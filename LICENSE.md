@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Roman Buchmüller
+Copyright (c) 2026 Alex Epp, Elena Hiener, Roman Buchmüller, Timo Indlekofer
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
