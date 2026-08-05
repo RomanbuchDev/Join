@@ -93,10 +93,19 @@ http://<deine_ip>:<live-server-port>
 ├───assets/
 │   ├───icons/
 │   └───img/
+│ 
+├───html/
+│       register.html
+│       summary.html
+│       add-task.html
+│       board.html
+│       contact.html
+│       impressum.html
+│       privacy-policy.html
 │                 
-├───scripts/
-│       ...
-│       ...
+├───js/
+│       template.js
+│       contact.js
 │       ...
 │          
 └───css/
