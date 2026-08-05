@@ -15,11 +15,18 @@
 <div align="center">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="html5 logo"  />
     <img width="12" />
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo" />
-    <img width="12" />
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo"  />
+    <img width="12" />
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo" />
+
 </div>
 <img/>
+
+<div align="center">
+        
+🌐 Live-Ansicht des Projekts: 👉 [GitHub Pages](https://romanbuchdev.github.io/Join/)
+
+</div>
 
 ## 👩‍💻 Contributors
 
@@ -44,7 +51,7 @@
 git clone git@github.com:RomanbuchDev/Join.git
 ```
 
-2. Repository klonen mit HTTPS:
+2. Oder: Repository klonen mit HTTPS:
 
 ```bash
 git clone https://github.com/RomanbuchDev/Join.git
@@ -84,7 +91,6 @@ http://<deine_ip>:<live-server-port>
 │   style.css
 │   
 ├───assets/
-│   ├───audio/
 │   ├───icons/
 │   └───img/
 │                 
