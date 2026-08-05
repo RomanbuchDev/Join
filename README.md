@@ -30,7 +30,7 @@
 
 ## 👩‍💻 Contributors
 
-- **Alex Epp**
+- **Alex Epp** (GitHub: [AlexEppDev](https://github.com/AlexEppDev-2026))
 - **Elena Hiener** (GitHub: [ElenaH-2026](https://github.com/ElenaH-2026))
 - **Roman Buchmüller** (GitHub: [RomanbuchDev](https://github.com/RomanbuchDev))
 - **Timo Indlekofer** (GitHub: [TimoIndlekofer](https://github.com/TimoIndlekofer))
