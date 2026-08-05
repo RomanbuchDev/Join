@@ -35,6 +35,17 @@
 - **Roman Buchmüller** (GitHub: [RomanbuchDev](https://github.com/RomanbuchDev))
 - **Timo Indlekofer** (GitHub: [TimoIndlekofer](https://github.com/TimoIndlekofer))
 
+### Commit-Präfixe
+| Präfix | Anwendung |
+| --- | --- |
+| `feat:` | neue Funktion hinzufügen |
+| `fix:` | Fehler beheben |
+| `docs:` | README oder Dokumentation ändern |
+| `style:` | nur Formatierung ändern, ohne die Funktion zu verändern |
+| `refactor:` | bestehenden Code verbessern oder umbauen |
+| `chore:` | Ordner, Dateien, Konfiguration oder Projektstruktur ändern |
+| `test:` | Tests hinzufügen oder ändern |
+
 ## 📑 Inhaltsverzeichnis
 
 🚀 [Quickstart](#-quickstart)
