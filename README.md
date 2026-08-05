@@ -86,21 +86,21 @@ http://<deine_ip>:<live-server-port>
 │   .gitignore
 │   README.md
 │   LICENSE.md
-│   index.html
+│   index.html  --> Alex
 │   script.js
 │   style.css
 │   
 ├───assets/
 │   ├───icons/
-│   └───img/
+│   └───fonts/
 │ 
 ├───html/
-│       register.html
-│       summary.html
+│       register.html  --> Alex
+│       summary.html  --> Roman
 │       add-task.html
-│       board.html
-│       contact.html
-│       impressum.html
+│       board.html --> Elena
+│       contact.html --> Timo
+│       impressum.html --> Roman
 │       privacy-policy.html
 │                 
 ├───js/
