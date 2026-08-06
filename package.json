@@ -1,0 +1,13 @@
+{
+  "name": "modul-10-join",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Clean-Code-Prüfung für HTML, CSS und JS via GitHub Actions.",
+  "devDependencies": {
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.0",
+    "html-validate": "^8.24.0",
+    "stylelint": "^16.11.0",
+    "stylelint-config-standard": "^36.0.1"
+  }
+}

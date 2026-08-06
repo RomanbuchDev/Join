@@ -1,0 +1,59 @@
+name: Code quality
+
+on:
+  push:
+    branches:
+      - main
+      - feat/**
+      - fix/**
+      - docs/**
+      - style/**
+      - refactor/**
+      - chore/**
+      - test/**
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Clean-Code-Regeln
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Formatierung prüfen (Prettier)
+        run: npx prettier --check "**/*.{html,css,js,json,md}"
+
+      - name: HTML validieren
+        run: npx html-validate "index.html" "html/**/*.html"
+
+      - name: CSS prüfen
+        run: npx stylelint --config quality/stylelint.config.mjs "style.css" "css/**/*.css"
+
+      - name: JavaScript prüfen
+        run: npx eslint --config quality/eslint.config.mjs . --max-warnings=0
+
+      - name: Prüfscripte testen
+        run: node --test "quality/*.test.cjs"
+
+      - name: Dateilänge prüfen
+        run: node quality/check-file-length.cjs
