@@ -35,16 +35,28 @@
 - **Roman Buchmüller** (GitHub: [RomanbuchDev](https://github.com/RomanbuchDev))
 - **Timo Indlekofer** (GitHub: [TimoIndlekofer](https://github.com/TimoIndlekofer))
 
-### Commit-Präfixe
-| Präfix | Anwendung |
-| --- | --- |
-| `feat:` | neue Funktion hinzufügen |
-| `fix:` | Fehler beheben |
-| `docs:` | README oder Dokumentation ändern |
-| `style:` | nur Formatierung ändern, ohne die Funktion zu verändern |
-| `refactor:` | bestehenden Code verbessern oder umbauen |
-| `chore:` | Ordner, Dateien, Konfiguration oder Projektstruktur ändern |
-| `test:` | Tests hinzufügen oder ändern |
+## 📋 Projektregeln
+
+### Beispiel:
+Feature-Branch: 
+```text
+feat/5-contacts-basic-structure
+```
+Commit:
+```text
+"feat: issue 5: Add page structure in contacts.html"
+```
+### Übersicht:
+| Featurebranch | Commit Präfix | Anwendung |
+| --- | --- | --- |
+| `feat/#-...` | `feat:` | neue Funktion hinzufügen |
+| `fix/#-...` | `fix:` | Fehler beheben |
+| `docs/#-...` | `docs:` | README oder Dokumentation ändern |
+| `style/#-...` | `style:` | nur Formatierung ändern, ohne die Funktion zu verändern |
+| `refactor/#-...` | `refactor:` | bestehenden Code verbessern oder umbauen |
+| `chore/#-...` | `chore:` | Ordner, Dateien, Konfiguration oder Projektstruktur ändern |
+| `test/#-...` | `test:` | Tests hinzufügen oder ändern |
+
 
 ## 📑 Inhaltsverzeichnis
 
