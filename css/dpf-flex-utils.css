@@ -1,0 +1,71 @@
+/* Zentrierungs-Klassen */
+.dpf-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dpf-center-x {
+  display: flex;
+  justify-content: center;
+}
+
+.dpf-center-y {
+  display: flex;
+  align-items: center;
+}
+
+/* Ausrichtungs-Klassen für Flex-Richtung */
+.dpf-flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dpf-flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.dpf-flex-column-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Klassen für Flex-Richtung mit Ausrichtung */
+.dpf-flex-column-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.dpf-flex-column-end {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.dpf-flex-row-start {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.dpf-flex-row-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.dpf-sb-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
