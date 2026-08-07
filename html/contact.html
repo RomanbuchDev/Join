@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="de">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,23 +9,22 @@
   <!-- JavaScript file -->
   <script src="../js/contact.js" defer></script>
 </head>
-
 <body>
   <!-- Header -->
   <header class="header-container">
     <a href="../index.html" aria-label="Go to the Join login page">
-      <img src="../assets/icons/join_logo_mobile.png" alt="Join logo mobile">
+      <img src="../assets/icons/contacts/join_logo_mobile.png" alt="Join logo mobile">
     </a>
     <button class="account-button">TI</button>
   </header>
 
   <!-- Main -->
   <main class="main-container">
-    <!-- HIER EVTL. noch eine NAV einbauen für das Menü links bei Desktop (Spalte 1) -->
+    <!-- Hier evtl. noch eine <nav> einbauen für das Menü links bei Desktop (Spalte 1) -->
     <!-- <nav></nav> -->
 
     <!-- Die folgende div nur für Desktop -->
-    <div> 
+    <div>
       <!-- Kontaktliste (Spalte 2) -->
       <!-- Buchstabe A -->
       <section>
@@ -43,7 +41,6 @@
               <span class="contact-e-mail">vorname.nachname@test.de</span>
             </div>
           </button>
-
           <button type="button" class="contact-card">
             <span class="contact-shortcut">TI</span>
             <div>
@@ -51,7 +48,6 @@
               <span class="contact-e-mail">vorname.nachname@test.de</span>
             </div>
           </button>
-
         </div>
       </section>
 
@@ -71,7 +67,6 @@
               <span class="contact-e-mail">vorname.nachname@test.de</span>
             </div>
           </button>
-
           <button type="button" class="contact-card">
             <span class="contact-shortcut">TI</span>
             <div>
@@ -79,10 +74,8 @@
               <span class="contact-e-mail">vorname.nachname@test.de</span>
             </div>
           </button>
-
         </div>
       </section>
-
 
 
       <!-- Nächster Buchstabe -->
@@ -100,7 +93,6 @@
               <span class="contact-e-mail">vorname.nachname@test.de</span>
             </div>
           </button>
-
           <button type="button" class="contact-card">
             <span class="contact-shortcut">TI</span>
             <div>
@@ -108,10 +100,8 @@
               <span class="contact-e-mail">vorname.nachname@test.de</span>
             </div>
           </button>
-
         </div>
       </section>
-
 
 
       <!-- Nächster Buchstabe -->
@@ -129,7 +119,6 @@
               <span class="contact-e-mail">vorname.nachname@test.de</span>
             </div>
           </button>
-
           <button type="button" class="contact-card">
             <span class="contact-shortcut">TI</span>
             <div>
@@ -137,9 +126,9 @@
               <span class="contact-e-mail">vorname.nachname@test.de</span>
             </div>
           </button>
-
         </div>
       </section>
+
 
       <!-- Nächster Buchstabe -->
       <section>
@@ -156,7 +145,6 @@
               <span class="contact-e-mail">vorname.nachname@test.de</span>
             </div>
           </button>
-
           <button type="button" class="contact-card">
             <span class="contact-shortcut">TI</span>
             <div>
@@ -164,7 +152,6 @@
               <span class="contact-e-mail">vorname.nachname@test.de</span>
             </div>
           </button>
-
         </div>
       </section>
     </div>
@@ -175,27 +162,79 @@
 
 
     <!-- Add contact button -->
-    <button class="contact-add-button">
-      <img src="../assets/icons/person_add_button_mobile.png" alt="Person add button mobile">
+    <button class="contact-add-button" onclick="openDialogAddContact()">
+      <img src="../assets/icons/contacts/contact_add_button_mobile.png" alt="Contact add button mobile">
     </button>
   </main>
 
-  
+
   <!-- Footer (only for mobile) -->
   <footer class="footer-container">
-    <a href="#">
-      <img src="../assets/icons/summary_button_mobile.png" alt="Join logo mobile">
+    <a href="#" class="footer-link">
+      <img src="../assets/icons/contacts/summary_button_mobile.png" alt="Summary button mobile">
+      <span>Summary</span>
     </a>
-    <a href="#">
-      <img src="../assets/icons/add_task_button_mobile.png" alt="Join logo mobile">
+    <a href="#" class="footer-link">
+      <img src="../assets/icons/contacts/add_task_button_mobile.png" alt="Add task button mobile">
+      <span>Add task</span>
     </a>
-    <a href="#">
-      <img src="../assets/icons/board_button_mobile.png" alt="Join logo mobile">
+    <a href="#" class="footer-link">
+      <img src="../assets/icons/contacts/board_button_mobile.png" alt="Board button mobile">
+      <span>Board</span>
     </a>
-    <a href="#">
-      <img src="../assets/icons/contacts_button_mobile.png" alt="Join logo mobile">
+    <a href="#" class="footer-link">
+      <img src="../assets/icons/contacts/contacts_button_mobile.png" alt="Contacts button mobile">
+      <span>Contacts</span>
     </a>
   </footer>
 
+
+  <!-- Dialog window to add contact (only for mobile) -->
+  <dialog class="add-contact" id="add-contact-dialog">
+    <form method="dialog">
+
+      <!-- Dialog header -->
+      <header class="add-contact-header-container">
+        <div class="close-button-container">
+          <button type="button" class="close-button" onclick="closeDialogAddContact()">X</button>
+        </div>
+        <div class="add-contact-title-container">
+          <span class="add-contact-title">Add contact</span>
+          <span class="add-contact-subtitle">Tasks are better with a team!</span>
+          <span class="add-contact-title-underline"></span>
+        </div>
+        <div class="add-contact-shortcut">
+          <img src="../assets/icons/contacts/person_icon.png" alt="Person icon">
+        </div>
+      </header>
+
+      <!-- Dialog main -->
+      <div class="add-contact-main-container">
+        <div class="add-contact-input">
+          <input type="text" placeholder="Name">
+          <img src="../assets/icons/contacts/person_icon_input.png" alt="Person input icon">
+        </div>
+
+        <div class="add-contact-input">
+          <input type="text" placeholder="Email">
+          <img src="../assets/icons/contacts/email_icon_input.png" alt="Email input icon">
+        </div>
+
+        <div class="add-contact-input">
+          <input type="text" placeholder="Phone">
+          <img src="../assets/icons/contacts/phone_icon_input.png" alt="Phone input icon">
+        </div>
+      </div>
+
+      <!-- Dialog footer -->
+      <footer class="add-contact-footer">
+        <button class="create-contact">Create contact
+          <img src="../assets/icons/contacts/check_icon.png" alt="Check icon">
+        </button>
+      </footer>
+
+    </form>
+  </dialog>
+  
 </body>
 </html>

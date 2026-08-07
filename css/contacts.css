@@ -5,6 +5,7 @@
     2. HEADER (Logo, User Account with logout)
     3. MAIN (Contact categories, contacts)
     4. FOOTER (Navigation bar)
+    5. ADD CONTACT DIALOG (Dialog window to add new contacts)
     ...
     ==================================================================================================== */
 
@@ -101,6 +102,7 @@ body {
     gap: 1.5rem; */
 
     margin-top: 80px;
+    margin-bottom: 80px;
     padding-left: 14px;
     padding-right: 14px;
     padding-bottom: 80px;
@@ -238,4 +240,223 @@ body {
     height: 80px;
     width: 100%;
     padding: 16px 8px;
+}
+
+
+.footer-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: rgba(231, 231, 231, 1);
+    text-decoration: none;
+}
+
+
+
+
+
+/*  ==================================================================================================== 
+    5. ADD CONTACT DIALOG
+    ==================================================================================================== */
+
+.add-contact {
+    background-color: rgba(255, 255, 255, 1);
+
+    border: none;
+    border-radius: 30px;
+
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+
+    overflow: hidden;
+
+    top: 80px;
+
+    margin-left: auto;
+    margin-right: auto;
+    /* padding: 66px 24px; */
+    width: calc(100% - 28px);
+    max-width: 396px;
+    height: 760px;
+    max-height: calc(100vh - 160px);
+}
+
+
+.add-contact[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.add-contact form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+}
+
+
+.add-contact-header-container {
+    background-color: rgba(42, 54, 71, 1);
+
+    position: relative;
+    
+    gap: 12px;
+
+    padding-left: 24px;
+    padding-right: 24px;
+
+    height: 352px;
+}
+
+
+.close-button-container {
+    display: flex;
+    justify-content: right;
+}
+
+
+.close-button {
+    background: none;
+
+    color: white;
+
+    border: none;
+
+    cursor: pointer;
+
+    width: 24px;
+    height: 24px;
+    padding-top: 24px;
+}
+
+
+.add-contact-title-container {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding-top: 66px;
+    padding-bottom: 66px;
+}
+
+
+.add-contact-title {
+    color: rgba(255, 255, 255, 1);
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0%;
+}
+
+
+.add-contact-subtitle {
+    color: rgba(255, 255, 255, 1);
+    font-size: 1rem;
+    line-height: 1.2;
+    letter-spacing: 0%;
+}
+
+
+.add-contact-title-underline {
+    display: block;
+    
+    background-color: rgba(41, 171, 226, 1);
+
+    border-radius: 3px;
+
+    width: 90px;
+    height: 3px;
+}
+
+
+.add-contact-shortcut {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(209, 209, 209, 1);
+
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+
+    border: 3px solid rgba(255, 255, 255, 1);
+    border-radius: 70px;
+
+    transform: translateY(50%);
+    transform: translate(-50%, 50%);
+
+    width: 120px;
+    height: 120px;
+}
+
+
+.add-contact-main-container {
+    display: flex;
+    flex-direction: column;
+
+    background-color: rgba(255, 255, 255, 1);
+
+    gap: 15px;
+
+    padding: 80px 16px;
+}
+
+
+.add-contact-input {
+    display: flex;
+    align-items: center;
+
+    border: 1px solid rgba(104, 104, 104, 1);
+    border-radius: 10px;
+
+    height: 30px;
+    padding: 13px 21px;
+}
+
+
+.add-contact-input input {
+    border: none;
+    outline: none;
+
+    flex-grow: 1;
+
+    padding: 0;
+}
+
+
+.add-contact-footer {
+    display: flex;
+    justify-content: center;
+
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+
+.create-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(42, 54, 71, 1);
+
+    color: rgba(255, 255, 255, 1);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0%;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    gap: 4px;
+
+    padding: 18px 10px;
 }
