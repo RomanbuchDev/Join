@@ -16,46 +16,48 @@
     <script src="./js/template.js" defer></script>
     <script src="./js/contact.js" defer></script>
   </head>
-  <body class="dpf-flex-column-center">
-    <header class="dpf-flex-start">
-      <div>
-        <img src="./assets/icons/join-logo.png" alt="" />
-      </div>
-    </header>
+  <body class="">
+    <section class="app dpf-column-spc-between-center">
+      <header class="">
+        <div class="dpf-flex-start">
+          <img src="./assets/icons/join-logo.png" alt="" />
+        </div>
+      </header>
 
-    <main class="dpf-flex-column-center">
-      <form class="dpf-flex-column-center">
-        <h1>LOGIN</h1>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label"
-            >Email address</label
-          >
-          <input
-            type="email"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" class="form-text">
-            <!-- We'll never share your email with anyone else. -->
+      <main class="">
+        <form class="dpf-flex-column-center">
+          <h1>LOGIN</h1>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Email address</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+            />
+            <div id="emailHelp" class="form-text">
+              <!-- We'll never share your email with anyone else. -->
+            </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="exampleInputPassword1"
-          />
-        </div>
-
-        <button type="submit" class="btn btn-primary">Login</button>
-        <button type="submit" class="btn btn-secondary">Guest Login</button>
-      </form>
-    </main>
-
-    <footer>
-      <nav>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Password</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+          <div class="btn-logins-bar dpf-column-spc-between-center">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-secondary">Guest Login</button>
+          </div>
+        </form>
+      </main>
+      <nav style="padding-top: 16px">
         <h3>test bar für links</h3>
         <a href="./html/register.html">register</a>
         <a href="./html/add-task.html">add-task</a>
@@ -63,7 +65,19 @@
         <a href="./html/contact.html">contact</a>
         <a href="./html/summary.html">summary</a>
       </nav>
-      <div></div>
-    </footer>
+      <footer class="dpf-flex-column-center">
+        <section class="sign-up-bar dpf-spc-between-center">
+          <p>Not a Join user?</p>
+          <button type="submit" class="btn btn-primary" style="width: 104px">
+            Sign up
+          </button>
+        </section>
+        <section class="dpf-center impress-bar">
+          <a href="">Privacy Policy</a>
+          <a href="">Legal notice</a>
+        </section>
+        <div></div>
+      </footer>
+    </section>
   </body>
 </html>
