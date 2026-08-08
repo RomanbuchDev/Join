@@ -3,9 +3,11 @@
     ====================================================================================================
     1. STANDARDS (only for testing)
     2. HEADER (Logo, User Account with logout)
-    3. MAIN (Contact categories, contacts)
-    4. FOOTER (Navigation bar)
-    5. ADD CONTACT DIALOG (Dialog window to add new contacts)
+    3. MAIN - CONTACT LIST (Contact categories, contacts)
+    4. MAIN - CONTACT DETAILS (Contact detail information)
+    5. FOOTER (Navigation bar)
+    6. ADD CONTACT DIALOG (Dialog window to add new contacts)
+    7. OTHER
     ...
     ==================================================================================================== */
 
@@ -86,7 +88,7 @@ body {
 
 
 /*  ==================================================================================================== 
-    3. MAIN
+    3. MAIN - CONTACT LIST
     ==================================================================================================== */
 
 .main-container {
@@ -189,7 +191,7 @@ body {
 }
 
 
-.contact-add-button {
+.contact-menu {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -222,7 +224,129 @@ body {
 
 
 /*  ==================================================================================================== 
-    4. FOOTER
+    4. MAIN - CONTACT DETAILS
+    ==================================================================================================== */
+
+/* .contact-details-container {
+    display: none;
+} */
+
+
+.contact-details-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+
+.contact-details-title-container {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding-top: 66px;
+    padding-bottom: 66px;
+}
+
+
+.contact-details-title {
+    color: rgba(0, 0, 0, 1);
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0%;
+}
+
+
+.contact-details-subtitle {
+    color: rgba(42, 54, 71, 1);
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0%;
+}
+
+
+.contact-details-back-button {
+    background: none;
+    border: none;
+
+    color: rgba(18, 70, 88, 1);
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    width: 32px;
+    height: 32px;
+}
+
+
+.contact-details-name-container {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+.contact-details-shortcut {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: green;
+
+    color: rgba(255, 255, 255, 1);
+    font-size: 1.6875rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0%;
+
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+
+    border: 3px solid rgba(255, 255, 255, 1);
+    border-radius: 70px;
+
+    flex-shrink: 0;
+
+    width: 80px;
+    height: 80px;
+}
+
+
+.contact-details-name {
+    color: rgba(0, 0, 0, 1);
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0%;
+}
+
+
+.contact-details-information-container {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+
+.contact-details-contact-data {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+
+
+
+
+/*  ==================================================================================================== 
+    5. FOOTER
     ==================================================================================================== */
 
 .footer-container {
@@ -257,7 +381,7 @@ body {
 
 
 /*  ==================================================================================================== 
-    5. ADD CONTACT DIALOG
+    6. ADD CONTACT DIALOG
     ==================================================================================================== */
 
 .add-contact {
@@ -265,12 +389,19 @@ body {
 
     border: none;
     border-radius: 30px;
+    outline: none;
 
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
 
     overflow: hidden;
 
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out, display 0.3s ease-out allow-discrete;
+
+    contain: paint layout;
+
     top: 80px;
+    z-index: 200;
 
     margin-left: auto;
     margin-right: auto;
@@ -278,20 +409,33 @@ body {
     width: calc(100% - 28px);
     max-width: 396px;
     height: 760px;
-    max-height: calc(100vh - 160px);
+    max-height: calc(100dvh - 160px);
 }
 
 
 .add-contact[open] {
     display: flex;
     flex-direction: column;
+
+    transform: translateY(0);
+}
+
+
+@starting-style {
+    .add-contact[open] {
+        transform: translateY(100%);
+    }
 }
 
 
 .add-contact form {
     display: flex;
     flex-direction: column;
+
+    background: transparent;
+
     height: 100%;
+    width: 100%;
     margin: 0;
 }
 
@@ -359,7 +503,7 @@ body {
 }
 
 
-.add-contact-title-underline {
+.title-underline {
     display: block;
     
     background-color: rgba(41, 171, 226, 1);
@@ -433,12 +577,14 @@ body {
     display: flex;
     justify-content: center;
 
+    gap: 20px;
+
     padding-left: 24px;
     padding-right: 24px;
 }
 
 
-.create-contact {
+.create-contact-data {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -459,4 +605,98 @@ body {
     gap: 4px;
 
     padding: 18px 10px;
+}
+
+
+.delete-contact-data {
+    display: none;
+
+    background-color: rgba(255, 255, 255, 1);
+
+    color: rgba(42, 54, 71, 1);
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0%;
+
+    border: 1px solid rgba(42, 54, 71, 1);
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    padding: 18px 10px;
+}
+
+
+.save-contact-data {
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(42, 54, 71, 1);
+
+    color: rgba(255, 255, 255, 1);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0%;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    gap: 4px;
+
+    padding: 18px 10px;
+}
+
+
+.toast-contact-created {
+    background-color: rgba(42, 54, 71, 1);
+
+    color: rgba(255, 255, 255, 1);
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0%;
+
+    border: none;
+    border-radius: 20px;
+
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+
+    position: fixed;
+    bottom: -80px;
+    left: 50%;
+    z-index: 300;
+
+    white-space: nowrap;
+
+    transform: translateX(-50%);
+    transition: bottom 0.3s ease-out;
+
+    padding: 18px 10px;
+}
+
+
+.toast-contact-created.show {
+    bottom: 150px;
+}
+
+
+
+
+
+/*  ==================================================================================================== 
+    7. OTHER
+    ==================================================================================================== */
+
+.show {
+    display: block;
+}
+
+
+.hidden {
+    display: none;
 }

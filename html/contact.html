@@ -24,7 +24,7 @@
     <!-- <nav></nav> -->
 
     <!-- Die folgende div nur für Desktop -->
-    <div>
+    <div id="contact-list">
       <!-- Kontaktliste (Spalte 2) -->
       <!-- Buchstabe A -->
       <section>
@@ -34,7 +34,7 @@
         </div>
         <div class="contact-grid">
           <!-- Kontakt-Beispiel -->
-          <button type="button" class="contact-card">
+          <button type="button" class="contact-card" onclick="showContactDetails()">
             <span class="contact-shortcut">TI</span>
             <div>
               <span class="contact-name">Timo Indlekofer</span>
@@ -157,13 +157,43 @@
     </div>
 
 
-    <!-- Kontaktdetails (Spalte 3) für Desktop -->
-    <!-- z.B. <aside> -->
+    <!-- Contact details (Same page in mobile / Column 3 in desktop) -->
+    <aside class="contact-details-container hidden" id="contact-details">
+      <!-- Contact details header -->
+      <div class="contact-details-header-container">
+        <div class="contact-details-title-container">
+          <span class="contact-details-title">Contacts</span>
+          <span class="contact-details-subtitle">Better with a team</span>
+          <span class="title-underline"></span>
+        </div>
+          <button type="button" class="contact-details-back-button" onclick="backToContactList()">&#x1F860;</button>
+      </div>
+
+      <!-- Contact details main -->
+      <div class="contact-details-name-container">
+        <span class="contact-details-shortcut">TI</span>
+        <span class="contact-details-name">Timo Indlekofer</span>
+      </div>
+
+      <!-- Contact details information -->
+      <div>
+        <div class="contact-details-information-container">
+          <h3>Contact information</h3>
+        </div>
+        <div class="contact-details-contact-data">
+          <h4>Email</h4>
+          <span class="contact-e-mail">vorname.nachname@test.de</span>
+          <h4>Phone</h4>
+          <span>+49 12345</span>
+        </div>
+      </div>
+    </aside>
 
 
     <!-- Add contact button -->
-    <button class="contact-add-button" onclick="openDialogAddContact()">
-      <img src="../assets/icons/contacts/contact_add_button_mobile.png" alt="Contact add button mobile">
+    <button class="contact-menu" onclick="openDialogAddContact()">
+      <img src="../assets/icons/contacts/contact_add_button_mobile.png" alt="Contact add button mobile" class="show" id="add-contact-icon">
+      <img src="../assets/icons/contacts/more_icon.png" alt="More button mobile" class="hidden" id="more-menu-icon">
     </button>
   </main>
 
@@ -192,7 +222,6 @@
   <!-- Dialog window to add contact (only for mobile) -->
   <dialog class="add-contact" id="add-contact-dialog">
     <form method="dialog">
-
       <!-- Dialog header -->
       <header class="add-contact-header-container">
         <div class="close-button-container">
@@ -201,7 +230,7 @@
         <div class="add-contact-title-container">
           <span class="add-contact-title">Add contact</span>
           <span class="add-contact-subtitle">Tasks are better with a team!</span>
-          <span class="add-contact-title-underline"></span>
+          <span class="title-underline"></span>
         </div>
         <div class="add-contact-shortcut">
           <img src="../assets/icons/contacts/person_icon.png" alt="Person icon">
@@ -211,30 +240,41 @@
       <!-- Dialog main -->
       <div class="add-contact-main-container">
         <div class="add-contact-input">
-          <input type="text" placeholder="Name">
+          <input type="text" placeholder="Name" id="input-contact-name-dialog">
           <img src="../assets/icons/contacts/person_icon_input.png" alt="Person input icon">
         </div>
 
         <div class="add-contact-input">
-          <input type="text" placeholder="Email">
+          <input type="text" placeholder="Email" id="input-contact-email-dialog">
           <img src="../assets/icons/contacts/email_icon_input.png" alt="Email input icon">
         </div>
 
         <div class="add-contact-input">
-          <input type="text" placeholder="Phone">
+          <input type="text" placeholder="Phone" id="input-contact-phone-dialog">
           <img src="../assets/icons/contacts/phone_icon_input.png" alt="Phone input icon">
         </div>
       </div>
 
       <!-- Dialog footer -->
       <footer class="add-contact-footer">
-        <button class="create-contact">Create contact
+        <!-- Create contact button -->
+        <button class="create-contact-data" onclick="createContact()">Create contact
           <img src="../assets/icons/contacts/check_icon.png" alt="Check icon">
         </button>
-      </footer>
+        <!-- Delete button -->
+        <button class="delete-contact-data">Delete</button>
+        <!-- Save button -->
+        <button class="save-contact-data">Save
+          <img src="../assets/icons/contacts/check_icon.png" alt="Save icon">
+        </button>
 
+      </footer>
     </form>
   </dialog>
+
+
+  <!-- Dialog toast message - Contact successfully created -->
+  <div class="toast-contact-created" id="toast-message-contact-created">Contact successfully created</div>
   
 </body>
 </html>
