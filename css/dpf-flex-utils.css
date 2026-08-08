@@ -5,6 +5,12 @@
   align-items: center;
 }
 
+.dpf-spc-between-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .dpf-center-x {
   display: flex;
   justify-content: center;
@@ -66,6 +72,13 @@
 
 .dpf-sb-center {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dpf-column-spc-between-center {
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
