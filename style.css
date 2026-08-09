@@ -165,3 +165,18 @@ footer {
   height: 3px;
   transform: translateX(-50%);
 }
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  padding: 4px 4px;
+  pointer-events: none;
+}
