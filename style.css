@@ -99,7 +99,7 @@ form {
   height: 51px;
   width: 100%;
   display: inline-block;
-  padding: 4px 4px;
+  padding: 0px;
   font-size: 1rem;
   line-height: 1;
   text-align: center;
@@ -125,10 +125,6 @@ form {
   background-color: #f6f7f8;
 }
 
-.btn-secondary:hover {
-  background-color: #2a3647;
-}
-
 /* footer */
 
 footer {
@@ -146,9 +142,26 @@ footer {
 .impress-bar {
   width: 246px;
   height: 35px;
-  /* gap: 35px; */
 }
 
 .impress-bar a {
   padding: 8px;
+}
+
+.heading-accent {
+  position: relative;
+  height: 72px;
+  width: 139px;
+  padding-bottom: 16px;
+}
+
+.heading-accent--bottom-center::after {
+  content: "";
+  position: absolute;
+  background-color: #29abe2;
+  bottom: 0;
+  left: 50%;
+  width: 80%;
+  height: 3px;
+  transform: translateX(-50%);
 }
