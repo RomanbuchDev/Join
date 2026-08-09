@@ -128,7 +128,7 @@ body {
 }
 
 
-.contact-grid {
+.contact-grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 
@@ -342,6 +342,88 @@ body {
 }
 
 
+/*  ##### Contact options ##### */
+
+.contact-option-menu-overlay {
+    background-color: rgba(0, 0, 0, 0.1);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 150;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+
+    width: 100vw;
+    height: 100vh;
+}
+
+
+.contact-option-menu-overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.contact-option-menu-container {
+    display: flex;
+    flex-direction: column;
+
+    background-color: rgba(255, 255, 255, 1);
+
+    color: rgba(42, 54, 71, 1);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0%;
+
+    border-radius: 20px 20px 0 20px;
+
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+    position: fixed;
+    bottom: 90px;
+    right: 10px;
+    z-index: 200;
+
+    transform: translateX(100%);
+    visibility: hidden;
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+
+    contain: paint layout;
+
+    gap: 8px;
+
+    width: 116px;
+    height: 100px;
+    padding: 10px;
+}
+
+
+.contact-option-menu-container.show {
+    transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.contact-option-menu-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px;
+}
+
+
+
+
+
 
 
 
@@ -384,7 +466,7 @@ body {
     6. ADD CONTACT DIALOG
     ==================================================================================================== */
 
-.add-contact {
+.add-contact-container {
     background-color: rgba(255, 255, 255, 1);
 
     border: none;
@@ -413,7 +495,7 @@ body {
 }
 
 
-.add-contact[open] {
+.add-contact-container[open] {
     display: flex;
     flex-direction: column;
 
@@ -422,13 +504,13 @@ body {
 
 
 @starting-style {
-    .add-contact[open] {
+    .add-contact-container[open] {
         transform: translateY(100%);
     }
 }
 
 
-.add-contact form {
+.add-contact-container form {
     display: flex;
     flex-direction: column;
 
@@ -693,7 +775,7 @@ body {
     ==================================================================================================== */
 
 .show {
-    display: block;
+    display: flex;
 }
 
 

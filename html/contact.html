@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +10,8 @@
   <!-- JavaScript file -->
   <script src="../js/contact.js" defer></script>
 </head>
-<body>
+
+<body onload="init()">
   <!-- Header -->
   <header class="header-container">
     <a href="../index.html" aria-label="Go to the Join login page">
@@ -27,12 +29,12 @@
     <div id="contact-list">
       <!-- Kontaktliste (Spalte 2) -->
       <!-- Buchstabe A -->
-      <section>
+      <section id="letter-group">
         <div>
           <h2 class="letter-container">A</h2>
           <hr class="letter-line">
         </div>
-        <div class="contact-grid">
+        <div class="contact-grid-container" id="contact-grid">
           <!-- Kontakt-Beispiel -->
           <button type="button" class="contact-card" onclick="showContactDetails()">
             <span class="contact-shortcut">TI</span>
@@ -52,12 +54,13 @@
       </section>
 
 
-      <!-- Nächster Buchstabe -->
+      <!-- Nächster Buchstabe (Platzhalter) -->
       <section>
         <div>
           <h2 class="letter-container">B</h2>
           <hr class="letter-line">
         </div>
+        <p>Notiz: Ab hier nur Platzhalter</p>
         <div class="contact-grid">
           <!-- Kontakt-Beispiel -->
           <button type="button" class="contact-card">
@@ -78,7 +81,7 @@
       </section>
 
 
-      <!-- Nächster Buchstabe -->
+      <!-- Nächster Buchstabe (Platzhalter) -->
       <section>
         <div>
           <h2 class="letter-container">C</h2>
@@ -104,7 +107,7 @@
       </section>
 
 
-      <!-- Nächster Buchstabe -->
+      <!-- Nächster Buchstabe (Platzhalter) -->
       <section>
         <div>
           <h2 class="letter-container">D</h2>
@@ -130,7 +133,7 @@
       </section>
 
 
-      <!-- Nächster Buchstabe -->
+      <!-- Nächster Buchstabe (Platzhalter) -->
       <section>
         <div>
           <h2 class="letter-container">E</h2>
@@ -154,6 +157,12 @@
           </button>
         </div>
       </section>
+
+      <!-- Button for dialog -->
+      <button class="contact-menu show" onclick="openDialogAddContact()">
+        <img src="../assets/icons/contacts/contact_add_button_mobile.png" alt="Contact add button mobile">
+        <!-- <img src="../assets/icons/contacts/more_icon.png" alt="More button mobile" class="hidden" id="more-menu-icon"> -->
+      </button>
     </div>
 
 
@@ -166,7 +175,7 @@
           <span class="contact-details-subtitle">Better with a team</span>
           <span class="title-underline"></span>
         </div>
-          <button type="button" class="contact-details-back-button" onclick="backToContactList()">&#x1F860;</button>
+        <button type="button" class="contact-details-back-button" onclick="backToContactList()">&#x1F860;</button>
       </div>
 
       <!-- Contact details main -->
@@ -187,14 +196,26 @@
           <span>+49 12345</span>
         </div>
       </div>
+
+      <!-- Contact details option menu button -->
+      <button class="contact-menu" onclick="toggleMobileContactOptions()">
+        <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
+      </button>
     </aside>
 
 
-    <!-- Add contact button -->
-    <button class="contact-menu" onclick="openDialogAddContact()">
-      <img src="../assets/icons/contacts/contact_add_button_mobile.png" alt="Contact add button mobile" class="show" id="add-contact-icon">
-      <img src="../assets/icons/contacts/more_icon.png" alt="More button mobile" class="hidden" id="more-menu-icon">
-    </button>
+    <!-- Contact details option menu -->
+    <div class="contact-option-menu-overlay" id="contact-options-overlay" onclick="closeMobileContactOptions()"></div>
+    <div class="contact-option-menu-container" id="contact-options">
+      <div class="contact-option-menu-items">
+        <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon">
+        <span>Edit</span>
+      </div>
+      <div class="contact-option-menu-items">
+        <img src="../assets/icons/contacts/delete_icon.png" alt="Delete icon">
+        <span>Delete</span>
+      </div>
+    </div>
   </main>
 
 
@@ -220,7 +241,7 @@
 
 
   <!-- Dialog window to add contact (only for mobile) -->
-  <dialog class="add-contact" id="add-contact-dialog">
+  <dialog class="add-contact-container" id="add-contact-dialog">
     <form method="dialog">
       <!-- Dialog header -->
       <header class="add-contact-header-container">
@@ -272,9 +293,9 @@
     </form>
   </dialog>
 
-
   <!-- Dialog toast message - Contact successfully created -->
   <div class="toast-contact-created" id="toast-message-contact-created">Contact successfully created</div>
-  
+
 </body>
+
 </html>
