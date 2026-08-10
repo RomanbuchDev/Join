@@ -1,0 +1,69 @@
+.summary-header {
+  row-gap: 0.5rem;
+  display: grid;
+}
+
+.summary-header::after {
+  content: "";
+  display: block;
+
+  width: 5.6rem;
+  height: 3px;
+  background-color: #29abe2;
+
+  margin-top: 0.5rem;
+}
+
+.summary-header p {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.summery-list {
+  border: 2px solid rgb(93, 232, 0);
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.summary-card {
+  border: 2px solid rgb(232, 0, 0);
+  grid-column: span 3;
+
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.summary-card--todo {
+  border: 2px solid rgb(6, 93, 87);
+}
+
+.summary-card--done {
+  border: 2px solid rgb(224, 232, 0);
+}
+
+.summary-card--urgent {
+  border: 2px solid rgb(176, 41, 243);
+  grid-column: span 6;
+}
+
+.summary-card--board {
+  border: 2px solid rgb(7, 72, 16);
+  grid-column: span 2;
+  aspect-ratio: 1 / 1;
+}
+
+.summary-card--progress {
+  border: 2px solid rgb(42, 171, 59);
+  grid-column: span 2;
+  aspect-ratio: 1 / 1;
+}
+
+.summary-card--feedback {
+  border: 2px solid rgb(18, 254, 234);
+  grid-column: span 2;
+  aspect-ratio: 1 / 1;
+}
