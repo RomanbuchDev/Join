@@ -7,11 +7,6 @@ main {
   padding-block-start: 3rem;
 }
 
-main section {
-  display: grid;
-  gap: 2rem;
-}
-
 h1 {
   border: 2px solid rgb(0, 255, 195);
   font-size: 3rem;
