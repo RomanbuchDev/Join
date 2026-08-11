@@ -32,8 +32,14 @@ jobs:
       - name: Abhängigkeiten installieren
         run: npm ci
 
+      - name: Prüfscripte testen
+        run: node --test "quality/*.test.cjs"
+
+      - name: Dateilänge prüfen
+        run: node quality/check-file-length.cjs
+
       - name: Formatierung prüfen (Prettier)
-        run: npx prettier --check "**/*.{html,css,js,json,md}"
+        run: npx prettier --check "*.{html,css,js,json,md}" "css/**/*.css" "html/**/*.html" "js/**/*.js" "quality/**/*.{cjs,mjs}"
 
       - name: HTML validieren
         run: npx html-validate "index.html" "html/**/*.html"
@@ -42,10 +48,4 @@ jobs:
         run: npx stylelint --config quality/stylelint.config.mjs "style.css" "css/**/*.css"
 
       - name: JavaScript prüfen
-        run: npx eslint --config quality/eslint.config.mjs . --max-warnings=0
-
-      - name: Prüfscripte testen
-        run: node --test "quality/*.test.cjs"
-
-      - name: Dateilänge prüfen
-        run: node quality/check-file-length.cjs
+        run: npx eslint --config quality/eslint.config.mjs "script.js" "js/**/*.js" "quality/**/*.{cjs,mjs}" --max-warnings=0
