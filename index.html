@@ -5,14 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join</title>
     <link rel="icon" href="./assets/icons/business_statistics.svg" />
+    <!-- login links -->
+    <link rel="stylesheet" href="./css/dpf-flex-utils.css" />
+
     <link rel="stylesheet" href="./css/reset_stylesheet.css" />
     <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/login.css" />
     <link rel="stylesheet" href="./style.css" />
+
     <script src="./script.js" defer></script>
     <script src="./js/template.js" defer></script>
     <script src="./js/contact.js" defer></script>
   </head>
-  <body>
-    <h1>Join - Alex, Elena, Roman und Timo</h1>
+  <body class="">
+    <section class="app dpf-column-spc-between-center">
+      <header class="">
+        <div class="dpf-flex-start">
+          <img src="./assets/icons/join-logo.png" alt="" />
+        </div>
+      </header>
+
+      <main class="">
+        <form class="dpf-column-spc-between-center">
+          <div class="heading-accent heading-accent--bottom-center">
+            <h1>LOGIN</h1>
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"></label>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                placeholder="Email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+              <img src="./assets/icons/mail.png" class="input-icon" alt="" />
+            </div>
+            <div id="emailHelp" class="form-text">
+              <!-- We'll never share your email with anyone else. -->
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"></label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                placeholder="Password"
+                class="form-control"
+                id="exampleInputPassword1"
+              />
+              <img src="./assets/icons/lock.png" class="input-icon" alt="" />
+            </div>
+          </div>
+          <div class="btn-logins-bar dpf-column-spc-between-center">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-secondary">Guest Login</button>
+          </div>
+        </form>
+      </main>
+      <nav style="padding-top: 16px">
+        <h3>test bar für links</h3>
+        <a href="./html/register.html" target="_blank">register</a>
+        <a href="./html/add-task.html" target="_blank">add-task</a>
+        <a href="./html/board.html" target="_blank">board</a>
+        <a href="./html/contact.html" target="_blank">contact</a>
+        <a href="./html/summary.html" target="_blank">summary</a>
+      </nav>
+      <footer class="dpf-flex-column-center">
+        <section class="sign-up-bar dpf-spc-between-center">
+          <p>Not a Join user?</p>
+
+          <button type="submit" class="btn btn-primary" style="width: 104px">
+            Sign up
+          </button>
+        </section>
+        <section class="dpf-center impress-bar">
+          <a href="./html/privacy-policy.html" target="_blank"
+            >Privacy Policy</a
+          >
+          <a href="./html/impressum.html" target="_blank">Legal notice</a>
+        </section>
+        <div></div>
+      </footer>
+    </section>
   </body>
 </html>
