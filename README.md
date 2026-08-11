@@ -1,11 +1,11 @@
 <div align="center">
-        
+
 # Join
 
 </div>
 
 <div align="center">
-        
+
 ![Lernprojekt](https://img.shields.io/badge/Lernprojekt-Frontend-00939b?style=for-the-badge)
 <img width="12" />
 ![Projektstatus](https://img.shields.io/badge/Projektstatus-ongoing-f221e4?style=for-the-badge)
@@ -23,7 +23,7 @@
 <img/>
 
 <div align="center">
-        
+
 🌐 Live-Ansicht des Projekts: 👉 [GitHub Pages](https://romanbuchdev.github.io/Join/)
 
 </div>
@@ -38,25 +38,30 @@
 ## 📋 Projektregeln
 
 ### Beispiel:
-Feature-Branch: 
+
+Feature-Branch:
+
 ```text
 feat/5-contacts-basic-structure
 ```
+
 Commit:
+
 ```text
 "feat: issue 5: Add page structure in contacts.html"
 ```
-### Übersicht:
-| Featurebranch | Commit Präfix | Anwendung |
-| --- | --- | --- |
-| `feat/#-...` | `feat:` | neue Funktion hinzufügen |
-| `fix/#-...` | `fix:` | Fehler beheben |
-| `docs/#-...` | `docs:` | README oder Dokumentation ändern |
-| `style/#-...` | `style:` | nur Formatierung ändern, ohne die Funktion zu verändern |
-| `refactor/#-...` | `refactor:` | bestehenden Code verbessern oder umbauen |
-| `chore/#-...` | `chore:` | Ordner, Dateien, Konfiguration oder Projektstruktur ändern |
-| `test/#-...` | `test:` | Tests hinzufügen oder ändern |
 
+### Übersicht:
+
+| Featurebranch    | Commit Präfix | Anwendung                                                  |
+| ---------------- | ------------- | ---------------------------------------------------------- |
+| `feat/#-...`     | `feat:`       | neue Funktion hinzufügen                                   |
+| `fix/#-...`      | `fix:`        | Fehler beheben                                             |
+| `docs/#-...`     | `docs:`       | README oder Dokumentation ändern                           |
+| `style/#-...`    | `style:`      | nur Formatierung ändern, ohne die Funktion zu verändern    |
+| `refactor/#-...` | `refactor:`   | bestehenden Code verbessern oder umbauen                   |
+| `chore/#-...`    | `chore:`      | Ordner, Dateien, Konfiguration oder Projektstruktur ändern |
+| `test/#-...`     | `test:`       | Tests hinzufügen oder ändern                               |
 
 ## 📑 Inhaltsverzeichnis
 
@@ -87,20 +92,22 @@ cd Join
 ```
 
 4. Starte deinen lokalen Entwicklungsserver:
+
 ```text
 z.B. Live Server in VS Code
 ```
 
 5. Öffne danach die URL im Browser auf deinem Computer:
+
 ```text
 http://localhost:<live-server-port>
 ```
 
 6. Oder öffne die URL im Browser auf deiner virtuellen Maschine:
+
 ```text
 http://<deine_ip>:<live-server-port>
 ```
-
 
 ## 📁 Projektstruktur
 
@@ -112,11 +119,11 @@ http://<deine_ip>:<live-server-port>
 │   index.html  --> Alex
 │   script.js
 │   style.css
-│   
+│
 ├───assets/
 │   ├───icons/
 │   └───fonts/
-│ 
+│
 ├───html/
 │       register.html  --> Alex
 │       summary.html  --> Roman
@@ -125,21 +132,21 @@ http://<deine_ip>:<live-server-port>
 │       contact.html --> Timo
 │       impressum.html --> Roman
 │       privacy-policy.html
-│                 
+│
 ├───js/
 │       template.js
 │       contact.js
 │       ...
-│          
+│
 └───css/
         ...
         ...
         ...
-     
+
 
 ```
 
 ## 📝 Disclaimer
 
-> [!NOTE] 
+> [!NOTE]
 > Dieses Projekt ist ein reines Übungsprojekt und ist zu Lernzwecken im Zuge unserer Weiterbildung bei der [Developer Akademie](https://developerakademie.com) entstanden.
