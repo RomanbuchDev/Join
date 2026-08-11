@@ -3,7 +3,127 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Register</title>
+    <link rel="icon" href="./assets/icons/business_statistics.svg" />
+    <!-- login links -->
+    <link rel="stylesheet" href="../css/dpf-flex-utils.css" />
+
+    <link rel="stylesheet" href="../css/reset_stylesheet.css" />
+    <link rel="stylesheet" href="../css/fonts.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <link rel="stylesheet" href="../style.css" />
+
+    <script src="../script.js" defer></script>
+    <script src="../js/template.js" defer></script>
+    <script src="../js/contact.js" defer></script>
   </head>
-  <body></body>
+  <body>
+    <section class="app dpf-column-spc-between-center">
+      <header class="">
+        <div class="dpf-flex-start">
+          <img src="../assets/icons/join-logo.png" alt="" />
+        </div>
+      </header>
+      <!-- main tag benuten wenn mit team geklärt ist -->
+      <section class="main-signup">
+        <form class="dpf-column-spc-between-center">
+          <div class="signup-header-row">
+            <a href="../index.html" class="signup-back-vector dpf-center">
+              <img src="../assets/icons/login-back-Vector.svg" alt="Zurück" />
+            </a>
+            <div class="heading-accent heading-accent--bottom-center">
+              <h1>Sign up</h1>
+            </div>
+          </div>
+
+          <div class="pb-1">
+            <label for="exampleInputEmail1" class="form-label"></label>
+            <div class="input-wrapper">
+              <input
+                type="name"
+                placeholder="Name"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+              <img
+                src="../assets/icons/login-person.svg"
+                class="input-icon"
+                alt=""
+              />
+            </div>
+            <label for="exampleInputEmail1" class="form-label"></label>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                placeholder="Email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+              <img src="../assets/icons/mail.png" class="input-icon" alt="" />
+            </div>
+            <div id="emailHelp" class="form-text">
+              <!-- We'll never share your email with anyone else. -->
+            </div>
+            <label for="exampleInputPassword1" class="form-label"></label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                placeholder="Password"
+                class="form-control"
+                id="exampleInputPassword1"
+              />
+              <img src="../assets/icons/lock.png" class="input-icon" alt="" />
+            </div>
+            <label for="exampleInputPassword1" class="form-label"></label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                class="form-control"
+                id="exampleInputPassword1"
+              />
+              <img src="../assets/icons/lock.png" class="input-icon" alt="" />
+            </div>
+          </div>
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="privacyCheck" />
+            <label class="form-check-label" for="privacyCheck">
+              I accept the
+              <a href="../html/privacy-policy.html" target="_blank"
+                >Privacy policy</a
+              >
+            </label>
+          </div>
+
+          <div class="btn-logins-bar dpf-column-spc-between-center">
+            <button type="submit" class="btn btn-primary">Sign up</button>
+          </div>
+        </form>
+      </section>
+      <nav style="padding-top: 16px">
+        <h3>test bar für links</h3>
+        <a href="./html/add-task.html" target="_blank">add-task</a>
+        <a href="./html/board.html" target="_blank">board</a>
+        <a href="./html/contact.html" target="_blank">contact</a>
+        <a href="./html/summary.html" target="_blank">summary</a>
+      </nav>
+      <footer class="dpf-flex-column-center footer-login">
+        <section class="dpf-center impress-bar">
+          <a href="./html/privacy-policy.html" target="_blank" class="login-a"
+            >Privacy Policy</a
+          >
+          <a href="./html/impressum.html" target="_blank" class="login-a"
+            >Legal notice</a
+          >
+        </section>
+        <div></div>
+      </footer>
+    </section>
+  </body>
 </html>

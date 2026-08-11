@@ -98,7 +98,6 @@ form {
 .btn {
   height: 3rem;
   width: 100%;
-  /* display: inline-block; */
   padding: 0;
   font-size: 1rem;
   line-height: 1;
@@ -116,7 +115,6 @@ form {
   background-color: #2a3647;
 }
 .login-a {
-  /* text-decoration: none; */
   color: #000000;
 }
 
@@ -159,7 +157,7 @@ form {
 .heading-accent {
   position: relative;
   height: 4.5rem;
-  width: 8.625rem;
+  width: auto;
   padding-bottom: 1rem;
 }
 
@@ -187,4 +185,36 @@ form {
   height: 1.5rem;
   padding: 0.25rem 0.25rem;
   pointer-events: none;
+}
+
+.main-signup {
+  max-height: 37.2rem;
+  max-width: 24.75rem;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 1.88rem;
+  padding: 2rem 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 0 0.88rem 0.19rem #00000024;
+}
+
+.signup-back-vector {
+  height: 2.5rem;
+  width: 2.5rem;
+  position: absolute;
+  left: 2rem;
+  top: 2rem;
+}
+
+.signup-back-vector a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.signup-header-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
