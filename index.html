@@ -10,6 +10,9 @@
 
     <link rel="stylesheet" href="./css/reset_stylesheet.css" />
     <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+    <link rel="stylesheet" href="./css/summary.css" />
+    <link rel="stylesheet" href="./css/variables.css" />
     <link rel="stylesheet" href="./css/login.css" />
     <link rel="stylesheet" href="./style.css" />
 
@@ -25,13 +28,13 @@
         </div>
       </header>
 
-      <main class="">
+      <section class="main-login">
         <form class="dpf-column-spc-between-center">
           <div class="heading-accent heading-accent--bottom-center">
             <h1>LOGIN</h1>
           </div>
 
-          <div class="mb-3">
+          <div class="pb-1">
             <label for="exampleInputEmail1" class="form-label"></label>
             <div class="input-wrapper">
               <input
@@ -46,8 +49,6 @@
             <div id="emailHelp" class="form-text">
               <!-- We'll never share your email with anyone else. -->
             </div>
-          </div>
-          <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"></label>
             <div class="input-wrapper">
               <input
@@ -59,33 +60,34 @@
               <img src="./assets/icons/lock.png" class="input-icon" alt="" />
             </div>
           </div>
+
           <div class="btn-logins-bar dpf-column-spc-between-center">
             <button type="submit" class="btn btn-primary">Login</button>
             <button type="submit" class="btn btn-secondary">Guest Login</button>
           </div>
         </form>
-      </main>
+      </section>
       <nav style="padding-top: 16px">
         <h3>test bar für links</h3>
-        <a href="./html/register.html" target="_blank">register</a>
         <a href="./html/add-task.html" target="_blank">add-task</a>
         <a href="./html/board.html" target="_blank">board</a>
         <a href="./html/contact.html" target="_blank">contact</a>
         <a href="./html/summary.html" target="_blank">summary</a>
       </nav>
-      <footer class="dpf-flex-column-center">
+      <footer class="dpf-flex-column-center footer-login">
         <section class="sign-up-bar dpf-spc-between-center">
           <p>Not a Join user?</p>
-
-          <button type="submit" class="btn btn-primary" style="width: 104px">
-            Sign up
-          </button>
+          <div class="dpf-center btn btn-primary" style="width: 104px">
+            <a href="./html/register.html" class="btn-primary">Sign up</a>
+          </div>
         </section>
         <section class="dpf-center impress-bar">
-          <a href="./html/privacy-policy.html" target="_blank"
+          <a href="./html/privacy-policy.html" target="_blank" class="login-a"
             >Privacy Policy</a
           >
-          <a href="./html/impressum.html" target="_blank">Legal notice</a>
+          <a href="./html/impressum.html" target="_blank" class="login-a"
+            >Legal notice</a
+          >
         </section>
         <div></div>
       </footer>

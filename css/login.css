@@ -9,43 +9,42 @@ body {
   background-color: #f6f7f8;
 }
 
+a {
+  text-decoration: none;
+}
+
 .app {
   background-color: #f6f7f8;
-  height: 926px;
-  width: 100vw;
-  padding-left: 8px;
-  padding-right: 8px;
+  height: 57.88rem;
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .app header {
   height: auto;
   width: 100%;
-  padding-top: 37px;
-  padding-left: 38px;
+  padding-top: 2.31rem;
+  padding-left: 2.38rem;
 }
 
 .app header img {
-  height: 78px;
-  width: 64px;
-
+  height: 4.88rem;
+  width: 4rem;
   object-fit: cover;
   object-position: center;
 }
 
-h1 {
-  font-size: 47px;
-}
-
 /* main class */
-main {
-  max-height: 475px;
-  max-width: 396px;
+.main-login {
+  max-height: 29.69rem;
+  max-width: 24.75rem;
   height: 100%;
   width: 100%;
-  border-radius: 30px;
-  padding: 32px 16px;
+  border-radius: 1.88rem;
+  padding: 2rem 1rem;
   background-color: #ffffff;
-  box-shadow: 0px 0px 14px 3px #00000024;
+  box-shadow: 0 0 0.88rem 0.19rem #00000024;
 }
 
 /* form login */
@@ -55,8 +54,8 @@ form {
 }
 
 /*Spacing & Labels */
-.mb-3 {
-  margin-bottom: 1rem;
+.pb-1 {
+  padding-bottom: 1rem;
   width: 100%;
 }
 .form-label {
@@ -66,6 +65,7 @@ form {
 
 /* form-control (Input-Felder) */
 .form-control {
+  height: 3rem;
   display: block;
   width: 100%;
   padding: 0.375rem 0.75rem;
@@ -74,7 +74,7 @@ form {
   color: #212529;
   background-color: #f6f7f8;
   border: 1px solid #686868;
-  border-radius: 0.375rem;
+  border-radius: 0.65rem;
   transition: box-shadow 100ms ease-in-out; /* statt Bootstraps 150ms */
 }
 .form-control:focus {
@@ -91,33 +91,37 @@ form {
 
 /* Buttons */
 .btn-logins-bar {
-  height: 123px;
-  width: 180px;
+  height: 7.5rem;
+  width: 11.25rem;
 }
 
 .btn {
-  height: 51px;
+  height: 3rem;
   width: 100%;
-  display: inline-block;
-  padding: 0px;
+  /* display: inline-block; */
+  padding: 0;
   font-size: 1rem;
   line-height: 1;
   text-align: center;
   cursor: pointer;
   user-select: none;
   border: 1px solid #686868;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   transition: background-color 100ms ease-in-out;
-  gap: 10px;
+  gap: 0.63rem;
 }
 
 .btn-primary {
   color: #f6f7f8;
   background-color: #2a3647;
 }
+.login-a {
+  /* text-decoration: none; */
+  color: #000000;
+}
 
 .btn-primary:hover {
-  background-color: #2a3647;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
 }
 
 .btn-secondary {
@@ -125,34 +129,38 @@ form {
   background-color: #f6f7f8;
 }
 
+.btn-secondary:hover {
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
 /* footer */
 
-footer {
-  height: 173px;
+.footer-login {
+  height: 10.81rem;
   width: 100%;
-  gap: 35px;
+  gap: 2.19rem;
 }
 
 .sign-up-bar {
-  height: 49px;
-  max-width: 292px;
-  gap: 35px;
+  height: 3rem;
+  max-width: 18.25rem;
+  gap: 2.2rem;
 }
 
 .impress-bar {
-  width: 246px;
-  height: 35px;
+  width: 15.375rem;
+  height: 2.2rem;
 }
 
 .impress-bar a {
-  padding: 8px;
+  padding: 0.5rem;
 }
 
 .heading-accent {
   position: relative;
-  height: 72px;
-  width: 139px;
-  padding-bottom: 16px;
+  height: 4.5rem;
+  width: 8.625rem;
+  padding-bottom: 1rem;
 }
 
 .heading-accent--bottom-center::after {
@@ -172,11 +180,11 @@ footer {
 
 .input-icon {
   position: absolute;
-  right: 14px;
+  right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  padding: 4px 4px;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.25rem 0.25rem;
   pointer-events: none;
 }
