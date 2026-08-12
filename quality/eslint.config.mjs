@@ -1,4 +1,4 @@
-import cleanCodePlugin from "./one-blank-line-between-functions.cjs";
+import cleanCodePlugin from "./two-blank-lines-between-functions.cjs";
 
 export default [
   {
@@ -48,7 +48,7 @@ export default [
       "no-nested-ternary": "error",
       "no-var": "error",
       "prefer-const": "error",
-      "clean-code/one-blank-line-between-functions": "error",
+      "clean-code/two-blank-lines-between-functions": "error",
     },
   },
   {
@@ -56,7 +56,7 @@ export default [
     rules: {
       "max-lines-per-function": "off",
       "max-statements": "off",
-      "clean-code/one-blank-line-between-functions": "off",
+      "clean-code/two-blank-lines-between-functions": "off",
     },
   },
 ];
