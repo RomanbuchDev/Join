@@ -2,12 +2,26 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+#page {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "main"
+    "nav";
+}
+
 h1 {
   font-size: 3rem;
   font-weight: 700;
 }
 
+.main {
+  grid-area: main;
+}
+
 .main-header {
+  grid-area: header;
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
@@ -34,6 +48,7 @@ h1 {
 }
 
 .main-nav {
+  grid-area: nav;
   position: fixed;
   bottom: 0;
   left: 0;
