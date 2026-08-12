@@ -3,7 +3,107 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="icon" type="images/" href="/assets/icons/join-logo.svg" />
+    <link rel="stylesheet" href="../assets/css/fonts.css" />
+    <link rel="stylesheet" href="../css/reset_stylesheet.css" />
+    <link rel="stylesheet" href="../css/summary.css" />
+    <link rel="stylesheet" href="../style.css" />
+    <title>Join</title>
   </head>
-  <body></body>
+  <body>
+    <header class="main-header">
+      <a href=""><img src="/assets/icons/join-logo.svg" alt="Join Logo" /></a>
+
+      <button class="user-avatar"><span>SM</span></button>
+    </header>
+    <main>
+      <section>
+        <header class="summary-header">
+          <h1>Join 360</h1>
+          <p>Key Metrics at a Glance</p>
+        </header>
+
+        <ul class="summery-list">
+          <li class="summary-card summary-card--todo">
+            <img
+              class="summary-card-icon"
+              src="/assets/icons/todo-icon.svg"
+              alt=""
+            />
+            <span class="summary-card-number">1</span>
+            <span class="summary-card-label">To-Do</span>
+          </li>
+          <li class="summary-card summary-card--done">
+            <img
+              class="summary-card-icon"
+              src="/assets/icons/done-icon.svg"
+              alt=""
+            />
+            <span class="summary-card-number">1</span>
+            <span class="summary-card-label">Done</span>
+          </li>
+
+          <li class="summary-card summary-card--urgent">
+            <img
+              class="summary-card-icon"
+              src="/assets/icons/urgent-icon.svg"
+              alt=""
+            />
+            <span class="summary-card-number">1</span>
+            <span class="summary-card-label">Urgent</span>
+
+            <div class="summary-card-deadline">
+              <time class="summary-card-date datetime="2026-10-16">October 16, 2022</time>
+              <span class="summary-card-deadline-label">Upcoming Deadline</span>
+            </div>
+          </li>
+
+          <li class="summary-card summary-card--small summary-card--board">
+            <span class="summary-card-number">5</span>
+            <span class="summary-card-label">Task in <br/> Board</span>
+          </li>
+
+          <li class="summary-card summary-card--small summary-card--progress">
+            <span class="summary-card-number">2</span>
+            <span class="summary-card-label">Task in Progress</span>
+          </li>
+
+          <li class="summary-card summary-card--small summary-card--feedback">
+            <span class="summary-card-number">2</span>
+            <span class="summary-card-label">Awaiting feedback</span>
+          </li>
+
+        </ul>
+      </section>
+    </main>
+
+    <nav class="main-nav">
+      <ul class="main-nav-list">
+        <li class="main-nav-item">
+          <a href="/html/summary.html" aria-current="page">
+            <img src="/assets/icons/summary-icon.svg" alt="" />
+            <span>Summary</span>
+          </a>
+        </li>
+        <li class="main-nav-item">
+          <a href="/html/add-task.html">
+            <img src="/assets/icons/addtask-icon.svg" alt="" />
+            <span> Add Task </span>
+          </a>
+        </li>
+        <li class="main-nav-item">
+          <a href="/html/board.html">
+            <img src="/assets/icons/board-icon.svg" alt="" />
+            <span> Board </span>
+          </a>
+        </li>
+        <li class="main-nav-item">
+          <a href="/html/contact.html">
+            <img src="/assets/icons/contact-icon.svg" alt="" />
+            <span> Contacts </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </body>
 </html>

@@ -1,11 +1,15 @@
 main section {
-  display: grid;
   gap: 1rem;
+  display: grid;
+}
+
+main {
+  padding-inline: 1rem;
+  padding-block-start: 2rem;
 }
 
 .summary-header {
   row-gap: 0.5rem;
-  display: grid;
 }
 
 .summary-header::after {
