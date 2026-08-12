@@ -1,7 +1,8 @@
 name: Code quality
 
-on: push
-  workflow_dispatch
+on:
+  push:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -30,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Prüfscripte testen
-        run: node --test
+        run: node --test "quality/*.test.cjs"
 
       - name: Dateilänge prüfen
         run: node quality/check-file-length.cjs
