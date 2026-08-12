@@ -1,10 +1,7 @@
 name: Code quality
 
-on:
-  push:
-    branches-ignore:
-      - main
-  workflow_dispatch:
+on: push
+  workflow_dispatch
 
 permissions:
   contents: read
@@ -21,10 +18,10 @@ jobs:
 
     steps:
       - name: Repository auschecken
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Node.js einrichten
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -33,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Prüfscripte testen
-        run: node --test "quality/*.test.cjs"
+        run: node --test
 
       - name: Dateilänge prüfen
         run: node quality/check-file-length.cjs
