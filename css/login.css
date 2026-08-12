@@ -113,6 +113,7 @@ form {
 .btn-primary {
   color: #f6f7f8;
   background-color: #2a3647;
+  width: 11.25rem;
 }
 .login-a {
   color: #000000;
@@ -206,6 +207,9 @@ form {
   left: 2rem;
   top: 2rem;
 }
+/* .signup-back-vector a:hover {
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
+} */
 
 .signup-back-vector a {
   display: block;
