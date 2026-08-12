@@ -113,12 +113,12 @@ body {
   margin-bottom: 8px;
 }
 
-.contact-grid-container {
+/* .contact-grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 
   gap: 35px;
-}
+} */
 
 .contact-card {
   display: flex;

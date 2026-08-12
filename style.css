@@ -3,8 +3,10 @@ body {
 }
 
 #page {
+  min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header"
     "main"
@@ -22,12 +24,11 @@ h1 {
 
 .main-header {
   grid-area: header;
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
 
-  padding-inline: 1rem;
-  padding-block: 1.25rem;
+  padding: 0.75em 1em;
   background-color: #ffffff;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 }
@@ -49,11 +50,6 @@ h1 {
 
 .main-nav {
   grid-area: nav;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
   height: 4.7rem;
 
   background-color: #2a3647;

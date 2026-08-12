@@ -28,7 +28,7 @@ main {
   font-weight: 400;
 }
 
-.summery-list {
+.summary-list {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
 
