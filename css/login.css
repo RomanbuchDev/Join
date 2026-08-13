@@ -204,21 +204,6 @@ form {
   height: 2.5rem;
   width: 2.5rem;
   position: absolute;
-  left: 2rem;
+  left: 1rem;
   top: 2rem;
-}
-/* .signup-back-vector a:hover {
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
-} */
-
-.signup-back-vector a {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.signup-header-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 }
