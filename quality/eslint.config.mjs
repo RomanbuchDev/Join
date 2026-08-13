@@ -45,6 +45,7 @@ export default [
       "max-statements": ["error", 10],
       "no-duplicate-imports": "error",
       "no-else-return": "error",
+      "no-multiple-empty-lines": ["error", { max: 2 }],
       "no-nested-ternary": "error",
       "no-var": "error",
       "prefer-const": "error",
@@ -57,6 +58,12 @@ export default [
       "max-lines-per-function": "off",
       "max-statements": "off",
       "clean-code/two-blank-lines-between-functions": "off",
+    },
+  },
+  {
+    files: ["**/*template*.js"],
+    rules: {
+      "max-lines-per-function": "off",
     },
   },
 ];

@@ -20,6 +20,7 @@ function countLines(content) {
   return content === "" ? 0 : content.split(/\r\n|\r|\n/u).length;
 }
 
+
 function collectFiles(directory, recursive) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const filePath = resolve(directory, entry.name);
@@ -32,6 +33,7 @@ function collectFiles(directory, recursive) {
   });
 }
 
+
 function findOversizedFiles(directory, maximum = MAX_LINES) {
   return SOURCE_PATHS.flatMap(({ dir, recursive }) =>
     collectFiles(resolve(directory, dir), recursive),
@@ -42,6 +44,7 @@ function findOversizedFiles(directory, maximum = MAX_LINES) {
     }))
     .filter(({ lines }) => lines > maximum);
 }
+
 
 function runCheck(directory) {
   const violations = findOversizedFiles(directory);

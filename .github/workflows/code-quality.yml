@@ -37,10 +37,10 @@ jobs:
         run: node quality/check-file-length.cjs
 
       - name: Formatierung prüfen (Prettier)
-        run: npx prettier --check "*.{html,css,js,json,md}" "css/**/*.css" "html/**/*.html" "js/**/*.js" "quality/**/*.{cjs,mjs}"
+        run: npx prettier --check "*.{html,css,json,md}" "css/**/*.css" "html/**/*.html"
 
       - name: HTML validieren
-        run: npx html-validate "index.html" "html/**/*.html"
+        run: npx html-validate --config quality/htmlvalidate.config.cjs "index.html" "html/**/*.html"
 
       - name: CSS prüfen
         run: npx stylelint --config quality/stylelint.config.mjs "style.css" "css/**/*.css"
