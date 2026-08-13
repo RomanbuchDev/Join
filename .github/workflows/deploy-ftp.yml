@@ -26,6 +26,7 @@ jobs:
           protocol: ftps          # 'ftp' oder 'ftps' (empfohlen: ftps)
           local-dir: ./           # lokales Verzeichnis, das hochgeladen wird
           server-dir: /           # Remote-Zielverzeichnis
+          security: loose
           exclude:
             .github/**
             node_modules/**
