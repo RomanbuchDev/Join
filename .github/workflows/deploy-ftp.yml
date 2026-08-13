@@ -1,4 +1,3 @@
-# Deploy to FTP/FTPS using SamKirkland/FTP-Deploy-Action
 name: Deploy to FTP
 
 on:
@@ -13,20 +12,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Clean deploy directory
+      - name: Prepare deploy directory (git archive)
         run: 
-          rm -rf .git
-          rm -rf .github
-          rm -rf node_modules
-          rm -rf quality
-          rm -f package.json package-lock.json
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          mkdir -p deploy
+          git archive --format=tar HEAD | tar -x -C deploy
 
       - name: Deploy to FTP/FTPS
         uses: airvzxf/ftp-deployment-action@v2
+        env:
+          HOME: /github/workspace
         with:
           server: ${{ secrets.FTP_HOST }}
           user: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local_dir: "./"
+          local_dir: "./deploy"
           remote_dir: "/"
           ssl_verify_certificate: "false"
