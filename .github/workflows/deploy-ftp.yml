@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Remove .git directory
+      - name: Clean deploy directory
         run: 
           rm -rf .git
           rm -rf .github
@@ -22,13 +22,11 @@ jobs:
           rm -f package.json package-lock.json
 
       - name: Deploy to FTP/FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        uses: airvzxf/ftp-deployment-action@v2
         with:
           server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
+          user: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          port: 21                # optional, Standard 21
-          protocol: ftps          # 'ftp' oder 'ftps' (empfohlen: ftps)
-          local-dir: ./           # lokales Verzeichnis, das hochgeladen wird
-          server-dir: /           # Remote-Zielverzeichnis
-          security: loose
+          local_dir: "./"
+          remote_dir: "/"
+          ssl_verify_certificate: "false"
