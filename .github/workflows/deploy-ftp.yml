@@ -1,0 +1,34 @@
+# Deploy to FTP/FTPS using SamKirkland/FTP-Deploy-Action
+name: Deploy to FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Remove .git directory
+        run: 
+          rm -rf .git
+          rm -rf .github
+          rm -rf node_modules
+          rm -rf quality
+          rm -f package.json package-lock.json
+
+      - name: Deploy to FTP/FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21                # optional, Standard 21
+          protocol: ftps          # 'ftp' oder 'ftps' (empfohlen: ftps)
+          local-dir: ./           # lokales Verzeichnis, das hochgeladen wird
+          server-dir: /           # Remote-Zielverzeichnis
+          security: loose
