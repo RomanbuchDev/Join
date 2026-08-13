@@ -24,7 +24,8 @@ jobs:
           local-dir: ./           # lokales Verzeichnis, das hochgeladen wird
           server-dir: /           # Remote-Zielverzeichnis
           exclude:
-            .git*
+            .git/**
+            .gitignore
             .github/**
             node_modules/**
             quality/**
