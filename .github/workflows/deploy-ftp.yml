@@ -14,7 +14,12 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Remove .git directory
-        run: rm -rf .git
+        run: 
+          rm -rf .git
+          rm -rf .github
+          rm -rf node_modules
+          rm -rf quality
+          rm -f package.json package-lock.json
 
       - name: Deploy to FTP/FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
@@ -27,9 +32,3 @@ jobs:
           local-dir: ./           # lokales Verzeichnis, das hochgeladen wird
           server-dir: /           # Remote-Zielverzeichnis
           security: loose
-          exclude:
-            .github/**
-            node_modules/**
-            quality/**
-            package.json
-            package-lock.json
