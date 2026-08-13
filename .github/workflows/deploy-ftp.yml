@@ -4,7 +4,7 @@ name: Deploy to FTP
 on:
   push:
     branches:
-      - main
+      - feat/cd/8-github-action-ftp-deployment
 
 jobs:
   deploy:
