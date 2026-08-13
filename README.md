@@ -116,32 +116,38 @@ http://<deine_ip>:<live-server-port>
 │   .gitignore
 │   README.md
 │   LICENSE.md
+│   package.json
+│   package-lock.json
 │   index.html  --> Alex
-│   script.js
 │   style.css
+│   script.js
+│
+├───.github/workflows/
+│       code-quality.yml
+│       deploy-ftp.yml
+│
+├───node_modules/ (-> .gitignore)
+│
+├───quality/
 │
 ├───assets/
-│   ├───icons/
-│   └───fonts/
+│   ├───fonts/
+│   └───icons/
+│       .DS_Store (-> .gitignore - Was ist das nochmal??)
 │
 ├───html/
-│       register.html  --> Alex
+│       signup.html  --> Alex
+│       greeting-page.html  --> Alex
 │       summary.html  --> Roman
-│       add-task.html
 │       board.html --> Elena
+│       add-task.html
 │       contact.html --> Timo
 │       impressum.html --> Roman
 │       privacy-policy.html
 │
-├───js/
-│       template.js
-│       contact.js
-│       ...
+├───css/
 │
-└───css/
-        ...
-        ...
-        ...
+└───js/
 
 
 ```
