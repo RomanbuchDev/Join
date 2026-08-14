@@ -10,6 +10,7 @@ function unwrapExport(node) {
   return node.declaration || node;
 }
 
+
 function isFunctionVariable(node) {
   if (node.type !== "VariableDeclaration") {
     return false;
@@ -18,6 +19,7 @@ function isFunctionVariable(node) {
     ({ init }) => init && FUNCTION_VALUES.has(init.type),
   );
 }
+
 
 function isFunctionLike(node) {
   const target = unwrapExport(node);
@@ -28,9 +30,11 @@ function isFunctionLike(node) {
   );
 }
 
+
 function countBlankLines(previous, next) {
   return next.loc.start.line - previous.loc.end.line - 1;
 }
+
 
 function buildFix(previous, next) {
   const indentation = " ".repeat(next.loc.start.column);
@@ -38,6 +42,7 @@ function buildFix(previous, next) {
   return (fixer) =>
     fixer.replaceTextRange([previous.range[1], next.range[0]], whitespace);
 }
+
 
 function checkPair(context, previous, next) {
   if (!isFunctionLike(previous) || !isFunctionLike(next)) {
@@ -53,6 +58,7 @@ function checkPair(context, previous, next) {
     });
   }
 }
+
 
 function checkBody(context, node) {
   node.body.forEach((current, index) => {
