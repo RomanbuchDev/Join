@@ -19,6 +19,12 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           mkdir -p deploy
           git archive --format=tar HEAD | tar -x -C deploy
+
+      - name: Ensure docker home writable
+        run: |
+          mkdir -p "$RUNNER_TEMP/_github_home"
+          chmod -R 0777 "$RUNNER_TEMP/_github_home"
+
       - name: Deploy to FTP/FTPS
         uses: airvzxf/ftp-deployment-action@v2
         env:
