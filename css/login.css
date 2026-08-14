@@ -35,6 +35,10 @@ a {
   object-position: center;
 }
 
+h1 {
+  font-size: 2.8rem;
+}
+
 /* main class */
 .main-login {
   max-height: 29.69rem;
@@ -155,11 +159,10 @@ form {
   padding: 0.5rem;
 }
 
-.heading-accent {
+/* .heading-accent {
   position: relative;
-  height: 4.5rem;
-  width: auto;
-  padding-bottom: 1rem;
+  height: 72px;
+  padding-bottom: 16px;
 }
 
 .heading-accent--bottom-center::after {
@@ -171,6 +174,20 @@ form {
   width: 80%;
   height: 3px;
   transform: translateX(-50%);
+} */
+
+.heading-accent--bottom-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.heading-accent--bottom-center::after {
+  content: "";
+  width: 80%;
+  height: 3px;
+  background-color: #29abe2;
 }
 
 .input-wrapper {
