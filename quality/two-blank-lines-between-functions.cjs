@@ -1,6 +1,6 @@
 "use strict";
 
-const REQUIRED_BLANK_LINES = 1;
+const REQUIRED_BLANK_LINES = 2;
 const FUNCTION_VALUES = new Set([
   "ArrowFunctionExpression",
   "FunctionExpression",
@@ -9,6 +9,7 @@ const FUNCTION_VALUES = new Set([
 function unwrapExport(node) {
   return node.declaration || node;
 }
+
 
 function isFunctionVariable(node) {
   if (node.type !== "VariableDeclaration") {
@@ -19,6 +20,7 @@ function isFunctionVariable(node) {
   );
 }
 
+
 function isFunctionLike(node) {
   const target = unwrapExport(node);
   return (
@@ -28,16 +30,19 @@ function isFunctionLike(node) {
   );
 }
 
+
 function countBlankLines(previous, next) {
   return next.loc.start.line - previous.loc.end.line - 1;
 }
 
+
 function buildFix(previous, next) {
   const indentation = " ".repeat(next.loc.start.column);
-  const whitespace = `\n\n${indentation}`;
+  const whitespace = `\n\n\n${indentation}`;
   return (fixer) =>
     fixer.replaceTextRange([previous.range[1], next.range[0]], whitespace);
 }
+
 
 function checkPair(context, previous, next) {
   if (!isFunctionLike(previous) || !isFunctionLike(next)) {
@@ -54,6 +59,7 @@ function checkPair(context, previous, next) {
   }
 }
 
+
 function checkBody(context, node) {
   node.body.forEach((current, index) => {
     if (index > 0) {
@@ -69,7 +75,7 @@ const rule = {
     schema: [],
     messages: {
       spacing:
-        "Zwischen Funktionen ist genau 1 Leerzeile nötig; gefunden: {{actual}}.",
+        "Zwischen Funktionen sind genau 2 Leerzeilen nötig; gefunden: {{actual}}.",
     },
   },
   create(context) {
@@ -82,6 +88,6 @@ const rule = {
 
 module.exports = {
   rules: {
-    "one-blank-line-between-functions": rule,
+    "two-blank-lines-between-functions": rule,
   },
 };
