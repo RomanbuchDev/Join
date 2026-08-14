@@ -1,0 +1,27 @@
+.greeting-text-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.greeting-text-body main {
+  flex: 1;
+}
+
+.main-greeting {
+  padding-bottom: 5rem;
+  gap: 1rem;
+}
+.greeting-content {
+  gap: 0.5rem;
+}
+
+.main-greeting p {
+  font-size: 1.5rem;
+  line-height: 120%;
+}
+
+.main-greeting h1 {
+  font-size: 3rem;
+  line-height: 120%;
+}
