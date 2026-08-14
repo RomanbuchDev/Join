@@ -105,3 +105,54 @@ h1 {
 .main-nav-item span {
   color: #ffffff;
 }
+
+@media (min-width: 40em) {
+  #page {
+    grid-template-columns: repeat(5, 1fr);
+
+    grid-template-areas:
+      "nav header header header header"
+      "nav main main main main";
+  }
+
+  .main-header {
+    grid-area: header;
+  }
+
+  .main {
+    grid-area: main;
+  }
+
+  .main-nav {
+    grid-area: nav;
+  }
+
+  .summary-header {
+    display: grid;
+    grid-template-columns: max-content 3px max-content;
+    align-items: center;
+    column-gap: 1rem;
+    justify-content: start;
+  }
+
+  .summary-header h1 {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .summary-header::after {
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 3px;
+    height: 2rem;
+    margin: 0;
+
+    background-color: #29abe2;
+  }
+
+  .summary-header p {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}

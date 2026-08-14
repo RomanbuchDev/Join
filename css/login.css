@@ -148,7 +148,7 @@ footer {
   padding: 8px;
 }
 
-.heading-accent {
+/* .heading-accent {
   position: relative;
   height: 72px;
   padding-bottom: 16px;
@@ -163,6 +163,20 @@ footer {
   width: 80%;
   height: 3px;
   transform: translateX(-50%);
+} */
+
+.heading-accent--bottom-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.heading-accent--bottom-center::after {
+  content: "";
+  width: 80%;
+  height: 3px;
+  background-color: #29abe2;
 }
 
 .input-wrapper {
