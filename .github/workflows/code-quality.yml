@@ -2,16 +2,6 @@ name: Code quality
 
 on:
   push:
-    branches:
-      - main
-      - feat/**
-      - fix/**
-      - docs/**
-      - style/**
-      - refactor/**
-      - chore/**
-      - test/**
-  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -29,10 +19,10 @@ jobs:
 
     steps:
       - name: Repository auschecken
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Node.js einrichten
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -40,20 +30,20 @@ jobs:
       - name: Abhängigkeiten installieren
         run: npm ci
 
-      - name: Formatierung prüfen (Prettier)
-        run: npx prettier --check "**/*.{html,css,js,json,md}"
-
-      - name: HTML validieren
-        run: npx html-validate "index.html" "html/**/*.html"
-
-      - name: CSS prüfen
-        run: npx stylelint --config quality/stylelint.config.mjs "style.css" "css/**/*.css"
-
-      - name: JavaScript prüfen
-        run: npx eslint --config quality/eslint.config.mjs . --max-warnings=0
-
       - name: Prüfscripte testen
         run: node --test "quality/*.test.cjs"
 
       - name: Dateilänge prüfen
         run: node quality/check-file-length.cjs
+
+      - name: Formatierung prüfen (Prettier)
+        run: npx prettier --check "*.{html,css,json,md}" "css/**/*.css" "html/**/*.html"
+
+      - name: HTML validieren
+        run: npx html-validate --config quality/htmlvalidate.config.cjs "index.html" "html/**/*.html"
+
+      - name: CSS prüfen
+        run: npx stylelint --config quality/stylelint.config.mjs "style.css" "css/**/*.css"
+
+      - name: JavaScript prüfen
+        run: npx eslint --config quality/eslint.config.mjs "script.js" "js/**/*.js" "quality/**/*.{cjs,mjs}" --max-warnings=0
