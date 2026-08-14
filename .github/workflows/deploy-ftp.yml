@@ -11,13 +11,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Prepare deploy directory (git archive)
-        run: 
+        run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           mkdir -p deploy
           git archive --format=tar HEAD | tar -x -C deploy
-
       - name: Deploy to FTP/FTPS
         uses: airvzxf/ftp-deployment-action@v2
         env:
