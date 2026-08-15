@@ -2,169 +2,48 @@
 <html lang="de">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contacts</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join - Contacts</title>
   <!-- CSS file -->
+  <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="../css/contacts.css">
+  <link rel="stylesheet" href="../css/contacts_dialog.css">
   <!-- JavaScript file -->
   <script src="../js/contact.js" defer></script>
 </head>
 
 <body onload="init()">
   <!-- Header -->
-  <header class="header-container">
-    <a href="../index.html" aria-label="Go to the Join login page">
-      <img src="../assets/icons/contacts/join_logo_mobile.png" alt="Join logo mobile">
-    </a>
-    <button class="account-button">TI</button>
+  <header class="main-header">
+    <a href=""><img src="/assets/icons/join-logo.svg" alt="Join Logo"></a>
+
+    <button class="user-avatar"><span>SM</span></button>
   </header>
 
-    <!-- Main -->
-    <main class="main-container">
-      <!-- Hier evtl. noch eine <nav> einbauen für das Menü links bei Desktop (Spalte 1) -->
-      <!-- <nav></nav> -->
+  <!-- Main -->
+  <main class="main-container">
+    <!-- Hier evtl. noch eine <nav> einbauen für das Menü links bei Desktop (Spalte 1) -->
+    <!-- <nav></nav> -->
 
     <!-- Die folgende div nur für Desktop -->
     <div id="contact-list">
       <!-- Kontaktliste (Spalte 2) -->
       <!-- Buchstabe A -->
-      <section id="letter-group">
+      <!-- <section id="letter-group">
         <div>
           <h2 class="letter-container">A</h2>
           <hr class="letter-line">
         </div>
-        <div class="contact-grid-container" id="contact-grid">
-          <!-- Kontakt-Beispiel -->
-          <button type="button" class="contact-card" onclick="showContactDetails()">
-            <span class="contact-shortcut">TI</span>
-            <div>
-              <span class="contact-name">Timo Indlekofer</span>
-              <span class="contact-e-mail">vorname.nachname@test.de</span>
-            </div>
-          </button>
-          <button type="button" class="contact-card">
-            <span class="contact-shortcut">TI</span>
-            <div>
-              <span class="contact-name">Timo Indlekofer</span>
-              <span class="contact-e-mail">vorname.nachname@test.de</span>
-            </div>
-          </button>
-        </div>
-      </section>
-
-
-      <!-- Nächster Buchstabe (Platzhalter) -->
-      <section>
-        <div>
-          <h2 class="letter-container">B</h2>
-          <hr class="letter-line">
-        </div>
-        <p>Notiz: Ab hier nur Platzhalter</p>
-        <div class="contact-grid">
-          <!-- Kontakt-Beispiel -->
-          <button type="button" class="contact-card">
-            <span class="contact-shortcut">TI</span>
-            <div>
-              <span class="contact-name">Timo Indlekofer</span>
-              <span class="contact-e-mail">vorname.nachname@test.de</span>
-            </div>
-          </button>
-          <button type="button" class="contact-card">
-            <span class="contact-shortcut">TI</span>
-            <div>
-              <span class="contact-name">Timo Indlekofer</span>
-              <span class="contact-e-mail">vorname.nachname@test.de</span>
-            </div>
-          </button>
-        </div>
-      </section>
-
-
-      <!-- Nächster Buchstabe (Platzhalter) -->
-      <section>
-        <div>
-          <h2 class="letter-container">C</h2>
-          <hr class="letter-line">
-        </div>
-        <div class="contact-grid">
-          <!-- Kontakt-Beispiel -->
-          <button type="button" class="contact-card">
-            <span class="contact-shortcut">TI</span>
-            <div>
-              <span class="contact-name">Timo Indlekofer</span>
-              <span class="contact-e-mail">vorname.nachname@test.de</span>
-            </div>
-          </button>
-          <button type="button" class="contact-card">
-            <span class="contact-shortcut">TI</span>
-            <div>
-              <span class="contact-name">Timo Indlekofer</span>
-              <span class="contact-e-mail">vorname.nachname@test.de</span>
-            </div>
-          </button>
-        </div>
-      </section>
-
-
-      <!-- Nächster Buchstabe (Platzhalter) -->
-      <section>
-        <div>
-          <h2 class="letter-container">D</h2>
-          <hr class="letter-line">
-        </div>
-        <div class="contact-grid">
-          <!-- Kontakt-Beispiel -->
-          <button type="button" class="contact-card">
-            <span class="contact-shortcut">TI</span>
-            <div>
-              <span class="contact-name">Timo Indlekofer</span>
-              <span class="contact-e-mail">vorname.nachname@test.de</span>
-            </div>
-          </button>
-          <button type="button" class="contact-card">
-            <span class="contact-shortcut">TI</span>
-            <div>
-              <span class="contact-name">Timo Indlekofer</span>
-              <span class="contact-e-mail">vorname.nachname@test.de</span>
-            </div>
-          </button>
-        </div>
-      </section>
-
-
-      <!-- Nächster Buchstabe (Platzhalter) -->
-      <section>
-        <div>
-          <h2 class="letter-container">E</h2>
-          <hr class="letter-line">
-        </div>
-        <div class="contact-grid">
-          <!-- Kontakt-Beispiel -->
-          <button type="button" class="contact-card">
-            <span class="contact-shortcut">TI</span>
-            <div>
-              <span class="contact-name">Timo Indlekofer</span>
-              <span class="contact-e-mail">vorname.nachname@test.de</span>
-            </div>
-          </button>
-          <button type="button" class="contact-card">
-            <span class="contact-shortcut">TI</span>
-            <div>
-              <span class="contact-name">Timo Indlekofer</span>
-              <span class="contact-e-mail">vorname.nachname@test.de</span>
-            </div>
-          </button>
-        </div>
-      </section>
-
-      <!-- Button for dialog -->
-      <button class="contact-menu show" onclick="openDialogAddContact()">
-        <img src="../assets/icons/contacts/contact_add_button_mobile.png" alt="Contact add button mobile">
-        <!-- <img src="../assets/icons/contacts/more_icon.png" alt="More button mobile" class="hidden" id="more-menu-icon"> -->
-      </button>
+        <div class="contact-grid-container" id="contact-grid"></div>
+      </section> -->
     </div>
 
+    <!-- Button for dialog -->
+    <button class="contact-menu show" onclick="openDialogAddContact()">
+      <img src="../assets/icons/contacts/contact_add_button_mobile.png" alt="Contact add button mobile">
+      <!-- <img src="../assets/icons/contacts/more_icon.png" alt="More button mobile" class="hidden" id="more-menu-icon"> -->
+    </button>
 
     <!-- Contact details (Same page in mobile / Column 3 in desktop) -->
     <aside class="contact-details-container hidden" id="contact-details">
@@ -173,36 +52,35 @@
         <div class="contact-details-title-container">
           <span class="contact-details-title">Contacts</span>
           <span class="contact-details-subtitle">Better with a team</span>
-          <span class="title-underline"></span>
+          <!-- <span class="title-underline"></span> -->
         </div>
         <button type="button" class="contact-details-back-button" onclick="backToContactList()">&#x1F860;</button>
       </div>
 
-        <!-- Contact details main -->
-        <div class="contact-details-name-container">
-          <span class="contact-details-shortcut">TI</span>
-          <span class="contact-details-name">Timo Indlekofer</span>
-        </div>
+      <!-- Contact details main -->
+      <div class="contact-details-name-container">
+        <span class="contact-details-shortcut">TI</span>
+        <span class="contact-details-name">Timo Indlekofer</span>
+      </div>
 
-        <!-- Contact details information -->
-        <div>
-          <div class="contact-details-information-container">
-            <h3>Contact information</h3>
-          </div>
-          <div class="contact-details-contact-data">
-            <h4>Email</h4>
-            <span class="contact-e-mail">vorname.nachname@test.de</span>
-            <h4>Phone</h4>
-            <span>+49 12345</span>
-          </div>
+      <!-- Contact details information -->
+      <div>
+        <div class="contact-details-information-container">
+          <h3>Contact information</h3>
         </div>
+        <div class="contact-details-contact-data">
+          <h4>Email</h4>
+          <span class="contact-e-mail">vorname.nachname@test.de</span>
+          <h4>Phone</h4>
+          <span>+49 12345</span>
+        </div>
+      </div>
 
       <!-- Contact details option menu button -->
       <button class="contact-menu" onclick="toggleMobileContactOptions()">
         <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
       </button>
     </aside>
-
 
     <!-- Contact details option menu -->
     <div class="contact-option-menu-overlay" id="contact-options-overlay" onclick="closeMobileContactOptions()"></div>
@@ -218,27 +96,35 @@
     </div>
   </main>
 
-
   <!-- Footer (only for mobile) -->
-  <footer class="footer-container">
-    <a href="#" class="footer-link">
-      <img src="../assets/icons/contacts/summary_button_mobile.png" alt="Summary button mobile">
-      <span>Summary</span>
-    </a>
-    <a href="#" class="footer-link">
-      <img src="../assets/icons/contacts/add_task_button_mobile.png" alt="Add task button mobile">
-      <span>Add task</span>
-    </a>
-    <a href="#" class="footer-link">
-      <img src="../assets/icons/contacts/board_button_mobile.png" alt="Board button mobile">
-      <span>Board</span>
-    </a>
-    <a href="#" class="footer-link">
-      <img src="../assets/icons/contacts/contacts_button_mobile.png" alt="Contacts button mobile">
-      <span>Contacts</span>
-    </a>
-  </footer>
-
+  <nav class="main-nav">
+    <ul class="main-nav-list">
+      <li class="main-nav-item">
+        <a href="/html/summary.html">
+          <img src="/assets/icons/summary-icon.svg" alt="">
+          <span>Summary</span>
+        </a>
+      </li>
+      <li class="main-nav-item">
+        <a href="/html/add-task.html">
+          <img src="/assets/icons/addtask-icon.svg" alt="">
+          <span> Add Task </span>
+        </a>
+      </li>
+      <li class="main-nav-item">
+        <a href="/html/board.html">
+          <img src="/assets/icons/board-icon.svg" alt="">
+          <span> Board </span>
+        </a>
+      </li>
+      <li class="main-nav-item">
+        <a href="/html/contact.html">
+          <img src="/assets/icons/contact-icon.svg" alt="">
+          <span> Contacts </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 
   <!-- Dialog window to add contact (only for mobile) -->
   <dialog class="add-contact-container" id="add-contact-dialog">
@@ -251,10 +137,10 @@
         <div class="add-contact-title-container">
           <span class="add-contact-title">Add contact</span>
           <span class="add-contact-subtitle">Tasks are better with a team!</span>
-          <span class="title-underline"></span>
+          <!-- <span class="title-underline"></span> -->
         </div>
         <div class="add-contact-shortcut">
-          <img src="../assets/icons/contacts/person_icon.png" alt="Person icon">
+          <img src="../assets/icons/contacts/person_icon.png" alt="Contacts icon">
         </div>
       </header>
 
@@ -288,14 +174,12 @@
         <button class="save-contact-data">Save
           <img src="../assets/icons/contacts/check_icon.png" alt="Save icon">
         </button>
-
       </footer>
     </form>
   </dialog>
 
   <!-- Dialog toast message - Contact successfully created -->
   <div class="toast-contact-created" id="toast-message-contact-created">Contact successfully created</div>
-
 </body>
 
 </html>

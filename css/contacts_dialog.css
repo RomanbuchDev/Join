@@ -106,6 +106,20 @@
   padding-bottom: 4.125rem;
 }
 
+.add-contact-title-container::after {
+  display: block;
+
+  background-color: rgba(41, 171, 226, 1);
+
+  border-radius: 0.1em;
+  
+  content: '';
+
+  width: 5.6em;
+  height: 0.2em;
+  margin-top: 0.5em;
+}
+
 .add-contact-title {
   color: rgba(255, 255, 255, 1);
   font-size: 2.6rem;
@@ -117,7 +131,7 @@
   font-size: 1rem;
 }
 
-.title-underline {
+/* .title-underline {
   display: block;
 
   background-color: rgba(41, 171, 226, 1);
@@ -126,7 +140,7 @@
 
   width: 90px;
   height: 3px;
-}
+} */
 
 .add-contact-shortcut {
   display: flex;
