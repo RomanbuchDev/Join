@@ -85,14 +85,14 @@
     <!-- Contact details option menu -->
     <div class="contact-option-menu-overlay" id="contact-options-overlay" onclick="closeMobileContactOptions()"></div>
     <div class="contact-option-menu-container" id="contact-options">
-      <div class="contact-option-menu-items">
+      <button type="button" class="contact-option-menu-items" onclick="editContactDetails()">
         <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon">
         <span>Edit</span>
-      </div>
-      <div class="contact-option-menu-items">
+      </button>
+      <button type="button" class="contact-option-menu-items" onclick="deleteContact()">
         <img src="../assets/icons/contacts/delete_icon.png" alt="Delete icon">
         <span>Delete</span>
-      </div>
+      </button>
     </div>
   </main>
 
@@ -127,7 +127,7 @@
   </nav>
 
   <!-- Dialog window to add contact (only for mobile) -->
-  <dialog class="add-contact-container" id="add-contact-dialog">
+  <dialog class="add-contact-container" id="contacts-dialog">
     <form method="dialog">
       <!-- Dialog header -->
       <header class="add-contact-header-container">
@@ -135,11 +135,11 @@
           <button type="button" class="close-button" onclick="closeDialogAddContact()">X</button>
         </div>
         <div class="add-contact-title-container">
-          <span class="add-contact-title">Add contact</span>
-          <span class="add-contact-subtitle">Tasks are better with a team!</span>
+          <span class="add-contact-title" id="dialog-title">Add contact</span>
+          <span class="add-contact-subtitle" id="dialog-subtitle">Tasks are better with a team!</span>
           <!-- <span class="title-underline"></span> -->
         </div>
-        <div class="add-contact-shortcut">
+        <div class="add-contact-shortcut" id="dialog-shortcut">
           <img src="../assets/icons/contacts/person_icon.png" alt="Contacts icon">
         </div>
       </header>
@@ -165,13 +165,13 @@
       <!-- Dialog footer -->
       <footer class="add-contact-footer">
         <!-- Create contact button -->
-        <button class="create-contact-data" onclick="createContact()">Create contact
+        <button class="create-contact-data" id="dialog-create-contact-button" onclick="createContact()">Create contact
           <img src="../assets/icons/contacts/check_icon.png" alt="Check icon">
         </button>
         <!-- Delete button -->
-        <button class="delete-contact-data">Delete</button>
+        <button class="delete-contact-data hidden" id="dialog-delete-button" onclick="deleteContact()">Delete</button>
         <!-- Save button -->
-        <button class="save-contact-data">Save
+        <button class="save-contact-data hidden" id="dialog-save-button" onclick="saveContactData()">Save
           <img src="../assets/icons/contacts/check_icon.png" alt="Save icon">
         </button>
       </footer>

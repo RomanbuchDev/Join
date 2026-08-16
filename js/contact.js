@@ -7,12 +7,20 @@ const contactDetails = document.getElementById("contact-details");
 const contactOptionMenu = document.getElementById("contact-options");
 const contactOptionMenuOverlay = document.getElementById("contact-options-overlay");
 
-const dialogBoxAddContact = document.getElementById("add-contact-dialog");
-const addContactForm = document.getElementById("add-contact-dialog").querySelector("form");
+const dialogBox = document.getElementById("contacts-dialog");
+const dialogTitle = document.getElementById("dialog-title");
+const dialogSubtitle = document.getElementById("dialog-subtitle");
+const dialogShortcut = document.getElementById("dialog-shortcut");
+const dialogContactForm = document.getElementById("contacts-dialog").querySelector("form");
 const contactName = document.getElementById("input-contact-name-dialog");
 const contactEmail = document.getElementById("input-contact-email-dialog");
 const contactPhone = document.getElementById("input-contact-phone-dialog");
+const dialogCreateContactButton = document.getElementById("dialog-create-contact-button");
+const dialogDeleteButton = document.getElementById("dialog-delete-button");
+const dialogSaveButton = document.getElementById("dialog-save-button");
 const messageContactCreated = document.getElementById("toast-message-contact-created");
+
+let currentContactData;
 
 
 // Database (for test only):
@@ -191,8 +199,7 @@ function init() {
 
 function assignAndCreateContacts(letter, contact, lastNameLetter) {
   const contactCategoryGrid = document.getElementById("contact-grid-" + lastNameLetter);
-  console.log(letter, contact, lastNameLetter);
-  
+
   if (lastNameLetter === letter) {
     contactCategoryGrid.innerHTML += getContactTemplate(contact);
   }
@@ -300,6 +307,7 @@ function showContactDetails(contactID) {
   contactDetails.innerHTML = "";
 
   const contact = allContacts.find((name) => name.id === contactID);
+  currentContactData = contact;
   const contactDetailsData = getContactDetailsTemplate(contact);
 
   const contactNameParts = contact.name.split(' ');
@@ -310,10 +318,10 @@ function showContactDetails(contactID) {
 
   contactDetails.innerHTML = contactDetailsData;
 
-  const contactID2 = document.getElementById(`contact-details-shortcut-${contact.id}`);
+  const contactShortcutID = document.getElementById(`contact-details-shortcut-${contact.id}`);
 
   const shortcutColor = calculateContactIconColor(shortcut);
-  setContactIconColor(contactID2, shortcutColor);
+  setContactIconColor(contactShortcutID, shortcutColor);
 }
 
 
@@ -341,15 +349,77 @@ function closeMobileContactOptions() {
 }
 
 
+function deleteContact() {
+  const databaseIndex = allContacts.findIndex(contact => contact.id === currentContactData.id);
+
+  if (databaseIndex !== -1) {
+    allContacts.splice(databaseIndex, 1);
+  }
+  closeMobileContactOptions();
+  contactList.innerHTML = '';
+  renderContactList();
+  backToContactList() 
+}
+
+
+function saveContactData() {
+  currentContactData.name = contactName.value;
+  currentContactData.email = contactEmail.value;
+  currentContactData.phone = contactPhone.value;
+  
+  contactList.innerHTML = '';
+  renderContactList();
+  showContactDetails(currentContactData.id);
+  closeMobileContactOptions();
+}
+
+
+function showContactData() {
+  const shortcutColor = calculateContactIconColor(currentContactData.shortcut);
+
+  dialogShortcut.innerHTML = currentContactData.shortcut;
+  dialogShortcut.classList.add("contact-details-shortcut");
+  dialogShortcut.style.setProperty("--background-color", shortcutColor);
+
+  contactName.value = currentContactData.name;
+  contactEmail.value = currentContactData.email;
+  contactPhone.value = currentContactData.phone;
+}
+
+
+function editContactDetails() {
+  dialogTitle.textContent = "Edit contact";
+  dialogSubtitle.style.display = "none";
+
+  showContactData();
+
+  dialogCreateContactButton.classList.add("hidden");
+  dialogDeleteButton.classList.remove("hidden");
+  dialogSaveButton.classList.remove("hidden");
+
+  dialogBox.showModal();
+}
+
+
 // Dialog
 
 function openDialogAddContact() {
-  dialogBoxAddContact.showModal();
+  dialogTitle.textContent = "Add contact";
+  dialogSubtitle.style.display = "flex";
+
+  dialogCreateContactButton.classList.remove("hidden");
+  dialogDeleteButton.classList.add("hidden");
+  dialogSaveButton.classList.add("hidden");
+
+  resetFormInputs();
+  dialogBox.showModal();
 }
 
 
 function closeDialogAddContact() {
-  dialogBoxAddContact.close();
+  resetFormInputs();
+  dialogShortcut.classList.remove("contact-details-shortcut");
+  dialogBox.close();
 }
 
 
@@ -365,7 +435,10 @@ function showToastMessageContactCreated() {
 
 
 function resetFormInputs() {
-  addContactForm.reset();
+  dialogContactForm.reset();
+
+  dialogShortcut.innerHTML = '<img src="../assets/icons/contacts/person_icon.png" alt="Contacts icon">';
+  dialogShortcut.style.removeProperty("--background-color");
 }
 
 
@@ -435,7 +508,6 @@ function getContactDetailsTemplate(contactData) {
 }
 
 
-// Test:
 function getLetterCategoryTemplate(letter) {
   return `<section id="letter-category-${letter}">
         <div>

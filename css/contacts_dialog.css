@@ -147,7 +147,10 @@
   justify-content: center;
   align-items: center;
 
-  background-color: rgba(209, 209, 209, 1);
+  font-size: 2.9rem;
+
+  /* background-color: rgba(209, 209, 209, 1); */
+  background-color: var(--background-color, rgba(209, 209, 209, 1));
 
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
 
@@ -228,7 +231,7 @@
 }
 
 .delete-contact-data {
-  display: none;
+  /* display: none; */
 
   background-color: rgba(255, 255, 255, 1);
 
@@ -244,7 +247,7 @@
 }
 
 .save-contact-data {
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
 
@@ -262,6 +265,10 @@
   gap: 0.25rem;
 
   padding: 1.125rem 0.625rem;
+}
+
+.add-contact-footer button.hidden {
+  display: none;
 }
 
 .toast-contact-created {

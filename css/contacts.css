@@ -352,6 +352,12 @@ body {
   justify-content: center;
   align-items: center;
 
+  background: none;
+
+  border: none;
+
+  cursor: pointer;
+
   gap: 0.5rem;
 
   padding: 0.5rem;
