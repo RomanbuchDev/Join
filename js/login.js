@@ -1,7 +1,9 @@
 function init() {
   setupEventListeners();
-  //   loginStatus();
 }
+window.addEventListener("pageshow", () => {
+  document.getElementById("loginToast").classList.remove("show");
+});
 
 function setupEventListeners() {
   const form = document.getElementById("loginForm");
@@ -12,9 +14,12 @@ function setupEventListeners() {
 
 function loginEventListener(form) {
   form.addEventListener("submit", async function (event) {
-    event.preventDefault(); // verhindert Neuladen der Seite
-    document.getElementById("loginBtn").disabled = true;
+    event.preventDefault();
     const loginUserData = getLoginFormValues();
+    if (!isLoginInputValid(loginUserData)) {
+      return;
+    }
+    document.getElementById("loginBtn").disabled = true;
     try {
       const user = await loginWithEmail(
         loginUserData.email,
@@ -44,7 +49,10 @@ function handleLoginSuccess(user) {
     "currentUser",
     JSON.stringify({ name: user.name, isGuest: user.isGuest }),
   );
-  window.location.href = "./html/greeting-page.html";
+  document.getElementById("loginToast").classList.add("show");
+  setTimeout(() => {
+    window.location.href = "./html/greeting-page.html";
+  }, 15000);
 }
 
 function handleLoginError() {
@@ -53,6 +61,21 @@ function handleLoginError() {
   setTimeout(() => {
     document.getElementById("loginError").innerText = "";
   }, 3000);
+}
+
+function isLoginInputValid(loginUserData) {
+  if (
+    loginUserData.email.trim() === "" ||
+    loginUserData.password.trim() === ""
+  ) {
+    document.getElementById("loginError").innerText =
+      "Please fill in all fields";
+    setTimeout(() => {
+      document.getElementById("loginError").innerText = "";
+    }, 3000);
+    return false;
+  }
+  return true;
 }
 
 function getLoginFormValues() {

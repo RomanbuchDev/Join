@@ -14,6 +14,8 @@ a {
 }
 
 .app {
+  position: relative;
+  overflow: hidden;
   background-color: #f6f7f8;
   height: 57.88rem;
   width: 100%;
@@ -41,6 +43,7 @@ h1 {
 
 /* main class */
 .main-login {
+  position: relative;
   max-height: 29.69rem;
   max-width: 24.75rem;
   height: 100%;
@@ -159,23 +162,6 @@ form {
   padding: 0.5rem;
 }
 
-/* .heading-accent {
-  position: relative;
-  height: 72px;
-  padding-bottom: 16px;
-}
-
-.heading-accent--bottom-center::after {
-  content: "";
-  position: absolute;
-  background-color: #29abe2;
-  bottom: 0;
-  left: 50%;
-  width: 80%;
-  height: 3px;
-  transform: translateX(-50%);
-} */
-
 .heading-accent--bottom-center {
   display: flex;
   flex-direction: column;
@@ -231,4 +217,26 @@ form {
   color: #d32f2f;
   font-size: 0.875rem;
   text-align: center;
+}
+
+.toast {
+  position: absolute;
+  top: 9rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+  width: auto;
+  color: #f6f7f8;
+  background-color: #2a3647;
+  font-size: 1rem;
+  line-height: 1;
+  text-align: center;
+  user-select: none;
+  border: 1px solid #686868;
+  border-radius: 0.5rem;
+  transform: translateX(120%);
+  transition: transform 300ms ease-out;
+}
+
+.toast.show {
+  transform: translateX(0);
 }
