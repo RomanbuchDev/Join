@@ -26,13 +26,6 @@ const mockUsers = [
   },
 ];
 
-let email = "anna.schmidt@join.de";
-let password = "test1234";
-
-function init() {
-  loginWithEmail(email, password);
-}
-
 /**
  * Checks email and password against the mock user list.
  * @param {string} email - The entered email address.
@@ -51,4 +44,19 @@ async function loginWithEmail(email, password) {
   } else {
     throw new Error("Login false");
   }
+}
+
+/**
+ * Creates a guest user without checking credentials.
+ * @returns {Promise<Object>} The guest user object.
+ */
+async function loginAsGuest() {
+  const userGuest = {
+    name: "Guest",
+    email: "none",
+    password: "none",
+    isGuest: true,
+  };
+  console.log(userGuest);
+  return userGuest;
 }
