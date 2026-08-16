@@ -34,10 +34,12 @@ const mockUsers = [
  * @throws {Error} If email/password do not match.
  */
 async function loginWithEmail(email, password) {
+  // await - test simulation
+  await new Promise((resolve) => setTimeout(resolve, 2000)); // entfernen nach firebase einbindung
   let user = mockUsers.find(function (u) {
     return u.email === email && u.password === password;
   });
-  console.log(user);
+  // console.log(user);
 
   if (user) {
     return user;
@@ -57,6 +59,6 @@ async function loginAsGuest() {
     password: "none",
     isGuest: true,
   };
-  console.log(userGuest);
+  // console.log(userGuest);
   return userGuest;
 }
