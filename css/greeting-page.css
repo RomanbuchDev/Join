@@ -16,12 +16,15 @@
   gap: 0.5rem;
 }
 
-.main-greeting p {
+.greeting-text {
   font-size: 1.5rem;
   line-height: 120%;
+  color: #2a3647;
 }
 
-.main-greeting h1 {
-  font-size: 3rem;
+.greeting-user {
+  font-size: 2rem;
+  font-weight: 700;
   line-height: 120%;
+  color: #124658;
 }

@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="images/" href="../assets/icons/join-logo.svg" />
-    <link rel="stylesheet" href="../assets/css/fonts.css" />
+    <link rel="icon" href="../assets/icons/join-logo.svg" />
+    <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/reset_stylesheet.css" />
     <link rel="stylesheet" href="../css/dpf-flex-utils.css" />
     <link rel="stylesheet" href="../css/greeting-page.css" />
@@ -14,16 +14,18 @@
     <script src="../js/greeting-page.js" defer></script>
     <title>Join - Greeting</title>
   </head>
-  <body class="greeting-text-body">
+  <body class="greeting-text-body" onload="initGreeting()">
     <header class="main-header">
-      <a href=""><img src="../assets/icons/join-logo.svg" alt="Join Logo" /></a>
+      <a href="./summary.html"
+        ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
+      /></a>
 
       <button class="user-avatar"><span>SM</span></button>
     </header>
     <main class="dpf-center main-greeting">
       <section class="dpf-flex-column-center greeting-content">
-        <p id="greetingMessage">Good morning,</p>
-        <h1 id="userName">Alex Epp</h1>
+        <p id="greetingMessage" class="greeting-text"></p>
+        <p id="userName" class="greeting-user"></p>
       </section>
     </main>
 
