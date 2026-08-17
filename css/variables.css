@@ -1,2 +1,6 @@
-::root {
+:root {
+  --color-bg-main: rgb(246 247 248 / 100%);
+  --color-bg-light: rgb(255 255 255 / 100%);
+  --color-bg-dark: rgb(42 54 71 / 100%);
+  --color-bg-dark-active: rgb(9 25 49 / 100%);
 }
