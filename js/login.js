@@ -5,6 +5,10 @@ window.addEventListener("pageshow", () => {
   document.getElementById("loginToast").classList.remove("show");
 });
 
+document.querySelector(".splash-logo").addEventListener("animationend", () => {
+  document.getElementById("splashScreen").style.display = "none";
+});
+
 function setupEventListeners() {
   const form = document.getElementById("loginForm");
   const formGuest = document.getElementById("guestLoginBtn");
@@ -28,7 +32,6 @@ function loginEventListener(form) {
       handleLoginSuccess(user);
     } catch (error) {
       handleLoginError();
-    } finally {
       document.getElementById("loginBtn").disabled = false;
     }
   });
@@ -40,7 +43,6 @@ function guestLoginEventListener(formGuest) {
     document.getElementById("guestLoginBtn").disabled = true;
     const user = await loginAsGuest();
     handleLoginSuccess(user);
-    document.getElementById("guestLoginBtn").disabled = false;
   });
 }
 
@@ -52,7 +54,7 @@ function handleLoginSuccess(user) {
   document.getElementById("loginToast").classList.add("show");
   setTimeout(() => {
     window.location.href = "./html/greeting-page.html";
-  }, 15000);
+  }, 1500);
 }
 
 function handleLoginError() {
@@ -86,12 +88,4 @@ function getLoginFormValues() {
     password: inputPassword,
   };
   return loginUserData;
-}
-
-// loginStatus kommt später in jede seite rein
-function loginStatus() {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  if (!currentUser) {
-    window.location.href = "../index.html";
-  }
 }

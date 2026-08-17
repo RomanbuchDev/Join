@@ -22,10 +22,17 @@
     <script src="./js/login.js" defer></script>
   </head>
   <body class="" onload="init()">
+    <div id="splashScreen" class="splash-screen">
+      <img
+        src="./assets/icons/screen-logo.svg"
+        alt="Join Logo"
+        class="splash-logo"
+      />
+    </div>
     <section class="app dpf-column-spc-between-center">
       <header class="">
         <div class="dpf-flex-start">
-          <img src="./assets/icons/join-logo.png" alt="" />
+          <img src="./assets/icons/join-logo.svg" alt="" />
         </div>
       </header>
 
@@ -45,7 +52,7 @@
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
               />
-              <img src="./assets/icons/mail.png" class="input-icon" alt="" />
+              <img src="./assets/icons/mail.svg" class="input-icon" alt="" />
             </div>
             <div id="emailHelp" class="form-text"></div>
             <label for="exampleInputPassword1" class="form-label"></label>
@@ -56,7 +63,7 @@
                 class="form-control"
                 id="exampleInputPassword1"
               />
-              <img src="./assets/icons/lock.png" class="input-icon" alt="" />
+              <img src="./assets/icons/lock.svg" class="input-icon" alt="" />
             </div>
           </div>
           <p id="loginError" class="error-text"></p>
@@ -87,7 +94,6 @@
             >Legal notice</a
           >
         </section>
-        <div></div>
       </footer>
     </section>
   </body>

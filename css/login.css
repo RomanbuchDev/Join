@@ -17,10 +17,11 @@ a {
   position: relative;
   overflow: hidden;
   background-color: #f6f7f8;
-  height: 57.88rem;
+  /* height: 57.88rem; */
   width: 100%;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+  gap: 4rem;
 }
 
 .app header {
@@ -58,6 +59,7 @@ h1 {
 form {
   height: 100%;
   width: 100%;
+  gap: 1rem;
 }
 
 /*Spacing & Labels */
@@ -142,9 +144,9 @@ form {
 /* footer */
 
 .footer-login {
-  height: 10.81rem;
+  height: 10.8rem;
   width: 100%;
-  gap: 2.19rem;
+  gap: 1.5rem;
 }
 
 .sign-up-bar {
@@ -217,11 +219,12 @@ form {
   color: #d32f2f;
   font-size: 0.875rem;
   text-align: center;
+  /* margin-bottom: 0.5rem; */
 }
 
 .toast {
   position: absolute;
-  top: 9rem;
+  top: 8rem;
   right: 0.5rem;
   padding: 0.5rem;
   width: auto;
@@ -239,4 +242,29 @@ form {
 
 .toast.show {
   transform: translateX(0);
+}
+
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  background-color: #2a3647; /* Platzhalter, Farbton kommt später */
+  z-index: 999;
+}
+
+.splash-logo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 8rem;
+  transform: translate(-50%, -50%);
+  animation: logoToHeader 2s ease-in-out forwards;
+}
+
+@keyframes logoToHeader {
+  to {
+    top: 2.31rem;
+    left: 2.38rem;
+    width: 4rem;
+    transform: translate(0, 0);
+  }
 }
