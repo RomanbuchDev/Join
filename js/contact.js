@@ -22,11 +22,9 @@ const messageContactCreated = document.getElementById("toast-message-contact-cre
 
 let currentContactData;
 
-
 // Database (for test only):
 
-
-let allContacts = [
+const allContacts = [
   {
     id: 1,
     name: "Anton Mayer",
@@ -77,9 +75,7 @@ let allContacts = [
   },
 ];
 
-
-let contactListCategory = [];
-
+const contactListCategory = [];
 
 // Functions:
 
@@ -88,117 +84,11 @@ function init() {
   console.log(allContacts);
 }
 
-// Meine Version vom 13.08.2026:
-
-// function checkFirstLetterOfContact(contactData) {
-//   const firstLetter = contactData.name[0];
-//   const checkFirstLetter = contactListCategory.includes(firstLetter);
-
-//   if (checkFirstLetter !== true) {
-//     contactListCategory.push(firstLetter);
-//   } else {
-//     return;
-//   }
-// }
-
-
-// function renderLetterCategories() {
-//   contactList.innerHTML = "";
-
-//   let letterCategories = [];
-
-//   for (let i = 0; i < contactListCategory.length; i++) {
-//     const contactListCategoryLetters = contactListCategory[i];
-//     letterCategories += getLetterCategoryTemplate(contactListCategoryLetters);
-//   }
-//   contactList.innerHTML = letterCategories;
-// }
-
-
-// function assignContactToLetterCategory(firstLetter) {
-//   const contactCategoryGrid = document.getElementById(
-//     "contact-grid-" + firstLetter,
-//   );
-
-//   let contactListData = "";
-
-//   for (let i = 0; i < allContacts.length; i++) {
-//     const contactData = allContacts[i];
-
-//     if (firstLetter === contactData.name[0]) {
-//       contactListData += getContactTemplate(contactData);
-//     }
-//   }
-//   contactCategoryGrid.innerHTML = contactListData;
-// }
-
-
-// function setContactIconColor() {
-//   for (let i = 0; i < allContacts.length; i++) {
-//     const contactData = allContacts[i];
-//     const shortcutColor = calculateContactIconColor(contactData.shortcut);
-
-//     const contactID = document.getElementById(`contact-${contactData.id}`);
-
-//     if (contactID) {
-//       contactID.style.setProperty("--background-color", shortcutColor);
-//     }
-//   }
-// }
-
-
-// function calculateContactIconColor(contactShortcut) {
-//   const correctShortcut = contactShortcut.toUpperCase();
-
-//   const firstNameLetter = correctShortcut[0];
-//   const LastNameLetter = correctShortcut[1];
-
-//   const value1 = firstNameLetter.charCodeAt(0) - 65;
-//   const value2 = LastNameLetter.charCodeAt(0) - 65;
-
-//   const r = (40 + value1 * 7).toFixed(0);
-//   const g = (40 + value2 * 7).toFixed(0);
-//   const b = (40 + (25 - value2) * 7).toFixed(0);
-
-//   return `rgba(${r}, ${g}, ${b}, 1)`;
-// }
-
-
-// function getContactShortcut(contactData) {
-//   const contactNameParts = contactData.name.split(" ");
-
-//   const firstNameLetter = contactNameParts[0][0];
-//   const LastNameLetter = contactNameParts[1][0];
-
-//   const contact = allContacts.find((name) => name.id === contactData.id);
-
-//   if (contact) {
-//     contact.shortcut = firstNameLetter + LastNameLetter;
-//   }
-// }
-
-
-// function renderContactList() {
-//   let contactListData = [];
-
-//   for (let i = 0; i < allContacts.length; i++) {
-//     const contactData = allContacts[i];
-//     getContactShortcut(contactData);
-//     checkFirstLetterOfContact(contactData);
-//   }
-//   renderLetterCategories();
-
-//   for (let i = 0; i < contactListCategory.length; i++) {
-//     assignContactToLetterCategory(contactListCategory[i]);
-//   }
-//   setContactIconColor();
-// }
-
-
-// Alternative vom 14.08.2026:
 
 function assignAndCreateContacts(letter, contact, lastNameLetter) {
-  const contactCategoryGrid = document.getElementById("contact-grid-" + lastNameLetter);
+  const contactCategoryGrid = document.getElementById(
+    "contact-grid-" + lastNameLetter,
+  );
 
   if (lastNameLetter === letter) {
     contactCategoryGrid.innerHTML += getContactTemplate(contact);
@@ -207,7 +97,7 @@ function assignAndCreateContacts(letter, contact, lastNameLetter) {
 
 
 function getLastNameLetter(contact) {
-  const contactNameParts = contact.name.split(' ');
+  const contactNameParts = contact.name.split(" ");
 
   const letter = contactNameParts[1]
     ? contactNameParts[1][0]
@@ -263,12 +153,12 @@ function setContactIconColor(contactID, shortcutColor) {
 
 
 function getContactShortcut(contact) {
-  const contactNameParts = contact.name.split(' ');
+  const contactNameParts = contact.name.split(" ");
 
   const shortcut = contactNameParts.length > 1
-    ? contactNameParts[0][0] + contactNameParts[1][0]
-    : contactNameParts[0][0];
-    
+      ? contactNameParts[0][0] + contactNameParts[1][0]
+      : contactNameParts[0][0];
+
   contact.shortcut = shortcut.toUpperCase();
 }
 
@@ -299,8 +189,6 @@ function renderContactList() {
 }
 
 
-// Ab hier die bisherigen Funktionen vor dem 14.08.2026:
-
 function showContactDetails(contactID) {
   toggleContactPageView(contactDetails, contactList);
 
@@ -310,11 +198,11 @@ function showContactDetails(contactID) {
   currentContactData = contact;
   const contactDetailsData = getContactDetailsTemplate(contact);
 
-  const contactNameParts = contact.name.split(' ');
-  
+  const contactNameParts = contact.name.split(" ");
+
   const shortcut = contactNameParts.length > 1
-    ? contactNameParts[0][0] + contactNameParts[1][0]
-    : contactNameParts[0][0];
+      ? contactNameParts[0][0] + contactNameParts[1][0]
+      : contactNameParts[0][0];
 
   contactDetails.innerHTML = contactDetailsData;
 
@@ -328,6 +216,7 @@ function showContactDetails(contactID) {
 function backToContactList() {
   toggleContactPageView(contactList, contactDetails);
 }
+
 
 function toggleContactPageView(show, hide) {
   show.classList.remove("hidden");
@@ -350,15 +239,15 @@ function closeMobileContactOptions() {
 
 
 function deleteContact() {
-  const databaseIndex = allContacts.findIndex(contact => contact.id === currentContactData.id);
+  const databaseIndex = allContacts.findIndex((contact) => contact.id === currentContactData.id);
 
   if (databaseIndex !== -1) {
     allContacts.splice(databaseIndex, 1);
   }
   closeMobileContactOptions();
-  contactList.innerHTML = '';
+  contactList.innerHTML = "";
   renderContactList();
-  backToContactList() 
+  backToContactList();
 }
 
 
@@ -366,8 +255,8 @@ function saveContactData() {
   currentContactData.name = contactName.value;
   currentContactData.email = contactEmail.value;
   currentContactData.phone = contactPhone.value;
-  
-  contactList.innerHTML = '';
+
+  contactList.innerHTML = "";
   renderContactList();
   showContactDetails(currentContactData.id);
   closeMobileContactOptions();
@@ -400,8 +289,6 @@ function editContactDetails() {
   dialogBox.showModal();
 }
 
-
-// Dialog
 
 function openDialogAddContact() {
   dialogTitle.textContent = "Add contact";
@@ -449,72 +336,12 @@ function createContact() {
     email: contactEmail.value,
     phone: contactPhone.value,
   };
-  
+
   getContactShortcut(newContactData);
   allContacts.push(newContactData);
 
-  contactList.innerHTML = '';
-  renderContactList();  
+  contactList.innerHTML = "";
+  renderContactList();
   resetFormInputs();
   showToastMessageContactCreated();
-}
-
-
-// Templates:
-
-function getContactTemplate(contactData) {
-  return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails(${contactData.id})">
-            <span class="contact-shortcut">${contactData.shortcut}</span>
-            <div class="contact-data-container">
-              <span class="contact-name">${contactData.name}</span>
-              <span class="contact-e-mail">${contactData.email}</span>
-            </div>
-          </button>`;
-}
-
-
-function getContactDetailsTemplate(contactData) {
-  return `<div class="contact-details-header-container">
-        <div class="contact-details-title-container">
-          <span class="contact-details-title">Contacts</span>
-          <span class="contact-details-subtitle">Better with a team</span>
-        </div>
-        <button type="button" class="contact-details-back-button" onclick="backToContactList()">&#x1F860;</button>
-      </div>
-
-      <!-- Contact details main -->
-      <div class="contact-details-name-container">
-        <span class="contact-details-shortcut" id="contact-details-shortcut-${contactData.id}">${contactData.shortcut}</span>
-        <span class="contact-details-name">${contactData.name}</span>
-      </div>
-
-      <!-- Contact details information -->
-      <div>
-        <div class="contact-details-information-container">
-          <h3>Contact information</h3>
-        </div>
-        <div class="contact-details-contact-data">
-          <h4>Email</h4>
-          <span class="contact-e-mail">${contactData.email}</span>
-          <h4>Phone</h4>
-          <span>${contactData.phone}</span>
-        </div>
-      </div>
-
-      <!-- Contact details option menu button -->
-      <button class="contact-menu" onclick="toggleMobileContactOptions()">
-        <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
-      </button>`;
-}
-
-
-function getLetterCategoryTemplate(letter) {
-  return `<section id="letter-category-${letter}">
-        <div>
-          <h2 class="letter-container">${letter}</h2>
-          <hr class="letter-line">
-        </div>
-        <div id="contact-grid-${letter}">
-        </div>
-      </section>`;
 }
