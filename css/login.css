@@ -5,16 +5,11 @@
   scroll-behavior: smooth;
 }
 
-body {
-  background-color: #f6f7f8;
-}
-
 a {
   text-decoration: none;
 }
 
 .app {
-  background-color: #f6f7f8;
   height: 57.88rem;
   width: 100%;
   padding-left: 0.5rem;
@@ -47,8 +42,8 @@ h1 {
   width: 100%;
   border-radius: 1.88rem;
   padding: 2rem 1rem;
-  background-color: #ffffff;
-  box-shadow: 0 0 0.88rem 0.19rem #00000024;
+  background-color: var(--color-white);
+  box-shadow: 0 0 0.88rem 0.19rem rgb(0 0 0 / 14.1%);
 }
 
 /* form login */
@@ -57,11 +52,12 @@ form {
   width: 100%;
 }
 
-/*Spacing & Labels */
+/* Spacing & Labels */
 .pb-1 {
   padding-bottom: 1rem;
   width: 100%;
 }
+
 .form-label {
   margin-bottom: 0.5rem;
   display: inline-block;
@@ -75,22 +71,22 @@ form {
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
-  color: #212529;
-  background-color: #f6f7f8;
-  border: 1px solid #686868;
+  color: rgb(34 38 42);
+  border: 1px solid var(--color-gray);
   border-radius: 0.65rem;
   transition: box-shadow 100ms ease-in-out; /* statt Bootstraps 150ms */
 }
+
 .form-control:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
 }
 
 /*  Inputs */
 .form-text {
   margin-top: 0.25rem;
   font-size: 0.875em;
-  color: #6c757d;
+  color: rgb(108 117 125);
 }
 
 /* Buttons */
@@ -115,25 +111,26 @@ form {
 }
 
 .btn-primary {
-  color: #f6f7f8;
-  background-color: #2a3647;
+  color: var(--color-bg-main);
+  background-color: var(--color-dark);
   width: 11.25rem;
 }
+
 .login-a {
-  color: #000000;
+  color: var(--color-black);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 30%);
 }
 
 .btn-secondary {
-  color: #2a3647;
-  background-color: #f6f7f8;
+  color: var(--color-dark);
+  background-color: var(--color-white);
 }
 
 .btn-secondary:hover {
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 30%);
 }
 
 /* footer */
@@ -187,7 +184,7 @@ form {
   content: "";
   width: 80%;
   height: 3px;
-  background-color: #29abe2;
+  background-color: var(--color-highlight);
 }
 
 .input-wrapper {
@@ -201,7 +198,7 @@ form {
   transform: translateY(-50%);
   width: 1.5rem;
   height: 1.5rem;
-  padding: 0.25rem 0.25rem;
+  padding: 0.25rem;
   pointer-events: none;
 }
 
@@ -213,7 +210,7 @@ form {
   width: 100%;
   border-radius: 1.88rem;
   padding: 2rem 1rem;
-  background-color: #ffffff;
+  background-color: #fff;
   box-shadow: 0 0 0.88rem 0.19rem #00000024;
 }
 
@@ -224,6 +221,7 @@ form {
   left: 2rem;
   top: 2rem;
 }
+
 /* .signup-back-vector a:hover {
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
 } */
