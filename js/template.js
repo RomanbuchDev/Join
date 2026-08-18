@@ -1,4 +1,4 @@
-// Templates - Contacts page:
+// Templates - Contacts page
 
 function getContactTemplate(contactData) {
   return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails(${contactData.id})">

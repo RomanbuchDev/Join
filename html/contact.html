@@ -1,65 +1,62 @@
 <!doctype html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join - Contacts</title>
-    <!-- CSS file -->
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../css/contacts.css" />
-    <link rel="stylesheet" href="../css/contacts_dialog.css" />
-    <!-- JavaScript file -->
-    <script src="../js/template.js" defer></script>
-    <script src="../js/contact.js" defer></script>
-  </head>
 
-  <body onload="init()">
-    <!-- Header -->
-    <header class="main-header" aria-labelledby="contacts header">
-      <a href=""><img src="/assets/icons/join-logo.svg" alt="Join Logo" /></a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join - Contacts</title>
+  <!-- CSS file -->
+  <!-- <link rel="stylesheet" href="../css/reset_stylesheet.css"> -->
+  <link rel="stylesheet" href="../css/fonts.css" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/contacts.css" />
+  <link rel="stylesheet" href="../css/contacts_dialog.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <!-- JavaScript file -->
+  <script src="../js/template.js" defer></script>
+  <script src="../js/contact.js" defer></script>
+</head>
 
-      <button type="button" class="user-avatar"><span>SM</span></button>
-    </header>
+<body onload="init()" id="page">
+  <!-- Header -->
+  <header class="main-header" aria-labelledby="contacts header">
+    <a href=""><img src="/assets/icons/join-logo.svg" alt="Join Logo" /></a>
 
-    <!-- Main -->
-    <main class="main-container">
-      <!-- Hier evtl. noch eine <nav> einbauen für das Menü links bei Desktop (Spalte 1) -->
-      <!-- <nav></nav> -->
+    <button type="button" class="user-avatar"><span>SM</span></button>
+  </header>
 
-      <!-- Die folgende div nur für Desktop -->
-      <div id="contact-list">
-        <!-- Kontaktliste (Spalte 2) -->
-        <!-- Buchstabe A -->
-        <!-- <section id="letter-group">
+  <!-- Main -->
+  <main class="main-container">
+    <!-- Hier evtl. noch eine <nav> einbauen für das Menü links bei Desktop (Spalte 1) -->
+    <!-- <nav></nav> -->
+
+    <!-- Button for dialog -->
+    <button type="button" class="contact-menu show" onclick="openDialog()">
+      <span class="contact-menu-text">Add new contact</span>
+      <img src="../assets/icons/contacts/contact_add_button_mobile.png" alt="Contact add button mobile" />
+      <!-- <img src="../assets/icons/contacts/more_icon.png" alt="More button mobile" class="hidden" id="more-menu-icon"> -->
+    </button>
+
+    <!-- Die folgende div nur für Desktop -->
+    <div id="contact-list">
+      <!-- Kontaktliste (Spalte 2) -->
+      <!-- Buchstabe A -->
+      <!-- <section id="letter-group">
         <div>
           <h2 class="letter-container">A</h2>
           <hr class="letter-line">
         </div>
         <div class="contact-grid-container" id="contact-grid"></div>
       </section> -->
-      </div>
+    </div>
 
-      <!-- Button for dialog -->
-      <button
-        type="button"
-        class="contact-menu show"
-        onclick="openDialogAddContact()"
-      >
-        <img
-          src="../assets/icons/contacts/contact_add_button_mobile.png"
-          alt="Contact add button mobile"
-        />
-        <!-- <img src="../assets/icons/contacts/more_icon.png" alt="More button mobile" class="hidden" id="more-menu-icon"> -->
-      </button>
-
-      <!-- Contact details (Same page in mobile / Column 3 in desktop) -->
-      <aside class="contact-details-container hidden" id="contact-details">
-        <!-- Contact details header -->
-        <div class="contact-details-header-container">
+    <!-- Contact details (Same page in mobile / Column 3 in desktop) -->
+    <aside class="contact-details-container hidden" id="contact-details">
+      <!-- Contact details header -->
+      <!-- <div class="contact-details-header-container">
           <div class="contact-details-title-container">
             <span class="contact-details-title">Contacts</span>
             <span class="contact-details-subtitle">Better with a team</span>
-            <!-- <span class="title-underline"></span> -->
           </div>
           <button
             type="button"
@@ -70,13 +67,11 @@
           </button>
         </div>
 
-        <!-- Contact details main -->
         <div class="contact-details-name-container">
-          <span class="contact-details-shortcut">TI</span>
-          <span class="contact-details-name">Timo Indlekofer</span>
+          <span class="contact-details-shortcut"></span>
+          <span class="contact-details-name"></span>
         </div>
 
-        <!-- Contact details information -->
         <div>
           <div class="contact-details-information-container">
             <h3>Contact information</h3>
@@ -87,195 +82,120 @@
             <h4>Phone</h4>
             <span>+49 12345</span>
           </div>
-        </div>
+        </div> -->
 
-        <!-- Contact details option menu button -->
-        <button
-          type="button"
-          class="contact-menu"
-          onclick="toggleMobileContactOptions()"
-        >
-          <img
-            src="../assets/icons/contacts/contact_options_icon.png"
-            alt="Contact options button mobile"
-          />
-        </button>
-      </aside>
+      <!-- Contact details option menu button -->
+      <button type="button" class="contact-menu" onclick="toggleMobileContactOptions()">
+        <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile" />
+      </button>
+    </aside>
 
-      <!-- Contact details option menu -->
-      <div
-        class="contact-option-menu-overlay"
-        id="contact-options-overlay"
-        onclick="closeMobileContactOptions()"
-      ></div>
-      <div class="contact-option-menu-container" id="contact-options">
-        <button
-          type="button"
-          class="contact-option-menu-items"
-          onclick="editContactDetails()"
-        >
-          <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon" />
-          <span>Edit</span>
-        </button>
-        <button
-          type="button"
-          class="contact-option-menu-items"
-          onclick="deleteContact()"
-        >
-          <img
-            src="../assets/icons/contacts/delete_icon.png"
-            alt="Delete icon"
-          />
-          <span>Delete</span>
-        </button>
-      </div>
-    </main>
-
-    <!-- Footer (only for mobile) -->
-    <nav class="main-nav">
-      <ul class="main-nav-list">
-        <li class="main-nav-item">
-          <a href="/html/summary.html">
-            <img src="/assets/icons/summary-icon.svg" alt="" />
-            <span>Summary</span>
-          </a>
-        </li>
-        <li class="main-nav-item">
-          <a href="/html/add-task.html">
-            <img src="/assets/icons/addtask-icon.svg" alt="" />
-            <span> Add Task </span>
-          </a>
-        </li>
-        <li class="main-nav-item">
-          <a href="/html/board.html">
-            <img src="/assets/icons/board-icon.svg" alt="" />
-            <span> Board </span>
-          </a>
-        </li>
-        <li class="main-nav-item">
-          <a href="/html/contact.html">
-            <img src="/assets/icons/contact-icon.svg" alt="" />
-            <span> Contacts </span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- Dialog window to add contact (only for mobile) -->
-    <dialog class="add-contact-container" id="contacts-dialog">
-      <form method="dialog">
-        <!-- Dialog header -->
-        <header
-          class="add-contact-header-container"
-          aria-labelledby="dialog title"
-        >
-          <div class="close-button-container">
-            <button
-              type="button"
-              class="close-button"
-              onclick="closeDialogAddContact()"
-            >
-              X
-            </button>
-          </div>
-          <div class="add-contact-title-container">
-            <span class="add-contact-title" id="dialog-title">Add contact</span>
-            <span class="add-contact-subtitle" id="dialog-subtitle"
-              >Tasks are better with a team!</span
-            >
-            <!-- <span class="title-underline"></span> -->
-          </div>
-          <div class="add-contact-shortcut" id="dialog-shortcut">
-            <img
-              src="../assets/icons/contacts/person_icon.png"
-              alt="Contacts icon"
-            />
-          </div>
-        </header>
-
-        <!-- Dialog main -->
-        <div class="add-contact-main-container">
-          <div class="add-contact-input">
-            <input
-              type="text"
-              placeholder="Name"
-              id="input-contact-name-dialog"
-            />
-            <img
-              src="../assets/icons/contacts/person_icon_input.png"
-              alt="Person input icon"
-            />
-          </div>
-
-          <div class="add-contact-input">
-            <input
-              type="text"
-              placeholder="Email"
-              id="input-contact-email-dialog"
-            />
-            <img
-              src="../assets/icons/contacts/email_icon_input.png"
-              alt="Email input icon"
-            />
-          </div>
-
-          <div class="add-contact-input">
-            <input
-              type="text"
-              placeholder="Phone"
-              id="input-contact-phone-dialog"
-            />
-            <img
-              src="../assets/icons/contacts/phone_icon_input.png"
-              alt="Phone input icon"
-            />
-          </div>
-        </div>
-
-        <!-- Dialog footer -->
-        <footer class="add-contact-footer">
-          <!-- Create contact button -->
-          <button
-            type="submit"
-            class="create-contact-data"
-            id="dialog-create-contact-button"
-            onclick="createContact()"
-          >
-            Create contact
-            <img
-              src="../assets/icons/contacts/check_icon.png"
-              alt="Check icon"
-            />
-          </button>
-          <!-- Delete button -->
-          <button
-            type="button"
-            class="delete-contact-data hidden"
-            id="dialog-delete-button"
-            onclick="deleteContact()"
-          >
-            Delete
-          </button>
-          <!-- Save button -->
-          <button
-            type="button"
-            class="save-contact-data hidden"
-            id="dialog-save-button"
-            onclick="saveContactData()"
-          >
-            Save
-            <img
-              src="../assets/icons/contacts/check_icon.png"
-              alt="Save icon"
-            />
-          </button>
-        </footer>
-      </form>
-    </dialog>
-
-    <!-- Dialog toast message - Contact successfully created -->
-    <div class="toast-contact-created" id="toast-message-contact-created">
-      Contact successfully created
+    <!-- Contact details option menu -->
+    <div class="contact-option-menu-overlay" id="contact-options-overlay" onclick="closeMobileContactOptions()"></div>
+    <div class="contact-option-menu-container" id="contact-options">
+      <button type="button" class="contact-option-menu-items" onclick="editContactDetails()">
+        <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon" />
+        <span>Edit</span>
+      </button>
+      <button type="button" class="contact-option-menu-items" onclick="deleteContact()">
+        <img src="../assets/icons/contacts/delete_icon.png" alt="Delete icon" />
+        <span>Delete</span>
+      </button>
     </div>
-  </body>
+  </main>
+
+  <!-- Footer (only for mobile) -->
+  <nav class="main-nav">
+    <ul class="main-nav-list">
+      <li class="main-nav-item">
+        <a href="/html/summary.html">
+          <img src="/assets/icons/summary-icon.svg" alt="" />
+          <span>Summary</span>
+        </a>
+      </li>
+      <li class="main-nav-item">
+        <a href="/html/add-task.html">
+          <img src="/assets/icons/addtask-icon.svg" alt="" />
+          <span> Add Task </span>
+        </a>
+      </li>
+      <li class="main-nav-item">
+        <a href="/html/board.html">
+          <img src="/assets/icons/board-icon.svg" alt="" />
+          <span> Board </span>
+        </a>
+      </li>
+      <li class="main-nav-item">
+        <a href="/html/contact.html">
+          <img src="/assets/icons/contact-icon.svg" alt="" />
+          <span> Contacts </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Dialog window to add contact (only for mobile) -->
+  <dialog class="add-contact-container" id="contacts-dialog">
+    <form method="dialog">
+      <!-- Dialog header -->
+      <header class="add-contact-header-container" aria-labelledby="dialog title">
+        <div class="close-button-container">
+          <button type="button" class="close-button" onclick="closeDialog()">
+            X
+          </button>
+        </div>
+        <div class="add-contact-title-container">
+          <span class="add-contact-title" id="dialog-title">Add contact</span>
+          <span class="add-contact-subtitle" id="dialog-subtitle">Tasks are better with a team!</span>
+          <!-- <span class="title-underline"></span> -->
+        </div>
+        <div class="add-contact-shortcut" id="dialog-shortcut">
+          <img src="../assets/icons/contacts/person_icon.png" alt="Contacts icon" />
+        </div>
+      </header>
+
+      <!-- Dialog main -->
+      <div class="add-contact-main-container">
+        <div class="add-contact-input">
+          <input type="text" placeholder="Name" id="input-contact-name-dialog" />
+          <img src="../assets/icons/contacts/person_icon_input.png" alt="Person input icon" />
+        </div>
+
+        <div class="add-contact-input">
+          <input type="text" placeholder="Email" id="input-contact-email-dialog" />
+          <img src="../assets/icons/contacts/email_icon_input.png" alt="Email input icon" />
+        </div>
+
+        <div class="add-contact-input">
+          <input type="text" placeholder="Phone" id="input-contact-phone-dialog" />
+          <img src="../assets/icons/contacts/phone_icon_input.png" alt="Phone input icon" />
+        </div>
+      </div>
+
+      <!-- Dialog footer -->
+      <footer class="add-contact-footer">
+        <!-- Create contact button -->
+        <button type="submit" class="create-contact-data" id="dialog-create-contact-button" onclick="createContact()">
+          Create contact
+          <img src="../assets/icons/contacts/check_icon.png" alt="Check icon" />
+        </button>
+        <!-- Delete button -->
+        <button type="button" class="delete-contact-data hidden" id="dialog-delete-button" onclick="deleteContact()">
+          Delete
+        </button>
+        <!-- Save button -->
+        <button type="button" class="save-contact-data hidden" id="dialog-save-button" onclick="saveContactData()">
+          Save
+          <img src="../assets/icons/contacts/check_icon.png" alt="Save icon" />
+        </button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Dialog toast message - Contact successfully created -->
+  <div class="toast-contact-created" id="toast-message-contact-created">
+    Contact successfully created
+  </div>
+</body>
+
 </html>
