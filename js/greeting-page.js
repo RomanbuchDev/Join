@@ -2,12 +2,14 @@ setTimeout(() => {
   window.location.href = "./summary.html";
 }, 3000);
 
+
 function initGreeting() {
   if (!loginStatus()) {
     return;
   }
   greetingUser();
 }
+
 
 function loginStatus() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -18,8 +20,9 @@ function loginStatus() {
   return true;
 }
 
+
 function greetingUser() {
-  let greetingUserData = JSON.parse(localStorage.getItem("currentUser"));
+  const greetingUserData = JSON.parse(localStorage.getItem("currentUser"));
   if (greetingUserData.isGuest) {
     document.getElementById("greetingMessage").innerText = "Good morning!";
     document.getElementById("userName").innerText = "";

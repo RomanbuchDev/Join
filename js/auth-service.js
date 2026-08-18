@@ -26,6 +26,7 @@ const mockUsers = [
   },
 ];
 
+
 /**
  * Checks email and password against the mock user list.
  * @param {string} email - The entered email address.
@@ -36,17 +37,15 @@ const mockUsers = [
 async function loginWithEmail(email, password) {
   // await - test simulation
   await new Promise((resolve) => setTimeout(resolve, 2000)); // entfernen nach firebase einbindung
-  let user = mockUsers.find(function (u) {
+  const user = mockUsers.find(function (u) {
     return u.email === email && u.password === password;
   });
-  // console.log(user);
-
   if (user) {
     return user;
-  } else {
-    throw new Error("Login false");
   }
-}
+  throw new Error("Login false");
+};
+
 
 /**
  * Creates a guest user without checking credentials.
@@ -59,6 +58,5 @@ async function loginAsGuest() {
     password: "none",
     isGuest: true,
   };
-  // console.log(userGuest);
   return userGuest;
 }
