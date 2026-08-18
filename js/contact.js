@@ -5,20 +5,28 @@ const contactList = document.getElementById("contact-list");
 const contactListGrid = document.getElementById("contact-grid");
 const contactDetails = document.getElementById("contact-details");
 const contactOptionMenu = document.getElementById("contact-options");
-const contactOptionMenuOverlay = document.getElementById("contact-options-overlay");
+const contactOptionMenuOverlay = document.getElementById(
+  "contact-options-overlay",
+);
 
 const dialogBox = document.getElementById("contacts-dialog");
 const dialogTitle = document.getElementById("dialog-title");
 const dialogSubtitle = document.getElementById("dialog-subtitle");
 const dialogShortcut = document.getElementById("dialog-shortcut");
-const dialogContactForm = document.getElementById("contacts-dialog").querySelector("form");
+const dialogContactForm = document
+  .getElementById("contacts-dialog")
+  .querySelector("form");
 const contactName = document.getElementById("input-contact-name-dialog");
 const contactEmail = document.getElementById("input-contact-email-dialog");
 const contactPhone = document.getElementById("input-contact-phone-dialog");
-const dialogCreateContactButton = document.getElementById("dialog-create-contact-button");
+const dialogCreateContactButton = document.getElementById(
+  "dialog-create-contact-button",
+);
 const dialogDeleteButton = document.getElementById("dialog-delete-button");
 const dialogSaveButton = document.getElementById("dialog-save-button");
-const messageContactCreated = document.getElementById("toast-message-contact-created");
+const messageContactCreated = document.getElementById(
+  "toast-message-contact-created",
+);
 
 let currentContactData;
 
@@ -155,7 +163,8 @@ function setContactIconColor(contactID, shortcutColor) {
 function getContactShortcut(contact) {
   const contactNameParts = contact.name.split(" ");
 
-  const shortcut = contactNameParts.length > 1
+  const shortcut =
+    contactNameParts.length > 1
       ? contactNameParts[0][0] + contactNameParts[1][0]
       : contactNameParts[0][0];
 
@@ -189,24 +198,32 @@ function renderContactList() {
 }
 
 
-function showContactDetails(contactID) {
-  toggleContactPageView(contactDetails, contactList);
+function createContactShortcut(name) {
+  const contactNameParts = name.split(" ");
 
-  contactDetails.innerHTML = "";
-
-  const contact = allContacts.find((name) => name.id === contactID);
-  currentContactData = contact;
-  const contactDetailsData = getContactDetailsTemplate(contact);
-
-  const contactNameParts = contact.name.split(" ");
-
-  const shortcut = contactNameParts.length > 1
+  const shortcut =
+    contactNameParts.length > 1
       ? contactNameParts[0][0] + contactNameParts[1][0]
       : contactNameParts[0][0];
 
+  return shortcut;
+}
+
+
+function showContactDetails(contactID) {
+  toggleContactPageView(contactDetails, contactList);
+  contactDetails.innerHTML = "";
+
+  const contact = allContacts.find((name) => name.id === contactID);
+  const shortcut = createContactShortcut(contact.name);
+  currentContactData = contact;
+  const contactDetailsData = getContactDetailsTemplate(contact);
+
   contactDetails.innerHTML = contactDetailsData;
 
-  const contactShortcutID = document.getElementById(`contact-details-shortcut-${contact.id}`);
+  const contactShortcutID = document.getElementById(
+    `contact-details-shortcut-${contact.id}`,
+  );
 
   const shortcutColor = calculateContactIconColor(shortcut);
   setContactIconColor(contactShortcutID, shortcutColor);
@@ -239,7 +256,9 @@ function closeMobileContactOptions() {
 
 
 function deleteContact() {
-  const databaseIndex = allContacts.findIndex((contact) => contact.id === currentContactData.id);
+  const databaseIndex = allContacts.findIndex(
+    (contact) => contact.id === currentContactData.id,
+  );
 
   if (databaseIndex !== -1) {
     allContacts.splice(databaseIndex, 1);
@@ -327,7 +346,8 @@ function showToastMessageContactCreated() {
 function resetFormInputs() {
   dialogContactForm.reset();
 
-  dialogShortcut.innerHTML = '<img src="../assets/icons/contacts/person_icon.png" alt="Contacts icon">';
+  dialogShortcut.innerHTML =
+    '<img src="../assets/icons/contacts/person_icon.png" alt="Contacts icon">';
   dialogShortcut.style.removeProperty("--background-color");
 }
 
