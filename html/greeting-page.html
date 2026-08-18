@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../assets/icons/join-logo.svg" />
+    <link rel="stylesheet" href="../css/fonts.css" />
+    <link rel="stylesheet" href="../css/reset_stylesheet.css" />
+    <link rel="stylesheet" href="../css/dpf-flex-utils.css" />
+    <link rel="stylesheet" href="../css/greeting-page.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <link rel="stylesheet" href="../css/summary.css" />
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../js/greeting-page.js" defer></script>
+    <title>Join - Greeting</title>
+  </head>
+  <body class="greeting-text-body" onload="initGreeting()">
+    <header class="main-header">
+      <a href="./summary.html"><img src="../assets/icons/join-logo.svg" alt="Join Logo" /></a>
+
+      <button type="button" class="user-avatar"><span>SM</span></button>
+    </header>
+    <main class="dpf-center main-greeting">
+      <section class="dpf-flex-column-center greeting-content">
+        <p id="greetingMessage" class="greeting-text"></p>
+        <p id="userName" class="greeting-user"></p>
+      </section>
+    </main>
+
+    <nav class="main-nav">
+      <ul class="main-nav-list">
+        <li class="main-nav-item">
+          <a href="./summary.html">
+            <img src="../assets/icons/summary-icon.svg" alt="" />
+            <span>Summary</span>
+          </a>
+        </li>
+        <li class="main-nav-item">
+          <a href="./add-task.html">
+            <img src="../assets/icons/addtask-icon.svg" alt="" />
+            <span> Add Task </span>
+          </a>
+        </li>
+        <li class="main-nav-item">
+          <a href="./board.html">
+            <img src="../assets/icons/board-icon.svg" alt="" />
+            <span> Board </span>
+          </a>
+        </li>
+        <li class="main-nav-item">
+          <a href="./contact.html">
+            <img src="../assets/icons/contact-icon.svg" alt="" />
+            <span> Contacts </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </body>
+</html>
