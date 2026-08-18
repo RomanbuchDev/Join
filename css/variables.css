@@ -1,2 +1,26 @@
-::root {
+:root {
+  --font-family: inter, sans-serif;
+  --color-bg-main: rgb(246 247 248 / 100%);
+
+  /* uses color-black: h1 */
+  --color-black: rgb(0 0 0 / 100%);
+
+  /* uses color-gray: */
+  --color-gray: rgb(104 104 104 / 100%);
+
+  /* uses color-white: background-header */
+  --color-white: rgb(255 255 255 / 100%);
+
+  /* uses color-dark: h2, span below h1, background-footer/-navbar, buttons, ... */
+  --color-dark: rgb(42 54 71 / 100%);
+
+  /* uses color-dark-active: buttons-active */
+  --color-dark-active: rgb(9 25 49 / 100%);
+
+  /* uses color-name: greeting-name, user-avatar */
+  --color-name: rgb(18 70 88 / 100%);
+  --color-highlight: rgb(41 171 226 / 100%);
+  --color-prio-urgent: rgb(255 61 0 / 100%);
+  --color-prio-medium: rgb(255 168 0 / 100%);
+  --color-prio-low: rgb(122 226 41 / 100%);
 }
