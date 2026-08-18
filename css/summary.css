@@ -17,7 +17,7 @@ main {
   display: block;
   width: 5.6rem;
   height: 3px;
-  background-color: #29abe2;
+  background-color: var(--color-highlight);
   margin-top: 0.5rem;
 }
 

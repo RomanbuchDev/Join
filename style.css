@@ -1,9 +1,10 @@
 body {
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family);
+  background-color: var(--color-bg-main);
 }
 
 #page {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   grid-template: "header" auto "main" 1fr "nav" auto / 1fr;
 }
@@ -24,7 +25,7 @@ h1 {
   align-items: center;
   justify-content: space-between;
   padding: 0.75em 1em;
-  background-color: #fff;
+  background-color: var(--color-white);
   box-shadow: 0 4px 4px rgb(0 0 0 / 10%);
 }
 
@@ -34,18 +35,18 @@ h1 {
 }
 
 .user-avatar {
-  color: #124658;
+  color: var(--color-name);
   width: 2.5rem;
   height: 2.5rem;
-  border: 2px solid #2a3647;
+  border: 2px solid var(--color-dark);
   border-radius: 30px;
-  background-color: #fff;
+  background-color: var(--color-white);
 }
 
 .main-nav {
   grid-area: nav;
   height: 4.7rem;
-  background-color: #2a3647;
+  background-color: var(--color-dark);
   z-index: 1000;
 }
 
@@ -76,22 +77,21 @@ h1 {
   justify-content: center;
   align-items: center;
   gap: 0.3rem;
-  font-family: Inter, sans-serif;
   font-size: 0.7rem;
   font-weight: 400;
   line-height: 1.2;
-  color: #fff;
+  color: var(--color-white);
   text-decoration: none;
   transition: background-color 150ms ease;
 }
 
 .main-nav a[aria-current="page"] {
-  background-color: #091931;
+  background-color: var(--color-dark-active);
   border-radius: 1rem;
 }
 
 .main-nav-item span {
-  color: #fff;
+  color: var(--color-white);
 }
 
 @media (width >= 40em) {
@@ -133,7 +133,7 @@ h1 {
     width: 3px;
     height: 2rem;
     margin: 0;
-    background-color: #29abe2;
+    background-color: var(--color-highlight);
   }
 
   .summary-header p {
