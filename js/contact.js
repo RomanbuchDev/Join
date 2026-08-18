@@ -244,10 +244,11 @@ function deleteContact() {
   if (databaseIndex !== -1) {
     allContacts.splice(databaseIndex, 1);
   }
-  closeMobileContactOptions();
   contactList.innerHTML = "";
   renderContactList();
   backToContactList();
+  closeMobileContactOptions();
+  closeDialog();
 }
 
 
@@ -260,6 +261,7 @@ function saveContactData() {
   renderContactList();
   showContactDetails(currentContactData.id);
   closeMobileContactOptions();
+  closeDialog();
 }
 
 
@@ -290,7 +292,7 @@ function editContactDetails() {
 }
 
 
-function openDialogAddContact() {
+function openDialog() {
   dialogTitle.textContent = "Add contact";
   dialogSubtitle.style.display = "flex";
 
@@ -303,9 +305,10 @@ function openDialogAddContact() {
 }
 
 
-function closeDialogAddContact() {
+function closeDialog() {
   resetFormInputs();
   dialogShortcut.classList.remove("contact-details-shortcut");
+  closeMobileContactOptions();
   dialogBox.close();
 }
 
