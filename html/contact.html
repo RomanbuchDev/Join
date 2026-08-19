@@ -97,7 +97,7 @@
         <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon" />
         <span>Edit</span>
       </button>
-      <button type="button" class="contact-option-menu-items" onclick="deleteContact()">
+      <button type="button" class="contact-option-menu-items" onclick="openDialogDeleteQuestion()">
         <img src="../assets/icons/contacts/delete_icon.png" alt="Delete icon" />
         <span>Delete</span>
       </button>
@@ -180,7 +180,8 @@
           <img src="../assets/icons/contacts/check_icon.png" alt="Check icon" />
         </button>
         <!-- Delete button -->
-        <button type="button" class="delete-contact-data hidden" id="dialog-delete-button" onclick="deleteContact()">
+        <button type="button" class="delete-contact-data hidden" id="dialog-delete-button"
+          onclick="openDialogDeleteQuestion()">
           Delete
         </button>
         <!-- Save button -->
@@ -192,9 +193,35 @@
     </form>
   </dialog>
 
+  <!-- Dialog for delete contact question -->
+  <dialog class="delete-question-container" id="delete-question-dialog">
+    <h4>Delete contact?</h4>
+    <p>Are you sure you want to delete this contact?</p>
+    <div class="delete-question-button-container">
+      <!-- Delete contact - No button -->
+      <button type="button" class="delete-question-no" id="delete-question-no-button" onclick="closeContactDeletion()">
+        NO
+      </button>
+      <!-- Delete contact - Yes button -->
+      <button type="button" class="delete-question-yes" id="delete-question-yes-button" onclick="deleteContact()">
+        YES
+      </button>
+    </div>
+  </dialog>
+
   <!-- Dialog toast message - Contact successfully created -->
   <div class="toast-contact-created" id="toast-message-contact-created">
     Contact successfully created
+  </div>
+
+  <!-- Dialog toast message - Contact successfully edited -->
+  <div class="toast-contact-edited" id="toast-message-contact-edited">
+    Contact successfully edited
+  </div>
+
+  <!-- Dialog toast message - Contact successfully deleted -->
+  <div class="toast-contact-deleted" id="toast-message-contact-deleted">
+    Contact successfully deleted
   </div>
 </body>
 

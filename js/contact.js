@@ -5,28 +5,24 @@ const contactList = document.getElementById("contact-list");
 const contactListGrid = document.getElementById("contact-grid");
 const contactDetails = document.getElementById("contact-details");
 const contactOptionMenu = document.getElementById("contact-options");
-const contactOptionMenuOverlay = document.getElementById(
-  "contact-options-overlay",
-);
+const contactOptionMenuOverlay = document.getElementById("contact-options-overlay");
 
 const dialogBox = document.getElementById("contacts-dialog");
 const dialogTitle = document.getElementById("dialog-title");
 const dialogSubtitle = document.getElementById("dialog-subtitle");
 const dialogShortcut = document.getElementById("dialog-shortcut");
-const dialogContactForm = document
-  .getElementById("contacts-dialog")
-  .querySelector("form");
+const dialogContactForm = document.getElementById("contacts-dialog").querySelector("form");
 const contactName = document.getElementById("input-contact-name-dialog");
 const contactEmail = document.getElementById("input-contact-email-dialog");
 const contactPhone = document.getElementById("input-contact-phone-dialog");
-const dialogCreateContactButton = document.getElementById(
-  "dialog-create-contact-button",
-);
+const dialogCreateContactButton = document.getElementById("dialog-create-contact-button");
 const dialogDeleteButton = document.getElementById("dialog-delete-button");
 const dialogSaveButton = document.getElementById("dialog-save-button");
-const messageContactCreated = document.getElementById(
-  "toast-message-contact-created",
-);
+const messageContactCreated = document.getElementById("toast-message-contact-created");
+
+const dialogBoxDeleteQuestion = document.getElementById("delete-question-dialog");
+const messageContactEdited = document.getElementById("toast-message-contact-edited");
+const messageContactDeleted = document.getElementById("toast-message-contact-deleted");
 
 let currentContactData;
 
@@ -266,7 +262,9 @@ function deleteContact() {
   contactList.innerHTML = "";
   renderContactList();
   backToContactList();
+  showToastMessageContactDeleted();
   closeMobileContactOptions();
+  closeContactDeletion();
   closeDialog();
 }
 
@@ -279,6 +277,7 @@ function saveContactData() {
   contactList.innerHTML = "";
   renderContactList();
   showContactDetails(currentContactData.id);
+  showToastMessageContactEdited();
   closeMobileContactOptions();
   closeDialog();
 }
@@ -340,6 +339,39 @@ function hideToastMessageContactCreated() {
 function showToastMessageContactCreated() {
   messageContactCreated.classList.add("show");
   setTimeout(hideToastMessageContactCreated, 3000);
+}
+
+
+// Additional (no requirement)
+
+function openDialogDeleteQuestion() {
+  dialogBoxDeleteQuestion.showModal();
+}
+
+function closeContactDeletion() {
+  dialogBoxDeleteQuestion.close();
+}
+
+
+function hideToastMessageContactEdited() {
+  messageContactEdited.classList.remove("show");
+}
+
+
+function showToastMessageContactEdited() {
+  messageContactEdited.classList.add("show");
+  setTimeout(hideToastMessageContactEdited, 3000);
+}
+
+
+function hideToastMessageContactDeleted() {
+  messageContactDeleted.classList.remove("show");
+}
+
+
+function showToastMessageContactDeleted() {
+  messageContactDeleted.classList.add("show");
+  setTimeout(hideToastMessageContactDeleted, 3000);
 }
 
 

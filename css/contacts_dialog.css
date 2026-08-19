@@ -11,7 +11,7 @@
     ==================================================================================================== */
 
 .add-contact-container {
-  background-color: rgb(255 255 255 / 100%);
+  background-color: var(--color-white);
   border: none;
   border-radius: 30px;
   outline: none;
@@ -56,7 +56,7 @@
 }
 
 .add-contact-header-container {
-  background-color: rgb(42 54 71 / 100%);
+  background-color: var(--color-dark);
   position: relative;
   gap: 0.75rem;
   padding-left: 1.5rem;
@@ -94,7 +94,7 @@
 
 .add-contact-title-container::after {
   display: block;
-  background-color: rgb(41 171 226 / 100%);
+  background-color: var(--color-highlight);
   border-radius: 0.1em;
   content: "";
   width: 5.6em;
@@ -103,26 +103,15 @@
 }
 
 .add-contact-title {
-  color: rgb(255 255 255 / 100%);
+  color: var(--color-white);
   font-size: 2.6rem;
   font-weight: 700;
 }
 
 .add-contact-subtitle {
-  color: rgb(255 255 255 / 100%);
+  color: var(--color-white);
   font-size: 1rem;
 }
-
-/* .title-underline {
-  display: block;
-
-  background-color: rgba(41, 171, 226, 1);
-
-  border-radius: 3px;
-
-  width: 90px;
-  height: 3px;
-} */
 
 .add-contact-shortcut {
   display: flex;
@@ -134,7 +123,7 @@
   position: absolute;
   left: 50%;
   bottom: 0;
-  border: 3px solid rgb(255 255 255 / 100%);
+  border: 3px solid var(--color-white);
   border-radius: 70px;
   transform: translateY(50%);
   transform: translate(-50%, 50%);
@@ -145,7 +134,7 @@
 .add-contact-main-container {
   display: flex;
   flex-direction: column;
-  background-color: rgb(255 255 255 / 100%);
+  background-color: var(--color-white);
   gap: 0.9375rem;
   padding: 5rem 1rem;
 }
@@ -153,7 +142,7 @@
 .add-contact-input {
   display: flex;
   align-items: center;
-  border: 1px solid rgb(104 104 104 / 100%);
+  border: 1px solid var(--color-gray);
   border-radius: 10px;
   height: 30px;
   padding: 0.8125rem 1.4375rem;
@@ -178,8 +167,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(42 54 71 / 100%);
-  color: rgb(255 255 255 / 100%);
+  background-color: var(--color-dark);
+  color: var(--color-white);
   font-size: 1.3rem;
   font-weight: 700;
   border: none;
@@ -195,34 +184,37 @@
 }
 
 .delete-contact-data {
-  /* display: none; */
-  background-color: rgb(255 255 255 / 100%);
-  color: rgb(42 54 71 / 100%);
+  background-color: var(--color-white);
+  color: var(--color-dark);
   font-size: 1.25rem;
-  border: 1px solid rgb(42 54 71 / 100%);
+  border: 1px solid var(--color-dark);
   border-radius: 10px;
+  flex: 1;
   cursor: pointer;
+  max-width: 8.75rem;
   padding: 1.125rem 0.625rem;
 }
 
 .delete-contact-data:hover {
   box-shadow:
     0 4px 4px rgb(0 0 0 / 25%),
-    inset 0 0 0 1px rgb(42 54 71 / 100%);
+    inset 0 0 0 1px var(--color-dark);
 }
 
 .save-contact-data {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(42 54 71 / 100%);
-  color: rgb(255 255 255 / 100%);
+  background-color: var(--color-dark);
+  color: var(--color-white);
   font-size: 1.3rem;
   font-weight: 700;
   border: none;
   border-radius: 10px;
+  flex: 1;
   cursor: pointer;
   gap: 0.25rem;
+  max-width: 8.75rem;
   padding: 1.125rem 0.625rem;
 }
 
@@ -236,8 +228,8 @@
 }
 
 .toast-contact-created {
-  background-color: rgb(42 54 71 / 100%);
-  color: rgb(255 255 255 / 100%);
+  background-color: var(--color-dark);
+  color: var(--color-white);
   font-size: 1.25rem;
   border: none;
   border-radius: 20px;
@@ -253,5 +245,125 @@
 }
 
 .toast-contact-created.show {
+  bottom: 150px;
+}
+
+/* Additonal messages (no requirement) */
+
+.delete-question-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: var(--color-white);
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  box-shadow: 0 0 4px rgb(0 0 0 / 40%);
+  overflow: hidden;
+  contain: paint layout;
+  z-index: 200;
+  margin: auto;
+  gap: 1rem;
+  padding: 30px 24px;
+  width: calc(100% - 28px);
+  max-width: 396px;
+  height: 200px;
+  max-height: calc(100dvh - 160px);
+}
+
+.delete-question-container:not([open]) {
+  display: none;
+}
+
+.delete-question-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin-top: 1rem;
+}
+
+.delete-question-no {
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  font-size: 1.25rem;
+  border: 1px solid var(--color-dark);
+  border-radius: 10px;
+  flex: 1;
+  cursor: pointer;
+  max-width: 8.75rem;
+  padding: 1.125rem 0.625rem;
+}
+
+.delete-question-no:hover {
+  box-shadow:
+    0 4px 4px rgb(0 0 0 / 25%),
+    inset 0 0 0 1px var(--color-dark);
+}
+
+.delete-question-yes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  font-size: 1.3rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  flex: 1;
+  cursor: pointer;
+  max-width: 8.75rem;
+  padding: 1.125rem 0.625rem;
+}
+
+.delete-question-yes:hover {
+  background-color: rgb(42 80 100 / 100%);
+  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+}
+
+.toast-contact-edited {
+  background-color: rgb(22 153 70 / 100%);
+  color: var(--color-white);
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgb(0 0 0 / 40%);
+  position: fixed;
+  bottom: -80px;
+  left: 50%;
+  z-index: 300;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  transition: bottom 0.3s ease-out;
+  padding: 1.125rem 0.625rem;
+}
+
+.toast-contact-edited.show {
+  bottom: 150px;
+}
+
+.toast-contact-deleted {
+  background-color: rgb(235 20 40 / 100%);
+  color: var(--color-white);
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgb(0 0 0 / 40%);
+  position: fixed;
+  bottom: -80px;
+  left: 50%;
+  z-index: 300;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  transition: bottom 0.3s ease-out;
+  padding: 1.125rem 0.625rem;
+}
+
+.toast-contact-deleted.show {
   bottom: 150px;
 }

@@ -37,7 +37,7 @@ body {
     ==================================================================================================== */
 
 .main-container {
-  background-color: rgb(255 255 255 / 100%);
+  background-color: var(--color-white);
   margin-top: 0.3125rem;
   margin-bottom: 5rem;
   padding-left: 0.875rem;
@@ -72,7 +72,7 @@ body {
 }
 
 .contact-card:active {
-  background-color: rgb(42 54 71 / 100%);
+  background-color: var(--color-dark);
   border-radius: 10px;
 }
 
@@ -86,9 +86,9 @@ body {
   justify-content: center;
   align-items: center;
   background-color: var(--background-color, rgb(77 77 255 / 100%));
-  border: 2px solid rgb(255 255 255 / 100%);
+  border: 2px solid var(--color-white);
   border-radius: 45px;
-  color: rgb(255 255 255 / 100%);
+  color: var(--color-white);
   flex-shrink: 0;
   width: 42px;
   height: 42px;
@@ -101,12 +101,12 @@ body {
 }
 
 .contact-name {
-  color: rgb(0 0 0 / 100%);
+  color: var(--color-black);
   font-size: 1.25rem;
 }
 
 .contact-name:active {
-  color: rgb(255 255 255 / 100%);
+  color: var(--color-white);
 }
 
 .contact-e-mail {
@@ -119,13 +119,13 @@ body {
   justify-content: center;
   align-items: center;
   object-fit: contain;
-  background-color: rgb(42 54 71 / 100%);
+  background-color: var(--color-dark);
   box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
   position: fixed;
   right: 10px;
   bottom: 96px;
   z-index: 50;
-  border: 1px solid rgb(42 54 71 / 100%);
+  border: 1px solid var(--color-dark);
   border-radius: 46px;
   flex-shrink: 0;
   cursor: pointer;
@@ -135,13 +135,13 @@ body {
 }
 
 .contact-menu:active {
-  background-color: rgb(18 70 88 / 100%);
-  border: 1px solid rgb(18 70 88 / 100%);
+  background-color: var(--color-name);
+  border: 1px solid var(--color-name);
 }
 
 .contact-menu:hover {
-  background-color: rgb(41 171 226 / 100%);
-  border: 1px solid rgb(41 171 226 / 100%);
+  background-color: var(--color-highlight);
+  border: 1px solid var(--color-highlight);
 }
 
 .contact-menu-text {
@@ -168,7 +168,7 @@ body {
 
 .contact-details-title-container::after {
   display: block;
-  background-color: rgb(41 171 226 / 100%);
+  background-color: var(--color-highlight);
   border-radius: 0.1em;
   content: "";
   width: 5.6em;
@@ -177,20 +177,20 @@ body {
 }
 
 .contact-details-title {
-  color: rgb(0 0 0 / 100%);
+  color: var(--color-black);
   font-size: 2.6rem;
   font-weight: 700;
 }
 
 .contact-details-subtitle {
-  color: rgb(42 54 71 / 100%);
+  color: var(--color-dark);
   font-size: 1.25rem;
 }
 
 .contact-details-back-button {
   background: none;
   border: none;
-  color: rgb(18 70 88 / 100%);
+  color: var(--color-name);
   font-size: 1.5rem;
   font-weight: 600;
   cursor: pointer;
@@ -209,10 +209,10 @@ body {
   justify-content: center;
   align-items: center;
   background-color: var(--background-color, rgb(77 77 255 / 100%));
-  color: rgb(255 255 255 / 100%);
+  color: var(--color-white);
   font-size: 1.6875rem;
   box-shadow: 0 0 4px rgb(0 0 0 / 40%);
-  border: 3px solid rgb(255 255 255 / 100%);
+  border: 3px solid var(--color-white);
   border-radius: 70px;
   flex-shrink: 0;
   width: 80px;
@@ -220,7 +220,7 @@ body {
 }
 
 .contact-details-name {
-  color: rgb(0 0 0 / 100%);
+  color: var(--color-black);
   font-size: 2.25rem;
   font-weight: 700;
 }
@@ -264,7 +264,7 @@ body {
 .contact-option-menu-container {
   display: flex;
   flex-direction: column;
-  background-color: rgb(255 255 255 / 100%);
+  background-color: var(--color-white);
   color: rgb(42 54 71 / 100%);
   font-size: 1rem;
   border-radius: 20px 20px 0;
@@ -298,7 +298,7 @@ body {
   justify-content: center;
   align-items: center;
   background: none;
-  color: rgb(42 54 71 / 100%);
+  color: var(--color-dark);
   border: none;
   cursor: pointer;
   gap: 0.5rem;
@@ -317,6 +317,98 @@ body {
   display: flex;
 }
 
-.hidden {
+/* .hidden {
   display: none;
+} */
+
+
+/* Test */
+@media (max-width: 1023px) {
+  .hidden {
+    display: none;
+  }
 }
+
+/* Test */
+
+@media (min-width: 40em) {
+  #page {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    grid-template-rows: auto 1fr;
+
+    grid-template-areas:
+      "nav header header header header"
+      "nav list main main main";
+
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .main-header {
+    grid-area: header;
+  }
+
+  .main-nav {
+    grid-area: nav;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .main-nav-list {
+    display: block;
+  }
+
+  .main-container {
+    display: contents;
+  }
+
+  .contact-menu.show {
+    grid-area: list;
+    align-self: start;
+    justify-self: center;
+    width: 80%;
+  }
+
+  .contact-menu {
+    position: static;
+    border-radius: 10px;
+    box-shadow: none;
+    gap: 1em;
+    width: auto;
+    height: auto;
+    padding: 0.75em 1em;
+    margin-top: 1em;
+  }
+
+  .contact-menu-text {
+    display: inline;
+    color: var(--color-white);
+    font-size: 1.3rem;
+  }
+
+  #contact-list {
+    grid-area: list;
+    display: block;
+    margin-top: 4em;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  #contact-details.hidden {
+    grid-area: main;
+    display: none;
+  }
+
+  #contact-details {
+    grid-area: main;
+    display: block;
+    background-color: var(--color-bg-main);
+    height: 100%;
+  }
+}
+
