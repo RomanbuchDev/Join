@@ -1,16 +1,12 @@
 body {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-family);
+  background-color: var(--color-bg-main);
 }
 
 #page {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    "header"
-    "main"
-    "nav";
+  grid-template: "header" auto "main" 1fr "nav" auto / 1fr;
 }
 
 h1 {
@@ -28,10 +24,9 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 0.75em 1em;
-  background-color: #ffffff;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-white);
+  box-shadow: 0 4px 4px rgb(0 0 0 / 10%);
 }
 
 .main-header img {
@@ -40,20 +35,18 @@ h1 {
 }
 
 .user-avatar {
-  color: #124658;
+  color: var(--color-name);
   width: 2.5rem;
   height: 2.5rem;
-
-  border: 2px solid #2a3647;
+  border: 2px solid var(--color-dark);
   border-radius: 30px;
-  background-color: #ffffff;
+  background-color: var(--color-white);
 }
 
 .main-nav {
   grid-area: nav;
   height: 4.7rem;
-
-  background-color: #2a3647;
+  background-color: var(--color-dark);
   z-index: 1000;
 }
 
@@ -79,38 +72,31 @@ h1 {
 .main-nav-item a {
   width: 4.5rem;
   height: 4.5rem;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   gap: 0.3rem;
-
-  font-family: "Inter", sans-serif;
   font-size: 0.7rem;
   font-weight: 400;
   line-height: 1.2;
-
-  color: #ffffff;
+  color: var(--color-white);
   text-decoration: none;
-
   transition: background-color 150ms ease;
 }
 
 .main-nav a[aria-current="page"] {
-  background-color: #091931;
+  background-color: var(--color-dark-active);
   border-radius: 1rem;
 }
 
 .main-nav-item span {
-  color: #ffffff;
+  color: var(--color-white);
 }
 
-@media (min-width: 40em) {
+@media (width >= 40em) {
   #page {
     grid-template-columns: repeat(5, 1fr);
-
     grid-template-areas:
       "nav header header header header"
       "nav main main main main";
@@ -144,12 +130,10 @@ h1 {
   .summary-header::after {
     grid-column: 2;
     grid-row: 1;
-
     width: 3px;
     height: 2rem;
     margin: 0;
-
-    background-color: #29abe2;
+    background-color: var(--color-highlight);
   }
 
   .summary-header p {

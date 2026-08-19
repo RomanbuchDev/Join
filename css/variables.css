@@ -1,1 +1,43 @@
+:root {
+  --font-family: inter, sans-serif;
 
+  /* uses bg-main: mostly background of main */
+  --color-bg-main: rgb(246 247 248 / 100%);
+
+  /* uses color-black-100%: h1, written text in input-fields */
+  --color-black-100: rgb(0 0 0 / 100%);
+
+  /* uses color-black-x%: box-shadows */
+  --color-black-40: rgba(0 0 0 / 40%);
+  --color-black-10: rgba(0 0 0 / 10%);
+
+  /* uses color-gray-104: placeholder text, inputfields-border */
+  --color-gray-104: rgb(104 104 104 / 100%);
+
+  /* uses color-gray-209: divider line */
+  --color-gray-209: rgb(209 209 209 / 100%);
+
+  /* uses color-gray-231: progressbar-empty */
+  --color-gray-231: rgb(231 231 231 / 100%);
+
+  /* uses color-white: background-header, font, input-background, card-background */
+  --color-white: rgb(255 255 255 / 100%);
+
+  /* uses color-dark: h2, span below h1, background-footer/-navbar, buttons, ... */
+  --color-dark: rgb(42 54 71 / 100%);
+
+  /* uses color-dark-active: buttons-active */
+  --color-dark-active: rgb(9 25 49 / 100%);
+
+  /* uses color-medium: greeting-name, user-avatar, back-arrow, active-inputfield-border, button-hover, font-color-hover-and-active-legalnotice-and-privacypolicy, font-color-links-LN-and-PP, progressbar-filled */
+  --color-medium: rgb(18 70 88 / 100%);
+
+  /* uses color-email: email links */
+  --color-email: rgb(0 124 238 / 100%);
+
+  /* uses: highlight, priority */
+  --color-highlight: rgb(41 171 226 / 100%);
+  --color-prio-urgent: rgb(255 61 0 / 100%);
+  --color-prio-medium: rgb(255 168 0 / 100%);
+  --color-prio-low: rgb(122 226 41 / 100%);
+}

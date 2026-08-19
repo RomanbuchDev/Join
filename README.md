@@ -91,19 +91,25 @@ git clone https://github.com/RomanbuchDev/Join.git
 cd Join
 ```
 
-4. Starte deinen lokalen Entwicklungsserver:
+4. Installiere die Abhaengigkeiten:
+
+```bash
+npm install
+```
+
+5. Starte deinen lokalen Entwicklungsserver:
 
 ```text
 z.B. Live Server in VS Code
 ```
 
-5. Öffne danach die URL im Browser auf deinem Computer:
+6. Öffne danach die URL im Browser auf deinem Computer:
 
 ```text
 http://localhost:<live-server-port>
 ```
 
-6. Oder öffne die URL im Browser auf deiner virtuellen Maschine:
+7. Oder öffne die URL im Browser auf deiner virtuellen Maschine:
 
 ```text
 http://<deine_ip>:<live-server-port>

@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   quality:
-    name: Clean-Code-Regeln
+    name: Clean-Code-Rules
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -37,7 +37,7 @@ jobs:
         run: node quality/check-file-length.cjs
 
       - name: Formatierung prüfen (Prettier)
-        run: npx prettier --check "*.{html,css,json,md}" "css/**/*.css" "html/**/*.html"
+        run: npx prettier "*.{html,css,json,md}" "css/**/*.css" "html/**/*.html" --check
 
       - name: HTML validieren
         run: npx html-validate --config quality/htmlvalidate.config.cjs "index.html" "html/**/*.html"
