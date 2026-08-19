@@ -93,8 +93,7 @@ h1 {
 .main-nav-item span {
   color: var(--color-white);
 }
-
-@media (width >= 40em) {
+@media (min-width: 64em) {
   #page {
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas:
@@ -112,32 +111,5 @@ h1 {
 
   .main-nav {
     grid-area: nav;
-  }
-
-  .summary-header {
-    display: grid;
-    grid-template-columns: max-content 3px max-content;
-    align-items: center;
-    column-gap: 1rem;
-    justify-content: start;
-  }
-
-  .summary-header h1 {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .summary-header::after {
-    grid-column: 2;
-    grid-row: 1;
-    width: 3px;
-    height: 2rem;
-    margin: 0;
-    background-color: var(--color-highlight);
-  }
-
-  .summary-header p {
-    grid-column: 3;
-    grid-row: 1;
   }
 }
