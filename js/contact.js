@@ -79,8 +79,6 @@ const allContacts = [
   },
 ];
 
-const contactListCategory = [];
-
 // Functions:
 
 function init() {
@@ -253,9 +251,8 @@ function closeMobileContactOptions() {
 
 function deleteContact() {
   const databaseIndex = allContacts.findIndex(
-    (contact) => contact.id === currentContactData.id,
-  );
-
+    (contact) => contact.id === currentContactData.id);
+  
   if (databaseIndex !== -1) {
     allContacts.splice(databaseIndex, 1);
   }
@@ -342,11 +339,10 @@ function showToastMessageContactCreated() {
 }
 
 
-// Additional (no requirement)
-
 function openDialogDeleteQuestion() {
   dialogBoxDeleteQuestion.showModal();
 }
+
 
 function closeContactDeletion() {
   dialogBoxDeleteQuestion.close();

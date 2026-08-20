@@ -317,98 +317,82 @@ body {
   display: flex;
 }
 
-/* .hidden {
-  display: none;
-} */
-
-
 /* Test */
-@media (max-width: 1023px) {
+@media (width <= 40em) {
   .hidden {
     display: none;
   }
 }
 
-/* Test */
-
-@media (min-width: 40em) {
+@media (width >= 40em) {
   #page {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-
-    grid-template-rows: auto 1fr;
-
-    grid-template-areas:
-      "nav header header header header"
-      "nav list main main main";
-
     height: 100vh;
     max-height: 100vh;
     overflow: hidden;
     margin: 0;
   }
 
-  .main-header {
-    grid-area: header;
-  }
-
-  .main-nav {
-    grid-area: nav;
-    height: 100vh;
-    overflow-y: auto;
-  }
-
-  .main-nav-list {
-    display: block;
-  }
-
   .main-container {
-    display: contents;
+    grid-area: main;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    height: 100%;
+    min-height: 0;
+    padding-right: 0;
   }
 
-  .contact-menu.show {
-    grid-area: list;
-    align-self: start;
-    justify-self: center;
-    width: 80%;
+  .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 40%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    gap: 1em;
+    height: 100%;
   }
 
   .contact-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     position: static;
     border-radius: 10px;
     box-shadow: none;
     gap: 1em;
-    width: auto;
-    height: auto;
+    width: 230px;
+    height: 50px;
     padding: 0.75em 1em;
-    margin-top: 1em;
   }
 
   .contact-menu-text {
     display: inline;
     color: var(--color-white);
     font-size: 1.3rem;
+    white-space: nowrap;
   }
 
   #contact-list {
-    grid-area: list;
     display: block;
-    margin-top: 4em;
-    height: 100%;
-    overflow-y: auto;
-    scrollbar-width: thin;
+    overflow: visible;
+    width: 100%;
+    height: auto;
+  }
+
+  .button-wrapper {
+    width: 100%;
+    padding-top: 1em;
+    padding-left: 1em;
   }
 
   #contact-details.hidden {
-    grid-area: main;
     display: none;
   }
 
   #contact-details {
-    grid-area: main;
-    display: block;
     background-color: var(--color-bg-main);
+    overflow: hidden;
+    flex: 1;
     height: 100%;
   }
 }
-
