@@ -3,12 +3,112 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../assets/icons/join-logo.svg"
+    />
+    <link rel="stylesheet" href="../css/reset_stylesheet.css" />
+    <link rel="stylesheet" href="../css/fonts.css" />
+    <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../style.css" />
     <title>Join - Board</title>
   </head>
 
   <body>
-    <h1>Board</h1>
-    <h2>To Do</h2>
+    <header class="main-header">
+      <a href="./summary.html">
+        <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
+      </a>
+      <button type="button" class="user-avatar"><span>G</span></button>
+    </header>
+
+    <main>
+      <h1>Board</h1>
+      <div>
+        <input type="text" placeholder="Find Task" />
+        <button type="button">Search</button>
+      </div>
+      <section>
+        <h2>To Do</h2>
+        <div>
+          <p>label</p>
+          <h3>Task 1</h3>
+          <p>
+            Task description, Task description, Task description, Task
+            description
+          </p>
+          <div>
+            <progress value="50" max="100"></progress>
+            <p>0/2 Subtasks</p>
+          </div>
+          <div>
+            <div>
+              <span>AB</span>
+              <span>CD</span>
+              <span>EF</span>
+            </div>
+            <img
+              src="../assets/icons/prio-urgent-symbol.svg"
+              alt="urgent task"
+            />
+          </div>
+        </div>
+        <div>
+          <h3>Task 2</h3>
+          <p>Task description</p>
+        </div>
+      </section>
+      <section>
+        <h2>In Progress</h2>
+      </section>
+      <section>
+        <h2>Await feedback</h2>
+      </section>
+      <section>
+        <h2>Done</h2>
+      </section>
+    </main>
+
+    <nav class="main-nav">
+      <ul class="main-nav-list">
+        <li class="main-nav-item">
+          <a href="./summary.html">
+            <img
+              src="../assets/icons/summary-icon.svg"
+              alt="to the summary page"
+            />
+            <span>Summary</span>
+          </a>
+        </li>
+
+        <li class="main-nav-item">
+          <a href="./add-task.html">
+            <img
+              src="../assets/icons/addtask-icon.svg"
+              alt="to add a new task"
+            />
+            <span> Add Task </span>
+          </a>
+        </li>
+
+        <li class="main-nav-item">
+          <a href="./board.html" aria-current="page">
+            <img src="../assets/icons/board-icon.svg" alt="to the board page" />
+            <span> Board </span>
+          </a>
+        </li>
+
+        <li class="main-nav-item">
+          <a href="./contact.html">
+            <img
+              src="../assets/icons/contact-icon.svg"
+              alt="to the contacts page"
+            />
+            <span> Contacts </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </body>
 </html>

@@ -24,9 +24,9 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75em 1em;
+  padding: 1.25em 1em;
   background-color: var(--color-white);
-  box-shadow: 0 4px 4px rgb(0 0 0 / 10%);
+  box-shadow: 0 4px 4px var(--color-black-10);
 }
 
 .main-header img {
@@ -35,7 +35,8 @@ h1 {
 }
 
 .user-avatar {
-  color: var(--color-name);
+  color: var(--color-medium);
+  font-weight: 700;
   width: 2.5rem;
   height: 2.5rem;
   border: 2px solid var(--color-dark);
@@ -94,7 +95,7 @@ h1 {
   color: var(--color-white);
 }
 
-@media (width >= 40em) {
+@media (width >=40em) {
   #page {
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas:
