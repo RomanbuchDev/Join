@@ -12,7 +12,7 @@ a {
 .app {
   position: relative;
   overflow: hidden;
-  background-color: #f6f7f8;
+  background-color: var(--color-bg-main);
   width: 100%;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -47,7 +47,7 @@ h1 {
   border-radius: 1.88rem;
   padding: 2rem 1rem;
   background-color: var(--color-white);
-  box-shadow: 0 0 0.88rem 0.19rem rgb(0 0 0 / 14.1%);
+  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.14);
 }
 
 /* form login */
@@ -76,7 +76,7 @@ form {
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
-  color: rgb(34 38 42);
+  color: var(--color-gray-104);
   border: 1px solid var(--color-gray-104);
   border-radius: 0.65rem;
   transition: box-shadow 100ms ease-in-out; /* statt Bootstraps 150ms */
@@ -84,7 +84,7 @@ form {
 
 .form-control:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+  box-shadow: 0px 0px 14px 3px color-mix(in srgb, var(--color-highlight) 60%, transparent);
 }
 
 /*  Inputs */
@@ -109,7 +109,7 @@ form {
   text-align: center;
   cursor: pointer;
   user-select: none;
-  border: 1px solid #686868;
+  border: 1px solid var(--color-gray-104);
   border-radius: 0.5rem;
   transition: background-color 100ms ease-in-out;
   gap: 0.63rem;
@@ -202,7 +202,7 @@ form {
   width: 100%;
   border-radius: 1.88rem;
   padding: 2rem 1rem;
-  background-color: #fff;
+  background-color: var(--color-white);
   box-shadow: 0 0 0.88rem 0.19rem #00000024;
 }
 
@@ -228,13 +228,13 @@ form {
   right: 0.5rem;
   padding: 0.5rem;
   width: auto;
-  color: #f6f7f8;
-  background-color: #2a3647;
+  color: var(--color-bg-main);
+  background-color: var(--color-dark);
   font-size: 1rem;
   line-height: 1;
   text-align: center;
   user-select: none;
-  border: 1px solid #686868;
+  border: 1px solid var(--color-gray-104);
   border-radius: 0.5rem;
   transform: translateX(120%);
   transition: transform 300ms ease-out;
@@ -247,7 +247,7 @@ form {
 .splash-screen {
   position: fixed;
   inset: 0;
-  background-color: #2a3647; /* Platzhalter, Farbton kommt später */
+  background-color: var(--color-dark);
   z-index: 999;
 }
 
