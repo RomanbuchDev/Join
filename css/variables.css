@@ -9,16 +9,20 @@
 
   /* uses color-black-x%: box-shadows */
   --color-black-40: rgba(0 0 0 / 40%);
+  --color-black-25: rgba(0 0 0 / 25%);
   --color-black-10: rgba(0 0 0 / 10%);
 
-  /* uses color-gray-104: placeholder text, inputfields-border */
-  --color-gray-104: rgb(104 104 104 / 100%);
+  /* uses color-gray-104: ======> NO USE ??? */
+  --color-gray-104: rgba(104 104 104 / 100%);
 
-  /* uses color-gray-209: divider line */
-  --color-gray-209: rgb(209 209 209 / 100%);
+  /* uses color-gray-168: task-description, no-task-dotted-border */
+  --color-gray-168: rgba(168 168 168 / 100%);
 
-  /* uses color-gray-231: progressbar-empty */
-  --color-gray-231: rgb(231 231 231 / 100%);
+  /* uses color-gray-209: divider line, placeholder text, inputfields-border, placeholder text, inputfields-border */
+  --color-gray-209: rgba(209 209 209 / 100%);
+
+  /* uses color-gray-231: progressbar-empty, question-mark */
+  --color-gray-231: rgba(231 231 231 / 100%);
 
   /* uses color-white: background-header, font, input-background, card-background */
   --color-white: rgb(255 255 255 / 100%);
@@ -35,9 +39,11 @@
   /* uses color-email: email links */
   --color-email: rgb(0 124 238 / 100%);
 
-  /* uses: highlight, priority */
-  --color-highlight: rgb(41 171 226 / 100%);
-  --color-prio-urgent: rgb(255 61 0 / 100%);
-  --color-prio-medium: rgb(255 168 0 / 100%);
-  --color-prio-low: rgb(122 226 41 / 100%);
+  /* uses: error, hover, highlight, priority */
+  --color-error: rgba(230 0 38 / 100%);
+  --color-hover: rgba(226 230 236 / 100%);
+  --color-highlight: rgba(41 171 226 / 100%);
+  --color-prio-urgent: rgba(255 61 0 / 100%);
+  --color-prio-medium: rgba(255 168 0 / 100%);
+  --color-prio-low: rgba(122 226 41 / 100%);
 }
