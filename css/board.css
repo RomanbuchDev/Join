@@ -1,0 +1,47 @@
+.d-flex {
+  display: flex;
+}
+
+.d-desktop {
+  display: none;
+}
+
+.margin-left-right {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.h1-find-section {
+  margin-top: 3em;
+  gap: 2.5em;
+  flex-direction: column;
+}
+
+.h1-container {
+  justify-content: space-between;
+}
+
+/* .find-task-container {
+}
+
+.find-task-inputfield {
+} */
+
+.button-reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.fill-svg-button {
+  fill: var(--color-dark);
+}
+
+.fill-svg-button:hover {
+  fill: var(--color-medium);
+}
+
+.fill-svg-button:active {
+  fill: var(--color-dark-active);
+}
