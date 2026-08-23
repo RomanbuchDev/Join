@@ -76,14 +76,49 @@ function handleLoginError() {
 
 
 function isLoginInputValid(loginUserData) {
-  if (loginUserData.email.trim() === "" || loginUserData.password.trim() === "") {
-    document.getElementById("loginError").innerText = "Please fill in all fields";
-    setTimeout(() => {
-      document.getElementById("loginError").innerText = "";
-    }, 3000);
-    return false;
+  const emailEmpty = checkEmailField(loginUserData.email);
+  const passwordEmpty = checkPasswordField(loginUserData.password);
+  const message = getLoginErrorMessage(emailEmpty, passwordEmpty);
+  document.getElementById("loginError").innerText = message;
+  return message === "";
+}
+
+
+function checkEmailField(email) {
+  const isEmpty = email.trim() === "";
+  markFieldError("exampleInputEmail1", isEmpty);
+  return isEmpty;
+}
+
+
+function checkPasswordField(password) {
+  const isEmpty = password.trim() === "";
+  markFieldError("exampleInputPassword1", isEmpty);
+  return isEmpty;
+}
+
+
+function getLoginErrorMessage(emailEmpty, passwordEmpty) {
+  if (emailEmpty && passwordEmpty) {
+    return "Please fill in All fields";
   }
-  return true;
+  if (emailEmpty) {
+    return "Please fill in Email field";
+  }
+  if (passwordEmpty) {
+    return "Please fill in Password field";
+  }
+  return "";
+}
+
+
+function markFieldError(inputId, isEmpty) {
+  const input = document.getElementById(inputId);
+  if (isEmpty) {
+    input.classList.add("input-error");
+  } else {
+    input.classList.remove("input-error");
+  }
 }
 
 

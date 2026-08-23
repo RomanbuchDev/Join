@@ -222,6 +222,11 @@ form {
   text-align: center;
 }
 
+.input-error {
+  /* background-color: var(--color-error); */
+  border: 1px solid var(--color-error);
+}
+
 .toast {
   position: absolute;
   top: 8rem;
