@@ -27,20 +27,16 @@
 
   <!-- Main -->
   <main class="main-container">
-    <!-- Hier evtl. noch eine <nav> einbauen für das Menü links bei Desktop (Spalte 1) -->
-    <!-- <nav></nav> -->
-
     <!-- Button for dialog -->
     <div class="main-wrapper">
       <div class="button-wrapper">
-        <button type="button" class="contact-menu show" onclick="openDialog()">
+        <button type="button" class="contact-menu show" id="contact-menu-button" onclick="openDialog()">
           <span class="contact-menu-text">Add new contact</span>
           <img src="../assets/icons/contacts/contact_add_button_mobile.png" alt="Contact add button mobile" />
-          <!-- <img src="../assets/icons/contacts/more_icon.png" alt="More button mobile" class="hidden" id="more-menu-icon"> -->
         </button>
       </div>
 
-      <!-- Die folgende div nur für Desktop -->
+      <!-- Contact list -->
       <div id="contact-list">
         <!-- Kontaktliste (Spalte 2) -->
         <!-- Buchstabe A -->
@@ -89,9 +85,9 @@
         </div> -->
 
       <!-- Contact details option menu button -->
-      <button type="button" class="contact-menu" onclick="toggleMobileContactOptions()">
+      <!-- <button type="button" class="contact-menu" onclick="toggleMobileContactOptions()">
         <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile" />
-      </button>
+      </button> -->
     </aside>
 
     <!-- Contact details option menu -->
@@ -108,7 +104,7 @@
     </div>
   </main>
 
-  <!-- Footer (only for mobile) -->
+  <!-- Navigation (at footer in mobile / on left side in Desktop) -->
   <nav class="main-nav">
     <ul class="main-nav-list">
       <li class="main-nav-item">
@@ -138,9 +134,9 @@
     </ul>
   </nav>
 
-  <!-- Dialog window to add contact (only for mobile) -->
+  <!-- Dialog window to add contact -->
   <dialog class="add-contact-container" id="contacts-dialog">
-    <form method="dialog">
+    <form>
       <!-- Dialog header -->
       <header class="add-contact-header-container" aria-labelledby="dialog title">
         <div class="close-button-container">
@@ -151,7 +147,6 @@
         <div class="add-contact-title-container">
           <span class="add-contact-title" id="dialog-title">Add contact</span>
           <span class="add-contact-subtitle" id="dialog-subtitle">Tasks are better with a team!</span>
-          <!-- <span class="title-underline"></span> -->
         </div>
         <div class="add-contact-shortcut" id="dialog-shortcut">
           <img src="../assets/icons/contacts/person_icon.png" alt="Contacts icon" />
@@ -161,17 +156,18 @@
       <!-- Dialog main -->
       <div class="add-contact-main-container">
         <div class="add-contact-input">
-          <input type="text" placeholder="Name" id="input-contact-name-dialog" />
+          <input type="text" placeholder="Name" id="input-contact-name-dialog" required />
           <img src="../assets/icons/contacts/person_icon_input.png" alt="Person input icon" />
         </div>
 
         <div class="add-contact-input">
-          <input type="text" placeholder="Email" id="input-contact-email-dialog" />
+          <input type="email" placeholder="Email" id="input-contact-email-dialog" />
           <img src="../assets/icons/contacts/email_icon_input.png" alt="Email input icon" />
         </div>
 
         <div class="add-contact-input">
-          <input type="text" placeholder="Phone" id="input-contact-phone-dialog" />
+          <input type="tel" placeholder="Phone" id="input-contact-phone-dialog" pattern="[0-9\s+]*"
+            title="Please enter only numbers from 0 to 9 and the plus symbol." />
           <img src="../assets/icons/contacts/phone_icon_input.png" alt="Phone input icon" />
         </div>
       </div>
@@ -179,7 +175,7 @@
       <!-- Dialog footer -->
       <footer class="add-contact-footer">
         <!-- Create contact button -->
-        <button type="submit" class="create-contact-data" id="dialog-create-contact-button" onclick="createContact()">
+        <button type="submit" class="create-contact-data" id="dialog-create-contact-button">
           Create contact
           <img src="../assets/icons/contacts/check_icon.png" alt="Check icon" />
         </button>
@@ -189,7 +185,7 @@
           Delete
         </button>
         <!-- Save button -->
-        <button type="button" class="save-contact-data hidden" id="dialog-save-button" onclick="saveContactData()">
+        <button type="submit" class="save-contact-data hidden" id="dialog-save-button">
           Save
           <img src="../assets/icons/contacts/check_icon.png" alt="Save icon" />
         </button>
@@ -199,18 +195,22 @@
 
   <!-- Dialog for delete contact question -->
   <dialog class="delete-question-container" id="delete-question-dialog">
-    <h4>Delete contact?</h4>
-    <p>Are you sure you want to delete this contact?</p>
-    <div class="delete-question-button-container">
-      <!-- Delete contact - No button -->
-      <button type="button" class="delete-question-no" id="delete-question-no-button" onclick="closeContactDeletion()">
-        NO
-      </button>
-      <!-- Delete contact - Yes button -->
-      <button type="button" class="delete-question-yes" id="delete-question-yes-button" onclick="deleteContact()">
-        YES
-      </button>
-    </div>
+    <form method="dialog">
+      <h4>Delete contact</h4>
+      <p>Do you really want to delete this contact?</p>
+      <div class="delete-question-button-container">
+        <!-- Delete contact - No button -->
+        <button type="button" class="delete-question-no" id="delete-question-no-button"
+          onclick="closeContactDeletion()">
+          NO
+        </button>
+        <!-- Delete contact - Yes button -->
+        <button type="submit" class="delete-question-yes" id="delete-question-yes-button" onclick="deleteContact()"
+          autofocus>
+          YES
+        </button>
+      </div>
+    </form>
   </dialog>
 
   <!-- Dialog toast message - Contact successfully created -->

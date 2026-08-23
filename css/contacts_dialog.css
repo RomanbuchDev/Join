@@ -179,7 +179,12 @@
 }
 
 .create-contact-data:hover {
-  background-color: rgb(42 80 100 / 100%);
+  background-color: var(--color-medium);
+  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+}
+
+.create-contact-data:active {
+  background-color: var(--color-dark-active);
   box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
 }
 
@@ -219,7 +224,12 @@
 }
 
 .save-contact-data:hover {
-  background-color: rgb(42 80 100 / 100%);
+  background-color: var(--color-medium);
+  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+}
+
+.save-contact-data:active {
+  background-color: var(--color-dark-active);
   box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
 }
 
@@ -251,11 +261,6 @@
 /* Additonal messages (no requirement) */
 
 .delete-question-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   background-color: var(--color-white);
   border: none;
   border-radius: 30px;
@@ -265,12 +270,21 @@
   contain: paint layout;
   z-index: 200;
   margin: auto;
-  gap: 1rem;
   padding: 30px 24px;
   width: calc(100% - 28px);
   max-width: 396px;
   height: 200px;
   max-height: calc(100dvh - 160px);
+}
+
+.delete-question-container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  height: 100%;
 }
 
 .delete-question-container:not([open]) {
@@ -322,7 +336,12 @@
 }
 
 .delete-question-yes:hover {
-  background-color: rgb(42 80 100 / 100%);
+  background-color: var(--color-medium);
+  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+}
+
+.delete-question-yes:active {
+  background-color: var(--color-dark-active);
   box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
 }
 
