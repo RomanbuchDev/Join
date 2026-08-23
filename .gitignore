@@ -2,3 +2,4 @@
 secrets
 *conflicted copy*
 node_modules/
+.vscode
