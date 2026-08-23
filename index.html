@@ -6,28 +6,22 @@
     <title>Join - Login</title>
     <link rel="icon" href="./assets/icons/join-logo.svg" />
     <!-- login links -->
-    <link rel="stylesheet" href="./css/dpf-flex-utils.css" />
     <link rel="stylesheet" href="./css/reset_stylesheet.css" />
     <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/dpf-flex-utils.css" />
     <link rel="stylesheet" href="./css/responsive.css" />
-    <link rel="stylesheet" href="./css/summary.css" />
     <link rel="stylesheet" href="./css/variables.css" />
     <link rel="stylesheet" href="./css/login.css" />
     <link rel="stylesheet" href="./style.css" />
 
     <script src="./script.js" defer></script>
     <script src="./js/template.js" defer></script>
-    <script src="./js/contact.js" defer></script>
     <script src="./js/auth-service.js" defer></script>
     <script src="./js/login.js" defer></script>
   </head>
   <body class="" onload="init()">
     <div id="splashScreen" class="splash-screen">
-      <img
-        src="./assets/icons/screen-logo.svg"
-        alt="Join Logo"
-        class="splash-logo"
-      />
+      <img src="./assets/icons/screen-logo.svg" alt="Join Logo" class="splash-logo" />
     </div>
     <section class="app dpf-column-spc-between-center">
       <header class="">
@@ -45,35 +39,20 @@
           <div class="pb-1">
             <label for="exampleInputEmail1" class="form-label"></label>
             <div class="input-wrapper">
-              <input
-                type="email"
-                placeholder="Email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
+              <input type="email" placeholder="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
               <img src="./assets/icons/mail.svg" class="input-icon" alt="" />
             </div>
             <div id="emailHelp" class="form-text"></div>
             <label for="exampleInputPassword1" class="form-label"></label>
             <div class="input-wrapper">
-              <input
-                type="password"
-                placeholder="Password"
-                class="form-control"
-                id="exampleInputPassword1"
-              />
+              <input type="password" placeholder="Password" class="form-control" id="exampleInputPassword1" />
               <img src="./assets/icons/lock.svg" class="input-icon" alt="" />
             </div>
           </div>
           <p id="loginError" class="error-text"></p>
           <div class="btn-logins-bar dpf-column-spc-between-center">
-            <button type="submit" class="btn btn-primary" id="loginBtn">
-              Log in
-            </button>
-            <button type="button" class="btn btn-secondary" id="guestLoginBtn">
-              Guest Login
-            </button>
+            <button type="submit" class="btn btn-primary" id="loginBtn">Log in</button>
+            <button type="button" class="btn btn-secondary" id="guestLoginBtn">Guest Login</button>
           </div>
         </form>
       </main>
@@ -87,12 +66,8 @@
           </div>
         </section>
         <section class="dpf-center impress-bar">
-          <a href="./html/privacy-policy.html" target="_blank" class="login-a"
-            >Privacy Policy</a
-          >
-          <a href="./html/impressum.html" target="_blank" class="login-a"
-            >Legal notice</a
-          >
+          <a href="./html/privacy-policy.html" target="_blank" class="login-a">Privacy Policy</a>
+          <a href="./html/impressum.html" target="_blank" class="login-a">Legal notice</a>
         </section>
       </footer>
     </section>
