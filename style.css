@@ -45,7 +45,9 @@ h1 {
 
 .main-nav {
   grid-area: nav;
-  height: 4.7rem;
+
+  /* an Figma-Vorlage angepasst: */
+  height: 5rem;
   background-color: var(--color-dark);
   z-index: 1000;
 }
@@ -61,7 +63,9 @@ h1 {
 .main-nav-item {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+
+  /* an Figma-Vorlage angepasst: */
+  align-items: center;
 }
 
 .main-nav img {
@@ -70,14 +74,19 @@ h1 {
 }
 
 .main-nav-item a {
-  width: 4.5rem;
-  height: 4.5rem;
+  /* an Figma-Vorlage angepasst: */
+  width: 4.75rem;
+
+  /* an Figma-Vorlage angepasst: */
+  height: 4.75rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.7rem;
+
+  /* an Figma-Vorlage angepasst: */
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.2;
   color: var(--color-white);

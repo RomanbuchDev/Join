@@ -16,17 +16,17 @@
     <title>Join - Board</title>
   </head>
 
-  <body>
-    <header class="main-header">
+  <body class="board-body d-flex">
+    <header class="main-header fixed-header">
       <a href="./summary.html">
         <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
       </a>
       <button type="button" class="user-avatar"><span>G</span></button>
     </header>
 
-    <main>
-      <section class="h1-find-section margin-left-right d-flex">
-        <section class="h1-container d-flex">
+    <main class="board-main-content flex-1">
+      <section class="h1-find-addtask-section d-flex">
+        <section class="h-addtask-container d-flex">
           <h1>Board</h1>
           <button class="button-reset" type="button" aria-label="Add new task">
             <svg
@@ -53,20 +53,29 @@
             </svg>
           </button>
         </section>
-        <section class="find-task-container d-flex">
-          <div class="find-task-inputfield">
-            <input type="text" placeholder="Find Task" />
-            <button class="button-reset" type="button" aria-label="Find tasks">
+        <section class="find-addtask-container d-flex">
+          <div class="find-container d-flex">
+            <input
+              id="ID_find-task"
+              class="find-input-field"
+              type="text"
+              placeholder="Find Task"
+            />
+            <button
+              class="find-button button-reset"
+              type="button"
+              aria-label="Find tasks"
+            >
               <svg
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
+                width="30"
+                height="30"
+                viewBox="0 0 30 30"
                 class="fill-svg-button"
               >
                 <path
-                  d="M6.50185 13.0037C4.68467 13.0037 3.14673 12.3744 1.88804 11.1157C0.629346 9.85697 0 8.31903 0 6.50185C0 4.68467 0.629346 3.14673 1.88804 1.88804C3.14673 0.629346 4.68467 0 6.50185 0C8.31903 0 9.85697 0.629346 11.1157 1.88804C12.3744 3.14673 13.0037 4.68467 13.0037 6.50185C13.0037 7.23539 12.887 7.92725 12.6536 8.57744C12.4202 9.22762 12.1034 9.80279 11.7033 10.3029L17.3049 15.9045C17.4883 16.0879 17.58 16.3213 17.58 16.6047C17.58 16.8881 17.4883 17.1215 17.3049 17.3049C17.1215 17.4883 16.8881 17.58 16.6047 17.58C16.3213 17.58 16.0879 17.4883 15.9045 17.3049L10.3029 11.7033C9.80279 12.1034 9.22762 12.4202 8.57744 12.6536C7.92725 12.887 7.23539 13.0037 6.50185 13.0037ZM6.50185 11.0031C7.7522 11.0031 8.81501 10.5655 9.69026 9.69026C10.5655 8.81501 11.0031 7.7522 11.0031 6.50185C11.0031 5.25149 10.5655 4.18869 9.69026 3.31344C8.81501 2.43819 7.7522 2.00057 6.50185 2.00057C5.25149 2.00057 4.18869 2.43819 3.31344 3.31344C2.43819 4.18869 2.00057 5.25149 2.00057 6.50185C2.00057 7.7522 2.43819 8.81501 3.31344 9.69026C4.18869 10.5655 5.25149 11.0031 6.50185 11.0031Z"
+                  d="M13.7118 20.2137C11.8946 20.2137 10.3567 19.5843 9.098 18.3256C7.83931 17.0669 7.20996 15.529 7.20996 13.7118C7.20996 11.8946 7.83931 10.3567 9.098 9.098C10.3567 7.83931 11.8946 7.20996 13.7118 7.20996C15.529 7.20996 17.0669 7.83931 18.3256 9.098C19.5843 10.3567 20.2137 11.8946 20.2137 13.7118C20.2137 14.4454 20.097 15.1372 19.8636 15.7874C19.6302 16.4376 19.3134 17.0127 18.9133 17.5129L24.5149 23.1145C24.6983 23.2979 24.79 23.5313 24.79 23.8147C24.79 24.0981 24.6983 24.3315 24.5149 24.5149C24.3315 24.6983 24.0981 24.79 23.8147 24.79C23.5313 24.79 23.2979 24.6983 23.1145 24.5149L17.5129 18.9133C17.0127 19.3134 16.4376 19.6302 15.7874 19.8636C15.1372 20.097 14.4454 20.2137 13.7118 20.2137ZM13.7118 18.2131C14.9622 18.2131 16.025 17.7755 16.9002 16.9002C17.7755 16.025 18.2131 14.9622 18.2131 13.7118C18.2131 12.4615 17.7755 11.3987 16.9002 10.5234C16.025 9.64815 14.9622 9.21053 13.7118 9.21053C12.4615 9.21053 11.3987 9.64815 10.5234 10.5234C9.64815 11.3987 9.21053 12.4615 9.21053 13.7118C9.21053 14.9622 9.64815 16.025 10.5234 16.9002C11.3987 17.7755 12.4615 18.2131 13.7118 18.2131Z"
                 />
               </svg>
             </button>
@@ -74,72 +83,162 @@
           <button class="d-desktop" type="button">Add task</button>
         </section>
       </section>
-      <section>
-        <div>
-          <h2>To Do</h2>
-          <button class="button-reset" type="button" aria-label="Add new task">
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="30"
-              viewBox="0 0 30 30"
-              class="fill-svg-button"
+      <section class="board-section d-flex">
+        <section class="board-column d-flex">
+          <div class="h-addtask-container d-flex">
+            <h2>To Do</h2>
+            <button
+              class="button-reset"
+              type="button"
+              aria-label="Add new task"
             >
-              <rect width="30" height="30" rx="10" />
-              <rect
-                x="2"
-                y="2"
-                width="26"
-                height="26"
-                rx="8"
-                fill="rgba(246 247 248 / 100%)"
-              />
-              <rect x="14" y="6.5" width="2" height="17" rx="1" />
-              <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
-            </svg>
-          </button>
-        </div>
-        <div>
-          <p>label</p>
-          <h3>Task 1</h3>
-          <p>
-            Task description, Task description, Task description, Task
-            description
-          </p>
-          <div>
-            <progress value="50" max="100"></progress>
-            <p>0/2 Subtasks</p>
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 30 30"
+                class="fill-svg-button"
+              >
+                <rect width="30" height="30" rx="10" />
+                <rect
+                  x="2"
+                  y="2"
+                  width="26"
+                  height="26"
+                  rx="8"
+                  fill="rgba(246 247 248 / 100%)"
+                />
+                <rect x="14" y="6.5" width="2" height="17" rx="1" />
+                <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
+              </svg>
+            </button>
           </div>
           <div>
+            <p>label</p>
+            <h3>Task 1</h3>
+            <p>
+              Task description, Task description, Task description, Task
+              description
+            </p>
             <div>
-              <span>AB</span>
-              <span>CD</span>
-              <span>EF</span>
+              <progress value="50" max="100"></progress>
+              <p>0/2 Subtasks</p>
             </div>
-            <img
-              src="../assets/icons/prio-urgent-symbol.svg"
-              alt="urgent task"
-            />
+            <div>
+              <div>
+                <span>AB</span>
+                <span>CD</span>
+                <span>EF</span>
+              </div>
+              <img
+                src="../assets/icons/prio-urgent-symbol.svg"
+                alt="urgent task"
+              />
+            </div>
           </div>
-        </div>
-        <div>
-          <h3>Task 2</h3>
-          <p>Task description</p>
-        </div>
-      </section>
-      <section>
-        <h2>In Progress</h2>
-      </section>
-      <section>
-        <h2>Await feedback</h2>
-      </section>
-      <section>
-        <h2>Done</h2>
+          <div>
+            <h3>Task 2</h3>
+            <p>Task description</p>
+          </div>
+        </section>
+        <section class="board-column d-flex">
+          <div class="h-addtask-container d-flex">
+            <h2>In progress</h2>
+            <button
+              class="button-reset"
+              type="button"
+              aria-label="Add new task"
+            >
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 30 30"
+                class="fill-svg-button"
+              >
+                <rect width="30" height="30" rx="10" />
+                <rect
+                  x="2"
+                  y="2"
+                  width="26"
+                  height="26"
+                  rx="8"
+                  fill="rgba(246 247 248 / 100%)"
+                />
+                <rect x="14" y="6.5" width="2" height="17" rx="1" />
+                <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
+              </svg>
+            </button>
+          </div>
+        </section>
+        <section class="board-column d-flex">
+          <div class="h-addtask-container d-flex">
+            <h2>Await feedback</h2>
+            <button
+              class="button-reset"
+              type="button"
+              aria-label="Add new task"
+            >
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 30 30"
+                class="fill-svg-button"
+              >
+                <rect width="30" height="30" rx="10" />
+                <rect
+                  x="2"
+                  y="2"
+                  width="26"
+                  height="26"
+                  rx="8"
+                  fill="rgba(246 247 248 / 100%)"
+                />
+                <rect x="14" y="6.5" width="2" height="17" rx="1" />
+                <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
+              </svg>
+            </button>
+          </div>
+        </section>
+        <section class="board-column d-flex">
+          <div class="h-addtask-container d-flex">
+            <h2>Done</h2>
+            <button
+              class="button-reset"
+              type="button"
+              aria-label="Add new task"
+            >
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 30 30"
+                class="fill-svg-button"
+              >
+                <rect width="30" height="30" rx="10" />
+                <rect
+                  x="2"
+                  y="2"
+                  width="26"
+                  height="26"
+                  rx="8"
+                  fill="rgba(246 247 248 / 100%)"
+                />
+                <rect x="14" y="6.5" width="2" height="17" rx="1" />
+                <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
+              </svg>
+            </button>
+          </div>
+        </section>
       </section>
     </main>
 
-    <nav class="main-nav">
+    <nav class="main-nav fixed-footer">
       <ul class="main-nav-list">
         <li class="main-nav-item">
           <a href="./summary.html">

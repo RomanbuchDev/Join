@@ -1,33 +1,80 @@
+h2 {
+  /* font-family: var(--font-family); */
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-dark);
+}
+
 .d-flex {
   display: flex;
+}
+
+.flex-1 {
+  flex: 1;
 }
 
 .d-desktop {
   display: none;
 }
 
-.margin-left-right {
-  margin-left: 1em;
-  margin-right: 1em;
+.fixed-header,
+.fixed-footer {
+  position: fixed;
+  width: 100%;
 }
 
-.h1-find-section {
-  margin-top: 3em;
-  gap: 2.5em;
+.fixed-header {
+  top: 0;
+}
+
+.fixed-footer {
+  bottom: 0;
+}
+
+.board-body {
   flex-direction: column;
+  min-height: 100dvh;
 }
 
-.h1-container {
+.board-main-content {
+  margin: 8em 1em 5em;
+}
+
+.h1-find-addtask-section {
+  flex-direction: column;
+  gap: 2.5em;
+}
+
+.h-addtask-container {
   justify-content: space-between;
 }
 
-/* .find-task-container {
-}
-
-.find-task-inputfield {
+/* .find-addtask-container {
+  width: 100%;
 } */
 
+.find-container {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-168);
+  border-radius: 10px;
+  padding: 0.5em 1em;
+
+  /* max-width: 100%; */
+}
+
+.find-input-field {
+  font-family: var(--font-family);
+  font-size: 1.25rem;
+  border: none;
+  padding: 0;
+  height: 30px;
+
+  /* width: 100%; */
+}
+
 .button-reset {
+  line-height: 0;
   background: none;
   border: none;
   cursor: pointer;
@@ -44,4 +91,20 @@
 
 .fill-svg-button:active {
   fill: var(--color-dark-active);
+}
+
+.find-button {
+  border-left: 1px solid var(--color-gray-168);
+  padding-left: 16px;
+}
+
+.board-section {
+  flex-direction: column;
+  margin: 1.5em 0;
+  gap: 1.5em;
+}
+
+.board-column {
+  flex-direction: column;
+  gap: 1em;
 }
