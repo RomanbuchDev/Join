@@ -46,4 +46,8 @@
   --color-prio-urgent: rgba(255 61 0 / 100%);
   --color-prio-medium: rgba(255 168 0 / 100%);
   --color-prio-low: rgba(122 226 41 / 100%);
+
+  /* uses color-label: board-task category tag */
+  --color-label-user-story: rgba(0 56 255 / 100%);
+  --color-label-technical-task: rgba(31 215 193 / 100%);
 }

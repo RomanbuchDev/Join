@@ -1,0 +1,201 @@
+// JavaScript file for board page - horizontal drag-scroll for task columns
+
+// Database (for test only):
+
+const allTasks = [
+  {
+    id: 1,
+    category: "User Story",
+    title: "Pokemon List View & Search Bar",
+    description: "Build the main page that fetches Pokemon from the PokeAPI and displays them as a scrollable list with a live search input.",
+    dueDate: "09/15/2026",
+    priority: "medium",
+    assignedTo: [6, 7, 1],
+    status: "todo",
+    subtasks: [
+      { text: "Fetch first 20 Pokemon from PokeAPI", done: true },
+      { text: "Render Pokemon cards in a grid", done: false },
+      { text: "Implement search input with filtering", done: false },
+    ],
+  },
+  {
+    id: 2,
+    category: "User Story",
+    title: "Pokemon Detail Overlay",
+    description: "Create a detail overlay that opens on card click and shows stats, abilities, and types for the selected Pokemon.",
+    dueDate: "09/18/2026",
+    priority: "urgent",
+    assignedTo: [2, 3],
+    status: "todo",
+    subtasks: [
+      { text: "Design overlay layout", done: true },
+      { text: "Fetch detail data by Pokemon ID", done: true },
+      { text: "Display base stats as bar chart", done: false },
+    ],
+  },
+  {
+    id: 3,
+    category: "User Story",
+    title: "Type & Stats Filter",
+    description: "Add filter controls so users can narrow the Pokemon list down by type (e.g. fire, water, grass).",
+    dueDate: "09/20/2026",
+    priority: "medium",
+    assignedTo: [4],
+    status: "in-progress",
+    subtasks: [
+      { text: "Create type filter dropdown", done: false },
+      { text: "Apply filter logic to rendered list", done: false },
+    ],
+  },
+  {
+    id: 4,
+    category: "User Story",
+    title: "Favorites / Bookmark System",
+    description: "Allow users to mark Pokemon as favorites and view a separate favorites list persisted in local storage.",
+    dueDate: "09/22/2026",
+    priority: "low",
+    assignedTo: [5, 6],
+    status: "todo",
+    subtasks: [
+      { text: "Add favorite toggle button on cards", done: false },
+      { text: "Persist favorites in localStorage", done: false },
+      { text: "Build favorites-only view", done: false },
+      { text: "Sync favorite state on page reload", done: false },
+    ],
+  },
+  {
+    id: 5,
+    category: "User Story",
+    title: "Loading Spinner & Load-More Pagination",
+    description: "Show a loading spinner during API calls and add a button to load the next batch of Pokemon.",
+    dueDate: "09/25/2026",
+    priority: "medium",
+    assignedTo: [7, 8, 1],
+    status: "in-progress",
+    subtasks: [
+      { text: "Add spinner component", done: true },
+      { text: "Implement offset-based pagination", done: false },
+    ],
+  },
+  {
+    id: 6,
+    category: "User Story",
+    title: "Responsive Mobile Layout",
+    description: "Adapt the list, search bar, and detail overlay so the app is fully usable on mobile screen sizes.",
+    dueDate: "09/28/2026",
+    priority: "low",
+    assignedTo: [3, 4, 5, 6],
+    status: "todo",
+    subtasks: [
+      { text: "Adjust grid breakpoints for mobile", done: false },
+      { text: "Make overlay full-screen on small viewports", done: false },
+      { text: "Test on real mobile devices", done: false },
+    ],
+  },
+  {
+    id: 7,
+    category: "Technical Task",
+    title: "PokeAPI Fetch & Data Caching Setup",
+    description: "Set up a central fetch service for the PokeAPI and cache already-loaded Pokemon to avoid duplicate requests.",
+    dueDate: "09/10/2026",
+    priority: "urgent",
+    assignedTo: [1, 2],
+    status: "done",
+    subtasks: [
+      { text: "Create fetch wrapper function", done: true },
+      { text: "Add in-memory cache for requested Pokemon", done: true },
+    ],
+  },
+  {
+    id: 8,
+    category: "Technical Task",
+    title: "Error Handling for API Requests",
+    description: "Add consistent error handling and a fallback UI message whenever a PokeAPI request fails or times out.",
+    dueDate: "09/12/2026",
+    priority: "medium",
+    assignedTo: [8],
+    status: "await-feedback",
+    subtasks: [
+      { text: "Wrap fetch calls in try/catch", done: true },
+      { text: "Show error toast on failed request", done: false },
+    ],
+  },
+  {
+    id: 9,
+    category: "Technical Task",
+    title: "Build Reusable Card & Overlay Templates",
+    description: "Extract the Pokemon card and detail overlay markup into reusable template functions, following the project's max-14-lines-per-function rule.",
+    dueDate: "09/14/2026",
+    priority: "medium",
+    assignedTo: [6, 7],
+    status: "in-progress",
+    subtasks: [
+      { text: "Create getPokemonCardTemplate()", done: true },
+      { text: "Create getPokemonDetailTemplate()", done: false },
+      { text: "Split templates into template.js", done: false },
+    ],
+  },
+  {
+    id: 10,
+    category: "Technical Task",
+    title: "Deploy Project via FTP & GitHub Actions",
+    description: "Wire up the existing CI/CD pipeline so the Pokedex build is linted, tested, and deployed automatically on merge to main.",
+    dueDate: "09/30/2026",
+    priority: "low",
+    assignedTo: [1],
+    status: "todo",
+    subtasks: [
+      { text: "Verify code-quality workflow passes", done: true },
+      { text: "Configure deploy-ftp.yml exclude list", done: true },
+      { text: "Confirm branch protection rules", done: false },
+    ],
+  },
+];
+
+let isDragging = false;
+let dragStartX = 0;
+let dragScrollLeft = 0;
+let activeTasksSection = null;
+
+const taskSections = document.querySelectorAll(".tasks-section");
+
+
+function handleDragStart(event) {
+  activeTasksSection = event.currentTarget;
+  isDragging = true;
+  dragStartX = event.pageX - activeTasksSection.offsetLeft;
+  dragScrollLeft = activeTasksSection.scrollLeft;
+  activeTasksSection.classList.add("dragging");
+}
+
+
+function handleDragEnd() {
+  if (activeTasksSection) {
+    activeTasksSection.classList.remove("dragging");
+  }
+  isDragging = false;
+  activeTasksSection = null;
+}
+
+
+function handleDragMove(event) {
+  if (!isDragging) return;
+
+  event.preventDefault();
+  const x = event.pageX - activeTasksSection.offsetLeft;
+  const walk = x - dragStartX;
+  activeTasksSection.scrollLeft = dragScrollLeft - walk;
+}
+
+
+function initTaskSectionDragScroll() {
+  taskSections.forEach((section) => {
+    section.addEventListener("mousedown", handleDragStart);
+    section.addEventListener("mouseleave", handleDragEnd);
+    section.addEventListener("mouseup", handleDragEnd);
+    section.addEventListener("mousemove", handleDragMove);
+  });
+}
+
+
+initTaskSectionDragScroll();

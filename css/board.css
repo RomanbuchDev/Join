@@ -1,25 +1,60 @@
-input:focus-visible {
-  outline: none;
-}
-
-h2 {
-  /* font-family: var(--font-family); */
-  font-size: 1.75rem;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--color-dark);
+.board-body {
+  flex-direction: column;
+  min-height: 100dvh;
 }
 
 .d-flex {
   display: flex;
 }
 
-.flex-1 {
-  flex: 1;
-}
-
 .d-desktop {
   display: none;
+}
+
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-dark);
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+input:focus-visible,
+button:focus-visible {
+  outline: none;
+}
+
+.button-reset {
+  line-height: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.svg-fill {
+  fill: var(--color-dark);
+  transition: fill 0s ease 125ms;
+}
+
+.svg-fill:active {
+  fill: var(--color-dark-active);
+}
+
+.svg-fill:hover,
+.button-reset:focus-visible .svg-fill {
+  fill: var(--color-medium);
+}
+
+.button-reset:active .svg-fill {
+  fill: var(--color-dark-active);
 }
 
 .svg-width-height-40px {
@@ -46,12 +81,8 @@ h2 {
   bottom: 0;
 }
 
-.board-body {
-  flex-direction: column;
-  min-height: 100dvh;
-}
-
 .board-main-content {
+  flex: 1;
   margin: 8em 1em 5em;
 }
 
@@ -64,8 +95,9 @@ h2 {
   justify-content: space-between;
 }
 
-/* .find-addtask-container {
-} */
+.find-addtask-container {
+  gap: 2em;
+}
 
 .find-container {
   background-color: var(--color-white);
@@ -82,31 +114,10 @@ h2 {
 .find-input-field {
   font-family: var(--font-family);
   font-size: 1.25rem;
-  border: none;
-  padding: 0;
   flex: 1;
-  min-width: 0;
-}
-
-.button-reset {
-  line-height: 0;
-  background: none;
   border: none;
-  cursor: pointer;
   padding: 0;
-}
-
-.svg-fill {
-  fill: var(--color-dark);
-  transition: fill 0s ease 10ms;
-}
-
-.svg-fill:hover {
-  fill: var(--color-medium);
-}
-
-.svg-fill:active {
-  fill: var(--color-dark-active);
+  min-width: 0;
 }
 
 .find-button {
@@ -123,4 +134,157 @@ h2 {
 .board-column {
   flex-direction: column;
   gap: 1em;
+}
+
+.empty-board-column {
+  justify-content: center;
+  align-items: center;
+  min-height: 3em;
+  color: var(--color-gray-168);
+  background-color: var(--color-gray-231);
+  border: 1px dashed var(--color-gray-168);
+  border-radius: 10px;
+  box-shadow: 0 0 4px 0 var(--color-black-25);
+  width: 100%;
+}
+
+.tasks-section {
+  gap: 1em;
+  margin: -1em;
+  padding: 1em;
+  overflow-x: auto;
+  cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tasks-section::-webkit-scrollbar {
+  display: none;
+}
+
+.tasks-section.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.task-card {
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 1.5em;
+  background-color: var(--color-white);
+  border-radius: 24px;
+  box-shadow: 0 0 10px 3px var(--color-black-10);
+  padding: 1em;
+  width: 15.75em;
+  cursor: pointer;
+}
+
+.task-label {
+  align-self: flex-start;
+  color: var(--color-white);
+  font-size: 1rem;
+  font-weight: 400;
+  border-radius: 8px;
+  padding: 0.25em 1em;
+}
+
+.task-title-description-container {
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.task-description {
+  overflow: hidden;
+  color: var(--color-gray-168);
+  font-size: 1rem;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.task-progress {
+  align-items: center;
+  gap: 1em;
+}
+
+.task-progress progress {
+  --progress-radius: 16px;
+
+  appearance: none;
+  flex: 1;
+  border: none;
+  border-radius: var(--progress-radius);
+  height: 0.5rem;
+}
+
+.task-progress progress::-webkit-progress-bar {
+  background-color: var(--color-gray-231);
+  border-radius: var(--progress-radius);
+}
+
+.task-progress progress::-webkit-progress-value {
+  background-color: var(--color-highlight);
+  border-radius: var(--progress-radius);
+}
+
+.task-progress progress::-moz-progress-bar {
+  background-color: var(--color-highlight);
+  border-radius: var(--progress-radius);
+}
+
+.task-progress p {
+  color: var(--color-black-100);
+  white-space: nowrap;
+}
+
+.task-card-footer {
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* This class has no effect.  */
+
+/* .task-avatars-container {
+  align-items: center;
+} */
+
+.task-avatar {
+  color: var(--color-white);
+  border: 1px solid var(--color-white);
+  border-radius: 50%;
+}
+
+.task-avatar,
+.priority-icon {
+  justify-content: center;
+  align-items: center;
+  width: 2em;
+  height: 2em;
+}
+
+.task-avatar + .task-avatar {
+  margin-left: -0.5em;
+}
+
+/* Label and AvatarColors: Interim status, final solution with JS */
+.color-label-user-story {
+  background-color: var(--color-label-user-story);
+}
+
+.color-label-technical-task {
+  background-color: var(--color-label-technical-task);
+}
+
+.color-avatar-1 {
+  background-color: var(--color-prio-low);
+}
+
+.color-avatar-2 {
+  background-color: var(--color-prio-medium);
+}
+
+.color-avatar-3 {
+  background-color: var(--color-email);
 }
