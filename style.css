@@ -76,7 +76,7 @@ h1 {
   justify-content: center;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.7rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.2;
   color: var(--color-white);
