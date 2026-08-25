@@ -96,7 +96,8 @@ h1 {
 .main-nav-legal {
   display: none;
 }
-@media (min-width: 64em) {
+
+@media (width >= 64em) {
   #page {
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas:
@@ -175,8 +176,7 @@ h1 {
     align-items: flex-start;
     width: fit-content;
     align-self: center;
-    margin-block-start: auto;
-    margin-block-end: 4em;
+    margin-block: auto 4em;
     gap: 1em;
   }
 

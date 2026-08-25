@@ -96,8 +96,7 @@ main {
 
 .summary-card-icon {
   grid-area: icon;
-  justify-self: flex-end;
-  align-self: center;
+  place-self: center flex-end;
 }
 
 .summary-card--date {
@@ -166,7 +165,7 @@ main {
   text-align: center;
 }
 
-@media (min-width: 64em) {
+@media (width >= 64em) {
   .summary-header {
     display: grid;
     grid-template-columns: max-content 3px max-content;
@@ -191,6 +190,7 @@ main {
     grid-column: 3;
     grid-row: 1;
   }
+
   .summary-list {
     margin: 0;
     border: 2px solid red;
