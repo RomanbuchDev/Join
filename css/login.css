@@ -9,11 +9,17 @@ a {
   text-decoration: none;
 }
 
+.body-login {
+  min-height: 100vh;
+}
+
 .app {
   position: relative;
   overflow: hidden;
   background-color: var(--color-bg-main);
   width: 100%;
+
+  min-height: 100vh;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   gap: 4rem;
@@ -42,12 +48,11 @@ h1 {
   position: relative;
   max-height: 29.7rem;
   max-width: 24.75rem;
-  height: 100%;
   width: 100%;
   border-radius: 1.9rem;
   padding: 2rem 1rem;
   background-color: var(--color-white);
-  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 0 0.875rem 0.1875rem rgba(0, 0, 0, 0.14);
 }
 
 /* form login */
@@ -84,7 +89,7 @@ form {
 
 .form-control:focus {
   outline: 0;
-  box-shadow: 0px 0px 14px 3px color-mix(in srgb, var(--color-highlight) 60%, transparent);
+  box-shadow: 0 0 0.875rem 0.1875rem color-mix(in srgb, var(--color-highlight) 60%, transparent);
 }
 
 /*  Inputs */
@@ -179,12 +184,14 @@ form {
 .heading-accent--bottom-center::after {
   content: "";
   width: 80%;
-  height: 3px;
+  height: 0.1875rem;
   background-color: var(--color-highlight);
 }
 
 .input-wrapper {
   position: relative;
+  max-width: 22.75rem;
+  width: 100%;
 }
 
 .input-icon {
@@ -198,36 +205,15 @@ form {
   pointer-events: none;
 }
 
-.main-signup {
-  max-height: 37.2rem;
-  max-width: 24.75rem;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  border-radius: 1.88rem;
-  padding: 2rem 1rem;
-  background-color: var(--color-white);
-  box-shadow: 0 0 0.88rem 0.19rem #00000024;
-}
-
-.signup-back-vector {
-  height: 2.5rem;
-  width: 2.5rem;
-  position: absolute;
-  left: 1rem;
-  top: 2rem;
-}
-
 .error-text {
   height: 1rem;
   width: 100%;
-  color: #d32f2f;
+  color: var(--color-error);
   font-size: 0.875rem;
   text-align: center;
 }
 
 .input-error {
-  /* background-color: var(--color-error); */
   border: 1px solid var(--color-error);
 }
 
@@ -278,42 +264,37 @@ form {
   }
 }
 
-@media (min-width: 20rem) and (max-width: 40rem) {
-}
-
+/* teblet */
 @media (min-width: 40rem) and (max-width: 64rem) {
+  .app {
+    width: 100%;
+    min-height: 100vh;
+  }
 }
+/* Laptop */
+@media (min-width: 64rem) {
+  .app {
+    min-width: 64rem;
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 4.1875rem;
+    padding-right: 7.625rem;
+    padding-left: 4.8125rem;
+    padding-bottom: 2.5rem;
+  }
 
-@media (min-width: 64rem) and (max-width: 90rem) {
-  .app {
-    width: 100%;
-  }
-  .header-login {
-    max-width: 90rem;
-  }
-}
-@media (min-width: 1440px) {
-  .app {
-    max-width: 90rem;
-    width: 100%;
-    height: 100%;
-    padding-top: 67px;
-    padding-right: 122px;
-    padding-left: 77px;
-    padding-bottom: 40px;
-  }
   .header-login {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     max-width: 77.5rem;
-    height: 7.75rem;
-    padding: 0px;
+    height: 6.5rem;
+    padding: 0;
   }
 
   .header-login img {
-    height: 7.75rem;
-    width: 6.25rem;
+    height: 6.5rem;
+    width: 5rem;
     padding: 0;
   }
 
@@ -325,33 +306,24 @@ form {
   .sign-up-bar {
     display: none;
   }
+
   .main-login {
-    max-height: 28rem;
     max-width: 41rem;
-    height: 100%;
+    height: 28rem;
     width: 100%;
     padding: 2rem 1rem;
   }
 
-  form {
-    /* max-width: 26.5rem;
-    max-height: 7.625rem; */
-    /* height: 100%;
-    width: 100%; */
-    /* gap: 1rem; */
-  }
-
   .input-wrapper {
-    width: 422px;
-    height: 48px;
-    margin-bottom: 32px;
+    width: 26.375rem;
+    height: 3rem;
+    margin-bottom: 2rem;
   }
 
   .input-bar {
-    width: 422px;
-    height: 152px;
+    width: 26.375rem;
+    height: 9.5rem;
     justify-content: flex-start;
-    /* gap: 2rem; */
   }
 
   .btn-logins-bar {
@@ -370,5 +342,47 @@ form {
 
   .footer-login {
     justify-content: end;
+    height: 2rem;
+  }
+
+  @keyframes logo-to-header {
+    to {
+      top: 4.1875rem;
+      left: 4.8125rem;
+      width: 5rem;
+      transform: translate(0, 0);
+    }
+  }
+}
+
+/* Desktop: nur Abweichungen von Laptop */
+@media (min-width: 90rem) {
+  .app {
+    max-width: 90rem;
+  }
+
+  .header-login {
+    height: 7.75rem;
+  }
+
+  .header-login img {
+    height: 7.75rem;
+    width: 6.25rem;
+  }
+
+  .splash-screen {
+    animation: splash-fade-out 2s ease-in-out forwards;
+  }
+
+  @keyframes splash-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes logo-to-header {
+    to {
+      opacity: 0;
+    }
   }
 }
