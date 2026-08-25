@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="images/" href="/assets/icons/join-logo.svg" />
+    <link rel="stylesheet" href="../css/reset_stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/variables.css" />
-    <link rel="stylesheet" href="../css/reset_stylesheet.css" />
     <link rel="stylesheet" href="../css/summary.css" />
     <link rel="stylesheet" href="../style.css" />
     <title>Join - Summary</title>
@@ -14,7 +14,9 @@
   <body>
     <div id="page">
       <header class="main-header">
-        <a href=""><img src="/assets/icons/join-logo.svg" alt="Join Logo" /></a>
+        <a href=""
+          ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
+        /></a>
 
         <button type="button" class="user-avatar"><span>SM</span></button>
       </header>
@@ -29,35 +31,37 @@
           <li class="summary-card summary-card--todo">
             <img
               class="summary-card-icon"
-              src="/assets/icons/todo-icon.svg"
+              src="../assets/icons/todo-icon.svg"
               alt=""
             />
-            <span class="summary-card-number">1</span>
-            <span class="summary-card-label">To-Do</span>
+            <span class="summary-card-number card-number">1</span>
+            <span class="summary-card-label label-todo">To-Do</span>
           </li>
 
           <li class="summary-card summary-card--done">
             <img
               class="summary-card-icon"
-              src="/assets/icons/done-icon.svg"
+              src="../assets/icons/done-icon.svg"
               alt=""
             />
-            <span class="summary-card-number">1</span>
-            <span class="summary-card-label">Done</span>
+            <span class="summary-card-number card-number">1</span>
+            <span class="summary-card-label label-done">Done</span>
           </li>
 
-          <li class="summary-card summary-card--urgent">
-            <img
-              class="summary-card-icon"
-              src="/assets/icons/urgent-icon.svg"
-              alt=""
-            />
-            <span class="summary-card-number">1</span>
-            <span class="summary-card-label">Urgent</span>
+          <li class="summary-card summary-card--date">
+            <div class="summary-card--urgent">
+              <img
+                class="summary-card-icon"
+                src="../assets/icons/urgent-icon.svg"
+                alt=""
+              />
+              <span class="summary-card-number card-number">1</span>
+              <span class="summary-card-label label-urgent">Urgent</span>
+            </div>
 
             <div class="summary-card-deadline">
-              <time class="summary-card-date" datetime="2026-10-16"
-                >October 16, 2022</time
+              <time class="card-date" datetime="2026-10-16"
+                >October 16, 2026</time
               >
               <span class="summary-card-deadline-label">Upcoming Deadline</span>
             </div>
@@ -84,33 +88,48 @@
       </main>
 
       <nav class="main-nav">
+        <img
+          class="nav-join-img"
+          src="../assets/icons/join-logo-white.svg"
+          alt=""
+        />
         <ul class="main-nav-list">
           <li class="main-nav-item">
-            <a href="/html/summary.html" aria-current="page">
-              <img src="/assets/icons/summary-icon.svg" alt="" />
+            <a href="../html/summary.html" aria-current="page">
+              <img src="../assets/icons/summary-icon.svg" alt="" />
               <span>Summary</span>
             </a>
           </li>
 
           <li class="main-nav-item">
-            <a href="/html/add-task.html">
-              <img src="/assets/icons/addtask-icon.svg" alt="" />
+            <a href="../html/add-task.html">
+              <img src="../assets/icons/addtask-icon.svg" alt="" />
               <span> Add Task </span>
             </a>
           </li>
 
           <li class="main-nav-item">
-            <a href="/html/board.html">
-              <img src="/assets/icons/board-icon.svg" alt="" />
+            <a href="../html/board.html">
+              <img src="../assets/icons/board-icon.svg" alt="" />
               <span> Board </span>
             </a>
           </li>
 
           <li class="main-nav-item">
-            <a href="/html/contact.html">
-              <img src="/assets/icons/contact-icon.svg" alt="" />
+            <a href="../html/contact.html">
+              <img src="../assets/icons/contact-icon.svg" alt="" />
               <span> Contacts </span>
             </a>
+          </li>
+        </ul>
+
+        <ul class="main-nav-legal">
+          <li>
+            <a href="../html/privacy-policy.html">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="../html/imprint.htmlfig fig">Legal Notice</a>
           </li>
         </ul>
       </nav>
