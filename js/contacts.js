@@ -1,6 +1,7 @@
 // JavaScript file for contact page
 
 // Variables:
+
 const contactList = document.getElementById("contact-list");
 const contactListGrid = document.getElementById("contact-grid");
 const contactDetails = document.getElementById("contact-details");
@@ -9,23 +10,14 @@ const contactOptionMenuOverlay = document.getElementById(
   "contact-options-overlay",
 );
 
-const dialogBox = document.getElementById("contacts-dialog");
-const dialogTitle = document.getElementById("dialog-title");
-const dialogSubtitle = document.getElementById("dialog-subtitle");
-const dialogShortcut = document.getElementById("dialog-shortcut");
-const dialogContactForm = document
-  .getElementById("contacts-dialog")
-  .querySelector("form");
-const contactName = document.getElementById("input-contact-name-dialog");
-const contactEmail = document.getElementById("input-contact-email-dialog");
-const contactPhone = document.getElementById("input-contact-phone-dialog");
-const dialogCreateContactButton = document.getElementById(
-  "dialog-create-contact-button",
+const dialogBoxDeleteQuestion = document.getElementById(
+  "delete-question-dialog",
 );
-const dialogDeleteButton = document.getElementById("dialog-delete-button");
-const dialogSaveButton = document.getElementById("dialog-save-button");
-const messageContactCreated = document.getElementById(
-  "toast-message-contact-created",
+const messageContactEdited = document.getElementById(
+  "toast-message-contact-edited",
+);
+const messageContactDeleted = document.getElementById(
+  "toast-message-contact-deleted",
 );
 
 let currentContactData;
@@ -83,12 +75,13 @@ const allContacts = [
   },
 ];
 
-const contactListCategory = [];
-
 // Functions:
 
 function init() {
   renderContactList();
+  activateContactFormSubmissionType();
+  renderContactDetailsDesktopPlaceholder();
+  closeDialogBackgroundClick();
   console.log(allContacts);
 }
 
@@ -139,8 +132,8 @@ function sortAlphabetList(alphabetList) {
 function calculateContactIconColor(contactShortcut) {
   const correctShortcut = contactShortcut.toUpperCase();
 
-  const firstNameLetter = correctShortcut[0];
-  const LastNameLetter = correctShortcut[1];
+  const firstNameLetter = correctShortcut[0] || "X";
+  const LastNameLetter = correctShortcut[1] || firstNameLetter;
 
   const value1 = firstNameLetter.charCodeAt(0) - 65;
   const value2 = LastNameLetter.charCodeAt(0) - 65;
@@ -161,7 +154,7 @@ function setContactIconColor(contactID, shortcutColor) {
 
 
 function getContactShortcut(contact) {
-  const contactNameParts = contact.name.split(" ");
+  const contactNameParts = contact.name.trim().split(/\s+/);
 
   const shortcut =
     contactNameParts.length > 1
@@ -210,10 +203,28 @@ function createContactShortcut(name) {
 }
 
 
-function showContactDetails(contactID) {
-  toggleContactPageView(contactDetails, contactList);
-  contactDetails.innerHTML = "";
+function highlightActivteContact(contactID) {
+  const allContacts = document.querySelectorAll(".contact-card");
+  allContacts.forEach((contact) => contact.classList.remove("active"));
 
+  if (window.innerWidth >= 1024) {
+    const activeContact = document.getElementById(`contact-${contactID}`);
+
+    if (activeContact) {
+      activeContact.classList.add("active");
+    }
+  }
+}
+
+
+function showContactDetailsDesktopAnimation() {
+  setTimeout(() => {
+    contactDetails.classList.add("show-animation");
+  }, 10);
+}
+
+
+function renderContactDetails(contactID) {
   const contact = allContacts.find((name) => name.id === contactID);
   const shortcut = createContactShortcut(contact.name);
   currentContactData = contact;
@@ -230,14 +241,29 @@ function showContactDetails(contactID) {
 }
 
 
+function showContactDetails(contactID) {
+  highlightActivteContact(contactID);
+  toggleContactPageView(contactDetails, contactList);
+  contactDetails.classList.remove("show-animation");
+  contactDetails.innerHTML = "";
+
+  renderContactDetails(contactID);
+  showContactDetailsDesktopAnimation();
+}
+
+
 function backToContactList() {
   toggleContactPageView(contactList, contactDetails);
+
+  dialogBoxButton.classList.remove("hidden");
 }
 
 
 function toggleContactPageView(show, hide) {
   show.classList.remove("hidden");
   hide.classList.add("hidden");
+
+  dialogBoxButton.classList.add("hidden");
 }
 
 
@@ -255,116 +281,22 @@ function closeMobileContactOptions() {
 }
 
 
-function deleteContact() {
-  const databaseIndex = allContacts.findIndex(
-    (contact) => contact.id === currentContactData.id,
-  );
-
-  if (databaseIndex !== -1) {
-    allContacts.splice(databaseIndex, 1);
+function checkContactFormValidation() {
+  if (!dialogContactForm.checkValidity()) {
+    dialogContactForm.reportValidity();
+    return false;
   }
-  contactList.innerHTML = "";
-  renderContactList();
-  backToContactList();
-  closeMobileContactOptions();
-  closeDialog();
+  return true;
 }
 
 
-function saveContactData() {
-  currentContactData.name = contactName.value;
-  currentContactData.email = contactEmail.value;
-  currentContactData.phone = contactPhone.value;
+function handleContactFormSubmit(event) {
+  event.preventDefault();
+  const mode = dialogContactForm.getAttribute("data-mode");
 
-  contactList.innerHTML = "";
-  renderContactList();
-  showContactDetails(currentContactData.id);
-  closeMobileContactOptions();
-  closeDialog();
-}
-
-
-function showContactData() {
-  const shortcutColor = calculateContactIconColor(currentContactData.shortcut);
-
-  dialogShortcut.innerHTML = currentContactData.shortcut;
-  dialogShortcut.classList.add("contact-details-shortcut");
-  dialogShortcut.style.setProperty("--background-color", shortcutColor);
-
-  contactName.value = currentContactData.name;
-  contactEmail.value = currentContactData.email;
-  contactPhone.value = currentContactData.phone;
-}
-
-
-function editContactDetails() {
-  dialogTitle.textContent = "Edit contact";
-  dialogSubtitle.style.display = "none";
-
-  showContactData();
-
-  dialogCreateContactButton.classList.add("hidden");
-  dialogDeleteButton.classList.remove("hidden");
-  dialogSaveButton.classList.remove("hidden");
-
-  dialogBox.showModal();
-}
-
-
-function openDialog() {
-  dialogTitle.textContent = "Add contact";
-  dialogSubtitle.style.display = "flex";
-
-  dialogCreateContactButton.classList.remove("hidden");
-  dialogDeleteButton.classList.add("hidden");
-  dialogSaveButton.classList.add("hidden");
-
-  resetFormInputs();
-  dialogBox.showModal();
-}
-
-
-function closeDialog() {
-  resetFormInputs();
-  dialogShortcut.classList.remove("contact-details-shortcut");
-  closeMobileContactOptions();
-  dialogBox.close();
-}
-
-
-function hideToastMessageContactCreated() {
-  messageContactCreated.classList.remove("show");
-}
-
-
-function showToastMessageContactCreated() {
-  messageContactCreated.classList.add("show");
-  setTimeout(hideToastMessageContactCreated, 3000);
-}
-
-
-function resetFormInputs() {
-  dialogContactForm.reset();
-
-  dialogShortcut.innerHTML =
-    '<img src="../assets/icons/contacts/person_icon.png" alt="Contacts icon">';
-  dialogShortcut.style.removeProperty("--background-color");
-}
-
-
-function createContact() {
-  const newContactData = {
-    id: allContacts.length > 0 ? allContacts[allContacts.length - 1].id + 1 : 1,
-    name: contactName.value,
-    email: contactEmail.value,
-    phone: contactPhone.value,
-  };
-
-  getContactShortcut(newContactData);
-  allContacts.push(newContactData);
-
-  contactList.innerHTML = "";
-  renderContactList();
-  resetFormInputs();
-  showToastMessageContactCreated();
+  if (mode === "edit") {
+    saveContactData();
+  } else {
+    createContact();
+  }
 }
