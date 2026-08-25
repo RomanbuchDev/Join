@@ -19,15 +19,21 @@
     <script src="./js/auth-service.js" defer></script>
     <script src="./js/login.js" defer></script>
   </head>
-  <body class="" onload="init()">
+  <body class="dpf-center" onload="init()">
     <div id="splashScreen" class="splash-screen">
       <img src="./assets/icons/screen-logo.svg" alt="Join Logo" class="splash-logo" />
     </div>
     <section class="app dpf-column-spc-between-center">
-      <header class="">
+      <header class="header-login">
         <div class="dpf-flex-start">
           <img src="./assets/icons/join-logo.svg" alt="" />
         </div>
+        <section class="sign-up-bar-header dpf-spc-between-center">
+          <p>Not a Join user?</p>
+          <div class="dpf-center btn btn-primary btn-signup">
+            <a href="./html/signup.html" class="btn-primary">Sign up</a>
+          </div>
+        </section>
       </header>
 
       <main class="main-login">
@@ -36,7 +42,7 @@
             <h1>Log in</h1>
           </div>
 
-          <div class="pb-1">
+          <div class="pb-1 dpf-flex-column-center input-bar">
             <label for="exampleInputEmail1" class="form-label"></label>
             <div class="input-wrapper">
               <input type="email" placeholder="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
@@ -56,7 +62,7 @@
           </div>
         </form>
       </main>
-      <div id="loginToast" class="toast">You Signed Up successfully</div>
+      <!-- <div id="loginToast" class="toast">You Signed Up successfully</div> -->
 
       <footer class="dpf-flex-column-center footer-login">
         <section class="sign-up-bar dpf-spc-between-center">

@@ -19,14 +19,14 @@ a {
   gap: 4rem;
 }
 
-.app header {
+.header-login {
   height: auto;
   width: 100%;
   padding-top: 2.31rem;
   padding-left: 2.38rem;
 }
 
-.app header img {
+.header-login img {
   height: 4.88rem;
   width: 4rem;
   object-fit: cover;
@@ -40,11 +40,11 @@ h1 {
 /* main class */
 .main-login {
   position: relative;
-  max-height: 29.69rem;
+  max-height: 29.7rem;
   max-width: 24.75rem;
   height: 100%;
   width: 100%;
-  border-radius: 1.88rem;
+  border-radius: 1.9rem;
   padding: 2rem 1rem;
   background-color: var(--color-white);
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.14);
@@ -154,6 +154,10 @@ form {
   height: 3rem;
   max-width: 18.25rem;
   gap: 2.2rem;
+}
+
+.sign-up-bar-header {
+  display: none;
 }
 
 .impress-bar {
@@ -271,5 +275,100 @@ form {
     left: 2.38rem;
     width: 4rem;
     transform: translate(0, 0);
+  }
+}
+
+@media (min-width: 20rem) and (max-width: 40rem) {
+}
+
+@media (min-width: 40rem) and (max-width: 64rem) {
+}
+
+@media (min-width: 64rem) and (max-width: 90rem) {
+  .app {
+    width: 100%;
+  }
+  .header-login {
+    max-width: 90rem;
+  }
+}
+@media (min-width: 1440px) {
+  .app {
+    max-width: 90rem;
+    width: 100%;
+    height: 100%;
+    padding-top: 67px;
+    padding-right: 122px;
+    padding-left: 77px;
+    padding-bottom: 40px;
+  }
+  .header-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 77.5rem;
+    height: 7.75rem;
+    padding: 0px;
+  }
+
+  .header-login img {
+    height: 7.75rem;
+    width: 6.25rem;
+    padding: 0;
+  }
+
+  .sign-up-bar-header {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .sign-up-bar {
+    display: none;
+  }
+  .main-login {
+    max-height: 28rem;
+    max-width: 41rem;
+    height: 100%;
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+
+  form {
+    /* max-width: 26.5rem;
+    max-height: 7.625rem; */
+    /* height: 100%;
+    width: 100%; */
+    /* gap: 1rem; */
+  }
+
+  .input-wrapper {
+    width: 422px;
+    height: 48px;
+    margin-bottom: 32px;
+  }
+
+  .input-bar {
+    width: 422px;
+    height: 152px;
+    justify-content: flex-start;
+    /* gap: 2rem; */
+  }
+
+  .btn-logins-bar {
+    height: 3rem;
+    width: 20.125rem;
+    flex-direction: unset;
+  }
+
+  .btn-primary {
+    width: 6.9rem;
+  }
+
+  .btn-secondary {
+    width: 11rem;
+  }
+
+  .footer-login {
+    justify-content: end;
   }
 }
