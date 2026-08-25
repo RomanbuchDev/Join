@@ -64,9 +64,8 @@ h1 {
   align-items: flex-end;
 }
 
-.main-nav img {
-  width: 1.5rem;
-  height: 1.5rem;
+.nav-join-img {
+  display: none;
 }
 
 .main-nav-item a {
@@ -93,6 +92,10 @@ h1 {
 .main-nav-item span {
   color: var(--color-white);
 }
+
+.main-nav-legal {
+  display: none;
+}
 @media (min-width: 64em) {
   #page {
     grid-template-columns: repeat(5, 1fr);
@@ -109,7 +112,77 @@ h1 {
     grid-area: main;
   }
 
+  .main-header img {
+    display: none;
+  }
+
   .main-nav {
     grid-area: nav;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-nav-list {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-nav-item {
+    width: 100%;
+  }
+
+  .main-nav-item a {
+    font-size: 1rem;
+    line-height: 1.2;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 2rem;
+    box-sizing: border-box;
+  }
+
+  .main-nav-item span {
+    width: 5rem;
+  }
+
+  .main-nav a[aria-current="page"] {
+    border-radius: 0;
+  }
+
+  .main-nav-item img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nav-join-img {
+    display: block;
+    width: 64px;
+    height: auto;
+    margin-inline: auto;
+    margin-block: 4em;
+  }
+
+  .main-nav-legal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+    align-self: center;
+    margin-block-start: auto;
+    margin-block-end: 4em;
+    gap: 1em;
+  }
+
+  .main-nav-legal a {
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--color-gray-231);
   }
 }
