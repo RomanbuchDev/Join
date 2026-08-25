@@ -2,8 +2,7 @@
     CONTACTS_DIALOG.CSS - DIALOG FOR CONTACTS PAGE - MOBILE VERSION (min-width: 320px)
     ====================================================================================================
     1. ADD CONTACT DIALOG (Dialog window to add new contacts)
-    2. OTHER
-    ...
+    2. OTHER (Desktop responsive)
     ==================================================================================================== */
 
 /*  ==================================================================================================== 
@@ -26,8 +25,6 @@
   z-index: 200;
   margin-left: auto;
   margin-right: auto;
-
-  /* padding: 66px 24px; */
   width: calc(100% - 28px);
   max-width: 396px;
   height: 760px;
@@ -71,15 +68,20 @@
 }
 
 .close-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   background: none;
   color: white;
+  font-size: 2rem;
+  line-height: 0;
   border: none;
   cursor: pointer;
   width: 24px;
   height: 24px;
 }
 
-.close-button:hover {
+.close-button-container .close-button:hover {
   background-color: rgb(104 104 104 / 10%);
   border-radius: 10px;
 }
@@ -100,6 +102,10 @@
   width: 5.6em;
   height: 0.2em;
   margin-top: 0.5em;
+}
+
+.dialog-join-icon {
+  display: none;
 }
 
 .add-contact-title {
@@ -142,7 +148,7 @@
 .add-contact-input {
   display: flex;
   align-items: center;
-  border: 1px solid var(--color-medium);
+  border: 1px solid var(--color-gray-104);
   border-radius: 10px;
   height: 30px;
   padding: 0.8125rem 1.4375rem;
@@ -163,74 +169,16 @@
   padding-right: 1.5rem;
 }
 
-.create-contact-data {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-dark);
-  color: var(--color-white);
-  font-size: 1.3rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  gap: 0.25rem;
-  padding: 1.125rem 0.625rem;
-}
-
-.create-contact-data:hover {
-  background-color: var(--color-medium);
-  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
-}
-
-.create-contact-data:active {
-  background-color: var(--color-dark-active);
-  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+#dialog-cancel-button {
+  display: none;
 }
 
 .delete-contact-data {
-  background-color: var(--color-white);
-  color: var(--color-dark);
-  font-size: 1.25rem;
-  border: 1px solid var(--color-dark);
-  border-radius: 10px;
-  flex: 1;
-  cursor: pointer;
   max-width: 8.75rem;
-  padding: 1.125rem 0.625rem;
-}
-
-.delete-contact-data:hover {
-  box-shadow:
-    0 4px 4px rgb(0 0 0 / 25%),
-    inset 0 0 0 1px var(--color-dark);
 }
 
 .save-contact-data {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-dark);
-  color: var(--color-white);
-  font-size: 1.3rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 10px;
-  flex: 1;
-  cursor: pointer;
-  gap: 0.25rem;
   max-width: 8.75rem;
-  padding: 1.125rem 0.625rem;
-}
-
-.save-contact-data:hover {
-  background-color: var(--color-medium);
-  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
-}
-
-.save-contact-data:active {
-  background-color: var(--color-dark-active);
-  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
 }
 
 .add-contact-footer button.hidden {
@@ -239,19 +187,6 @@
 
 .toast-contact-created {
   background-color: var(--color-dark);
-  color: var(--color-white);
-  font-size: 1.25rem;
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0 0 4px rgb(0 0 0 / 40%);
-  position: fixed;
-  bottom: -80px;
-  left: 50%;
-  z-index: 300;
-  white-space: nowrap;
-  transform: translateX(-50%);
-  transition: bottom 0.3s ease-out;
-  padding: 1.125rem 0.625rem;
 }
 
 .toast-contact-created.show {
@@ -302,64 +237,15 @@
 }
 
 .delete-question-no {
-  background-color: var(--color-white);
-  color: var(--color-dark);
-  font-size: 1.25rem;
-  border: 1px solid var(--color-dark);
-  border-radius: 10px;
-  flex: 1;
-  cursor: pointer;
   max-width: 8.75rem;
-  padding: 1.125rem 0.625rem;
-}
-
-.delete-question-no:hover {
-  box-shadow:
-    0 4px 4px rgb(0 0 0 / 25%),
-    inset 0 0 0 1px var(--color-dark);
 }
 
 .delete-question-yes {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-dark);
-  color: var(--color-white);
-  font-size: 1.3rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 10px;
-  flex: 1;
-  cursor: pointer;
   max-width: 8.75rem;
-  padding: 1.125rem 0.625rem;
-}
-
-.delete-question-yes:hover {
-  background-color: var(--color-medium);
-  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
-}
-
-.delete-question-yes:active {
-  background-color: var(--color-dark-active);
-  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
 }
 
 .toast-contact-edited {
   background-color: rgb(22 153 70 / 100%);
-  color: var(--color-white);
-  font-size: 1.25rem;
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0 0 4px rgb(0 0 0 / 40%);
-  position: fixed;
-  bottom: -80px;
-  left: 50%;
-  z-index: 300;
-  white-space: nowrap;
-  transform: translateX(-50%);
-  transition: bottom 0.3s ease-out;
-  padding: 1.125rem 0.625rem;
 }
 
 .toast-contact-edited.show {
@@ -368,21 +254,141 @@
 
 .toast-contact-deleted {
   background-color: rgb(235 20 40 / 100%);
-  color: var(--color-white);
-  font-size: 1.25rem;
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0 0 4px rgb(0 0 0 / 40%);
-  position: fixed;
-  bottom: -80px;
-  left: 50%;
-  z-index: 300;
-  white-space: nowrap;
-  transform: translateX(-50%);
-  transition: bottom 0.3s ease-out;
-  padding: 1.125rem 0.625rem;
 }
 
 .toast-contact-deleted.show {
   bottom: 150px;
+}
+
+/*  ==================================================================================================== 
+    2. OTHER
+    ==================================================================================================== */
+
+@media (width >= 64em) {
+  .add-contact-container {
+    transform: translateX(100%);
+    transition:
+      transform 0.3s ease-out,
+      display 0.3s ease-out allow-discrete;
+    contain: paint layout;
+    top: 180px;
+    z-index: 200;
+    max-width: 1200px;
+    max-height: 500px;
+  }
+
+  .add-contact-container[open] {
+    display: block;
+    overflow: hidden;
+    max-width: 1200px;
+    height: auto;
+    min-height: 400px;
+    padding: 0;
+  }
+
+  .add-contact-container form {
+    display: grid;
+    grid-template-columns: 3fr 2fr 3fr;
+    align-items: stretch;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+  }
+
+  .add-contact-header-container {
+    display: contents;
+    height: auto;
+  }
+
+  @starting-style {
+    .add-contact-container[open] {
+      transform: translateX(100%);
+    }
+  }
+
+  .close-button-container {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+  }
+
+  .close-button {
+    color: var(--color-dark);
+  }
+
+  .add-contact-title-container {
+    grid-column: 1;
+    background-color: var(--color-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .dialog-join-icon {
+    display: block;
+    object-fit: contain;
+    align-self: flex-start;
+    margin-bottom: 1em;
+  }
+
+  .add-contact-title {
+    font-size: 3.8125rem;
+  }
+
+  .add-contact-subtitle {
+    font-size: 1.6875rem;
+  }
+
+  .add-contact-shortcut {
+    grid-column: 2;
+    grid-row: 1;
+    place-self: center;
+    position: static;
+    margin: 0;
+    transform: none;
+  }
+
+  .add-contact-main-container {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2em;
+    padding: 16px 40px 40px 0;
+    margin-bottom: 3em;
+  }
+
+  .add-contact-input {
+    height: 3em;
+  }
+
+  .add-contact-input input {
+    font-size: 1.25rem;
+  }
+
+  .add-contact-footer {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-self: end;
+    padding: 0 100px 80px 0;
+  }
+
+  #dialog-cancel-button {
+    display: flex;
+  }
+
+  #dialog-cancel-button.hidden {
+    display: none;
+  }
+
+  .add-contact-footer .delete-contact-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25em;
+  }
 }

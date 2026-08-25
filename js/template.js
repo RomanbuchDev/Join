@@ -52,7 +52,7 @@ function getContactDetailsTemplate(contactData) {
       </div>
 
       <!-- Contact details option menu button -->
-      <button class="contact-menu" id="contact-menu-button" onclick="toggleMobileContactOptions()">
+      <button class="button-primary contact-menu" id="contact-menu-button" onclick="toggleMobileContactOptions()">
         <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
       </button>`;
 }
@@ -67,4 +67,13 @@ function getLetterCategoryTemplate(letter) {
         <div id="contact-grid-${letter}">
         </div>
       </section>`;
+}
+
+
+function getContactDetailsPlaceholderTemplate() {
+  return `<div class="contact-details-header-container">
+        <div class="contact-details-title-container">
+          <span class="contact-details-title">Contacts</span>
+          <span class="contact-details-subtitle">Better with a team</span>
+        </div>`;
 }

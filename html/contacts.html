@@ -9,12 +9,15 @@
   <!-- <link rel="stylesheet" href="../css/reset_stylesheet.css"> -->
   <link rel="stylesheet" href="../css/fonts.css" />
   <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/assets.css" />
   <link rel="stylesheet" href="../css/contacts.css" />
+  <link rel="stylesheet" href="../css/contacts_details.css" />
   <link rel="stylesheet" href="../css/contacts_dialog.css" />
   <link rel="stylesheet" href="../style.css" />
-  <!-- JavaScript file -->
+  <!-- JavaScript files -->
   <script src="../js/template.js" defer></script>
-  <script src="../js/contact.js" defer></script>
+  <script src="../js/contacts.js" defer></script>
+  <script src="../js/contacts_dialog.js" defer></script>
 </head>
 
 <body onload="init()" id="page">
@@ -30,7 +33,7 @@
     <!-- Button for dialog -->
     <div class="main-wrapper">
       <div class="button-wrapper">
-        <button type="button" class="contact-menu show" id="contact-menu-button" onclick="openDialog()">
+        <button type="button" class="button-primary contact-menu show" id="contact-menu-button" onclick="openDialog()">
           <span class="contact-menu-text">Add new contact</span>
           <img src="../assets/icons/contacts/contact_add_button_mobile.png" alt="Contact add button mobile" />
         </button>
@@ -54,11 +57,11 @@
     <aside class="contact-details-container hidden" id="contact-details">
       <!-- Contact details header -->
       <!-- <div class="contact-details-header-container">
-          <div class="contact-details-title-container">
-            <span class="contact-details-title">Contacts</span>
-            <span class="contact-details-subtitle">Better with a team</span>
-          </div>
-          <button
+        <div class="contact-details-title-container">
+          <span class="contact-details-title">Contacts</span>
+          <span class="contact-details-subtitle">Better with a team</span>
+        </div> -->
+      <!-- <button
             type="button"
             class="contact-details-back-button"
             onclick="backToContactList()"
@@ -141,10 +144,11 @@
       <header class="add-contact-header-container" aria-labelledby="dialog title">
         <div class="close-button-container">
           <button type="button" class="close-button" onclick="closeDialog()">
-            X
+            &times;
           </button>
         </div>
         <div class="add-contact-title-container">
+          <img src="../assets/icons/contacts/join-logo-white-letters.svg" alt="Join logo" class="dialog-join-icon" />
           <span class="add-contact-title" id="dialog-title">Add contact</span>
           <span class="add-contact-subtitle" id="dialog-subtitle">Tasks are better with a team!</span>
         </div>
@@ -174,18 +178,24 @@
 
       <!-- Dialog footer -->
       <footer class="add-contact-footer">
+        <!-- Cancel button -->
+        <button type="button" class="button-secondary delete-contact-data" id="dialog-cancel-button"
+          onclick="closeDialog()">
+          <span>Cancel</span>
+          <span class="close-button">&times;</span>
+        </button>
         <!-- Create contact button -->
-        <button type="submit" class="create-contact-data" id="dialog-create-contact-button">
+        <button type="submit" class="button-primary" id="dialog-create-contact-button">
           Create contact
           <img src="../assets/icons/contacts/check_icon.png" alt="Check icon" />
         </button>
         <!-- Delete button -->
-        <button type="button" class="delete-contact-data hidden" id="dialog-delete-button"
+        <button type="button" class="button-secondary delete-contact-data hidden" id="dialog-delete-button"
           onclick="openDialogDeleteQuestion()">
           Delete
         </button>
         <!-- Save button -->
-        <button type="submit" class="save-contact-data hidden" id="dialog-save-button">
+        <button type="submit" class="button-primary save-contact-data hidden" id="dialog-save-button">
           Save
           <img src="../assets/icons/contacts/check_icon.png" alt="Save icon" />
         </button>
@@ -200,13 +210,13 @@
       <p>Do you really want to delete this contact?</p>
       <div class="delete-question-button-container">
         <!-- Delete contact - No button -->
-        <button type="button" class="delete-question-no" id="delete-question-no-button"
+        <button type="button" class="button-secondary delete-question-no" id="delete-question-no-button"
           onclick="closeContactDeletion()">
           NO
         </button>
         <!-- Delete contact - Yes button -->
-        <button type="submit" class="delete-question-yes" id="delete-question-yes-button" onclick="deleteContact()"
-          autofocus>
+        <button type="submit" class="button-primary delete-question-yes" id="delete-question-yes-button"
+          onclick="deleteContact()" autofocus>
           YES
         </button>
       </div>
@@ -214,17 +224,17 @@
   </dialog>
 
   <!-- Dialog toast message - Contact successfully created -->
-  <div class="toast-contact-created" id="toast-message-contact-created">
+  <div class="toast-message toast-contact-created" id="toast-message-contact-created">
     Contact successfully created
   </div>
 
   <!-- Dialog toast message - Contact successfully edited -->
-  <div class="toast-contact-edited" id="toast-message-contact-edited">
+  <div class="toast-message toast-contact-edited" id="toast-message-contact-edited">
     Contact successfully edited
   </div>
 
   <!-- Dialog toast message - Contact successfully deleted -->
-  <div class="toast-contact-deleted" id="toast-message-contact-deleted">
+  <div class="toast-message toast-contact-deleted" id="toast-message-contact-deleted">
     Contact successfully deleted
   </div>
 </body>

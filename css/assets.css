@@ -1,0 +1,77 @@
+/*  ==================================================================================================== 
+    ASSETS.CSS - FOR ALL PAGES
+    ==================================================================================================== */
+
+/* Basic button structure for confirmation (login, sign up, create task, add task, new contact, create contact, save) */
+
+.button-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  font-size: 1.3125rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  flex: 1;
+  cursor: pointer;
+  gap: 0.25em;
+  padding: 1em;
+}
+
+.button-primary:hover {
+  background-color: var(--color-medium);
+  box-shadow: 0 4px 4px var(--color-black-25);
+}
+
+.button-primary:active {
+  background-color: var(--color-dark-active);
+  box-shadow: 0 4px 4px var(--color-black-25);
+}
+
+/* Basic button structure for rejection (clear, cancel, delete) */
+
+.button-secondary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  font-size: 1.3125rem;
+  border: 1px solid var(--color-dark);
+  border-radius: 10px;
+  flex: 1;
+  cursor: pointer;
+  gap: 0.25em;
+  padding: 1em;
+}
+
+.button-secondary:hover {
+  box-shadow:
+    0 4px 4px var(--color-black-25),
+    inset 0 0 0 1px var(--color-medium);
+}
+
+.button-secondary:active {
+  border: 1px solid var(--color-dark-active);
+  box-shadow: 0 4px 4px var(--color-black-25);
+}
+
+/* Basic toast messages structure */
+
+.toast-message {
+  color: var(--color-white);
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 4px var(--color-black-40);
+  position: fixed;
+  bottom: -80px;
+  left: 50%;
+  z-index: 300;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  transition: bottom 0.3s ease-out;
+  padding: 1.125em 0.625em;
+}
