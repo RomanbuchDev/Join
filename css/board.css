@@ -67,23 +67,9 @@ button:focus-visible {
   height: 2rem;
 }
 
-.fixed-header,
-.fixed-footer {
-  position: fixed;
-  width: 100%;
-}
-
-.fixed-header {
-  top: 0;
-}
-
-.fixed-footer {
-  bottom: 0;
-}
-
 .board-main-content {
   flex: 1;
-  margin: 8em 1em 5em;
+  margin: 7.5em 1em 5em;
 }
 
 .h1-find-addtask-section {
