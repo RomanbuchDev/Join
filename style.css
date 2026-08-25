@@ -10,13 +10,26 @@ body {
 }
 
 h1 {
-  /* border: 2px solid rgb(0, 255, 195); */
   font-size: 3rem;
   font-weight: 700;
 }
 
 .main {
   grid-area: main;
+}
+
+.fixed-header,
+.fixed-footer {
+  position: fixed;
+  width: 100%;
+}
+
+.fixed-header {
+  top: 0;
+}
+
+.fixed-footer {
+  bottom: 0;
 }
 
 .main-header {
@@ -26,7 +39,7 @@ h1 {
   justify-content: space-between;
   padding: 0.75em 1em;
   background-color: var(--color-white);
-  box-shadow: 0 4px 4px rgb(0 0 0 / 10%);
+  box-shadow: 0 4px 4px var(--color-black-10);
 }
 
 .main-header img {
@@ -35,17 +48,25 @@ h1 {
 }
 
 .user-avatar {
-  color: var(--color-name);
+  color: var(--color-medium);
+  font-weight: 700;
   width: 2.5rem;
   height: 2.5rem;
   border: 2px solid var(--color-dark);
   border-radius: 30px;
   background-color: var(--color-white);
+  transition: fill 0s ease 125ms;
+  cursor: pointer;
+}
+
+.user-avatar:hover,
+.user-avatar:active {
+  background-color: var(--color-gray-231);
 }
 
 .main-nav {
   grid-area: nav;
-  height: 4.7rem;
+  height: 5rem;
   background-color: var(--color-dark);
   z-index: 1000;
 }
@@ -61,7 +82,7 @@ h1 {
 .main-nav-item {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .nav-join-img {
@@ -69,14 +90,14 @@ h1 {
 }
 
 .main-nav-item a {
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 5rem;
+  height: 4.75rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.7rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.2;
   color: var(--color-white);
