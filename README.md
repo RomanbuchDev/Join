@@ -142,14 +142,14 @@ http://<deine_ip>:<live-server-port>
 │       .DS_Store (-> .gitignore - Was ist das nochmal??)
 │
 ├───html/
-│       signup.html  --> Alex
-│       greeting-page.html  --> Alex
-│       summary.html  --> Roman
-│       board.html --> Elena
 │       add-task.html
+│       board.html --> Elena
 │       contact.html --> Timo
-│       impressum.html --> Roman
+│       greeting-page.html  --> Alex
+│       imprint.html --> Roman
 │       privacy-policy.html
+│       signup.html  --> Alex
+│       summary.html  --> Roman
 │
 ├───css/
 │

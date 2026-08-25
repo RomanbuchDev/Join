@@ -2,10 +2,10 @@
   --font-family: inter, sans-serif;
 
   /* uses bg-main: mostly background of main */
-  --color-bg-main: rgb(246 247 248 / 100%);
+  --color-bg-main: rgba(246 247 248 / 100%);
 
   /* uses color-black-100%: h1, written text in input-fields */
-  --color-black-100: rgb(0 0 0 / 100%);
+  --color-black-100: rgba(0 0 0 / 100%);
 
   /* uses color-black-x%: box-shadows */
   --color-black-40: rgba(0 0 0 / 40%);
@@ -18,26 +18,26 @@
   /* uses color-gray-168: task-description, no-task-dotted-border */
   --color-gray-168: rgba(168 168 168 / 100%);
 
-  /* uses color-gray-209: divider line, placeholder text, inputfields-border, placeholder text, inputfields-border */
+  /* uses color-gray-209: divider line, placeholder text, inputfields-border */
   --color-gray-209: rgba(209 209 209 / 100%);
 
   /* uses color-gray-231: progressbar-empty, question-mark */
   --color-gray-231: rgba(231 231 231 / 100%);
 
   /* uses color-white: background-header, font, input-background, card-background */
-  --color-white: rgb(255 255 255 / 100%);
+  --color-white: rgba(255 255 255 / 100%);
 
   /* uses color-dark: h2, span below h1, background-footer/-navbar, buttons, ... */
-  --color-dark: rgb(42 54 71 / 100%);
+  --color-dark: rgba(42 54 71 / 100%);
 
   /* uses color-dark-active: buttons-active */
-  --color-dark-active: rgb(9 25 49 / 100%);
+  --color-dark-active: rgba(9 25 49 / 100%);
 
   /* uses color-medium: greeting-name, user-avatar, back-arrow, active-inputfield-border, button-hover, font-color-hover-and-active-legalnotice-and-privacypolicy, font-color-links-LN-and-PP, progressbar-filled */
-  --color-medium: rgb(18 70 88 / 100%);
+  --color-medium: rgba(18 70 88 / 100%);
 
   /* uses color-email: email links */
-  --color-email: rgb(0 124 238 / 100%);
+  --color-email: rgba(0 124 238 / 100%);
 
   /* uses: error, hover, highlight, priority */
   --color-error: rgba(230 0 38 / 100%);
@@ -46,4 +46,8 @@
   --color-prio-urgent: rgba(255 61 0 / 100%);
   --color-prio-medium: rgba(255 168 0 / 100%);
   --color-prio-low: rgba(122 226 41 / 100%);
+
+  /* uses color-label: board-task category tag */
+  --color-label-user-story: rgba(0 56 255 / 100%);
+  --color-label-technical-task: rgba(31 215 193 / 100%);
 }

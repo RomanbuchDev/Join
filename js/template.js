@@ -23,7 +23,19 @@ function getContactDetailsTemplate(contactData) {
       <!-- Contact details main -->
       <div class="contact-details-name-container">
         <span class="contact-details-shortcut" id="contact-details-shortcut-${contactData.id}">${contactData.shortcut}</span>
-        <span class="contact-details-name">${contactData.name}</span>
+        <div>
+          <span class="contact-details-name">${contactData.name}</span>
+            <div class="contact-option-menu-container-desktop hidden">
+              <button type="button" class="contact-option-menu-items" onclick="editContactDetails()">
+                <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon" />
+                <span>Edit</span>
+              </button>
+              <button type="button" class="contact-option-menu-items" onclick="openDialogDeleteQuestion()">
+                <img src="../assets/icons/contacts/delete_icon.png" alt="Delete icon" />
+                <span>Delete</span>
+              </button>
+            </div>
+        </div>
       </div>
 
       <!-- Contact details information -->
@@ -40,7 +52,7 @@ function getContactDetailsTemplate(contactData) {
       </div>
 
       <!-- Contact details option menu button -->
-      <button class="contact-menu" onclick="toggleMobileContactOptions()">
+      <button class="button-primary contact-menu" id="contact-menu-button" onclick="toggleMobileContactOptions()">
         <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
       </button>`;
 }
@@ -55,4 +67,13 @@ function getLetterCategoryTemplate(letter) {
         <div id="contact-grid-${letter}">
         </div>
       </section>`;
+}
+
+
+function getContactDetailsPlaceholderTemplate() {
+  return `<div class="contact-details-header-container">
+        <div class="contact-details-title-container">
+          <span class="contact-details-title">Contacts</span>
+          <span class="contact-details-subtitle">Better with a team</span>
+        </div>`;
 }
