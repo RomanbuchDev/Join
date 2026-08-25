@@ -3,11 +3,6 @@ function init() {
 }
 
 
-window.addEventListener("pageshow", () => {
-  document.getElementById("loginToast").classList.remove("show");
-});
-
-
 document.querySelector(".splash-logo").addEventListener("animationend", () => {
   document.getElementById("splashScreen").style.display = "none";
 });
@@ -60,7 +55,6 @@ function guestLoginEventListener(formGuest) {
 
 function handleLoginSuccess(user) {
   localStorage.setItem("currentUser", JSON.stringify({ name: user.name, isGuest: user.isGuest }));
-  document.getElementById("loginToast").classList.add("show");
   setTimeout(() => {
     window.location.href = "./html/greeting-page.html";
   }, 1500);
