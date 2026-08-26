@@ -94,13 +94,13 @@ function checkPasswordField(password) {
 
 function getLoginErrorMessage(emailEmpty, passwordEmpty) {
   if (emailEmpty && passwordEmpty) {
-    return "Please fill in All fields";
+    return "Check your email and password. Please try again.";
   }
   if (emailEmpty) {
-    return "Please fill in Email field";
+    return "Please fill in Email field.";
   }
   if (passwordEmpty) {
-    return "Please fill in Password field";
+    return "Please fill in Password field.";
   }
   return "";
 }
