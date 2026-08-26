@@ -70,9 +70,6 @@ function handleLoginSuccess(user) {
 function handleLoginError() {
   document.getElementById("loginError").innerText =
     "Password or email is incorrect!";
-  setTimeout(() => {
-    document.getElementById("loginError").innerText = "";
-  }, 3000);
 }
 
 
