@@ -47,6 +47,14 @@ h1 {
   height: auto;
 }
 
+.main-header-title {
+  display: none;
+}
+
+.main-header-help {
+  display: none;
+}
+
 .user-avatar {
   color: var(--color-medium);
   font-weight: 700;
@@ -128,14 +136,31 @@ h1 {
 
   .main-header {
     grid-area: header;
+    display: flex;
+    align-items: center;
+    padding-inline: 4em;
   }
 
   .main {
     grid-area: main;
   }
 
-  .main-header img {
+  .main-header-logo {
     display: none;
+  }
+
+  .main-header-title {
+    display: block;
+    margin-inline-end: auto;
+  }
+
+  .main-header-help {
+    display: block;
+    margin-inline-end: 1em;
+  }
+
+  .main-header-help:hover {
+    transform: scale(1.1);
   }
 
   .main-nav {
