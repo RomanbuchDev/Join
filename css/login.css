@@ -89,13 +89,6 @@ form {
   border: 1px solid var(--color-medium);
 }
 
-/*  Inputs */
-.form-text {
-  margin-top: 0.25rem;
-  font-size: 0.875em;
-  color: var(--color-gray-104);
-}
-
 /* Buttons */
 .btn-logins-bar {
   height: 7.5rem;
@@ -288,10 +281,19 @@ form {
     padding: 2rem 1rem;
   }
 
+  .form-label {
+    margin-bottom: 0;
+    line-height: 0;
+  }
+
   .input-wrapper {
     width: 26.375rem;
     height: 3rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .input-bar .input-wrapper:last-of-type {
+    margin-bottom: 0.5rem;
   }
 
   .input-bar {
