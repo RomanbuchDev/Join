@@ -34,7 +34,10 @@ async function handleLoginSubmit(event) {
 
 async function attemptLogin(loginUserData) {
   try {
-    const user = await loginWithEmail(loginUserData.email, loginUserData.password);
+    const user = await loginWithEmail(
+      loginUserData.email,
+      loginUserData.password,
+    );
     handleLoginSuccess(user);
   } catch (error) {
     handleLoginError();
@@ -54,7 +57,10 @@ function guestLoginEventListener(formGuest) {
 
 
 function handleLoginSuccess(user) {
-  localStorage.setItem("currentUser", JSON.stringify({ name: user.name, isGuest: user.isGuest }));
+  localStorage.setItem(
+    "currentUser",
+    JSON.stringify({ name: user.name, isGuest: user.isGuest }),
+  );
   setTimeout(() => {
     window.location.href = "./html/greeting-page.html";
   }, 1500);
@@ -62,7 +68,8 @@ function handleLoginSuccess(user) {
 
 
 function handleLoginError() {
-  document.getElementById("loginError").innerText = "Password or email is incorrect!";
+  document.getElementById("loginError").innerText =
+    "Password or email is incorrect!";
   setTimeout(() => {
     document.getElementById("loginError").innerText = "";
   }, 3000);
