@@ -6,7 +6,7 @@
   border-radius: 1.88rem;
   padding: 2rem 1rem;
   background-color: var(--color-white);
-  box-shadow: 0 0 0.88rem 0.19rem #00000024;
+  box-shadow: 0 0 0.88rem 0.19rem var(--color-black-10);
 }
 
 .signup-back-vector {

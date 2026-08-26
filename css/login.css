@@ -49,7 +49,7 @@ h1 {
   border-radius: 1.9rem;
   padding: 2rem 1rem;
   background-color: var(--color-white);
-  box-shadow: 0 0 0.875rem 0.1875rem rgba(0, 0, 0, 0.14);
+  box-shadow: 0 0 0.875rem 0.1875rem var(--color-black-10);
 }
 
 /* form login */
@@ -93,7 +93,7 @@ form {
 .form-text {
   margin-top: 0.25rem;
   font-size: 0.875em;
-  color: rgb(108 117 125);
+  color: var(--color-gray-104);
 }
 
 /* Buttons */
@@ -132,7 +132,7 @@ form {
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 30%);
+  box-shadow: 0 0.25rem 0.5rem var(--color-black-25);
 }
 
 .btn-secondary {
@@ -141,7 +141,7 @@ form {
 }
 
 .btn-secondary:hover {
-  box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 30%);
+  box-shadow: 0 0.25rem 0.5rem var(--color-black-25);
 }
 
 /* footer */
@@ -241,14 +241,15 @@ form {
 }
 
 /* teblet */
-@media (min-width: 40rem) and (max-width: 64rem) {
+@media (width >= 40rem) and (width < 64rem) {
   .app {
     width: 100%;
     min-height: 100vh;
   }
 }
+
 /* Laptop */
-@media (min-width: 64rem) {
+@media (width >= 64rem) {
   .app {
     min-width: 64rem;
     width: 100%;
@@ -329,7 +330,7 @@ form {
 }
 
 /* Desktop */
-@media (min-width: 90rem) {
+@media (width >= 90rem) {
   .app {
     max-width: 90rem;
   }
