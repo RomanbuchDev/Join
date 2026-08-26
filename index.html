@@ -6,22 +6,20 @@
     <title>Join - Login</title>
     <link rel="icon" href="./assets/icons/join-logo.svg" />
     <!-- login links -->
-    <link rel="stylesheet" href="./css/dpf-flex-utils.css" />
     <link rel="stylesheet" href="./css/reset_stylesheet.css" />
     <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/dpf-flex-utils.css" />
     <link rel="stylesheet" href="./css/responsive.css" />
-    <link rel="stylesheet" href="./css/summary.css" />
     <link rel="stylesheet" href="./css/variables.css" />
     <link rel="stylesheet" href="./css/login.css" />
     <link rel="stylesheet" href="./style.css" />
 
     <script src="./script.js" defer></script>
     <script src="./js/template.js" defer></script>
-    <script src="./js/contact.js" defer></script>
     <script src="./js/auth-service.js" defer></script>
     <script src="./js/login.js" defer></script>
   </head>
-  <body class="" onload="init()">
+  <body class="dpf-center body-login" onload="init()">
     <div id="splashScreen" class="splash-screen">
       <img
         src="./assets/icons/screen-logo.svg"
@@ -30,10 +28,16 @@
       />
     </div>
     <section class="app dpf-column-spc-between-center">
-      <header class="">
+      <header class="header-login">
         <div class="dpf-flex-start">
           <img src="./assets/icons/join-logo.svg" alt="" />
         </div>
+        <section class="sign-up-bar-header dpf-spc-between-center">
+          <p>Not a Join user?</p>
+          <div class="dpf-center btn btn-primary btn-signup">
+            <a href="./html/signup.html" class="btn-primary">Sign up</a>
+          </div>
+        </section>
       </header>
 
       <main class="main-login">
@@ -42,7 +46,7 @@
             <h1>Log in</h1>
           </div>
 
-          <div class="pb-1">
+          <div class="pb-1 dpf-flex-column-center input-bar">
             <label for="exampleInputEmail1" class="form-label"></label>
             <div class="input-wrapper">
               <input
@@ -65,8 +69,8 @@
               />
               <img src="./assets/icons/lock.svg" class="input-icon" alt="" />
             </div>
+            <p id="loginError" class="error-text"></p>
           </div>
-          <p id="loginError" class="error-text"></p>
           <div class="btn-logins-bar dpf-column-spc-between-center">
             <button type="submit" class="btn btn-primary" id="loginBtn">
               Log in
@@ -77,7 +81,6 @@
           </div>
         </form>
       </main>
-      <div id="loginToast" class="toast">You Signed Up successfully</div>
 
       <footer class="dpf-flex-column-center footer-login">
         <section class="sign-up-bar dpf-spc-between-center">

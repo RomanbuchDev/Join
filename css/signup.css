@@ -1,0 +1,59 @@
+.main-signup {
+  max-width: 24.75rem;
+  position: relative;
+  height: 37.2rem;
+  width: 100%;
+  border-radius: 1.88rem;
+  padding: 2rem 1rem;
+  background-color: var(--color-white);
+  box-shadow: 0 0 0.88rem 0.19rem var(--color-black-10);
+}
+
+.signup-back-vector {
+  height: 2.5rem;
+  width: 2.5rem;
+  position: absolute;
+  left: 1rem;
+  top: 2rem;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.form-check-input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--color-highlight);
+  cursor: pointer;
+}
+
+.form-check-label {
+  font-size: 0.875rem;
+  color: var(--color-black-100);
+}
+
+.toast {
+  position: absolute;
+  top: 8rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+  width: auto;
+  color: var(--color-bg-main);
+  background-color: var(--color-dark);
+  font-size: 1rem;
+  line-height: 1;
+  text-align: center;
+  user-select: none;
+  border: 1px solid var(--color-gray-104);
+  border-radius: 0.5rem;
+  transform: translateX(120%);
+  transition: transform 300ms ease-out;
+}
+
+.toast.show {
+  transform: translateX(0);
+}

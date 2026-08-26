@@ -9,24 +9,27 @@ a {
   text-decoration: none;
 }
 
+.body-login {
+  min-height: 100vh;
+}
+
 .app {
   position: relative;
   overflow: hidden;
-  background-color: #f6f7f8;
+  background-color: var(--color-bg-main);
   width: 100%;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  min-height: 100vh;
+  padding: 0 0.5rem;
   gap: 4rem;
 }
 
-.app header {
+.header-login {
   height: auto;
   width: 100%;
-  padding-top: 2.31rem;
-  padding-left: 2.38rem;
+  padding: 2.31rem 0 0 2.38rem;
 }
 
-.app header img {
+.header-login img {
   height: 4.88rem;
   width: 4rem;
   object-fit: cover;
@@ -40,14 +43,13 @@ h1 {
 /* main class */
 .main-login {
   position: relative;
-  max-height: 29.69rem;
+  max-height: 29.7rem;
   max-width: 24.75rem;
-  height: 100%;
   width: 100%;
-  border-radius: 1.88rem;
+  border-radius: 1.9rem;
   padding: 2rem 1rem;
   background-color: var(--color-white);
-  box-shadow: 0 0 0.88rem 0.19rem rgb(0 0 0 / 14.1%);
+  box-shadow: 0 0 0.875rem 0.1875rem var(--color-black-10);
 }
 
 /* form login */
@@ -76,22 +78,22 @@ form {
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
-  color: rgb(34 38 42);
-  border: 1px solid var(--color-gray-104);
+  color: var(--color-gray-104);
+  border: 1px solid var(--color-gray-209);
   border-radius: 0.65rem;
-  transition: box-shadow 100ms ease-in-out; /* statt Bootstraps 150ms */
+  transition: box-shadow 100ms ease-in-out;
 }
 
 .form-control:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+  border: 1px solid var(--color-medium);
 }
 
 /*  Inputs */
 .form-text {
   margin-top: 0.25rem;
   font-size: 0.875em;
-  color: rgb(108 117 125);
+  color: var(--color-gray-104);
 }
 
 /* Buttons */
@@ -109,7 +111,7 @@ form {
   text-align: center;
   cursor: pointer;
   user-select: none;
-  border: 1px solid #686868;
+  border: 1px solid var(--color-gray-104);
   border-radius: 0.5rem;
   transition: background-color 100ms ease-in-out;
   gap: 0.63rem;
@@ -130,7 +132,7 @@ form {
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 30%);
+  box-shadow: 0 0.25rem 0.5rem var(--color-black-25);
 }
 
 .btn-secondary {
@@ -139,7 +141,7 @@ form {
 }
 
 .btn-secondary:hover {
-  box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 30%);
+  box-shadow: 0 0.25rem 0.5rem var(--color-black-25);
 }
 
 /* footer */
@@ -154,6 +156,10 @@ form {
   height: 3rem;
   max-width: 18.25rem;
   gap: 2.2rem;
+}
+
+.sign-up-bar-header {
+  display: none;
 }
 
 .impress-bar {
@@ -175,12 +181,14 @@ form {
 .heading-accent--bottom-center::after {
   content: "";
   width: 80%;
-  height: 3px;
+  height: 0.1875rem;
   background-color: var(--color-highlight);
 }
 
 .input-wrapper {
   position: relative;
+  max-width: 22.75rem;
+  width: 100%;
 }
 
 .input-icon {
@@ -194,60 +202,23 @@ form {
   pointer-events: none;
 }
 
-.main-signup {
-  max-height: 37.2rem;
-  max-width: 24.75rem;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  border-radius: 1.88rem;
-  padding: 2rem 1rem;
-  background-color: #fff;
-  box-shadow: 0 0 0.88rem 0.19rem #00000024;
-}
-
-.signup-back-vector {
-  height: 2.5rem;
-  width: 2.5rem;
-  position: absolute;
-  left: 1rem;
-  top: 2rem;
-}
-
 .error-text {
   height: 1rem;
   width: 100%;
-  color: #d32f2f;
+  color: var(--color-error);
   font-size: 0.875rem;
   text-align: center;
+  padding-top: 0.5rem;
 }
 
-.toast {
-  position: absolute;
-  top: 8rem;
-  right: 0.5rem;
-  padding: 0.5rem;
-  width: auto;
-  color: #f6f7f8;
-  background-color: #2a3647;
-  font-size: 1rem;
-  line-height: 1;
-  text-align: center;
-  user-select: none;
-  border: 1px solid #686868;
-  border-radius: 0.5rem;
-  transform: translateX(120%);
-  transition: transform 300ms ease-out;
-}
-
-.toast.show {
-  transform: translateX(0);
+.input-error {
+  border: 1px solid var(--color-error);
 }
 
 .splash-screen {
   position: fixed;
   inset: 0;
-  background-color: #2a3647; /* Platzhalter, Farbton kommt später */
+  background-color: var(--color-dark);
   z-index: 999;
 }
 
@@ -266,5 +237,126 @@ form {
     left: 2.38rem;
     width: 4rem;
     transform: translate(0, 0);
+  }
+}
+
+/* teblet */
+@media (width >= 40rem) and (width < 64rem) {
+  .app {
+    width: 100%;
+    min-height: 100vh;
+  }
+}
+
+/* Laptop */
+@media (width >= 64rem) {
+  .app {
+    min-width: 64rem;
+    width: 100%;
+    min-height: 100vh;
+    padding: 4.1875rem 7.625rem 2.5rem 4.8125rem;
+  }
+
+  .header-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 77.5rem;
+    height: 6.5rem;
+    padding: 0;
+  }
+
+  .header-login img {
+    height: 6.5rem;
+    width: 5rem;
+    padding: 0;
+  }
+
+  .sign-up-bar-header {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .sign-up-bar {
+    display: none;
+  }
+
+  .main-login {
+    max-width: 41rem;
+    height: 28rem;
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+
+  .input-wrapper {
+    width: 26.375rem;
+    height: 3rem;
+    margin-bottom: 2rem;
+  }
+
+  .input-bar {
+    width: 26.375rem;
+    height: 9.5rem;
+    justify-content: flex-start;
+  }
+
+  .btn-logins-bar {
+    height: 3rem;
+    width: 20.125rem;
+    flex-direction: unset;
+  }
+
+  .btn-primary {
+    width: 6.9rem;
+  }
+
+  .btn-secondary {
+    width: 11rem;
+  }
+
+  .footer-login {
+    justify-content: end;
+    height: 2rem;
+  }
+
+  @keyframes logo-to-header {
+    to {
+      top: 4.1875rem;
+      left: 4.8125rem;
+      width: 5rem;
+      transform: translate(0, 0);
+    }
+  }
+}
+
+/* Desktop */
+@media (width >= 90rem) {
+  .app {
+    max-width: 90rem;
+  }
+
+  .header-login {
+    height: 7.75rem;
+  }
+
+  .header-login img {
+    height: 7.75rem;
+    width: 6.25rem;
+  }
+
+  .splash-screen {
+    animation: splash-fade-out 2s ease-in-out forwards;
+  }
+
+  @keyframes splash-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes logo-to-header {
+    to {
+      opacity: 0;
+    }
   }
 }
