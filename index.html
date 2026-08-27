@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="./style.css" />
 
     <script src="./script.js" defer></script>
-    <script src="./js/template.js" defer></script>
+    <!-- <script src="./js/template.js" defer></script> -->
     <script src="./js/auth-service.js" defer></script>
     <script src="./js/login.js" defer></script>
   </head>
-  <body class="dpf-center body-login" onload="init()">
+  <body class="dpf-center body-login">
     <div id="splashScreen" class="splash-screen">
       <img
         src="./assets/icons/screen-logo.svg"
@@ -41,7 +41,7 @@
       </header>
 
       <main class="main-login">
-        <form class="dpf-column-spc-between-center" id="loginForm">
+        <form class="dpf-column-spc-between-center" id="loginForm" novalidate>
           <div class="heading-accent heading-accent--bottom-center">
             <h1>Log in</h1>
           </div>

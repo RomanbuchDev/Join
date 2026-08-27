@@ -2,11 +2,9 @@ function init() {
   setupEventListeners();
 }
 
-
 document.querySelector(".splash-logo").addEventListener("animationend", () => {
   document.getElementById("splashScreen").style.display = "none";
 });
-
 
 function setupEventListeners() {
   const form = document.getElementById("loginForm");
@@ -15,11 +13,9 @@ function setupEventListeners() {
   guestLoginEventListener(formGuest);
 }
 
-
 function loginEventListener(form) {
   form.addEventListener("submit", handleLoginSubmit);
 }
-
 
 async function handleLoginSubmit(event) {
   event.preventDefault();
@@ -30,7 +26,6 @@ async function handleLoginSubmit(event) {
   document.getElementById("loginBtn").disabled = true;
   await attemptLogin(loginUserData);
 }
-
 
 async function attemptLogin(loginUserData) {
   try {
@@ -45,7 +40,6 @@ async function attemptLogin(loginUserData) {
   }
 }
 
-
 function guestLoginEventListener(formGuest) {
   formGuest.addEventListener("click", async function (event) {
     event.preventDefault();
@@ -54,7 +48,6 @@ function guestLoginEventListener(formGuest) {
     handleLoginSuccess(user);
   });
 }
-
 
 function handleLoginSuccess(user) {
   localStorage.setItem(
@@ -66,12 +59,10 @@ function handleLoginSuccess(user) {
   }, 1500);
 }
 
-
 function handleLoginError() {
   document.getElementById("loginError").innerText =
     "Password or email is incorrect!";
 }
-
 
 function isLoginInputValid(loginUserData) {
   const emailEmpty = checkEmailField(loginUserData.email);
@@ -81,20 +72,17 @@ function isLoginInputValid(loginUserData) {
   return message === "";
 }
 
-
 function checkEmailField(email) {
   const isEmpty = email.trim() === "";
   markFieldError("exampleInputEmail1", isEmpty);
   return isEmpty;
 }
 
-
 function checkPasswordField(password) {
   const isEmpty = password.trim() === "";
   markFieldError("exampleInputPassword1", isEmpty);
   return isEmpty;
 }
-
 
 function getLoginErrorMessage(emailEmpty, passwordEmpty) {
   if (emailEmpty && passwordEmpty) {
@@ -109,7 +97,6 @@ function getLoginErrorMessage(emailEmpty, passwordEmpty) {
   return "";
 }
 
-
 function markFieldError(inputId, isEmpty) {
   const input = document.getElementById(inputId);
   if (isEmpty) {
@@ -118,7 +105,6 @@ function markFieldError(inputId, isEmpty) {
     input.classList.remove("input-error");
   }
 }
-
 
 function getLoginFormValues() {
   const inputEmail = document.getElementById("exampleInputEmail1").value;
@@ -129,3 +115,5 @@ function getLoginFormValues() {
   };
   return loginUserData;
 }
+
+init();
