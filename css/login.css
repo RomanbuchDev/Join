@@ -198,6 +198,11 @@ form {
   pointer-events: none;
 }
 
+.visibility-icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
 .error-text {
   height: 1rem;
   width: 100%;
