@@ -91,7 +91,7 @@ form {
 
 /* Buttons */
 .btn-logins-bar {
-  height: 7.5rem;
+  height: 7rem;
   width: 11.25rem;
 }
 
@@ -106,7 +106,9 @@ form {
   user-select: none;
   border: 1px solid var(--color-gray-104);
   border-radius: 0.5rem;
-  transition: background-color 100ms ease-in-out;
+  transition:
+    background-color 100ms ease-in-out,
+    box-shadow 100ms ease-in-out;
   gap: 0.63rem;
 }
 
@@ -182,6 +184,7 @@ form {
   position: relative;
   max-width: 22.75rem;
   width: 100%;
+  margin-top: 0.5rem;
 }
 
 .input-icon {
@@ -278,7 +281,7 @@ form {
     max-width: 41rem;
     height: 28rem;
     width: 100%;
-    padding: 2rem 1rem;
+    padding: 3rem 2rem;
   }
 
   .form-label {
