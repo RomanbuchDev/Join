@@ -161,6 +161,10 @@
   padding: 0;
 }
 
+.add-contact-input:focus-within {
+  border-color: var(--color-medium);
+}
+
 .add-contact-footer {
   display: flex;
   justify-content: center;
@@ -194,6 +198,13 @@
 }
 
 /* Additonal messages (no requirement) */
+
+/* Test for dialog error messages */
+/* .dialog-error-message {
+  display: none;
+  color: var(--color-error);
+  font-size: 0.75rem;
+} */
 
 .delete-question-container {
   background-color: var(--color-white);

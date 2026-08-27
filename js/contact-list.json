@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Anton Mayer",
+    "email": "antonm@gmail.com",
+    "phone": "+49 123 4567890"
+  },
+  {
+    "id": 2,
+    "name": "Anja Schulz",
+    "email": "schulz@hotmail.com",
+    "phone": "+49 123 4567890"
+  },
+  {
+    "id": 3,
+    "name": "Benedikt Ziegler",
+    "email": "benedikt@gmail.com",
+    "phone": "+49 123 4567890"
+  },
+  {
+    "id": 4,
+    "name": "David Eisenberg",
+    "email": "davidberg@gmail.com",
+    "phone": "+49 123 4567890"
+  },
+  {
+    "id": 5,
+    "name": "Eva Fischer",
+    "email": "eva@gmail.com",
+    "phone": "+49 123 4567890"
+  },
+  {
+    "id": 6,
+    "name": "Emmanuel Mauer",
+    "email": "emmanuelma@gmail.com",
+    "phone": "+49 123 4567890"
+  },
+  {
+    "id": 7,
+    "name": "Marcel Bauer",
+    "email": "bauer@gmail.com",
+    "phone": "+49 123 4567890"
+  },
+  {
+    "id": 8,
+    "name": "Tatjana Wolf",
+    "email": "wolf@gmail.com",
+    "phone": "+49 123 4567890"
+  }
+]

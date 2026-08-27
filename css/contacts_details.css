@@ -171,9 +171,9 @@
     ==================================================================================================== */
 
 @media (width >= 64em) {
-  #contact-details.hidden {
+  /* #contact-details.hidden {
     display: none;
-  }
+  } */
 
   #contact-details {
     background-color: var(--color-bg-main);
@@ -183,9 +183,9 @@
     padding-left: 2em;
   }
 
-  /* #contact-details.hidden {
+  #contact-details.hidden {
     display: block;
-  } */
+  }
 
   .contact-details-container h3 {
     font-size: 1.25rem;

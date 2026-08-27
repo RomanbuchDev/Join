@@ -6,78 +6,74 @@ const contactList = document.getElementById("contact-list");
 const contactListGrid = document.getElementById("contact-grid");
 const contactDetails = document.getElementById("contact-details");
 const contactOptionMenu = document.getElementById("contact-options");
-const contactOptionMenuOverlay = document.getElementById(
-  "contact-options-overlay",
-);
+const contactOptionMenuOverlay = document.getElementById("contact-options-overlay");
 
-const dialogBoxDeleteQuestion = document.getElementById(
-  "delete-question-dialog",
-);
-const messageContactEdited = document.getElementById(
-  "toast-message-contact-edited",
-);
-const messageContactDeleted = document.getElementById(
-  "toast-message-contact-deleted",
-);
+const dialogBoxDeleteQuestion = document.getElementById("delete-question-dialog");
+const messageContactEdited = document.getElementById("toast-message-contact-edited");
+const messageContactDeleted = document.getElementById("toast-message-contact-deleted");
 
 let currentContactData;
 
 // Database (for test only):
 
-const allContacts = [
-  {
-    id: 1,
-    name: "Anton Mayer",
-    email: "antonm@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 2,
-    name: "Anja Schulz",
-    email: "schulz@hotmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 3,
-    name: "Benedikt Ziegler",
-    email: "benedikt@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 4,
-    name: "David Eisenberg",
-    email: "davidberg@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 5,
-    name: "Eva Fischer",
-    email: "eva@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 6,
-    name: "Emmanuel Mauer",
-    email: "emmanuelma@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 7,
-    name: "Marcel Bauer",
-    email: "bauer@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 8,
-    name: "Tatjana Wolf",
-    email: "wolf@gmail.com",
-    phone: "+49 123 4567890",
-  },
-];
+// const allContacts = [
+//   {
+//     id: 1,
+//     name: "Anton Mayer",
+//     email: "antonm@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 2,
+//     name: "Anja Schulz",
+//     email: "schulz@hotmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 3,
+//     name: "Benedikt Ziegler",
+//     email: "benedikt@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 4,
+//     name: "David Eisenberg",
+//     email: "davidberg@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 5,
+//     name: "Eva Fischer",
+//     email: "eva@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 6,
+//     name: "Emmanuel Mauer",
+//     email: "emmanuelma@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 7,
+//     name: "Marcel Bauer",
+//     email: "bauer@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 8,
+//     name: "Tatjana Wolf",
+//     email: "wolf@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+// ];
+
+// NEU - Test:
+let allContacts = [];
 
 // Functions:
 
-function init() {
+async function init() {
+  await fetchAllContacts();
   renderContactList();
   activateContactFormSubmissionType();
   renderContactDetailsDesktopPlaceholder();
@@ -86,10 +82,32 @@ function init() {
 }
 
 
+function prepareContactColor(contact) {
+  const shortcutColor = calculateContactIconColor(contact.shortcut);
+  contact.shortcutColor = shortcutColor;
+}
+
+
+async function fetchAllContacts() {
+  try {
+    let response = await fetch('../js/contact-list.json');
+    let responseAsJSON = await response.json();
+
+    for (let index = 0; index < responseAsJSON.length; index++) {
+      const contact = responseAsJSON[index];
+      getContactShortcut(contact);
+      prepareContactColor(contact);
+      allContacts.push(contact);
+  }
+  return allContacts;
+  } catch (error) {
+    console.log("Error loading data!", error);
+  }
+}
+
+
 function assignAndCreateContacts(letter, contact, lastNameLetter) {
-  const contactCategoryGrid = document.getElementById(
-    "contact-grid-" + lastNameLetter,
-  );
+  const contactCategoryGrid = document.getElementById("contact-grid-" + lastNameLetter);
 
   if (lastNameLetter === letter) {
     contactCategoryGrid.innerHTML += getContactTemplate(contact);
@@ -142,7 +160,8 @@ function calculateContactIconColor(contactShortcut) {
   const g = (40 + value2 * 7).toFixed(0);
   const b = (40 + (25 - value2) * 7).toFixed(0);
 
-  return `rgba(${r}, ${g}, ${b}, 1)`;
+  // return `rgba(${r}, ${g}, ${b}, 1)`;
+  return `rgba(${r} ${g} ${b} / 100%)`;
 }
 
 
@@ -167,15 +186,15 @@ function getContactShortcut(contact) {
 
 function addContactIconColorToContactList(contact) {
   const contactID = document.getElementById(`contact-${contact.id}`);
-  const shortcutColor = calculateContactIconColor(contact.shortcut);
-
+  const shortcutColor = contact.shortcutColor;
+  
   setContactIconColor(contactID, shortcutColor);
 }
 
 
-function renderContactList() {
+async function renderContactList() {
   const letters = createAlphabetList();
-
+  contactList.innerHTML = "";
   for (let i = 0; i < letters.length; i++) {
     const letter = letters[i];
     contactList.innerHTML += getLetterCategoryTemplate(letter);
@@ -183,7 +202,6 @@ function renderContactList() {
     for (let j = 0; j < allContacts.length; j++) {
       const contact = allContacts[j];
       const lastNameLetter = getLastNameLetter(contact);
-      getContactShortcut(contact);
       assignAndCreateContacts(letter, contact, lastNameLetter);
       addContactIconColorToContactList(contact);
     }
@@ -298,5 +316,13 @@ function handleContactFormSubmit(event) {
     saveContactData();
   } else {
     createContact();
+  }
+}
+
+
+function renderContactDetailsDesktopPlaceholder() {
+  if (window.innerWidth >= 1024) {
+    const contactDetailsPlaceholder = getContactDetailsPlaceholderTemplate();
+    contactDetails.innerHTML = contactDetailsPlaceholder;
   }
 }

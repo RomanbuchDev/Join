@@ -15,16 +15,17 @@
     <link rel="stylesheet" href="../style.css" />
     <!-- JavaScript files -->
     <script src="../js/template.js" defer></script>
-    <script src="../js/contacts.js" defer></script>
     <script src="../js/contacts_dialog.js" defer></script>
+    <script src="../js/contacts.js" defer></script>
   </head>
 
   <body onload="init()" id="page">
     <!-- Header -->
-    <header class="main-header" aria-labelledby="contacts header">
-      <a href=""><img src="/assets/icons/join-logo.svg" alt="Join Logo" /></a>
-
-      <button type="button" class="user-avatar"><span>SM</span></button>
+    <header class="main-header fixed-header">
+      <a href="./summary.html">
+        <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
+      </a>
+      <button type="button" class="user-avatar"><span>G</span></button>
     </header>
 
     <!-- Main -->
@@ -47,58 +48,11 @@
         </div>
 
         <!-- Contact list -->
-        <div id="contact-list">
-          <!-- Kontaktliste (Spalte 2) -->
-          <!-- Buchstabe A -->
-          <!-- <section id="letter-group">
-        <div>
-          <h2 class="letter-container">A</h2>
-          <hr class="letter-line">
-        </div>
-        <div class="contact-grid-container" id="contact-grid"></div>
-      </section> -->
-        </div>
+        <div id="contact-list"></div>
       </div>
 
       <!-- Contact details (Same page in mobile / Column 3 in desktop) -->
-      <aside class="contact-details-container hidden" id="contact-details">
-        <!-- Contact details header -->
-        <!-- <div class="contact-details-header-container">
-        <div class="contact-details-title-container">
-          <span class="contact-details-title">Contacts</span>
-          <span class="contact-details-subtitle">Better with a team</span>
-        </div> -->
-        <!-- <button
-            type="button"
-            class="contact-details-back-button"
-            onclick="backToContactList()"
-          >
-            &#x1F860;
-          </button>
-        </div>
-
-        <div class="contact-details-name-container">
-          <span class="contact-details-shortcut"></span>
-          <span class="contact-details-name"></span>
-        </div>
-
-        <div>
-          <div class="contact-details-information-container">
-            <h3>Contact information</h3>
-          </div>
-          <div class="contact-details-contact-data">
-            <h4>Email</h4>
-            <span class="contact-e-mail">vorname.nachname@test.de</span>
-            <h4>Phone</h4>
-            <span>+49 12345</span>
-          </div>
-        </div> -->
-
-        <!-- Contact details option menu button -->
-        <!-- <button type="button" class="contact-menu" onclick="toggleMobileContactOptions()">
-        <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile" />
-      </button> -->
-      </aside>
+      <aside class="contact-details-container hidden" id="contact-details"></aside>
 
       <!-- Contact details option menu -->
       <div
@@ -130,29 +84,46 @@
     </main>
 
     <!-- Navigation (at footer in mobile / on left side in Desktop) -->
-    <nav class="main-nav">
+    <nav class="main-nav fixed-footer">
+      <img
+          class="nav-join-img"
+          src="../assets/icons/join-logo-white.svg"
+          alt=""
+        />
       <ul class="main-nav-list">
         <li class="main-nav-item">
-          <a href="/html/summary.html">
-            <img src="/assets/icons/summary-icon.svg" alt="" />
+          <a href="./summary.html">
+            <img
+              src="../assets/icons/summary-icon.svg"
+              alt="to the summary page"
+            />
             <span>Summary</span>
           </a>
         </li>
+
         <li class="main-nav-item">
-          <a href="/html/add-task.html">
-            <img src="/assets/icons/addtask-icon.svg" alt="" />
+          <a href="./add-task.html">
+            <img
+              src="../assets/icons/addtask-icon.svg"
+              alt="to add a new task"
+            />
             <span> Add Task </span>
           </a>
         </li>
+
         <li class="main-nav-item">
-          <a href="/html/board.html">
-            <img src="/assets/icons/board-icon.svg" alt="" />
+          <a href="./board.html">
+            <img src="../assets/icons/board-icon.svg" alt="to the board page" />
             <span> Board </span>
           </a>
         </li>
+
         <li class="main-nav-item">
-          <a href="/html/contact.html">
-            <img src="/assets/icons/contact-icon.svg" alt="" />
+          <a href="./contact.html" aria-current="page">
+            <img
+              src="../assets/icons/contact-icon.svg"
+              alt="to the contacts page"
+            />
             <span> Contacts </span>
           </a>
         </li>
@@ -231,6 +202,10 @@
               alt="Phone input icon"
             />
           </div>
+          <!-- Test for dialog error messages -->
+          <!-- <span class="dialog-error-message" id="error-message-name">Name is a required informatin field! Please enter a name.</span>
+          <span class="dialog-error-message" id="error-message-email">Please enter a valid email address.</span>
+          <span class="dialog-error-message" id="error-message-phone">Only numbes and the + sign are allowed. Please try again.</span> -->
         </div>
 
         <!-- Dialog footer -->
