@@ -1,0 +1,27 @@
+[
+  {
+    "uid": "hBjkl3mN9pQwErTyU1oI2aS4dF6g",
+    "email": "sara.hoffmann@join.de",
+    "password": "test1234"
+  },
+  {
+    "uid": "qWzXcV8bN2mLkJhG5fD7sA1yT3rE",
+    "email": "jonas.becker@join.de",
+    "password": "test1234"
+  },
+  {
+    "uid": "pL4kR9xZ1vB6nM3cQ8wY2eU5tH0j",
+    "name": "Lena Fischer",
+    "password": "test1234"
+  },
+  {
+    "uid": "gT7yU2iO9pA4sD6fH1jK3lZ5xC8v",
+    "name": "Max Weber",
+    "password": "test1234"
+  },
+  {
+    "uid": "nM5bV8cX1zQ4wE7rT9yU2iO6pA3s",
+    "name": "Anna Schmidt",
+    "password": "test1234"
+  }
+]
