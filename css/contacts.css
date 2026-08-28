@@ -37,8 +37,8 @@ body {
 
 .main-container {
   background-color: var(--color-white);
-  margin-top: 0.3125rem;
-  margin-bottom: 5rem;
+  margin-top: 4.7em;
+  margin-bottom: 8em;
   padding-left: 0.875rem;
   padding-right: 0.875rem;
 }
@@ -59,7 +59,6 @@ body {
 
 .contact-card {
   display: flex;
-  align-items: center;
   background: none;
   border: none;
   font: inherit;
@@ -171,14 +170,20 @@ body {
     margin: 0;
   }
 
+  body .fixed-footer {
+    position: static;
+    width: 100%;
+  }
+
   .main-container {
     grid-area: main;
     display: flex;
     flex-direction: row;
     overflow: hidden;
-    height: 100%;
     min-height: 0;
     padding-right: 0;
+    margin-bottom: 0;
+    margin-top: 4.2em;
   }
 
   .main-wrapper {
@@ -189,6 +194,9 @@ body {
     scrollbar-width: thin;
     gap: 1em;
     height: 100%;
+    position: relative;
+    z-index: 10;
+    box-shadow: 4px 0 6px var(--color-black-10);
   }
 
   .contact-menu {

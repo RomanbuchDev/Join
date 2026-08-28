@@ -161,6 +161,10 @@
   padding: 0;
 }
 
+.add-contact-input:focus-within {
+  border-color: var(--color-medium);
+}
+
 .add-contact-footer {
   display: flex;
   justify-content: center;

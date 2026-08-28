@@ -23,6 +23,11 @@ const messageContactCreated = document.getElementById(
   "toast-message-contact-created",
 );
 
+// Test for dialog error messages
+// const dialogErrorMessageName = document.getElementById("error-message-name");
+// const dialogErrorMessageEmail = document.getElementById("error-message-email");
+// const dialogErrorMessagePhone = document.getElementById("error-message-phone");
+
 // Functions:
 
 function activateContactFormSubmissionType() {
@@ -31,8 +36,8 @@ function activateContactFormSubmissionType() {
 
 
 function updateContactList() {
-    contactList.innerHTML = "";
-    renderContactList();
+  contactList.innerHTML = "";
+  renderContactList();
 }
 
 
@@ -59,7 +64,7 @@ function saveContactData() {
   currentContactData.email = contactEmail.value;
   currentContactData.phone = contactPhone.value;
 
-    updateContactList();
+  updateContactList();
   showContactDetails(currentContactData.id);
   showToastMessageContactEdited();
   closeMobileContactOptions();
@@ -180,25 +185,25 @@ function resetFormInputs() {
 }
 
 
-function createContact() {
-  if (!checkContactFormValidation()) return;
-  const newContactData = {
+function createContactObject() {
+  return {
     id: allContacts.length > 0 ? allContacts[allContacts.length - 1].id + 1 : 1,
     name: contactName.value,
     email: contactEmail.value,
     phone: contactPhone.value,
   };
-  getContactShortcut(newContactData);
-  allContacts.push(newContactData);
-    updateContactList();
-  showToastMessageContactCreated();
-  closeDialog();
 }
 
 
-function renderContactDetailsDesktopPlaceholder() {
-  if (window.innerWidth >= 1024) {
-    const contactDetailsPlaceholder = getContactDetailsPlaceholderTemplate();
-    contactDetails.innerHTML = contactDetailsPlaceholder;
-  }
+function createContact() {
+  if (!checkContactFormValidation()) return;
+
+  const newContactData = createContactObject();
+  
+  getContactShortcut(newContactData);
+  prepareContactColor(newContactData);
+  allContacts.push(newContactData);
+  updateContactList();
+  showToastMessageContactCreated();
+  closeDialog();
 }
