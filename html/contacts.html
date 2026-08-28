@@ -21,7 +21,7 @@
 
   <body onload="init()" id="page">
     <!-- Header -->
-    <header class="main-header fixed-header">
+    <header class="main-header" aria-label="Page header">
       <a href="./summary.html">
         <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
       </a>
@@ -52,7 +52,10 @@
       </div>
 
       <!-- Contact details (Same page in mobile / Column 3 in desktop) -->
-      <aside class="contact-details-container hidden" id="contact-details"></aside>
+      <aside
+        class="contact-details-container hidden"
+        id="contact-details"
+      ></aside>
 
       <!-- Contact details option menu -->
       <div
@@ -84,8 +87,8 @@
     </main>
 
     <!-- Navigation (at footer in mobile / on left side in Desktop) -->
-    <nav class="main-nav fixed-footer">
-      <img
+    <nav class="main-nav">
+        <img
           class="nav-join-img"
           src="../assets/icons/join-logo-white.svg"
           alt=""
@@ -119,7 +122,7 @@
         </li>
 
         <li class="main-nav-item">
-          <a href="./contact.html" aria-current="page">
+          <a href="./contacts.html" aria-current="page">
             <img
               src="../assets/icons/contact-icon.svg"
               alt="to the contacts page"

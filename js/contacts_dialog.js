@@ -7,15 +7,21 @@ const dialogBoxButton = document.getElementById("contact-menu-button");
 const dialogTitle = document.getElementById("dialog-title");
 const dialogSubtitle = document.getElementById("dialog-subtitle");
 const dialogShortcut = document.getElementById("dialog-shortcut");
-const dialogContactForm = document.getElementById("contacts-dialog").querySelector("form");
+const dialogContactForm = document
+  .getElementById("contacts-dialog")
+  .querySelector("form");
 const contactName = document.getElementById("input-contact-name-dialog");
 const contactEmail = document.getElementById("input-contact-email-dialog");
 const contactPhone = document.getElementById("input-contact-phone-dialog");
-const dialogCreateContactButton = document.getElementById("dialog-create-contact-button");
+const dialogCreateContactButton = document.getElementById(
+  "dialog-create-contact-button",
+);
 const dialogCancelButton = document.getElementById("dialog-cancel-button");
 const dialogDeleteButton = document.getElementById("dialog-delete-button");
 const dialogSaveButton = document.getElementById("dialog-save-button");
-const messageContactCreated = document.getElementById("toast-message-contact-created");
+const messageContactCreated = document.getElementById(
+  "toast-message-contact-created",
+);
 
 // Test for dialog error messages
 // const dialogErrorMessageName = document.getElementById("error-message-name");
@@ -30,8 +36,8 @@ function activateContactFormSubmissionType() {
 
 
 function updateContactList() {
-    contactList.innerHTML = "";
-    renderContactList();
+  contactList.innerHTML = "";
+  renderContactList();
 }
 
 
@@ -58,7 +64,7 @@ function saveContactData() {
   currentContactData.email = contactEmail.value;
   currentContactData.phone = contactPhone.value;
 
-    updateContactList();
+  updateContactList();
   showContactDetails(currentContactData.id);
   showToastMessageContactEdited();
   closeMobileContactOptions();
@@ -173,19 +179,27 @@ function showToastMessageContactDeleted() {
 function resetFormInputs() {
   dialogContactForm.reset();
 
-  dialogShortcut.innerHTML = '<img src="../assets/icons/contacts/person_icon.png" alt="Contacts icon">';
+  dialogShortcut.innerHTML =
+    '<img src="../assets/icons/contacts/person_icon.png" alt="Contacts icon">';
   dialogShortcut.style.removeProperty("--background-color");
 }
 
 
-function createContact() {
-  if (!checkContactFormValidation()) return;
-  const newContactData = {
+function createContactObject() {
+  return {
     id: allContacts.length > 0 ? allContacts[allContacts.length - 1].id + 1 : 1,
     name: contactName.value,
     email: contactEmail.value,
     phone: contactPhone.value,
   };
+}
+
+
+function createContact() {
+  if (!checkContactFormValidation()) return;
+
+  const newContactData = createContactObject();
+  
   getContactShortcut(newContactData);
   prepareContactColor(newContactData);
   allContacts.push(newContactData);

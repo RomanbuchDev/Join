@@ -6,11 +6,19 @@ const contactList = document.getElementById("contact-list");
 const contactListGrid = document.getElementById("contact-grid");
 const contactDetails = document.getElementById("contact-details");
 const contactOptionMenu = document.getElementById("contact-options");
-const contactOptionMenuOverlay = document.getElementById("contact-options-overlay");
+const contactOptionMenuOverlay = document.getElementById(
+  "contact-options-overlay",
+);
 
-const dialogBoxDeleteQuestion = document.getElementById("delete-question-dialog");
-const messageContactEdited = document.getElementById("toast-message-contact-edited");
-const messageContactDeleted = document.getElementById("toast-message-contact-deleted");
+const dialogBoxDeleteQuestion = document.getElementById(
+  "delete-question-dialog",
+);
+const messageContactEdited = document.getElementById(
+  "toast-message-contact-edited",
+);
+const messageContactDeleted = document.getElementById(
+  "toast-message-contact-deleted",
+);
 
 let currentContactData;
 
@@ -68,7 +76,7 @@ let currentContactData;
 // ];
 
 // NEU - Test:
-let allContacts = [];
+const allContacts = [];
 
 // Functions:
 
@@ -88,26 +96,32 @@ function prepareContactColor(contact) {
 }
 
 
-async function fetchAllContacts() {
-  try {
-    let response = await fetch('../js/contact-list.json');
-    let responseAsJSON = await response.json();
-
-    for (let index = 0; index < responseAsJSON.length; index++) {
-      const contact = responseAsJSON[index];
-      getContactShortcut(contact);
-      prepareContactColor(contact);
-      allContacts.push(contact);
+function saveContacts(responseAsJSON) {
+  for (let index = 0; index < responseAsJSON.length; index++) {
+    const contact = responseAsJSON[index];
+    getContactShortcut(contact);
+    prepareContactColor(contact);
+    allContacts.push(contact);
   }
   return allContacts;
+}
+
+
+async function fetchAllContacts() {
+  try {
+    const response = await fetch("../js/contact-list.json");
+    const responseAsJSON = await response.json();
+    return saveContacts(responseAsJSON);
   } catch (error) {
-    console.log("Error loading data!", error);
+    console.error("Error loading data!", error);
   }
 }
 
 
 function assignAndCreateContacts(letter, contact, lastNameLetter) {
-  const contactCategoryGrid = document.getElementById("contact-grid-" + lastNameLetter);
+  const contactCategoryGrid = document.getElementById(
+    "contact-grid-" + lastNameLetter,
+  );
 
   if (lastNameLetter === letter) {
     contactCategoryGrid.innerHTML += getContactTemplate(contact);
@@ -187,7 +201,7 @@ function getContactShortcut(contact) {
 function addContactIconColorToContactList(contact) {
   const contactID = document.getElementById(`contact-${contact.id}`);
   const shortcutColor = contact.shortcutColor;
-  
+
   setContactIconColor(contactID, shortcutColor);
 }
 

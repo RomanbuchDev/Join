@@ -59,7 +59,6 @@ body {
 
 .contact-card {
   display: flex;
-  /* align-items: center; */
   background: none;
   border: none;
   font: inherit;
@@ -184,7 +183,6 @@ body {
     min-height: 0;
     padding-right: 0;
     margin-bottom: 0;
-
     margin-top: 4.2em;
   }
 
@@ -196,7 +194,6 @@ body {
     scrollbar-width: thin;
     gap: 1em;
     height: 100%;
-
     position: relative;
     z-index: 10;
     box-shadow: 4px 0 6px var(--color-black-10);
