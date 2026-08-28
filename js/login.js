@@ -134,6 +134,8 @@ function handleLoginSuccess(user) {
 function handleLoginError() {
   document.getElementById("loginError").innerText =
     "Password or email is incorrect!";
+  markFieldError("exampleInputEmail1", true);
+  markFieldError("exampleInputPassword1", true);
 }
 
 
