@@ -7,7 +7,8 @@
     "dueDate": "09/15/2026",
     "priority": "medium",
     "assignedTo": [6, 7, 1],
-    "status": "todo",
+    "status": "toDo",
+    "position": 0,
     "subtasks": [
       { "text": "Fetch first 20 Pokemon from PokeAPI", "done": true },
       { "text": "Render Pokemon cards in a grid", "done": false },
@@ -22,7 +23,8 @@
     "dueDate": "09/18/2026",
     "priority": "urgent",
     "assignedTo": [2, 3],
-    "status": "todo",
+    "status": "toDo",
+    "position": 1,
     "subtasks": [
       { "text": "Design overlay layout", "done": true },
       { "text": "Fetch detail data by Pokemon ID", "done": true },
@@ -37,7 +39,8 @@
     "dueDate": "09/20/2026",
     "priority": "medium",
     "assignedTo": [4],
-    "status": "in-progress",
+    "status": "inProgress",
+    "position": 0,
     "subtasks": [
       { "text": "Create type filter dropdown", "done": false },
       { "text": "Apply filter logic to rendered list", "done": false }
@@ -51,7 +54,8 @@
     "dueDate": "09/22/2026",
     "priority": "low",
     "assignedTo": [5, 6],
-    "status": "todo",
+    "status": "toDo",
+    "position": 2,
     "subtasks": [
       { "text": "Add favorite toggle button on cards", "done": false },
       { "text": "Persist favorites in localStorage", "done": false },
@@ -67,7 +71,8 @@
     "dueDate": "09/25/2026",
     "priority": "medium",
     "assignedTo": [7, 8, 1],
-    "status": "in-progress",
+    "status": "inProgress",
+    "position": 1,
     "subtasks": [
       { "text": "Add spinner component", "done": true },
       { "text": "Implement offset-based pagination", "done": false }
@@ -81,7 +86,8 @@
     "dueDate": "09/28/2026",
     "priority": "low",
     "assignedTo": [3, 4, 5, 6],
-    "status": "todo",
+    "status": "toDo",
+    "position": 3,
     "subtasks": [
       { "text": "Adjust grid breakpoints for mobile", "done": false },
       { "text": "Make overlay full-screen on small viewports", "done": false },
@@ -97,6 +103,7 @@
     "priority": "urgent",
     "assignedTo": [1, 2],
     "status": "done",
+    "position": 0,
     "subtasks": [
       { "text": "Create fetch wrapper function", "done": true },
       { "text": "Add in-memory cache for requested Pokemon", "done": true }
@@ -110,7 +117,8 @@
     "dueDate": "09/12/2026",
     "priority": "medium",
     "assignedTo": [8],
-    "status": "await-feedback",
+    "status": "awaitFeedback",
+    "position": 0,
     "subtasks": [
       { "text": "Wrap fetch calls in try/catch", "done": true },
       { "text": "Show error toast on failed request", "done": false }
@@ -124,7 +132,8 @@
     "dueDate": "09/14/2026",
     "priority": "medium",
     "assignedTo": [6, 7],
-    "status": "in-progress",
+    "status": "inProgress",
+    "position": 2,
     "subtasks": [
       { "text": "Create getPokemonCardTemplate()", "done": true },
       { "text": "Create getPokemonDetailTemplate()", "done": false },
@@ -139,7 +148,8 @@
     "dueDate": "09/30/2026",
     "priority": "low",
     "assignedTo": [1],
-    "status": "todo",
+    "status": "toDo",
+    "position": 4,
     "subtasks": [
       { "text": "Verify code-quality workflow passes", "done": true },
       { "text": "Configure deploy-ftp.yml exclude list", "done": true },

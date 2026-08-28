@@ -16,11 +16,12 @@
 
     <script src="../js/board-templates.js" defer></script>
     <script src="../js/board.js" defer></script>
+    <script src="../js/board-cardmovement.js" defer></script>
 
     <title>Join - Board</title>
   </head>
 
-  <body class="board-body d-flex">
+  <body onload="initBoard()" class="board-body d-flex">
     <header class="main-header">
       <a href="./summary.html">
         <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
@@ -114,8 +115,8 @@
               </svg>
             </button>
           </div>
-          <section class="tasks-section d-flex">
-            <div class="task-card d-flex">
+          <section id="toDo" class="tasks-section d-flex">
+            <!-- <div class="task-card d-flex">
               <p class="task-label color-label-user-story">User Story</p>
               <div class="task-title-description-container d-flex">
                 <h3>Erste Task-Überschrift für das Join Projekt</h3>
@@ -218,7 +219,7 @@
                   />
                 </div>
               </div>
-            </div>
+            </div> -->
           </section>
         </section>
         <section class="board-column d-flex">
@@ -249,10 +250,10 @@
               </svg>
             </button>
           </div>
-          <section class="tasks-section d-flex">
-            <div class="empty-board-column d-flex">
+          <section id="inProgress" class="tasks-section d-flex">
+            <!-- <div class="empty-board-column d-flex">
               <p>No tasks "Column Name"</p>
-            </div>
+            </div> -->
           </section>
         </section>
         <section class="board-column d-flex">
@@ -283,8 +284,8 @@
               </svg>
             </button>
           </div>
-          <section class="tasks-section d-flex">
-            <div class="task-card d-flex">
+          <section id="awaitFeedback" class="tasks-section d-flex">
+            <!-- <div class="task-card d-flex">
               <p class="task-label color-label-technical-task">
                 Technical Task
               </p>
@@ -311,17 +312,17 @@
                   />
                 </div>
               </div>
-            </div>
+            </div> -->
           </section>
         </section>
         <section class="board-column d-flex">
           <div class="h-addtask-container d-flex">
             <h2>Done</h2>
           </div>
-          <section class="tasks-section d-flex">
-            <div class="empty-board-column d-flex">
+          <section id="done" class="tasks-section d-flex">
+            <!-- <div class="empty-board-column d-flex">
               <p>No tasks "Column Name"</p>
-            </div>
+            </div> -->
           </section>
         </section>
       </section>
