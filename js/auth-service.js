@@ -19,7 +19,6 @@ async function findUserProfile(uid) {
   });
 }
 
-
 // Checks email and password against the mock auth data, then loads the matching profile
 async function loginWithEmail(email, password) {
   await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -30,7 +29,6 @@ async function loginWithEmail(email, password) {
   const profile = await findUserProfile(authMatch.uid);
   return { name: profile.name, email: authMatch.email };
 }
-
 
 // Creates a guest user without checking credentials
 async function loginAsGuest() {
