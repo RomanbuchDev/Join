@@ -6,6 +6,7 @@
     <title>Join - Signup</title>
     <link rel="icon" href="../assets/icons/join-logo.svg" />
     <!-- login links -->
+
     <link rel="stylesheet" href="../css/reset_stylesheet.css" />
     <link rel="stylesheet" href="../css/dpf-flex-utils.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
@@ -16,7 +17,6 @@
 
     <script src="../script.js" defer></script>
     <script src="../js/template.js" defer></script>
-    <script src="../js/contact.js" defer></script>
   </head>
   <body class="dpf-center body-signup">
     <section class="app dpf-column-spc-between-center">
@@ -36,7 +36,7 @@
             </div>
           </div>
 
-          <div class="pb-1">
+          <div class="pb-1 dpf-flex-column-center input-bar">
             <label for="registerName" class="form-label"></label>
             <div class="input-wrapper">
               <input
@@ -82,23 +82,30 @@
               <img src="../assets/icons/lock.svg" class="input-icon" alt="" />
             </div>
           </div>
+          <section class="dpf-column-spc-between-center">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="privacyCheck"
+              />
+              <label class="form-check-label" for="privacyCheck">
+                I accept the
+                <a href="./privacy-policy.html" target="_blank" class="signup-a"
+                  >Privacy policy</a
+                >
+              </label>
+            </div>
 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="privacyCheck" />
-            <label class="form-check-label" for="privacyCheck">
-              I accept the
-              <a href="./privacy-policy.html" target="_blank">Privacy policy</a>
-            </label>
-          </div>
-
-          <div class="dpf-column-spc-between-center">
-            <button type="submit" class="btn btn-primary" id="signup">
-              Sign up
-            </button>
-          </div>
+            <div class="dpf-column-spc-between-center">
+              <button type="submit" class="btn btn-primary" id="signup">
+                Sign up
+              </button>
+            </div>
+          </section>
         </form>
       </main>
-      <!-- <div id="loginToast" class="toast">You Signed Up successfully</div> -->
+      <div id="loginToast" class="toast">You Signed Up successfully</div>
 
       <footer class="dpf-flex-column-center footer-signup">
         <section class="dpf-center impress-bar">

@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 .body-signup {
   min-height: 100vh;
 }
@@ -26,9 +30,9 @@
 }
 
 .main-signup {
-  max-width: 24.75rem;
+  max-width: 25rem;
   position: relative;
-  height: 37.2rem;
+  height: 37.19rem;
   width: 100%;
   border-radius: 1.88rem;
   padding: 2rem 1rem;
@@ -42,6 +46,13 @@
   position: absolute;
   left: 1rem;
   top: 2rem;
+}
+
+/* form signup */
+form {
+  height: 100%;
+  width: 100%;
+  gap: 1rem;
 }
 
 /* Spacing & Labels */
@@ -219,6 +230,12 @@
     padding: 0;
   }
 
+  .main-signup {
+    max-width: 37.5rem;
+    max-height: 39.38rem;
+    height: auto;
+  }
+
   .form-label {
     margin-bottom: 0;
     line-height: 0;
@@ -228,6 +245,10 @@
     width: 26.375rem;
     height: 3rem;
     margin-bottom: 1.25rem;
+  }
+
+  .input-bar .input-wrapper:last-of-type {
+    margin-bottom: 0.5rem;
   }
 
   .footer-signup {
