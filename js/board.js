@@ -22,15 +22,16 @@ function renderTasks(tasksData) {
     const taskID = tasksData[i].id;
     renderOneTask(taskID)
   }
+  checkForEmptyColumn()
 }
 
 
 function renderOneTask(taskID) {
-  const {category, title, description, priority, assignedTo, status, subtasks,} 
+  const {category, title, description, priority, assignedTo, status: columnName, subtasks,} 
       = tasksData[tasksData.findIndex(task => task.id === taskID)];
     const colorLabel = (category == "User Story") ? "color-label-user-story" : "color-label-technical-task";
     const doneSubtasks = checkDoneSubtasks(subtasks);
-    document.getElementById(status).innerHTML 
+    document.getElementById(columnName).innerHTML 
       += templateTaskCard({taskID, category, colorLabel, title, description, priority, doneSubtasks, subtasksLength: subtasks.length});
     renderTaskAvatars(taskID, assignedTo);
 }
@@ -51,4 +52,32 @@ function renderTaskAvatars(taskID, taskAvatars) {
     document.getElementById(`avatarsContainer${taskID}`).innerHTML +=
       templateTaskAvatar(colorAvatar, taskAvatars[i]);
   }
+}
+
+
+function checkForEmptyColumn() {
+  const columns = document.querySelectorAll(".tasks-section");
+  for (let i = 0; i < columns.length; i++) {
+    if (!columns[i].innerText) {
+      const emptyColumnID = columns[i].id;
+      const emptyColumnName = getColumnName(emptyColumnID)
+      document.getElementById(emptyColumnID).innerHTML = templateEmptyColumn(emptyColumnName);
+    }
+  }
+}
+
+
+function getColumnName(columnID) {
+  const columnName = "";
+  switch (columnID) {
+    case "toDo": columnName = "To Do";
+      break;
+    case "inProgress": columnName = "In progress";
+      break; 
+    case "awaitFeedback": columnName = "Await feedback";
+      break;
+    case "done": columnName = "Done";
+      break;
+  }
+  return columnName;
 }
