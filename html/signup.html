@@ -17,6 +17,7 @@
 
     <script src="../script.js" defer></script>
     <script src="../js/template.js" defer></script>
+    <script src="../js/signup.js" defer></script>
   </head>
   <body class="dpf-center body-signup">
     <section class="app dpf-column-spc-between-center">
@@ -26,7 +27,7 @@
         </div>
       </header>
       <main class="main-signup">
-        <form class="dpf-column-spc-between-center">
+        <form class="dpf-column-spc-between-center" id="signupForm">
           <div>
             <a href="../index.html" class="signup-back-vector dpf-center">
               <img src="../assets/icons/login-back-Vector.svg" alt="Zurück" />
@@ -69,7 +70,12 @@
                 class="form-control"
                 id="registerPassword"
               />
-              <img src="../assets/icons/lock.svg" class="input-icon" alt="" />
+              <img
+                src="../assets/icons/lock.svg"
+                id="visibility-icon-password"
+                class="input-icon"
+                alt=""
+              />
             </div>
             <label for="registerConfirmPassword" class="form-label"></label>
             <div class="input-wrapper">
@@ -79,8 +85,14 @@
                 class="form-control"
                 id="registerConfirmPassword"
               />
-              <img src="../assets/icons/lock.svg" class="input-icon" alt="" />
+              <img
+                src="../assets/icons/lock.svg"
+                id="visibility-icon-confirm"
+                class="input-icon"
+                alt=""
+              />
             </div>
+            <p id="signupError" class="error-text"></p>
           </div>
           <section class="dpf-column-spc-between-center">
             <div class="form-check">
@@ -105,18 +117,17 @@
           </section>
         </form>
       </main>
-      <div id="loginToast" class="toast">You Signed Up successfully</div>
+      <div id="signupToast" class="toast">You Signed Up successfully</div>
 
       <footer class="dpf-flex-column-center footer-signup">
         <section class="dpf-center impress-bar">
           <a href="./privacy-policy.html" target="_blank" class="signup-a"
             >Privacy Policy</a
           >
-          <a href="./impressum.html" target="_blank" class="signup-a"
+          <a href="./imprint.html" target="_blank" class="signup-a"
             >Legal notice</a
           >
         </section>
-        <div></div>
       </footer>
     </section>
   </body>
