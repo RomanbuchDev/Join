@@ -3,11 +3,6 @@ function init() {
 }
 
 
-window.addEventListener("pageshow", () => {
-  document.getElementById("loginToast").classList.remove("show");
-});
-
-
 document.querySelector(".splash-logo").addEventListener("animationend", () => {
   document.getElementById("splashScreen").style.display = "none";
 });
@@ -39,7 +34,10 @@ async function handleLoginSubmit(event) {
 
 async function attemptLogin(loginUserData) {
   try {
-    const user = await loginWithEmail(loginUserData.email, loginUserData.password);
+    const user = await loginWithEmail(
+      loginUserData.email,
+      loginUserData.password,
+    );
     handleLoginSuccess(user);
   } catch (error) {
     handleLoginError();
@@ -59,8 +57,10 @@ function guestLoginEventListener(formGuest) {
 
 
 function handleLoginSuccess(user) {
-  localStorage.setItem("currentUser", JSON.stringify({ name: user.name, isGuest: user.isGuest }));
-  document.getElementById("loginToast").classList.add("show");
+  localStorage.setItem(
+    "currentUser",
+    JSON.stringify({ name: user.name, isGuest: user.isGuest }),
+  );
   setTimeout(() => {
     window.location.href = "./html/greeting-page.html";
   }, 1500);
@@ -68,7 +68,8 @@ function handleLoginSuccess(user) {
 
 
 function handleLoginError() {
-  document.getElementById("loginError").innerText = "Password or email is incorrect!";
+  document.getElementById("loginError").innerText =
+    "Password or email is incorrect!";
   setTimeout(() => {
     document.getElementById("loginError").innerText = "";
   }, 3000);
@@ -76,14 +77,49 @@ function handleLoginError() {
 
 
 function isLoginInputValid(loginUserData) {
-  if (loginUserData.email.trim() === "" || loginUserData.password.trim() === "") {
-    document.getElementById("loginError").innerText = "Please fill in all fields";
-    setTimeout(() => {
-      document.getElementById("loginError").innerText = "";
-    }, 3000);
-    return false;
+  const emailEmpty = checkEmailField(loginUserData.email);
+  const passwordEmpty = checkPasswordField(loginUserData.password);
+  const message = getLoginErrorMessage(emailEmpty, passwordEmpty);
+  document.getElementById("loginError").innerText = message;
+  return message === "";
+}
+
+
+function checkEmailField(email) {
+  const isEmpty = email.trim() === "";
+  markFieldError("exampleInputEmail1", isEmpty);
+  return isEmpty;
+}
+
+
+function checkPasswordField(password) {
+  const isEmpty = password.trim() === "";
+  markFieldError("exampleInputPassword1", isEmpty);
+  return isEmpty;
+}
+
+
+function getLoginErrorMessage(emailEmpty, passwordEmpty) {
+  if (emailEmpty && passwordEmpty) {
+    return "Check your email and password. Please try again.";
   }
-  return true;
+  if (emailEmpty) {
+    return "Please fill in Email field.";
+  }
+  if (passwordEmpty) {
+    return "Please fill in Password field.";
+  }
+  return "";
+}
+
+
+function markFieldError(inputId, isEmpty) {
+  const input = document.getElementById(inputId);
+  if (isEmpty) {
+    input.classList.add("input-error");
+  } else {
+    input.classList.remove("input-error");
+  }
 }
 
 

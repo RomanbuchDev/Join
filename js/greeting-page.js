@@ -11,16 +11,6 @@ function initGreeting() {
 }
 
 
-function loginStatus() {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  if (!currentUser) {
-    window.location.href = "../index.html";
-    return false;
-  }
-  return true;
-}
-
-
 function greetingUser() {
   const greetingUserData = JSON.parse(localStorage.getItem("currentUser"));
   if (greetingUserData.isGuest) {

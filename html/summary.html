@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Summary - Join</title>
     <link rel="icon" type="images/" href="/assets/icons/join-logo.svg" />
     <link rel="stylesheet" href="../css/reset_stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/summary.css" />
     <link rel="stylesheet" href="../style.css" />
-    <title>Join - Summary</title>
+    <script src="../js/summary.js" defer></script>
   </head>
   <body>
     <div id="page">
@@ -20,7 +21,11 @@
 
         <p class="main-header-title">Kanban Project Management Tool</p>
 
-        <a href="./help.html" class="main-header-help" aria-label="Help">
+        <a
+          href="./help.html"
+          class="main-header-help"
+          aria-label="Link to Help page"
+        >
           <img src="../assets/icons/help.svg" alt="" />
         </a>
 
@@ -91,6 +96,11 @@
             <span class="summary-card-label">Awaiting feedback</span>
           </li>
         </ul>
+
+        <p class="greeting">
+          <span class="greeting__text">Good morning,</span>
+          <span class="greeting__name">Sofia Müller</span>
+        </p>
       </main>
 
       <nav class="main-nav">

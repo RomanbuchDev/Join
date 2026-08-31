@@ -126,12 +126,12 @@ h1 {
   display: none;
 }
 
-@media (width >= 64em) {
+@media (width >= 80em) {
   #page {
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas:
-      "nav header header header header"
-      "nav main main main main";
+      "nav header header header header "
+      "nav main main main main ";
   }
 
   .main-header {
@@ -191,7 +191,7 @@ h1 {
     justify-content: center;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.75rem 2rem;
+    padding: 1.5rem 2rem;
     box-sizing: border-box;
   }
 
@@ -210,10 +210,11 @@ h1 {
 
   .nav-join-img {
     display: block;
-    width: 64px;
+    width: 115px;
     height: auto;
     margin-inline: auto;
-    margin-block: 4em;
+    margin-block-start: 4em;
+    margin-block-end: 7em;
   }
 
   .main-nav-legal {
