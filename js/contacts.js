@@ -9,6 +9,7 @@ const contactOptionMenu = document.getElementById("contact-options");
 const contactOptionMenuOverlay = document.getElementById(
   "contact-options-overlay",
 );
+const mainView = document.getElementById("main-view");
 
 const dialogBoxDeleteQuestion = document.getElementById(
   "delete-question-dialog",
@@ -75,9 +76,6 @@ let currentContactData;
 //   },
 // ];
 
-// NEU - Test:
-const allContacts = [];
-
 // Functions:
 
 async function init() {
@@ -87,12 +85,6 @@ async function init() {
   renderContactDetailsDesktopPlaceholder();
   closeDialogBackgroundClick();
   console.log(allContacts);
-}
-
-
-function prepareContactColor(contact) {
-  const shortcutColor = calculateContactIconColor(contact.shortcut);
-  contact.shortcutColor = shortcutColor;
 }
 
 
@@ -161,24 +153,6 @@ function sortAlphabetList(alphabetList) {
 }
 
 
-function calculateContactIconColor(contactShortcut) {
-  const correctShortcut = contactShortcut.toUpperCase();
-
-  const firstNameLetter = correctShortcut[0] || "X";
-  const LastNameLetter = correctShortcut[1] || firstNameLetter;
-
-  const value1 = firstNameLetter.charCodeAt(0) - 65;
-  const value2 = LastNameLetter.charCodeAt(0) - 65;
-
-  const r = (40 + value1 * 7).toFixed(0);
-  const g = (40 + value2 * 7).toFixed(0);
-  const b = (40 + (25 - value2) * 7).toFixed(0);
-
-  // return `rgba(${r}, ${g}, ${b}, 1)`;
-  return `rgba(${r} ${g} ${b} / 100%)`;
-}
-
-
 function setContactIconColor(contactID, shortcutColor) {
   if (contactID) {
     contactID.style.setProperty("--background-color", shortcutColor);
@@ -186,39 +160,34 @@ function setContactIconColor(contactID, shortcutColor) {
 }
 
 
-function getContactShortcut(contact) {
-  const contactNameParts = contact.name.trim().split(/\s+/);
+function addContactIconColorToContactList(contact) {
+  const contactID = document.getElementById(`contact-${contact.id}`);
+  const shortcutColor = calculateContactIconColor(contact.shortcut);
+  // const shortcutColor = contact.shortcutColor;
 
-  const shortcut =
-    contactNameParts.length > 1
-      ? contactNameParts[0][0] + contactNameParts[1][0]
-      : contactNameParts[0][0];
-
-  contact.shortcut = shortcut.toUpperCase();
+  setContactIconColor(contactID, shortcutColor);
 }
 
 
-function addContactIconColorToContactList(contact) {
-  const contactID = document.getElementById(`contact-${contact.id}`);
-  const shortcutColor = contact.shortcutColor;
-
-  setContactIconColor(contactID, shortcutColor);
+function renderContactsByLetter(letter) {
+  for (let j = 0; j < allContacts.length; j++) {
+    const contact = allContacts[j];
+    const lastNameLetter = getLastNameLetter(contact);
+    getContactShortcut(contact);
+    assignAndCreateContacts(letter, contact, lastNameLetter);
+    addContactIconColorToContactList(contact);
+  }
 }
 
 
 async function renderContactList() {
   const letters = createAlphabetList();
   contactList.innerHTML = "";
+
   for (let i = 0; i < letters.length; i++) {
     const letter = letters[i];
     contactList.innerHTML += getLetterCategoryTemplate(letter);
-
-    for (let j = 0; j < allContacts.length; j++) {
-      const contact = allContacts[j];
-      const lastNameLetter = getLastNameLetter(contact);
-      assignAndCreateContacts(letter, contact, lastNameLetter);
-      addContactIconColorToContactList(contact);
-    }
+    renderContactsByLetter(letter);
   }
 }
 
@@ -281,6 +250,8 @@ function showContactDetails(contactID) {
 
   renderContactDetails(contactID);
   showContactDetailsDesktopAnimation();
+
+  mainView.classList.add("details-open");
 }
 
 
@@ -288,6 +259,8 @@ function backToContactList() {
   toggleContactPageView(contactList, contactDetails);
 
   dialogBoxButton.classList.remove("hidden");
+
+  mainView.classList.remove("details-open");
 }
 
 

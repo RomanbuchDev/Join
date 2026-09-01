@@ -10,12 +10,13 @@
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/assets.css" />
     <link rel="stylesheet" href="../css/contacts.css" />
-    <link rel="stylesheet" href="../css/contacts_details.css" />
-    <link rel="stylesheet" href="../css/contacts_dialog.css" />
+    <link rel="stylesheet" href="../css/contacts-details.css" />
+    <link rel="stylesheet" href="../css/contacts-dialog.css" />
     <link rel="stylesheet" href="../style.css" />
     <!-- JavaScript files -->
     <script src="../js/template.js" defer></script>
-    <script src="../js/contacts_dialog.js" defer></script>
+    <script src="../js/contact-utils.js" defer></script>
+    <script src="../js/contacts-dialog.js" defer></script>
     <script src="../js/contacts.js" defer></script>
   </head>
 
@@ -29,13 +30,13 @@
     </header>
 
     <!-- Main -->
-    <main class="main-container">
+    <main class="main-container" id="main-view">
       <!-- Button for dialog -->
       <div class="main-wrapper">
         <div class="button-wrapper">
           <button
             type="button"
-            class="button-primary contact-menu show"
+            class="button-basic button-primary contact-menu show"
             id="contact-menu-button"
             onclick="openDialog()"
           >
@@ -66,7 +67,7 @@
       <div class="contact-option-menu-container" id="contact-options">
         <button
           type="button"
-          class="contact-option-menu-items"
+          class="option-button"
           onclick="editContactDetails()"
         >
           <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon" />
@@ -74,7 +75,7 @@
         </button>
         <button
           type="button"
-          class="contact-option-menu-items"
+          class="option-button"
           onclick="openDialogDeleteQuestion()"
         >
           <img
@@ -167,12 +168,11 @@
 
         <!-- Dialog main -->
         <div class="add-contact-main-container">
-          <div class="add-contact-input">
+          <div class="add-contact-input" id="input-name-dialog">
             <input
               type="text"
               placeholder="Name"
               id="input-contact-name-dialog"
-              required
             />
             <img
               src="../assets/icons/contacts/person_icon_input.png"
@@ -180,9 +180,9 @@
             />
           </div>
 
-          <div class="add-contact-input">
+          <div class="add-contact-input" id="input-email-dialog">
             <input
-              type="email"
+              type="text"
               placeholder="Email"
               id="input-contact-email-dialog"
             />
@@ -192,13 +192,11 @@
             />
           </div>
 
-          <div class="add-contact-input">
+          <div class="add-contact-input" id="input-phone-dialog">
             <input
               type="tel"
               placeholder="Phone"
               id="input-contact-phone-dialog"
-              pattern="[0-9\s+]*"
-              title="Please enter only numbers from 0 to 9 and the plus symbol."
             />
             <img
               src="../assets/icons/contacts/phone_icon_input.png"
@@ -206,9 +204,17 @@
             />
           </div>
           <!-- Test for dialog error messages -->
-          <!-- <span class="dialog-error-message" id="error-message-name">Name is a required informatin field! Please enter a name.</span>
-          <span class="dialog-error-message" id="error-message-email">Please enter a valid email address.</span>
-          <span class="dialog-error-message" id="error-message-phone">Only numbes and the + sign are allowed. Please try again.</span> -->
+          <div class="dialog-error-message-container" id="error-message">
+            <span class="dialog-error-message" id="error-message-name"
+              >Name is a required information field! Please enter a name.</span
+            >
+            <span class="dialog-error-message" id="error-message-email"
+              >Please enter a valid email address.</span
+            >
+            <span class="dialog-error-message" id="error-message-phone"
+              >Only numbes and the + sign are allowed. Please try again.</span
+            >
+          </div>
         </div>
 
         <!-- Dialog footer -->
@@ -216,7 +222,7 @@
           <!-- Cancel button -->
           <button
             type="button"
-            class="button-secondary delete-contact-data"
+            class="button-basic button-secondary delete-contact-data"
             id="dialog-cancel-button"
             onclick="closeDialog()"
           >
@@ -226,10 +232,10 @@
           <!-- Create contact button -->
           <button
             type="submit"
-            class="button-primary"
+            class="button-basic button-primary"
             id="dialog-create-contact-button"
           >
-            Create contact
+            <span>Create contact</span>
             <img
               src="../assets/icons/contacts/check_icon.png"
               alt="Check icon"
@@ -238,7 +244,7 @@
           <!-- Delete button -->
           <button
             type="button"
-            class="button-secondary delete-contact-data hidden"
+            class="button-basic button-secondary delete-contact-data hidden"
             id="dialog-delete-button"
             onclick="openDialogDeleteQuestion()"
           >
@@ -247,7 +253,7 @@
           <!-- Save button -->
           <button
             type="submit"
-            class="button-primary save-contact-data hidden"
+            class="button-basic button-primary save-contact-data hidden"
             id="dialog-save-button"
           >
             Save
@@ -269,7 +275,7 @@
           <!-- Delete contact - No button -->
           <button
             type="button"
-            class="button-secondary delete-question-no"
+            class="button-basic button-secondary delete-question-no"
             id="delete-question-no-button"
             onclick="closeContactDeletion()"
           >
@@ -278,7 +284,7 @@
           <!-- Delete contact - Yes button -->
           <button
             type="submit"
-            class="button-primary delete-question-yes"
+            class="button-basic button-primary delete-question-yes"
             id="delete-question-yes-button"
             onclick="deleteContact()"
             autofocus

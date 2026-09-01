@@ -44,17 +44,6 @@
   font-size: 1.25rem;
 }
 
-.contact-details-back-button {
-  background: none;
-  border: none;
-  color: var(--color-name);
-  font-size: 1.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
-}
-
 .contact-details-name-container {
   display: flex;
   align-items: center;
@@ -150,22 +139,6 @@
   opacity: 1;
 }
 
-.contact-option-menu-items {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: none;
-  color: var(--color-dark);
-  border: none;
-  cursor: pointer;
-  gap: 0.5rem;
-  padding: 0.5rem;
-}
-
-.contact-option-menu-items:hover {
-  font-weight: 700;
-}
-
 /*  ==================================================================================================== 
     2. OTHER
     ==================================================================================================== */
@@ -229,10 +202,6 @@
   .contact-details-name {
     font-size: 2.9375rem;
     font-weight: 500;
-  }
-
-  .contact-details-back-button {
-    display: none;
   }
 
   .contact-option-menu-container-desktop {

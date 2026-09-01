@@ -2,22 +2,31 @@
     ASSETS.CSS - FOR ALL PAGES
     ==================================================================================================== */
 
-/* Basic button structure for confirmation (login, sign up, create task, add task, new contact, create contact, save) */
+/* Basic button structure for all buttons */
 
-.button-primary {
+.button-basic {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-dark);
-  color: var(--color-white);
   font-size: 1.3125rem;
-  font-weight: 700;
-  border: none;
   border-radius: 10px;
-  flex: 1;
+  transition:
+    background-color 0.1s ease,
+    color 0.1s ease,
+    box-shadow 0.1s ease;
   cursor: pointer;
   gap: 0.25em;
+  height: 3em;
   padding: 1em;
+}
+
+/* Button for confirmation (login, sign up, create task, add task, new contact, create contact, save) */
+
+.button-primary {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  font-weight: 700;
+  border: none;
 }
 
 .button-primary:hover {
@@ -33,18 +42,9 @@
 /* Basic button structure for rejection (clear, cancel, delete) */
 
 .button-secondary {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: var(--color-white);
   color: var(--color-dark);
-  font-size: 1.3125rem;
   border: 1px solid var(--color-dark);
-  border-radius: 10px;
-  flex: 1;
-  cursor: pointer;
-  gap: 0.25em;
-  padding: 1em;
 }
 
 .button-secondary:hover {
@@ -74,4 +74,63 @@
   transform: translateX(-50%);
   transition: bottom 0.3s ease-out;
   padding: 1.125em 0.625em;
+}
+
+/* Back button */
+
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.back-button img {
+  width: 32px;
+  height: 32px;
+}
+
+/* Close button */
+
+.close-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  font-size: 2rem;
+  line-height: 0;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+/* Option button */
+
+.option-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  color: var(--color-dark);
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  gap: 0.5em;
+  width: 80px;
+  padding: 0.5em;
+}
+
+.option-button:hover {
+  font-weight: 700;
+}
+
+/* ##### Other ##### */
+
+@media (width >= 64em) {
+  .button-basic {
+    height: 3.5em;
+  }
+
+  .back-button {
+    display: none;
+  }
 }
