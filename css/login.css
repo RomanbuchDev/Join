@@ -89,16 +89,9 @@ form {
   border: 1px solid var(--color-medium);
 }
 
-/*  Inputs */
-.form-text {
-  margin-top: 0.25rem;
-  font-size: 0.875em;
-  color: var(--color-gray-104);
-}
-
 /* Buttons */
 .btn-logins-bar {
-  height: 7.5rem;
+  height: 7rem;
   width: 11.25rem;
 }
 
@@ -113,7 +106,9 @@ form {
   user-select: none;
   border: 1px solid var(--color-gray-104);
   border-radius: 0.5rem;
-  transition: background-color 100ms ease-in-out;
+  transition:
+    background-color 100ms ease-in-out,
+    box-shadow 100ms ease-in-out;
   gap: 0.63rem;
 }
 
@@ -189,6 +184,7 @@ form {
   position: relative;
   max-width: 22.75rem;
   width: 100%;
+  margin-top: 0.5rem;
 }
 
 .input-icon {
@@ -200,6 +196,11 @@ form {
   height: 1.5rem;
   padding: 0.25rem;
   pointer-events: none;
+}
+
+.visibility-icon {
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .error-text {
@@ -285,13 +286,22 @@ form {
     max-width: 41rem;
     height: 28rem;
     width: 100%;
-    padding: 2rem 1rem;
+    padding: 3rem 2rem;
+  }
+
+  .form-label {
+    margin-bottom: 0;
+    line-height: 0;
   }
 
   .input-wrapper {
     width: 26.375rem;
     height: 3rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .input-bar .input-wrapper:last-of-type {
+    margin-bottom: 0.5rem;
   }
 
   .input-bar {

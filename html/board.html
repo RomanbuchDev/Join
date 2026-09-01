@@ -16,11 +16,12 @@
 
     <script src="../js/board-templates.js" defer></script>
     <script src="../js/board.js" defer></script>
+    <script src="../js/board-cardmovement.js" defer></script>
 
     <title>Join - Board</title>
   </head>
 
-  <body class="board-body d-flex">
+  <body onload="initBoard()" class="board-body d-flex">
     <header class="main-header">
       <a href="./summary.html">
         <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
@@ -114,112 +115,7 @@
               </svg>
             </button>
           </div>
-          <section class="tasks-section d-flex">
-            <div class="task-card d-flex">
-              <p class="task-label color-label-user-story">User Story</p>
-              <div class="task-title-description-container d-flex">
-                <h3>Erste Task-Überschrift für das Join Projekt</h3>
-                <p class="task-description">
-                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div class="task-progress d-flex">
-                <progress value="2" max="3"></progress>
-                <p>2/3 Subtasks</p>
-              </div>
-              <div class="task-card-footer d-flex">
-                <div class="task-avatars-container d-flex">
-                  <span class="task-avatar d-flex color-avatar-1">AM</span>
-                  <span class="task-avatar d-flex color-avatar-2">EM</span>
-                  <span class="task-avatar d-flex color-avatar-3">MB</span>
-                </div>
-                <div class="priority-icon d-flex">
-                  <img
-                    src="../assets/icons/prio-medium-symbol.svg"
-                    alt="medium priority task"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="task-card d-flex">
-              <p class="task-label color-label-technical-task">
-                Technical Task
-              </p>
-              <div class="task-title-description-container d-flex">
-                <h3>Zweite Task-Überschrift für das Join Projekt</h3>
-                <p class="task-description">
-                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div class="task-progress d-flex">
-                <progress value="0" max="2"></progress>
-                <p>0/2 Subtasks</p>
-              </div>
-              <div class="task-card-footer d-flex">
-                <div class="task-avatars-container d-flex"></div>
-                <div class="priority-icon d-flex">
-                  <img
-                    src="../assets/icons/prio-low-symbol.svg"
-                    alt="low priority task"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="task-card d-flex">
-              <p class="task-label color-label-user-story">User Story</p>
-              <div class="task-title-description-container d-flex">
-                <h3>Erste Task-Überschrift für das Join Projekt</h3>
-                <p class="task-description">
-                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div class="task-progress d-flex">
-                <progress value="2" max="3"></progress>
-                <p>2/3 Subtasks</p>
-              </div>
-              <div class="task-card-footer d-flex">
-                <div class="task-avatars-container d-flex">
-                  <span class="task-avatar d-flex color-avatar-1">AM</span>
-                  <span class="task-avatar d-flex color-avatar-2">EM</span>
-                  <span class="task-avatar d-flex color-avatar-3">MB</span>
-                </div>
-                <div class="priority-icon d-flex">
-                  <img
-                    src="../assets/icons/prio-medium-symbol.svg"
-                    alt="medium priority task"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="task-card d-flex">
-              <p class="task-label color-label-technical-task">
-                Technical Task
-              </p>
-              <div class="task-title-description-container d-flex">
-                <h3>Zweite Task-Überschrift für das Join Projekt</h3>
-                <p class="task-description">
-                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div class="task-progress d-flex">
-                <progress value="0" max="2"></progress>
-                <p>0/2 Subtasks</p>
-              </div>
-              <div class="task-card-footer d-flex">
-                <div class="task-avatars-container d-flex"></div>
-                <div class="priority-icon d-flex">
-                  <img
-                    src="../assets/icons/prio-low-symbol.svg"
-                    alt="low priority task"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
+          <section id="toDo" class="tasks-section d-flex"></section>
         </section>
         <section class="board-column d-flex">
           <div class="h-addtask-container d-flex">
@@ -249,10 +145,10 @@
               </svg>
             </button>
           </div>
-          <section class="tasks-section d-flex">
-            <div class="empty-board-column d-flex">
+          <section id="inProgress" class="tasks-section d-flex">
+            <!-- <div class="empty-board-column d-flex">
               <p>No tasks "Column Name"</p>
-            </div>
+            </div> -->
           </section>
         </section>
         <section class="board-column d-flex">
@@ -283,46 +179,13 @@
               </svg>
             </button>
           </div>
-          <section class="tasks-section d-flex">
-            <div class="task-card d-flex">
-              <p class="task-label color-label-technical-task">
-                Technical Task
-              </p>
-              <div class="task-title-description-container d-flex">
-                <h3>Dritte Task-Überschrift für das Join Projekt</h3>
-                <p class="task-description">
-                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div class="task-progress d-flex">
-                <progress value="2" max="2"></progress>
-                <p>2/2 Subtasks</p>
-              </div>
-              <div class="task-card-footer d-flex">
-                <div class="task-avatars-container d-flex">
-                  <span class="task-avatar d-flex color-avatar-1">AM</span>
-                  <span class="task-avatar d-flex color-avatar-2">EM</span>
-                </div>
-                <div class="priority-icon d-flex">
-                  <img
-                    src="../assets/icons/prio-urgent-symbol.svg"
-                    alt="urgent priority task"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
+          <section id="awaitFeedback" class="tasks-section d-flex"></section>
         </section>
         <section class="board-column d-flex">
           <div class="h-addtask-container d-flex">
             <h2>Done</h2>
           </div>
-          <section class="tasks-section d-flex">
-            <div class="empty-board-column d-flex">
-              <p>No tasks "Column Name"</p>
-            </div>
-          </section>
+          <section id="done" class="tasks-section d-flex"></section>
         </section>
       </section>
     </main>
