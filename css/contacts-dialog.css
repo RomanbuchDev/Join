@@ -13,9 +13,7 @@
   background-color: var(--color-white);
   border: none;
   border-radius: 30px;
-  outline: none;
   box-shadow: 0 0 4px rgb(0 0 0 / 40%);
-  overflow: hidden;
   transform: translateY(100%);
   transition:
     transform 0.3s ease-out,
@@ -23,8 +21,7 @@
   contain: paint layout;
   top: 85px;
   z-index: 200;
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline: auto;
   width: calc(100% - 28px);
   max-width: 396px;
   height: 760px;
@@ -55,30 +52,18 @@
 .add-contact-header-container {
   background-color: var(--color-dark);
   position: relative;
-  gap: 0.75rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-inline: 1.5em;
   height: 352px;
 }
 
 .close-button-container {
   display: flex;
   justify-content: flex-end;
-  padding-top: 1.5rem;
+  padding-top: 1.5em;
 }
 
 .close-button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  background: none;
   color: white;
-  font-size: 2rem;
-  line-height: 0;
-  border: none;
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
 }
 
 .close-button-container .close-button:hover {
@@ -90,8 +75,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding-top: 4.125rem;
-  padding-bottom: 4.125rem;
+  padding-block: 4.125em;
 }
 
 .add-contact-title-container::after {
@@ -131,7 +115,6 @@
   bottom: 0;
   border: 3px solid var(--color-white);
   border-radius: 70px;
-  transform: translateY(50%);
   transform: translate(-50%, 50%);
   width: 120px;
   height: 120px;
@@ -142,7 +125,8 @@
   flex-direction: column;
   background-color: var(--color-white);
   gap: 0.9375rem;
-  padding: 5rem 1rem;
+  padding: 1.5em 1em 1.25em;
+  margin-top: 3.5em;
 }
 
 .add-contact-input {
@@ -150,27 +134,63 @@
   align-items: center;
   border: 1px solid var(--color-gray-104);
   border-radius: 10px;
-  height: 30px;
+  height: 2.5625em;
   padding: 0.8125rem 1.4375rem;
 }
 
+.add-contact-input.error-message {
+  border: 1px solid var(--color-error);
+}
+
 .add-contact-input input {
+  font-size: 1.25rem;
   border: none;
   outline: none;
   flex-grow: 1;
-  padding: 0;
+  width: 100%;
 }
 
 .add-contact-input:focus-within {
   border-color: var(--color-medium);
 }
 
+.dialog-error-message-container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  gap: 0.5em;
+  width: 100%;
+  height: 3.5em;
+  padding: 0.25em 0.5em;
+}
+
+.dialog-error-message-container span {
+  display: none;
+}
+
+.dialog-error-message-container .show {
+  display: flex;
+}
+
+.dialog-error-message {
+  color: var(--color-error);
+  font-size: 0.75rem;
+}
+
 .add-contact-footer {
   display: flex;
   justify-content: center;
   gap: 1.25rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-inline: 1.5em;
+}
+
+#dialog-create-contact-button {
+  gap: 0.5em;
+}
+
+#dialog-create-contact-button span {
+  width: max-content;
 }
 
 #dialog-cancel-button {
@@ -193,41 +213,40 @@
   background-color: var(--color-dark);
 }
 
-.toast-contact-created.show {
+.toast-contact-created.show,
+.toast-contact-edited.show,
+.toast-contact-deleted.show {
   bottom: 150px;
 }
 
-/* Additonal messages (no requirement) */
+.toast-contact-edited {
+  background-color: rgb(22 153 70 / 100%);
+}
+
+.toast-contact-deleted {
+  background-color: rgb(235 20 40 / 100%);
+}
 
 .delete-question-container {
   background-color: var(--color-white);
   border: none;
   border-radius: 30px;
-  outline: none;
   box-shadow: 0 0 4px rgb(0 0 0 / 40%);
-  overflow: hidden;
   contain: paint layout;
   z-index: 200;
   margin: auto;
   padding: 30px 24px;
   width: calc(100% - 28px);
   max-width: 396px;
-  height: 200px;
   max-height: calc(100dvh - 160px);
 }
 
 .delete-question-container form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-align: center;
   gap: 1rem;
-  height: 100%;
-}
-
-.delete-question-container:not([open]) {
-  display: none;
 }
 
 .delete-question-button-container {
@@ -235,9 +254,7 @@
   justify-content: center;
   gap: 1.25rem;
   width: 100%;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  margin-top: 1rem;
+  padding-inline: 1.5em;
 }
 
 .delete-question-no {
@@ -246,22 +263,6 @@
 
 .delete-question-yes {
   max-width: 8.75rem;
-}
-
-.toast-contact-edited {
-  background-color: rgb(22 153 70 / 100%);
-}
-
-.toast-contact-edited.show {
-  bottom: 150px;
-}
-
-.toast-contact-deleted {
-  background-color: rgb(235 20 40 / 100%);
-}
-
-.toast-contact-deleted.show {
-  bottom: 150px;
 }
 
 /*  ==================================================================================================== 
@@ -277,14 +278,12 @@
     contain: paint layout;
     top: 180px;
     z-index: 200;
-    max-width: 1200px;
-    max-height: 500px;
+    max-width: 1212px;
+    max-height: 592px;
   }
 
   .add-contact-container[open] {
-    display: block;
     overflow: hidden;
-    max-width: 1200px;
     height: auto;
     min-height: 400px;
     padding: 0;
@@ -295,13 +294,10 @@
     grid-template-columns: 3fr 2fr 3fr;
     align-items: stretch;
     height: 100%;
-    width: 100%;
-    margin: 0;
   }
 
   .add-contact-header-container {
     display: contents;
-    height: auto;
   }
 
   @starting-style {
@@ -326,7 +322,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 40px;
+    padding: 40px 40px 150px;
   }
 
   .dialog-join-icon {
@@ -349,7 +345,7 @@
     grid-row: 1;
     place-self: center;
     position: static;
-    margin: 0;
+    margin: 0 0 100px;
     transform: none;
   }
 
@@ -376,9 +372,13 @@
     grid-column: 3;
     grid-row: 1;
     display: flex;
-    justify-content: flex-end;
+    justify-content: left;
     align-self: end;
-    padding: 0 100px 80px 0;
+    padding: 0 0 50px;
+  }
+
+  .dialog-error-message-container {
+    height: 3em;
   }
 
   #dialog-cancel-button {

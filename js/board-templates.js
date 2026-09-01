@@ -30,3 +30,11 @@ function templateTaskAvatar(colorAvatar, avatarShortcut) {
   return `
     <span class="task-avatar d-flex" style="background-color:${colorAvatar}">${avatarShortcut}</span>`
 }
+
+
+function templateEmptyColumn(columnName) {
+  return `
+    <div class="empty-board-column d-flex">
+      <p>No tasks ${columnName}</p>
+    </div>`
+}

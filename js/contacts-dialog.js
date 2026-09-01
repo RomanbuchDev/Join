@@ -11,8 +11,11 @@ const dialogContactForm = document
   .getElementById("contacts-dialog")
   .querySelector("form");
 const contactName = document.getElementById("input-contact-name-dialog");
+const contactNameInput = document.getElementById("input-name-dialog");
 const contactEmail = document.getElementById("input-contact-email-dialog");
+const contactEmailInput = document.getElementById("input-email-dialog");
 const contactPhone = document.getElementById("input-contact-phone-dialog");
+const contactPhoneInput = document.getElementById("input-phone-dialog");
 const dialogCreateContactButton = document.getElementById(
   "dialog-create-contact-button",
 );
@@ -23,10 +26,10 @@ const messageContactCreated = document.getElementById(
   "toast-message-contact-created",
 );
 
-// Test for dialog error messages
-// const dialogErrorMessageName = document.getElementById("error-message-name");
-// const dialogErrorMessageEmail = document.getElementById("error-message-email");
-// const dialogErrorMessagePhone = document.getElementById("error-message-phone");
+const dialogErrorMessage = document.getElementById("error-message");
+const dialogErrorMessageName = document.getElementById("error-message-name");
+const dialogErrorMessageEmail = document.getElementById("error-message-email");
+const dialogErrorMessagePhone = document.getElementById("error-message-phone");
 
 // Functions:
 
@@ -43,11 +46,11 @@ function updateContactList() {
 
 function deleteContact() {
   const databaseIndex = allContacts.findIndex(
-    (contact) => contact.id === currentContactData.id);
+    (contact) => contact.id === currentContactData.id,
+  );
 
-  if (databaseIndex !== -1) {
-    allContacts.splice(databaseIndex, 1);
-  }
+  if (databaseIndex !== -1) allContacts.splice(databaseIndex, 1);
+  
   updateContactList();
   backToContactList();
   renderContactDetailsDesktopPlaceholder();
@@ -60,6 +63,7 @@ function deleteContact() {
 
 function saveContactData() {
   if (!checkContactFormValidation()) return;
+  if (checkInputData() === false) return;
   currentContactData.name = contactName.value;
   currentContactData.email = contactEmail.value;
   currentContactData.phone = contactPhone.value;
@@ -118,6 +122,7 @@ function openDialog() {
 
 function closeDialog() {
   resetFormInputs();
+  clearErrorMessages();
   dialogShortcut.classList.remove("contact-details-shortcut");
   closeMobileContactOptions();
   dialogBox.close();
@@ -197,13 +202,78 @@ function createContactObject() {
 
 function createContact() {
   if (!checkContactFormValidation()) return;
-
+  if (checkInputData() === false) return;
   const newContactData = createContactObject();
-  
   getContactShortcut(newContactData);
   prepareContactColor(newContactData);
   allContacts.push(newContactData);
   updateContactList();
   showToastMessageContactCreated();
+  clearErrorMessages();
   closeDialog();
+}
+
+
+function clearErrorMessages() {
+  dialogErrorMessageName.classList.remove("show");
+  dialogErrorMessageEmail.classList.remove("show");
+  dialogErrorMessagePhone.classList.remove("show");
+
+  contactNameInput.classList.remove("error-message");
+  contactEmailInput.classList.remove("error-message");
+  contactPhoneInput.classList.remove("error-message");
+}
+
+
+function checkInputName() {
+  const contactNameData = contactName.value.trim();
+
+  if (contactNameData === "") {
+    dialogErrorMessageName.classList.add("show");
+    contactNameInput.classList.add("error-message");
+    return false;
+  } 
+    dialogErrorMessageName.classList.remove("show");
+    contactNameInput.classList.remove("error-message");
+    return true;
+  
+}
+
+
+function checkInputEmail() {
+  const contactEmailData = contactEmail.value.trim();
+
+  if (contactEmailData !== "" && !contactEmailData.includes("@")) {
+    dialogErrorMessageEmail.classList.add("show");
+    contactEmailInput.classList.add("error-message");
+    return false;
+  } 
+    dialogErrorMessageEmail.classList.remove("show");
+    contactEmailInput.classList.remove("error-message");
+    return true;
+  
+}
+
+
+function checkInputPhone() {
+  const contactPhoneData = contactPhone.value.trim();
+
+  if (contactPhoneData !== "" && !/^\+?[0-9\s]+$/.test(contactPhoneData)) {
+    dialogErrorMessagePhone.classList.add("show");
+    contactPhoneInput.classList.add("error-message");
+    return false;
+  } 
+    dialogErrorMessagePhone.classList.remove("show");
+    contactPhoneInput.classList.remove("error-message");
+    return true;
+  
+}
+
+
+function checkInputData() {
+  const nameData = checkInputName();
+  const emailData = checkInputEmail();
+  const phoneData = checkInputPhone();
+
+  return nameData && emailData && phoneData;
 }

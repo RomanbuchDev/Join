@@ -15,7 +15,6 @@ document.querySelector(".splash-logo").addEventListener("animationend", () => {
   document.getElementById("splashScreen").style.display = "none";
 });
 
-
 // Attaches all event listeners for the login page
 function setupEventListeners() {
   const form = document.getElementById("loginForm");
@@ -26,7 +25,6 @@ function setupEventListeners() {
   visibilityEventListener();
   inputPasswordCheck();
 }
-
 
 // Listens for the login form submit
 function loginEventListener(form) {
@@ -79,7 +77,6 @@ function visibilityIconSwish(icon, inputPasswordCheck) {
   return;
 }
 
-
 // Handles the login form submit event
 async function handleLoginSubmit(event) {
   event.preventDefault();
@@ -90,7 +87,6 @@ async function handleLoginSubmit(event) {
   document.getElementById("loginBtn").disabled = true;
   await attemptLogin(loginUserData);
 }
-
 
 // Tries to log in with the entered data
 async function attemptLogin(loginUserData) {
@@ -106,7 +102,6 @@ async function attemptLogin(loginUserData) {
   }
 }
 
-
 // Listens for the guest login button click
 function guestLoginEventListener(formGuest) {
   formGuest.addEventListener("click", async function (event) {
@@ -116,7 +111,6 @@ function guestLoginEventListener(formGuest) {
     handleLoginSuccess(user);
   });
 }
-
 
 // Saves the user and redirects after a successful login
 function handleLoginSuccess(user) {
@@ -129,7 +123,6 @@ function handleLoginSuccess(user) {
   }, 1500);
 }
 
-
 // Shows the error message after a failed login
 function handleLoginError() {
   document.getElementById("loginError").innerText =
@@ -137,7 +130,6 @@ function handleLoginError() {
   markFieldError("exampleInputEmail1", true);
   markFieldError("exampleInputPassword1", true);
 }
-
 
 // Checks if the entered login data is valid
 function isLoginInputValid(loginUserData) {
@@ -148,7 +140,6 @@ function isLoginInputValid(loginUserData) {
   return message === "";
 }
 
-
 // Checks if the email field is empty or invalid
 function checkEmailField(email) {
   const isEmpty = email.trim() === "";
@@ -157,14 +148,12 @@ function checkEmailField(email) {
   return { isEmpty, isInvalid };
 }
 
-
 // Checks if the password field is empty
 function checkPasswordField(password) {
   const isEmpty = password.trim() === "";
   markFieldError("exampleInputPassword1", isEmpty);
   return isEmpty;
 }
-
 
 // Builds the error message text out of the email and password checks
 function getLoginErrorMessage(emailCheck, passwordEmpty) {
@@ -178,7 +167,6 @@ function getLoginErrorMessage(emailCheck, passwordEmpty) {
   return getPasswordErrorMessage(passwordEmpty);
 }
 
-
 // Builds the error message text for the email field
 function getEmailErrorMessage(emailCheck) {
   if (emailCheck.isEmpty) {
@@ -190,7 +178,6 @@ function getEmailErrorMessage(emailCheck) {
   return "";
 }
 
-
 // Builds the error message text for the password field
 function getPasswordErrorMessage(isEmpty) {
   if (isEmpty) {
@@ -198,7 +185,6 @@ function getPasswordErrorMessage(isEmpty) {
   }
   return "";
 }
-
 
 // Adds or removes error styling on a field
 function markFieldError(inputId, isEmpty) {
@@ -210,7 +196,6 @@ function markFieldError(inputId, isEmpty) {
   }
 }
 
-
 // Reads email and password from the form
 function getLoginFormValues() {
   const inputEmail = document.getElementById("exampleInputEmail1").value;
@@ -221,7 +206,6 @@ function getLoginFormValues() {
   };
   return loginUserData;
 }
-
 
 // Resets error styling and buttons after page returns
 function resetLoginFormState() {
