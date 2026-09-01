@@ -1,4 +1,4 @@
-function templateTaskCard({ taskID, category, colorLabel, title, description, priority, doneSubtasks, subtasksLength }) {
+function templateTaskCard({ taskID, category, colorLabel, title, description, priority }) {
   return `
     <div class="task-card d-flex">
       <p class="task-label ${colorLabel}">${category}</p>
@@ -8,9 +8,7 @@ function templateTaskCard({ taskID, category, colorLabel, title, description, pr
           ${description}
         </p>
       </div>
-      <div class="task-progress d-flex">
-        <progress value="${doneSubtasks}" max="${subtasksLength}"></progress>
-        <p>${doneSubtasks}/${subtasksLength} Subtasks</p>
+      <div id="progressContainer${taskID}" class="task-progress d-flex">
       </div>
       <div class="task-card-footer d-flex">
         <div id="avatarsContainer${taskID}" class="task-avatars-container d-flex">
@@ -23,6 +21,13 @@ function templateTaskCard({ taskID, category, colorLabel, title, description, pr
         </div>
       </div>
     </div>`;
+}
+
+
+function templateProgressBar(doneSubtasks, subtasksLength) {
+  return `
+    <progress value="${doneSubtasks}" max="${subtasksLength}"></progress>
+    <p>${doneSubtasks}/${subtasksLength} Subtasks</p>`
 }
 
 

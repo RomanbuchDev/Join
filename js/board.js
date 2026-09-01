@@ -2,6 +2,7 @@ let tasksData = [];
 
 async function initBoard() {
   await fetchAllTasks();
+  await fetchAllContacts();
   renderTasks(tasksData);
 }
 
@@ -27,13 +28,24 @@ function renderTasks(tasksData) {
 
 
 function renderOneTask(taskID) {
-  const {category, title, description, priority, assignedTo, status: columnName, subtasks,} 
+  const {category, title, description, priority, assignedTo, status: columnName, subtasks} 
       = tasksData[tasksData.findIndex(task => task.id === taskID)];
-    const colorLabel = (category == "User Story") ? "color-label-user-story" : "color-label-technical-task";
-    const doneSubtasks = checkDoneSubtasks(subtasks);
-    document.getElementById(columnName).innerHTML 
-      += templateTaskCard({taskID, category, colorLabel, title, description, priority, doneSubtasks, subtasksLength: subtasks.length});
-    renderTaskAvatars(taskID, assignedTo);
+  const colorLabel = (category == "User Story") ? "color-label-user-story" : "color-label-technical-task";
+  document.getElementById(columnName).innerHTML 
+    += templateTaskCard({taskID, category, colorLabel, title, description, priority});
+  if (subtasks && subtasks.length > 0) {
+    renderProgressBar(taskID, subtasks);
+  } else {
+    document.getElementById(`progressContainer${taskID}`).className = "task-progress d-none";
+  }
+  renderTaskAvatars(taskID, assignedTo);
+}
+
+
+function renderProgressBar(taskID, taskSubtasks) {
+  const doneSubtasks = checkDoneSubtasks(taskSubtasks);
+  document.getElementById(`progressContainer${taskID}`).innerHTML
+    = templateProgressBar(doneSubtasks, taskSubtasks.length);
 }
 
 
@@ -48,9 +60,12 @@ function checkDoneSubtasks(taskSubtasks) {
 
 function renderTaskAvatars(taskID, taskAvatars) {
   for (let i = 0; i < taskAvatars.length; i++) {
-    const colorAvatar = "rgba(18 70 88 / 100%)";
-    document.getElementById(`avatarsContainer${taskID}`).innerHTML +=
-      templateTaskAvatar(colorAvatar, taskAvatars[i]);
+    const contactID = taskAvatars[i];
+    const contact = allContacts.find((c) => c.id === contactID);
+    const avatarShortcut = contact.shortcut;
+    const avatarColor = contact.shortcutColor;
+    document.getElementById(`avatarsContainer${taskID}`).innerHTML 
+      += templateTaskAvatar(avatarColor, avatarShortcut);
   }
 }
 
@@ -68,9 +83,9 @@ function checkForEmptyColumn() {
 
 
 function getColumnName(columnID) {
-  const columnName = "";
+  let columnName = "";
   switch (columnID) {
-    case "toDo": columnName = "To Do";
+    case "toDo": columnName = "To do";
       break;
     case "inProgress": columnName = "In progress";
       break; 
