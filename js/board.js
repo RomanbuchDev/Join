@@ -2,6 +2,7 @@ let tasksData = [];
 
 async function initBoard() {
   await fetchAllTasks();
+  await fetchAllContacts();
   renderTasks(tasksData);
 }
 
@@ -48,9 +49,12 @@ function checkDoneSubtasks(taskSubtasks) {
 
 function renderTaskAvatars(taskID, taskAvatars) {
   for (let i = 0; i < taskAvatars.length; i++) {
-    const colorAvatar = "rgba(18 70 88 / 100%)";
+    const contactID = taskAvatars[i];
+    const contact = allContacts.find((c) => c.id === contactID);
+    const avatarShortcut = contact.shortcut;
+    const avatarColor = contact.shortcutColor;
     document.getElementById(`avatarsContainer${taskID}`).innerHTML +=
-      templateTaskAvatar(colorAvatar, taskAvatars[i]);
+      templateTaskAvatar(avatarColor, avatarShortcut);
   }
 }
 
@@ -68,9 +72,9 @@ function checkForEmptyColumn() {
 
 
 function getColumnName(columnID) {
-  const columnName = "";
+  let columnName = "";
   switch (columnID) {
-    case "toDo": columnName = "To Do";
+    case "toDo": columnName = "To do";
       break;
     case "inProgress": columnName = "In progress";
       break; 

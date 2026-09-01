@@ -117,12 +117,9 @@
     "dueDate": "09/12/2026",
     "priority": "medium",
     "assignedTo": [8],
-    "status": "awaitFeedback",
+    "status": "inProgress",
     "position": 0,
-    "subtasks": [
-      { "text": "Wrap fetch calls in try/catch", "done": true },
-      { "text": "Show error toast on failed request", "done": false }
-    ]
+    "subtasks": []
   },
   {
     "id": 9,
