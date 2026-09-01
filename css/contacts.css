@@ -38,9 +38,15 @@ body {
 .main-container {
   background-color: var(--color-white);
   margin-top: 4.7em;
-  margin-bottom: 8em;
+
+  /* margin-bottom: 8em; */
   padding-left: 0.875rem;
   padding-right: 0.875rem;
+  padding-bottom: 8em;
+}
+
+.main-container.details-open {
+  background-color: transparent;
 }
 
 .letter-container {
@@ -63,6 +69,10 @@ body {
   border: none;
   font: inherit;
   text-align: left;
+  transition:
+    background-color 0.1s ease,
+    color 0.1s ease,
+    border-radius 0.1s ease;
   cursor: pointer;
   gap: 2.1875rem;
   width: 100%;
@@ -75,13 +85,14 @@ body {
   border-radius: 10px;
 }
 
-.contact-card:hover {
+.contact-card:not(.active):hover {
   background-color: rgb(240 240 240 / 100%);
   border-radius: 10px;
 }
 
-.contact-card:active {
+.contact-card:not(.active):active {
   background-color: var(--color-dark);
+  color: var(--color-white);
   border-radius: 10px;
 }
 
@@ -128,7 +139,6 @@ body {
   z-index: 50;
   border: 1px solid var(--color-dark);
   border-radius: 46px;
-  flex-shrink: 0;
   padding: 1.5625rem;
   width: 32px;
   height: 32px;
@@ -170,10 +180,10 @@ body {
     margin: 0;
   }
 
-  body .fixed-footer {
+  /* body .fixed-footer {
     position: static;
     width: 100%;
-  }
+  } */
 
   .main-container {
     grid-area: main;
@@ -182,8 +192,15 @@ body {
     overflow: hidden;
     min-height: 0;
     padding-right: 0;
-    margin-bottom: 0;
+
+    /* margin-bottom: 0; */
+    padding-bottom: 0;
     margin-top: 4.2em;
+  }
+
+  .main-container,
+  .main-container.details-open {
+    background-color: var(--color-white);
   }
 
   .main-wrapper {
@@ -202,13 +219,13 @@ body {
   .contact-menu {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     position: static;
     border-radius: 10px;
     box-shadow: none;
     gap: 1em;
-    width: 230px;
-    max-width: 260px;
+    width: 350px;
+    max-width: 350px;
     height: 50px;
     padding: 0.75em 1em;
     margin-right: 1.5em;
