@@ -185,10 +185,7 @@ main {
     grid-template-areas:
       "summary-header summary-header"
       "summary-list greeting";
-
-    column-gap: 4em;
-    row-gap: 2em;
-
+    gap: 2em 4em;
     padding-inline: 4em;
     padding-block-start: 5em;
   }
@@ -213,6 +210,8 @@ main {
   .summary-header p {
     font-size: 1.6rem;
     line-height: 1.2;
+    grid-column: 3;
+    grid-row: 1;
   }
 
   .summary-header::after {
@@ -222,20 +221,15 @@ main {
     background-color: var(--color-highlight);
   }
 
-  .summary-header p {
-    grid-column: 3;
-    grid-row: 1;
-  }
-
   .summary-list {
     grid-area: summary-list;
     width: 100%;
     max-width: 560px;
     margin: 0;
-    column-gap: 1.75em;
-    row-gap: 1.5em;
+    gap: 1.5em 1.75em;
     grid-template-rows: repeat(3, 10.5em);
   }
+
   .summary-card--small {
     width: 100%;
     height: auto;
@@ -261,8 +255,7 @@ main {
     grid-area: greeting;
     display: flex;
     flex-direction: column;
-    align-self: start;
-    justify-self: start;
+    place-self: start start;
     margin: 0;
     margin-block-start: 12.25em;
   }
@@ -294,7 +287,6 @@ main {
     transform: scale(1.05);
     background-color: var(--color-dark);
     color: var(--color-white);
-
     box-shadow: 0 4px 8px var(--color-black-25);
   }
 }

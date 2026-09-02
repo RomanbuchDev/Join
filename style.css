@@ -86,6 +86,9 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease;
 }
 
 .nav-join-img {
@@ -119,12 +122,6 @@ h1 {
 
 .main-nav-legal {
   display: none;
-}
-
-.main-nav-item {
-  transition:
-    transform 150ms ease,
-    background-color 150ms ease;
 }
 
 @media (width >= 80em) {
@@ -211,8 +208,7 @@ h1 {
     width: 115px;
     height: auto;
     margin-inline: auto;
-    margin-block-start: 4em;
-    margin-block-end: 7em;
+    margin-block: 4em 7em;
   }
 
   .main-nav-legal {
