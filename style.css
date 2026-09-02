@@ -125,7 +125,6 @@ h1 {
     height: 100dvh;
     overflow: hidden;
     grid-template-columns: 14.5rem repeat(4, 1fr);
-
     grid-template-areas:
       "nav  header header header header"
       "nav main main main main";
@@ -139,19 +138,10 @@ h1 {
 
   .main-header {
     grid-area: header;
-    display: flex;
-    align-items: center;
-    padding-inline: 4em;
-  }
-
-  .main-header {
-    grid-area: header;
-
     position: static;
     width: auto;
     top: auto;
     left: auto;
-
     display: flex;
     align-items: center;
     padding-inline: 4em;
