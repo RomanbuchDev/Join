@@ -40,7 +40,16 @@ main {
   padding: 0;
 }
 
+.summary-card__link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  border-radius: inherit;
+}
+
 .summary-card {
+  position: relative;
   grid-column: span 3;
   border-radius: 1.25rem;
   background: var(--color-white);
@@ -191,7 +200,7 @@ main {
     align-items: center;
     column-gap: 2rem;
     justify-content: start;
-    margin: 0px 0 3.5em;
+    margin: 0 0 0.5em;
   }
 
   .summary-header h1 {
@@ -250,7 +259,6 @@ main {
 
   .greeting {
     grid-area: greeting;
-
     display: flex;
     flex-direction: column;
     align-self: start;
@@ -270,5 +278,23 @@ main {
     font-weight: 700;
     line-height: 1.2;
     color: var(--color-medium);
+  }
+
+  .summary-card {
+    transition:
+      transform 150ms ease,
+      background-color 150ms ease,
+      color 150ms ease,
+      box-shadow 150ms ease;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .summary-card:hover {
+    transform: scale(1.05);
+    background-color: var(--color-dark);
+    color: var(--color-white);
+
+    box-shadow: 0 4px 8px var(--color-black-25);
   }
 }

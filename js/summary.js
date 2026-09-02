@@ -39,4 +39,20 @@ function countStatus(task, status) {
   return counter;
 }
 
+function changeFillIcon(element, action) {
+  const circle = element.querySelector(".icon_circle");
+  const motif = element.querySelector(".icon_motif");
+
+  circle.setAttribute("fill", action === "start" ? "white" : "#2A3647");
+  motif.setAttribute("fill", action === "start" ? "#2A3647" : "white");
+}
+
+function changeStrokeIcon(element, action) {
+  const circle = element.querySelector(".icon_circle");
+  const motif = element.querySelector(".icon_motif");
+
+  circle.setAttribute("fill", action === "start" ? "white" : "#2A3647");
+  motif.setAttribute("stroke", action === "start" ? "#2A3647" : "white");
+}
+
 init();
