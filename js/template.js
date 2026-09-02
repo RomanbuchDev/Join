@@ -17,7 +17,9 @@ function getContactDetailsTemplate(contactData) {
           <span class="contact-details-title">Contacts</span>
           <span class="contact-details-subtitle">Better with a team</span>
         </div>
-        <button type="button" class="contact-details-back-button" onclick="backToContactList()">&#x1F860;</button>
+        <button type="button" class="back-button" onclick="backToContactList()">
+        <img src="../assets/icons/login-back-vector.svg" alt="Back button icon">
+        </button>
       </div>
 
       <!-- Contact details main -->
@@ -26,11 +28,11 @@ function getContactDetailsTemplate(contactData) {
         <div>
           <span class="contact-details-name">${contactData.name}</span>
             <div class="contact-option-menu-container-desktop hidden">
-              <button type="button" class="contact-option-menu-items" onclick="editContactDetails()">
+              <button type="button" class="option-button" onclick="editContactDetails()">
                 <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon" />
                 <span>Edit</span>
               </button>
-              <button type="button" class="contact-option-menu-items" onclick="openDialogDeleteQuestion()">
+              <button type="button" class="option-button" onclick="openDialogDeleteQuestion()">
                 <img src="../assets/icons/contacts/delete_icon.png" alt="Delete icon" />
                 <span>Delete</span>
               </button>
@@ -52,7 +54,7 @@ function getContactDetailsTemplate(contactData) {
       </div>
 
       <!-- Contact details option menu button -->
-      <button class="button-primary contact-menu" id="contact-menu-button" onclick="toggleMobileContactOptions()">
+      <button class="button-basic button-primary contact-menu" id="contact-menu-button" onclick="toggleMobileContactOptions()">
         <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
       </button>`;
 }

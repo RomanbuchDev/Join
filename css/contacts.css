@@ -37,10 +37,16 @@ body {
 
 .main-container {
   background-color: var(--color-white);
-  margin-top: 0.3125rem;
-  margin-bottom: 5rem;
+  margin-top: 4.7em;
+
+  /* margin-bottom: 8em; */
   padding-left: 0.875rem;
   padding-right: 0.875rem;
+  padding-bottom: 8em;
+}
+
+.main-container.details-open {
+  background-color: transparent;
 }
 
 .letter-container {
@@ -59,11 +65,14 @@ body {
 
 .contact-card {
   display: flex;
-  align-items: center;
   background: none;
   border: none;
   font: inherit;
   text-align: left;
+  transition:
+    background-color 0.1s ease,
+    color 0.1s ease,
+    border-radius 0.1s ease;
   cursor: pointer;
   gap: 2.1875rem;
   width: 100%;
@@ -76,13 +85,14 @@ body {
   border-radius: 10px;
 }
 
-.contact-card:hover {
+.contact-card:not(.active):hover {
   background-color: rgb(240 240 240 / 100%);
   border-radius: 10px;
 }
 
-.contact-card:active {
+.contact-card:not(.active):active {
   background-color: var(--color-dark);
+  color: var(--color-white);
   border-radius: 10px;
 }
 
@@ -129,7 +139,6 @@ body {
   z-index: 50;
   border: 1px solid var(--color-dark);
   border-radius: 46px;
-  flex-shrink: 0;
   padding: 1.5625rem;
   width: 32px;
   height: 32px;
@@ -171,14 +180,27 @@ body {
     margin: 0;
   }
 
+  /* body .fixed-footer {
+    position: static;
+    width: 100%;
+  } */
+
   .main-container {
     grid-area: main;
     display: flex;
     flex-direction: row;
     overflow: hidden;
-    height: 100%;
     min-height: 0;
     padding-right: 0;
+
+    /* margin-bottom: 0; */
+    padding-bottom: 0;
+    margin-top: 4.2em;
+  }
+
+  .main-container,
+  .main-container.details-open {
+    background-color: var(--color-white);
   }
 
   .main-wrapper {
@@ -189,18 +211,21 @@ body {
     scrollbar-width: thin;
     gap: 1em;
     height: 100%;
+    position: relative;
+    z-index: 10;
+    box-shadow: 4px 0 6px var(--color-black-10);
   }
 
   .contact-menu {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     position: static;
     border-radius: 10px;
     box-shadow: none;
     gap: 1em;
-    width: 230px;
-    max-width: 260px;
+    width: 350px;
+    max-width: 350px;
     height: 50px;
     padding: 0.75em 1em;
     margin-right: 1.5em;

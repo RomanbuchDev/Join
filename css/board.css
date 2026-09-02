@@ -1,12 +1,8 @@
-.board-body {
-  flex-direction: column;
-  min-height: 100dvh;
-}
-
 .d-flex {
   display: flex;
 }
 
+.d-none,
 .d-desktop {
   display: none;
 }
@@ -69,7 +65,8 @@ button:focus-visible {
 
 .board-main-content {
   flex: 1;
-  margin: 7.5em 1em 5em;
+  margin-block: 7.5em 5em;
+  padding-inline: 1em;
 }
 
 .h1-find-addtask-section {
@@ -273,4 +270,48 @@ button:focus-visible {
 
 .color-avatar-3 {
   background-color: var(--color-email);
+}
+
+@media (width >= 64em) {
+  .board-main-content {
+    margin: 0;
+    padding: 2rem 2.5rem;
+  }
+
+  .h1-find-addtask-section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2em;
+  }
+
+  .find-addtask-container {
+    flex: 1;
+    max-width: 35em;
+  }
+
+  .d-desktop {
+    display: flex;
+  }
+
+  .board-section {
+    flex-direction: row;
+    align-items: flex-start;
+    margin: -1em;
+    padding: 1em;
+    overflow-x: auto;
+  }
+
+  .board-column {
+    flex: 1;
+    min-width: 15.75em;
+  }
+
+  .tasks-section {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    overflow-x: visible;
+    cursor: default;
+  }
 }

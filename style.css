@@ -16,23 +16,13 @@ h1 {
 
 .main {
   grid-area: main;
-}
-
-.fixed-header,
-.fixed-footer {
-  position: fixed;
-  width: 100%;
-}
-
-.fixed-header {
-  top: 0;
-}
-
-.fixed-footer {
-  bottom: 0;
+  min-width: 0;
 }
 
 .main-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
   grid-area: header;
   display: flex;
   align-items: center;
@@ -68,6 +58,9 @@ h1 {
 }
 
 .main-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   grid-area: nav;
   height: 5rem;
   background-color: var(--color-dark);
@@ -128,8 +121,8 @@ h1 {
   #page {
     grid-template-columns: 14.5rem repeat(4, 1fr);
     grid-template-areas:
-      "nav header header header header"
-      "nav main main main main";
+      "nav header"
+      "nav main";
   }
 
   .main-header {
@@ -159,6 +152,8 @@ h1 {
 
   .main-nav {
     grid-area: nav;
+    position: static;
+    width: auto;
     height: 100%;
     display: flex;
     flex-direction: column;

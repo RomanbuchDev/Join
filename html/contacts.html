@@ -10,31 +10,33 @@
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/assets.css" />
     <link rel="stylesheet" href="../css/contacts.css" />
-    <link rel="stylesheet" href="../css/contacts_details.css" />
-    <link rel="stylesheet" href="../css/contacts_dialog.css" />
+    <link rel="stylesheet" href="../css/contacts-details.css" />
+    <link rel="stylesheet" href="../css/contacts-dialog.css" />
     <link rel="stylesheet" href="../style.css" />
     <!-- JavaScript files -->
     <script src="../js/template.js" defer></script>
+    <script src="../js/contact-utils.js" defer></script>
+    <script src="../js/contacts-dialog.js" defer></script>
     <script src="../js/contacts.js" defer></script>
-    <script src="../js/contacts_dialog.js" defer></script>
   </head>
 
   <body onload="init()" id="page">
     <!-- Header -->
-    <header class="main-header" aria-labelledby="contacts header">
-      <a href=""><img src="/assets/icons/join-logo.svg" alt="Join Logo" /></a>
-
-      <button type="button" class="user-avatar"><span>SM</span></button>
+    <header class="main-header" aria-label="Page header">
+      <a href="./summary.html">
+        <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
+      </a>
+      <button type="button" class="user-avatar"><span>G</span></button>
     </header>
 
     <!-- Main -->
-    <main class="main-container">
+    <main class="main-container" id="main-view">
       <!-- Button for dialog -->
       <div class="main-wrapper">
         <div class="button-wrapper">
           <button
             type="button"
-            class="button-primary contact-menu show"
+            class="button-basic button-primary contact-menu show"
             id="contact-menu-button"
             onclick="openDialog()"
           >
@@ -47,58 +49,14 @@
         </div>
 
         <!-- Contact list -->
-        <div id="contact-list">
-          <!-- Kontaktliste (Spalte 2) -->
-          <!-- Buchstabe A -->
-          <!-- <section id="letter-group">
-        <div>
-          <h2 class="letter-container">A</h2>
-          <hr class="letter-line">
-        </div>
-        <div class="contact-grid-container" id="contact-grid"></div>
-      </section> -->
-        </div>
+        <div id="contact-list"></div>
       </div>
 
       <!-- Contact details (Same page in mobile / Column 3 in desktop) -->
-      <aside class="contact-details-container hidden" id="contact-details">
-        <!-- Contact details header -->
-        <!-- <div class="contact-details-header-container">
-        <div class="contact-details-title-container">
-          <span class="contact-details-title">Contacts</span>
-          <span class="contact-details-subtitle">Better with a team</span>
-        </div> -->
-        <!-- <button
-            type="button"
-            class="contact-details-back-button"
-            onclick="backToContactList()"
-          >
-            &#x1F860;
-          </button>
-        </div>
-
-        <div class="contact-details-name-container">
-          <span class="contact-details-shortcut"></span>
-          <span class="contact-details-name"></span>
-        </div>
-
-        <div>
-          <div class="contact-details-information-container">
-            <h3>Contact information</h3>
-          </div>
-          <div class="contact-details-contact-data">
-            <h4>Email</h4>
-            <span class="contact-e-mail">vorname.nachname@test.de</span>
-            <h4>Phone</h4>
-            <span>+49 12345</span>
-          </div>
-        </div> -->
-
-        <!-- Contact details option menu button -->
-        <!-- <button type="button" class="contact-menu" onclick="toggleMobileContactOptions()">
-        <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile" />
-      </button> -->
-      </aside>
+      <aside
+        class="contact-details-container hidden"
+        id="contact-details"
+      ></aside>
 
       <!-- Contact details option menu -->
       <div
@@ -109,7 +67,7 @@
       <div class="contact-option-menu-container" id="contact-options">
         <button
           type="button"
-          class="contact-option-menu-items"
+          class="option-button"
           onclick="editContactDetails()"
         >
           <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon" />
@@ -117,7 +75,7 @@
         </button>
         <button
           type="button"
-          class="contact-option-menu-items"
+          class="option-button"
           onclick="openDialogDeleteQuestion()"
         >
           <img
@@ -131,28 +89,45 @@
 
     <!-- Navigation (at footer in mobile / on left side in Desktop) -->
     <nav class="main-nav">
+      <img
+        class="nav-join-img"
+        src="../assets/icons/join-logo-white.svg"
+        alt=""
+      />
       <ul class="main-nav-list">
         <li class="main-nav-item">
-          <a href="/html/summary.html">
-            <img src="/assets/icons/summary-icon.svg" alt="" />
+          <a href="./summary.html">
+            <img
+              src="../assets/icons/summary-icon.svg"
+              alt="to the summary page"
+            />
             <span>Summary</span>
           </a>
         </li>
+
         <li class="main-nav-item">
-          <a href="/html/add-task.html">
-            <img src="/assets/icons/addtask-icon.svg" alt="" />
+          <a href="./add-task.html">
+            <img
+              src="../assets/icons/addtask-icon.svg"
+              alt="to add a new task"
+            />
             <span> Add Task </span>
           </a>
         </li>
+
         <li class="main-nav-item">
-          <a href="/html/board.html">
-            <img src="/assets/icons/board-icon.svg" alt="" />
+          <a href="./board.html">
+            <img src="../assets/icons/board-icon.svg" alt="to the board page" />
             <span> Board </span>
           </a>
         </li>
+
         <li class="main-nav-item">
-          <a href="/html/contact.html">
-            <img src="/assets/icons/contact-icon.svg" alt="" />
+          <a href="./contacts.html" aria-current="page">
+            <img
+              src="../assets/icons/contact-icon.svg"
+              alt="to the contacts page"
+            />
             <span> Contacts </span>
           </a>
         </li>
@@ -193,12 +168,11 @@
 
         <!-- Dialog main -->
         <div class="add-contact-main-container">
-          <div class="add-contact-input">
+          <div class="add-contact-input" id="input-name-dialog">
             <input
               type="text"
               placeholder="Name"
               id="input-contact-name-dialog"
-              required
             />
             <img
               src="../assets/icons/contacts/person_icon_input.png"
@@ -206,9 +180,9 @@
             />
           </div>
 
-          <div class="add-contact-input">
+          <div class="add-contact-input" id="input-email-dialog">
             <input
-              type="email"
+              type="text"
               placeholder="Email"
               id="input-contact-email-dialog"
             />
@@ -218,18 +192,28 @@
             />
           </div>
 
-          <div class="add-contact-input">
+          <div class="add-contact-input" id="input-phone-dialog">
             <input
               type="tel"
               placeholder="Phone"
               id="input-contact-phone-dialog"
-              pattern="[0-9\s+]*"
-              title="Please enter only numbers from 0 to 9 and the plus symbol."
             />
             <img
               src="../assets/icons/contacts/phone_icon_input.png"
               alt="Phone input icon"
             />
+          </div>
+          <!-- Test for dialog error messages -->
+          <div class="dialog-error-message-container" id="error-message">
+            <span class="dialog-error-message" id="error-message-name"
+              >Name is a required information field! Please enter a name.</span
+            >
+            <span class="dialog-error-message" id="error-message-email"
+              >Please enter a valid email address.</span
+            >
+            <span class="dialog-error-message" id="error-message-phone"
+              >Only numbes and the + sign are allowed. Please try again.</span
+            >
           </div>
         </div>
 
@@ -238,7 +222,7 @@
           <!-- Cancel button -->
           <button
             type="button"
-            class="button-secondary delete-contact-data"
+            class="button-basic button-secondary delete-contact-data"
             id="dialog-cancel-button"
             onclick="closeDialog()"
           >
@@ -248,10 +232,10 @@
           <!-- Create contact button -->
           <button
             type="submit"
-            class="button-primary"
+            class="button-basic button-primary"
             id="dialog-create-contact-button"
           >
-            Create contact
+            <span>Create contact</span>
             <img
               src="../assets/icons/contacts/check_icon.png"
               alt="Check icon"
@@ -260,7 +244,7 @@
           <!-- Delete button -->
           <button
             type="button"
-            class="button-secondary delete-contact-data hidden"
+            class="button-basic button-secondary delete-contact-data hidden"
             id="dialog-delete-button"
             onclick="openDialogDeleteQuestion()"
           >
@@ -269,7 +253,7 @@
           <!-- Save button -->
           <button
             type="submit"
-            class="button-primary save-contact-data hidden"
+            class="button-basic button-primary save-contact-data hidden"
             id="dialog-save-button"
           >
             Save
@@ -291,7 +275,7 @@
           <!-- Delete contact - No button -->
           <button
             type="button"
-            class="button-secondary delete-question-no"
+            class="button-basic button-secondary delete-question-no"
             id="delete-question-no-button"
             onclick="closeContactDeletion()"
           >
@@ -300,7 +284,7 @@
           <!-- Delete contact - Yes button -->
           <button
             type="submit"
-            class="button-primary delete-question-yes"
+            class="button-basic button-primary delete-question-yes"
             id="delete-question-yes-button"
             onclick="deleteContact()"
             autofocus

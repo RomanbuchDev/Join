@@ -9,6 +9,7 @@ const contactOptionMenu = document.getElementById("contact-options");
 const contactOptionMenuOverlay = document.getElementById(
   "contact-options-overlay",
 );
+const mainView = document.getElementById("main-view");
 
 const dialogBoxDeleteQuestion = document.getElementById(
   "delete-question-dialog",
@@ -24,65 +25,88 @@ let currentContactData;
 
 // Database (for test only):
 
-const allContacts = [
-  {
-    id: 1,
-    name: "Anton Mayer",
-    email: "antonm@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 2,
-    name: "Anja Schulz",
-    email: "schulz@hotmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 3,
-    name: "Benedikt Ziegler",
-    email: "benedikt@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 4,
-    name: "David Eisenberg",
-    email: "davidberg@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 5,
-    name: "Eva Fischer",
-    email: "eva@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 6,
-    name: "Emmanuel Mauer",
-    email: "emmanuelma@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 7,
-    name: "Marcel Bauer",
-    email: "bauer@gmail.com",
-    phone: "+49 123 4567890",
-  },
-  {
-    id: 8,
-    name: "Tatjana Wolf",
-    email: "wolf@gmail.com",
-    phone: "+49 123 4567890",
-  },
-];
+// const allContacts = [
+//   {
+//     id: 1,
+//     name: "Anton Mayer",
+//     email: "antonm@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 2,
+//     name: "Anja Schulz",
+//     email: "schulz@hotmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 3,
+//     name: "Benedikt Ziegler",
+//     email: "benedikt@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 4,
+//     name: "David Eisenberg",
+//     email: "davidberg@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 5,
+//     name: "Eva Fischer",
+//     email: "eva@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 6,
+//     name: "Emmanuel Mauer",
+//     email: "emmanuelma@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 7,
+//     name: "Marcel Bauer",
+//     email: "bauer@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+//   {
+//     id: 8,
+//     name: "Tatjana Wolf",
+//     email: "wolf@gmail.com",
+//     phone: "+49 123 4567890",
+//   },
+// ];
 
 // Functions:
 
-function init() {
+async function init() {
+  await fetchAllContacts();
   renderContactList();
   activateContactFormSubmissionType();
   renderContactDetailsDesktopPlaceholder();
   closeDialogBackgroundClick();
   console.log(allContacts);
+}
+
+
+function saveContacts(responseAsJSON) {
+  for (let index = 0; index < responseAsJSON.length; index++) {
+    const contact = responseAsJSON[index];
+    getContactShortcut(contact);
+    prepareContactColor(contact);
+    allContacts.push(contact);
+  }
+  return allContacts;
+}
+
+
+async function fetchAllContacts() {
+  try {
+    const response = await fetch("../js/contact-list.json");
+    const responseAsJSON = await response.json();
+    return saveContacts(responseAsJSON);
+  } catch (error) {
+    console.error("Error loading data!", error);
+  }
 }
 
 
@@ -129,23 +153,6 @@ function sortAlphabetList(alphabetList) {
 }
 
 
-function calculateContactIconColor(contactShortcut) {
-  const correctShortcut = contactShortcut.toUpperCase();
-
-  const firstNameLetter = correctShortcut[0] || "X";
-  const LastNameLetter = correctShortcut[1] || firstNameLetter;
-
-  const value1 = firstNameLetter.charCodeAt(0) - 65;
-  const value2 = LastNameLetter.charCodeAt(0) - 65;
-
-  const r = (40 + value1 * 7).toFixed(0);
-  const g = (40 + value2 * 7).toFixed(0);
-  const b = (40 + (25 - value2) * 7).toFixed(0);
-
-  return `rgba(${r}, ${g}, ${b}, 1)`;
-}
-
-
 function setContactIconColor(contactID, shortcutColor) {
   if (contactID) {
     contactID.style.setProperty("--background-color", shortcutColor);
@@ -153,40 +160,34 @@ function setContactIconColor(contactID, shortcutColor) {
 }
 
 
-function getContactShortcut(contact) {
-  const contactNameParts = contact.name.trim().split(/\s+/);
-
-  const shortcut =
-    contactNameParts.length > 1
-      ? contactNameParts[0][0] + contactNameParts[1][0]
-      : contactNameParts[0][0];
-
-  contact.shortcut = shortcut.toUpperCase();
-}
-
-
 function addContactIconColorToContactList(contact) {
   const contactID = document.getElementById(`contact-${contact.id}`);
   const shortcutColor = calculateContactIconColor(contact.shortcut);
+  // const shortcutColor = contact.shortcutColor;
 
   setContactIconColor(contactID, shortcutColor);
 }
 
 
-function renderContactList() {
+function renderContactsByLetter(letter) {
+  for (let j = 0; j < allContacts.length; j++) {
+    const contact = allContacts[j];
+    const lastNameLetter = getLastNameLetter(contact);
+    getContactShortcut(contact);
+    assignAndCreateContacts(letter, contact, lastNameLetter);
+    addContactIconColorToContactList(contact);
+  }
+}
+
+
+async function renderContactList() {
   const letters = createAlphabetList();
+  contactList.innerHTML = "";
 
   for (let i = 0; i < letters.length; i++) {
     const letter = letters[i];
     contactList.innerHTML += getLetterCategoryTemplate(letter);
-
-    for (let j = 0; j < allContacts.length; j++) {
-      const contact = allContacts[j];
-      const lastNameLetter = getLastNameLetter(contact);
-      getContactShortcut(contact);
-      assignAndCreateContacts(letter, contact, lastNameLetter);
-      addContactIconColorToContactList(contact);
-    }
+    renderContactsByLetter(letter);
   }
 }
 
@@ -249,6 +250,8 @@ function showContactDetails(contactID) {
 
   renderContactDetails(contactID);
   showContactDetailsDesktopAnimation();
+
+  mainView.classList.add("details-open");
 }
 
 
@@ -256,6 +259,8 @@ function backToContactList() {
   toggleContactPageView(contactList, contactDetails);
 
   dialogBoxButton.classList.remove("hidden");
+
+  mainView.classList.remove("details-open");
 }
 
 
@@ -298,5 +303,13 @@ function handleContactFormSubmit(event) {
     saveContactData();
   } else {
     createContact();
+  }
+}
+
+
+function renderContactDetailsDesktopPlaceholder() {
+  if (window.innerWidth >= 1024) {
+    const contactDetailsPlaceholder = getContactDetailsPlaceholderTemplate();
+    contactDetails.innerHTML = contactDetailsPlaceholder;
   }
 }

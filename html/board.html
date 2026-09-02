@@ -8,363 +8,252 @@
       type="image/svg+xml"
       href="../assets/icons/join-logo.svg"
     />
-    <link rel="stylesheet" href="../css/reset_stylesheet.css" />
+    <link rel="stylesheet" href="../css/reset-stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/board.css" />
     <link rel="stylesheet" href="../style.css" />
 
+    <script src="../js/board-templates.js" defer></script>
+    <script src="../js/contact-utils.js" defer></script>
     <script src="../js/board.js" defer></script>
+    <script src="../js/board-cardmovement.js" defer></script>
 
     <title>Join - Board</title>
   </head>
 
-  <body class="board-body d-flex">
-    <header class="main-header fixed-header">
-      <a href="./summary.html">
-        <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
-      </a>
-      <button type="button" class="user-avatar"><span>G</span></button>
-    </header>
+  <body onload="initBoard()">
+    <div id="page">
+      <header class="main-header">
+        <a href="./summary.html">
+          <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
+        </a>
+        <button type="button" class="user-avatar"><span>G</span></button>
+      </header>
 
-    <main class="board-main-content">
-      <section class="h1-find-addtask-section d-flex">
-        <section class="h-addtask-container d-flex">
-          <h1>Board</h1>
-          <button class="button-reset" type="button" aria-label="Add new task">
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 40 40"
-              class="svg-fill svg-width-height-40px"
-            >
-              <rect width="40" height="40" rx="10" />
-              <path
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                d="M20 10V30"
-              />
-              <path
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                d="M30 20L10.0005 20.138"
-              />
-            </svg>
-          </button>
-        </section>
-        <section class="find-addtask-container d-flex">
-          <div class="find-container d-flex">
-            <input
-              id="ID_find-task"
-              class="find-input-field"
-              type="text"
-              placeholder="Find Task"
-              aria-label="Search tasks"
-            />
+      <main class="main board-main-content">
+        <section class="h1-find-addtask-section d-flex">
+          <section class="h-addtask-container d-flex">
+            <h1>Board</h1>
             <button
-              class="find-button button-reset"
+              class="button-reset"
               type="button"
-              aria-label="Submit search"
+              aria-label="Add new task"
             >
               <svg
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                class="svg-fill svg-width-height-32px"
+                viewBox="0 0 40 40"
+                class="svg-fill svg-width-height-40px"
               >
+                <rect width="40" height="40" rx="10" />
                 <path
-                  d="M13.7118 20.2137C11.8946 20.2137 10.3567 19.5843 9.098 18.3256C7.83931 17.0669 7.20996 15.529 7.20996 13.7118C7.20996 11.8946 7.83931 10.3567 9.098 9.098C10.3567 7.83931 11.8946 7.20996 13.7118 7.20996C15.529 7.20996 17.0669 7.83931 18.3256 9.098C19.5843 10.3567 20.2137 11.8946 20.2137 13.7118C20.2137 14.4454 20.097 15.1372 19.8636 15.7874C19.6302 16.4376 19.3134 17.0127 18.9133 17.5129L24.5149 23.1145C24.6983 23.2979 24.79 23.5313 24.79 23.8147C24.79 24.0981 24.6983 24.3315 24.5149 24.5149C24.3315 24.6983 24.0981 24.79 23.8147 24.79C23.5313 24.79 23.2979 24.6983 23.1145 24.5149L17.5129 18.9133C17.0127 19.3134 16.4376 19.6302 15.7874 19.8636C15.1372 20.097 14.4454 20.2137 13.7118 20.2137ZM13.7118 18.2131C14.9622 18.2131 16.025 17.7755 16.9002 16.9002C17.7755 16.025 18.2131 14.9622 18.2131 13.7118C18.2131 12.4615 17.7755 11.3987 16.9002 10.5234C16.025 9.64815 14.9622 9.21053 13.7118 9.21053C12.4615 9.21053 11.3987 9.64815 10.5234 10.5234C9.64815 11.3987 9.21053 12.4615 9.21053 13.7118C9.21053 14.9622 9.64815 16.025 10.5234 16.9002C11.3987 17.7755 12.4615 18.2131 13.7118 18.2131Z"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M20 10V30"
+                />
+                <path
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M30 20L10.0005 20.138"
                 />
               </svg>
             </button>
-          </div>
-          <button class="d-desktop" type="button">Add task</button>
-        </section>
-      </section>
-
-      <section class="board-section d-flex">
-        <section class="board-column d-flex">
-          <div class="h-addtask-container d-flex">
-            <h2>To Do</h2>
-            <button
-              class="button-reset"
-              type="button"
-              aria-label="Add new task"
-            >
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                class="svg-fill svg-width-height-32px"
+          </section>
+          <section class="find-addtask-container d-flex">
+            <div class="find-container d-flex">
+              <input
+                id="ID_find-task"
+                class="find-input-field"
+                type="text"
+                placeholder="Find Task"
+                aria-label="Search tasks"
+              />
+              <button
+                class="find-button button-reset"
+                type="button"
+                aria-label="Submit search"
               >
-                <rect width="30" height="30" rx="10" />
-                <rect
-                  x="2"
-                  y="2"
-                  width="26"
-                  height="26"
-                  rx="8"
-                  fill="rgba(246 247 248 / 100%)"
-                />
-                <rect x="14" y="6.5" width="2" height="17" rx="1" />
-                <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
-              </svg>
-            </button>
-          </div>
-          <section class="tasks-section d-flex">
-            <div class="task-card d-flex">
-              <p class="task-label color-label-user-story">User Story</p>
-              <div class="task-title-description-container d-flex">
-                <h3>Erste Task-Überschrift für das Join Projekt</h3>
-                <p class="task-description">
-                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div class="task-progress d-flex">
-                <progress value="2" max="3"></progress>
-                <p>2/3 Subtasks</p>
-              </div>
-              <div class="task-card-footer d-flex">
-                <div class="task-avatars-container d-flex">
-                  <span class="task-avatar d-flex color-avatar-1">AM</span>
-                  <span class="task-avatar d-flex color-avatar-2">EM</span>
-                  <span class="task-avatar d-flex color-avatar-3">MB</span>
-                </div>
-                <div class="priority-icon d-flex">
-                  <img
-                    src="../assets/icons/prio-medium-symbol.svg"
-                    alt="medium priority task"
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                  class="svg-fill svg-width-height-32px"
+                >
+                  <path
+                    d="M13.7118 20.2137C11.8946 20.2137 10.3567 19.5843 9.098 18.3256C7.83931 17.0669 7.20996 15.529 7.20996 13.7118C7.20996 11.8946 7.83931 10.3567 9.098 9.098C10.3567 7.83931 11.8946 7.20996 13.7118 7.20996C15.529 7.20996 17.0669 7.83931 18.3256 9.098C19.5843 10.3567 20.2137 11.8946 20.2137 13.7118C20.2137 14.4454 20.097 15.1372 19.8636 15.7874C19.6302 16.4376 19.3134 17.0127 18.9133 17.5129L24.5149 23.1145C24.6983 23.2979 24.79 23.5313 24.79 23.8147C24.79 24.0981 24.6983 24.3315 24.5149 24.5149C24.3315 24.6983 24.0981 24.79 23.8147 24.79C23.5313 24.79 23.2979 24.6983 23.1145 24.5149L17.5129 18.9133C17.0127 19.3134 16.4376 19.6302 15.7874 19.8636C15.1372 20.097 14.4454 20.2137 13.7118 20.2137ZM13.7118 18.2131C14.9622 18.2131 16.025 17.7755 16.9002 16.9002C17.7755 16.025 18.2131 14.9622 18.2131 13.7118C18.2131 12.4615 17.7755 11.3987 16.9002 10.5234C16.025 9.64815 14.9622 9.21053 13.7118 9.21053C12.4615 9.21053 11.3987 9.64815 10.5234 10.5234C9.64815 11.3987 9.21053 12.4615 9.21053 13.7118C9.21053 14.9622 9.64815 16.025 10.5234 16.9002C11.3987 17.7755 12.4615 18.2131 13.7118 18.2131Z"
                   />
-                </div>
-              </div>
+                </svg>
+              </button>
             </div>
-            <div class="task-card d-flex">
-              <p class="task-label color-label-technical-task">
-                Technical Task
-              </p>
-              <div class="task-title-description-container d-flex">
-                <h3>Zweite Task-Überschrift für das Join Projekt</h3>
-                <p class="task-description">
-                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div class="task-progress d-flex">
-                <progress value="0" max="2"></progress>
-                <p>0/2 Subtasks</p>
-              </div>
-              <div class="task-card-footer d-flex">
-                <div class="task-avatars-container d-flex"></div>
-                <div class="priority-icon d-flex">
-                  <img
-                    src="../assets/icons/prio-low-symbol.svg"
-                    alt="low priority task"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="task-card d-flex">
-              <p class="task-label color-label-user-story">User Story</p>
-              <div class="task-title-description-container d-flex">
-                <h3>Erste Task-Überschrift für das Join Projekt</h3>
-                <p class="task-description">
-                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div class="task-progress d-flex">
-                <progress value="2" max="3"></progress>
-                <p>2/3 Subtasks</p>
-              </div>
-              <div class="task-card-footer d-flex">
-                <div class="task-avatars-container d-flex">
-                  <span class="task-avatar d-flex color-avatar-1">AM</span>
-                  <span class="task-avatar d-flex color-avatar-2">EM</span>
-                  <span class="task-avatar d-flex color-avatar-3">MB</span>
-                </div>
-                <div class="priority-icon d-flex">
-                  <img
-                    src="../assets/icons/prio-medium-symbol.svg"
-                    alt="medium priority task"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="task-card d-flex">
-              <p class="task-label color-label-technical-task">
-                Technical Task
-              </p>
-              <div class="task-title-description-container d-flex">
-                <h3>Zweite Task-Überschrift für das Join Projekt</h3>
-                <p class="task-description">
-                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div class="task-progress d-flex">
-                <progress value="0" max="2"></progress>
-                <p>0/2 Subtasks</p>
-              </div>
-              <div class="task-card-footer d-flex">
-                <div class="task-avatars-container d-flex"></div>
-                <div class="priority-icon d-flex">
-                  <img
-                    src="../assets/icons/prio-low-symbol.svg"
-                    alt="low priority task"
-                  />
-                </div>
-              </div>
-            </div>
+            <button class="d-desktop" type="button">Add task</button>
           </section>
         </section>
-        <section class="board-column d-flex">
-          <div class="h-addtask-container d-flex">
-            <h2>In progress</h2>
-            <button
-              class="button-reset"
-              type="button"
-              aria-label="Add new task"
-            >
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                class="svg-fill svg-width-height-32px"
+
+        <section class="board-section d-flex">
+          <section class="board-column d-flex">
+            <div class="h-addtask-container d-flex">
+              <h2>To do</h2>
+              <button
+                class="button-reset"
+                type="button"
+                aria-label="Add new task"
               >
-                <rect width="30" height="30" rx="10" />
-                <rect
-                  x="2"
-                  y="2"
-                  width="26"
-                  height="26"
-                  rx="8"
-                  fill="rgba(246 247 248 / 100%)"
-                />
-                <rect x="14" y="6.5" width="2" height="17" rx="1" />
-                <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
-              </svg>
-            </button>
-          </div>
-          <section class="tasks-section d-flex">
-            <div class="empty-board-column d-flex">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                  class="svg-fill svg-width-height-32px"
+                >
+                  <rect width="30" height="30" rx="10" />
+                  <rect
+                    x="2"
+                    y="2"
+                    width="26"
+                    height="26"
+                    rx="8"
+                    fill="rgba(246 247 248 / 100%)"
+                  />
+                  <rect x="14" y="6.5" width="2" height="17" rx="1" />
+                  <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
+                </svg>
+              </button>
+            </div>
+            <section id="toDo" class="tasks-section d-flex"></section>
+          </section>
+          <section class="board-column d-flex">
+            <div class="h-addtask-container d-flex">
+              <h2>In progress</h2>
+              <button
+                class="button-reset"
+                type="button"
+                aria-label="Add new task"
+              >
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                  class="svg-fill svg-width-height-32px"
+                >
+                  <rect width="30" height="30" rx="10" />
+                  <rect
+                    x="2"
+                    y="2"
+                    width="26"
+                    height="26"
+                    rx="8"
+                    fill="rgba(246 247 248 / 100%)"
+                  />
+                  <rect x="14" y="6.5" width="2" height="17" rx="1" />
+                  <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
+                </svg>
+              </button>
+            </div>
+            <section id="inProgress" class="tasks-section d-flex">
+              <!-- <div class="empty-board-column d-flex">
               <p>No tasks "Column Name"</p>
-            </div>
+            </div> -->
+            </section>
           </section>
-        </section>
-        <section class="board-column d-flex">
-          <div class="h-addtask-container d-flex">
-            <h2>Await feedback</h2>
-            <button
-              class="button-reset"
-              type="button"
-              aria-label="Add new task"
-            >
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                class="svg-fill svg-width-height-32px"
+          <section class="board-column d-flex">
+            <div class="h-addtask-container d-flex">
+              <h2>Await feedback</h2>
+              <button
+                class="button-reset"
+                type="button"
+                aria-label="Add new task"
               >
-                <rect width="30" height="30" rx="10" />
-                <rect
-                  x="2"
-                  y="2"
-                  width="26"
-                  height="26"
-                  rx="8"
-                  fill="rgba(246 247 248 / 100%)"
-                />
-                <rect x="14" y="6.5" width="2" height="17" rx="1" />
-                <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
-              </svg>
-            </button>
-          </div>
-          <section class="tasks-section d-flex">
-            <div class="task-card d-flex">
-              <p class="task-label color-label-technical-task">
-                Technical Task
-              </p>
-              <div class="task-title-description-container d-flex">
-                <h3>Dritte Task-Überschrift für das Join Projekt</h3>
-                <p class="task-description">
-                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div class="task-progress d-flex">
-                <progress value="2" max="2"></progress>
-                <p>2/2 Subtasks</p>
-              </div>
-              <div class="task-card-footer d-flex">
-                <div class="task-avatars-container d-flex">
-                  <span class="task-avatar d-flex color-avatar-1">AM</span>
-                  <span class="task-avatar d-flex color-avatar-2">EM</span>
-                </div>
-                <div class="priority-icon d-flex">
-                  <img
-                    src="../assets/icons/prio-urgent-symbol.svg"
-                    alt="urgent priority task"
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                  class="svg-fill svg-width-height-32px"
+                >
+                  <rect width="30" height="30" rx="10" />
+                  <rect
+                    x="2"
+                    y="2"
+                    width="26"
+                    height="26"
+                    rx="8"
+                    fill="rgba(246 247 248 / 100%)"
                   />
-                </div>
-              </div>
+                  <rect x="14" y="6.5" width="2" height="17" rx="1" />
+                  <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
+                </svg>
+              </button>
             </div>
+            <section id="awaitFeedback" class="tasks-section d-flex"></section>
+          </section>
+          <section class="board-column d-flex">
+            <div class="h-addtask-container d-flex">
+              <h2>Done</h2>
+            </div>
+            <section id="done" class="tasks-section d-flex"></section>
           </section>
         </section>
-        <section class="board-column d-flex">
-          <div class="h-addtask-container d-flex">
-            <h2>Done</h2>
-          </div>
-          <section class="tasks-section d-flex">
-            <div class="empty-board-column d-flex">
-              <p>No tasks "Column Name"</p>
-            </div>
-          </section>
-        </section>
-      </section>
-    </main>
+      </main>
 
-    <nav class="main-nav fixed-footer">
-      <ul class="main-nav-list">
-        <li class="main-nav-item">
-          <a href="./summary.html">
-            <img
-              src="../assets/icons/summary-icon.svg"
-              alt="to the summary page"
-            />
-            <span>Summary</span>
-          </a>
-        </li>
+      <nav class="main-nav">
+        <img
+          class="nav-join-img"
+          src="../assets/icons/join-logo-white.svg"
+          alt="Join logo"
+        />
+        <ul class="main-nav-list">
+          <li class="main-nav-item">
+            <a href="./summary.html">
+              <img
+                src="../assets/icons/summary-icon.svg"
+                alt="to the summary page"
+              />
+              <span>Summary</span>
+            </a>
+          </li>
 
-        <li class="main-nav-item">
-          <a href="./add-task.html">
-            <img
-              src="../assets/icons/addtask-icon.svg"
-              alt="to add a new task"
-            />
-            <span> Add Task </span>
-          </a>
-        </li>
+          <li class="main-nav-item">
+            <a href="./add-task.html">
+              <img
+                src="../assets/icons/addtask-icon.svg"
+                alt="to add a new task"
+              />
+              <span> Add Task </span>
+            </a>
+          </li>
 
-        <li class="main-nav-item">
-          <a href="./board.html" aria-current="page">
-            <img src="../assets/icons/board-icon.svg" alt="to the board page" />
-            <span> Board </span>
-          </a>
-        </li>
+          <li class="main-nav-item">
+            <a href="./board.html" aria-current="page">
+              <img
+                src="../assets/icons/board-icon.svg"
+                alt="to the board page"
+              />
+              <span> Board </span>
+            </a>
+          </li>
 
-        <li class="main-nav-item">
-          <a href="./contact.html">
-            <img
-              src="../assets/icons/contact-icon.svg"
-              alt="to the contacts page"
-            />
-            <span> Contacts </span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+          <li class="main-nav-item">
+            <a href="./contacts.html">
+              <img
+                src="../assets/icons/contact-icon.svg"
+                alt="to the contacts page"
+              />
+              <span> Contacts </span>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="main-nav-legal">
+          <li>
+            <a href="./privacy-policy.html">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="./imprint.html">Legal Notice</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </body>
 </html>
