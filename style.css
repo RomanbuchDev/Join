@@ -4,9 +4,13 @@ body {
 }
 
 #page {
-  min-height: 100dvh;
+  height: 100dvh;
   display: grid;
-  grid-template: "header" auto "main" 1fr "nav" auto / 1fr;
+  grid-template:
+    "header" auto
+    "main" minmax(0, 1fr)
+    "nav" auto / 1fr;
+  overflow: hidden;
 }
 
 h1 {
@@ -16,14 +20,13 @@ h1 {
 
 .main {
   grid-area: main;
-  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .main-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
   grid-area: header;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,6 +40,14 @@ h1 {
   height: auto;
 }
 
+.main-header-title {
+  display: none;
+}
+
+.main-header-help {
+  display: none;
+}
+
 .user-avatar {
   color: var(--color-medium);
   font-weight: 700;
@@ -47,11 +58,6 @@ h1 {
   background-color: var(--color-white);
   transition: fill 0s ease 125ms;
   cursor: pointer;
-}
-
-.user-avatar:hover,
-.user-avatar:active {
-  background-color: var(--color-gray-231);
 }
 
 .main-nav {
@@ -76,6 +82,9 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease;
 }
 
 .nav-join-img {
@@ -111,33 +120,52 @@ h1 {
   display: none;
 }
 
-@media (width >= 64em) {
+@media (width >= 80em) {
   #page {
-    grid-template-columns: 14.5em 1fr;
+    height: 100dvh;
+    overflow: hidden;
+    grid-template-columns: 14.5rem repeat(4, 1fr);
     grid-template-areas:
-      "nav header"
-      "nav main";
+      "nav  header header header header"
+      "nav main main main main";
+  }
+
+  .main {
+    grid-area: main;
+    min-height: 0;
+    overflow-y: auto;
   }
 
   .main-header {
     grid-area: header;
     position: static;
     width: auto;
+    top: auto;
+    left: auto;
+    display: flex;
+    align-items: center;
+    padding-inline: 4em;
   }
 
-  .main {
-    grid-area: main;
-  }
-
-  .main-header img {
+  .main-header-logo {
     display: none;
+  }
+
+  .main-header-title {
+    display: block;
+    margin-inline-end: auto;
+  }
+
+  .main-header-help {
+    display: block;
+    margin-inline-end: 1em;
   }
 
   .main-nav {
     grid-area: nav;
     position: static;
     width: auto;
-    height: 100%;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
   }
@@ -146,6 +174,7 @@ h1 {
     width: 100%;
     height: auto;
     display: flex;
+    gap: 1.2em;
     flex-direction: column;
   }
 
@@ -163,7 +192,7 @@ h1 {
     justify-content: center;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.75rem 2rem;
+    padding: 0.8em 2em;
     box-sizing: border-box;
   }
 
@@ -182,10 +211,10 @@ h1 {
 
   .nav-join-img {
     display: block;
-    width: 64px;
+    width: 115px;
     height: auto;
     margin-inline: auto;
-    margin-block: 4em;
+    margin-block: 4em 7em;
   }
 
   .main-nav-legal {
@@ -202,5 +231,25 @@ h1 {
     font-size: 1rem;
     text-decoration: none;
     color: var(--color-gray-231);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .user-avatar:hover,
+  .user-avatar:active {
+    background-color: var(--color-gray-231);
+  }
+
+  .main-header-help:hover {
+    transform: scale(1.1);
+  }
+
+  .main-nav-item:not(:has(a[aria-current="page"])):hover {
+    background-color: var(--color-medium);
+    transform: translateY(-2px);
+  }
+
+  .main-nav-legal a:hover {
+    color: var(--color-dark-active);
   }
 }
