@@ -16,6 +16,7 @@ h1 {
 
 .main {
   grid-area: main;
+  min-width: 0;
 }
 
 .main-header {
@@ -112,14 +113,16 @@ h1 {
 
 @media (width >= 64em) {
   #page {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 14.5em 1fr;
     grid-template-areas:
-      "nav header header header header"
-      "nav main main main main";
+      "nav header"
+      "nav main";
   }
 
   .main-header {
     grid-area: header;
+    position: static;
+    width: auto;
   }
 
   .main {
@@ -132,6 +135,7 @@ h1 {
 
   .main-nav {
     grid-area: nav;
+    position: static;
     width: auto;
     height: 100%;
     display: flex;
