@@ -29,8 +29,9 @@ h1 {
   width: 100%;
   display: flex;
   align-items: center;
+  z-index: 100;
   justify-content: space-between;
-  padding: 0.75em 1em;
+  padding: 1.2em 1em;
   background-color: var(--color-white);
   box-shadow: 0 4px 4px var(--color-black-10);
 }
@@ -139,9 +140,8 @@ h1 {
   .main-header {
     grid-area: header;
     position: static;
+    padding: 1.6em 1em;
     width: auto;
-    top: auto;
-    left: auto;
     display: flex;
     align-items: center;
     padding-inline: 4em;
