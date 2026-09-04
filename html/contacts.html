@@ -4,8 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Contacts</title>
-    <!-- CSS file -->
-    <!-- <link rel="stylesheet" href="../css/reset_stylesheet.css"> -->
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../assets/icons/join-logo.svg"
+    />
+    <!-- CSS files -->
+    <link rel="stylesheet" href="../css/reset-stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/assets.css" />
@@ -20,13 +26,24 @@
     <script src="../js/contacts.js" defer></script>
   </head>
 
-  <body onload="init()" id="page">
+  <body onload="init()" class="main-page" id="page">
     <!-- Header -->
     <header class="main-header" aria-label="Page header">
-      <a href="./summary.html">
-        <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
+      <a class="main-header-logo" href=""
+        ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
+      /></a>
+
+      <p class="main-header-title">Kanban Project Management Tool</p>
+
+      <a
+        href="./help.html"
+        class="main-header-help"
+        aria-label="Link to Help page"
+      >
+        <img src="../assets/icons/help.svg" alt="" />
       </a>
-      <button type="button" class="user-avatar"><span>G</span></button>
+
+      <button type="button" class="user-avatar"><span>SM</span></button>
     </header>
 
     <!-- Main -->
@@ -96,69 +113,73 @@
       />
       <ul class="main-nav-list">
         <li class="main-nav-item">
-          <a href="./summary.html">
-            <img
-              src="../assets/icons/summary-icon.svg"
-              alt="to the summary page"
-            />
+          <a href="../html/summary.html">
+            <img src="../assets/icons/summary-icon.svg" alt="" />
             <span>Summary</span>
           </a>
         </li>
 
         <li class="main-nav-item">
-          <a href="./add-task.html">
-            <img
-              src="../assets/icons/addtask-icon.svg"
-              alt="to add a new task"
-            />
+          <a href="../html/add-task.html">
+            <img src="../assets/icons/addtask-icon.svg" alt="" />
             <span> Add Task </span>
           </a>
         </li>
 
         <li class="main-nav-item">
-          <a href="./board.html">
-            <img src="../assets/icons/board-icon.svg" alt="to the board page" />
+          <a href="../html/board.html">
+            <img src="../assets/icons/board-icon.svg" alt="" />
             <span> Board </span>
           </a>
         </li>
 
         <li class="main-nav-item">
-          <a href="./contacts.html" aria-current="page">
-            <img
-              src="../assets/icons/contact-icon.svg"
-              alt="to the contacts page"
-            />
+          <a href="../html/contacts.html" aria-current="page">
+            <img src="../assets/icons/contact-icon.svg" alt="" />
             <span> Contacts </span>
           </a>
+        </li>
+      </ul>
+
+      <ul class="main-nav-legal">
+        <li>
+          <a href="../html/privacy-policy.html">Privacy Policy</a>
+        </li>
+
+        <li>
+          <a href="../html/imprint.htmlfig fig">Legal Notice</a>
         </li>
       </ul>
     </nav>
 
     <!-- Dialog window to add contact -->
-    <dialog class="add-contact-container" id="contacts-dialog">
+    <dialog class="contact-form-container" id="contacts-dialog">
       <form>
         <!-- Dialog header -->
         <header
-          class="add-contact-header-container"
+          class="contact-form-header-container"
           aria-labelledby="dialog title"
+          aria-label="Contact form header"
         >
           <div class="close-button-container">
             <button type="button" class="close-button" onclick="closeDialog()">
               &times;
             </button>
           </div>
-          <div class="add-contact-title-container">
+          <div class="contact-form-title-container">
             <img
               src="../assets/icons/contacts/join-logo-white-letters.svg"
               alt="Join logo"
               class="dialog-join-icon"
             />
-            <span class="add-contact-title" id="dialog-title">Add contact</span>
-            <span class="add-contact-subtitle" id="dialog-subtitle"
+            <span class="contact-form-title" id="dialog-title"
+              >Add contact</span
+            >
+            <span class="contact-form-subtitle" id="dialog-subtitle"
               >Tasks are better with a team!</span
             >
           </div>
-          <div class="add-contact-shortcut" id="dialog-shortcut">
+          <div class="contact-form-shortcut" id="dialog-shortcut">
             <img
               src="../assets/icons/contacts/person_icon.png"
               alt="Contacts icon"
@@ -167,8 +188,8 @@
         </header>
 
         <!-- Dialog main -->
-        <div class="add-contact-main-container">
-          <div class="add-contact-input" id="input-name-dialog">
+        <div class="contact-form-main-container">
+          <div class="contact-form-input" id="input-name-dialog">
             <input
               type="text"
               placeholder="Name"
@@ -180,7 +201,7 @@
             />
           </div>
 
-          <div class="add-contact-input" id="input-email-dialog">
+          <div class="contact-form-input" id="input-email-dialog">
             <input
               type="text"
               placeholder="Email"
@@ -192,7 +213,7 @@
             />
           </div>
 
-          <div class="add-contact-input" id="input-phone-dialog">
+          <div class="contact-form-input" id="input-phone-dialog">
             <input
               type="tel"
               placeholder="Phone"
@@ -218,7 +239,7 @@
         </div>
 
         <!-- Dialog footer -->
-        <footer class="add-contact-footer">
+        <footer class="contact-form-footer">
           <!-- Cancel button -->
           <button
             type="button"

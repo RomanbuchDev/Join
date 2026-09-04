@@ -22,6 +22,7 @@ const messageContactDeleted = document.getElementById(
 );
 
 let currentContactData;
+let lastScrollPosition = 0;
 
 // Database (for test only):
 
@@ -88,25 +89,13 @@ async function init() {
 }
 
 
-function saveContacts(responseAsJSON) {
-  for (let index = 0; index < responseAsJSON.length; index++) {
-    const contact = responseAsJSON[index];
-    getContactShortcut(contact);
-    prepareContactColor(contact);
-    allContacts.push(contact);
-  }
-  return allContacts;
-}
-
-
-async function fetchAllContacts() {
-  try {
-    const response = await fetch("../js/contact-list.json");
-    const responseAsJSON = await response.json();
-    return saveContacts(responseAsJSON);
-  } catch (error) {
-    console.error("Error loading data!", error);
-  }
+function lastPositionAfterWebsiteLoading() {
+  requestAnimationFrame(() => {
+    window.scrollTo({
+      top: lastScrollPosition,
+      behavior: "instant",
+    });
+  });
 }
 
 
@@ -204,9 +193,9 @@ function createContactShortcut(name) {
 }
 
 
-function highlightActivteContact(contactID) {
-  const allContacts = document.querySelectorAll(".contact-card");
-  allContacts.forEach((contact) => contact.classList.remove("active"));
+function highlightActivateContact(contactID) {
+  const contactCards = document.querySelectorAll(".contact-card");
+  contactCards.forEach((contact) => contact.classList.remove("active"));
 
   if (window.innerWidth >= 1024) {
     const activeContact = document.getElementById(`contact-${contactID}`);
@@ -243,7 +232,8 @@ function renderContactDetails(contactID) {
 
 
 function showContactDetails(contactID) {
-  highlightActivteContact(contactID);
+  lastScrollPosition = window.scrollY;
+  highlightActivateContact(contactID);
   toggleContactPageView(contactDetails, contactList);
   contactDetails.classList.remove("show-animation");
   contactDetails.innerHTML = "";
@@ -261,6 +251,8 @@ function backToContactList() {
   dialogBoxButton.classList.remove("hidden");
 
   mainView.classList.remove("details-open");
+
+  lastPositionAfterWebsiteLoading();
 }
 
 

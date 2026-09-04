@@ -31,27 +31,59 @@ body {
   margin: 0;
 }
 
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.17rem;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 /*  ==================================================================================================== 
     2. MAIN - CONTACT LIST
     ==================================================================================================== */
 
+body#page {
+  overflow: auto;
+
+  /* height: auto;
+  min-height: 100dvh; */
+}
+
 .main-container {
   background-color: var(--color-white);
-  margin-top: 4.7em;
+
+  /* margin-top: 4.7em; */
 
   /* margin-bottom: 8em; */
-  padding-left: 0.875rem;
-  padding-right: 0.875rem;
-  padding-bottom: 8em;
+
+  min-width: 0;
+  padding-left: 0.875em;
+  padding-right: 0.875em;
 }
 
 .main-container.details-open {
   background-color: transparent;
+  padding-top: 0;
+}
+
+#contact-list {
+  padding-top: 1.5em;
+  padding-bottom: 10em;
 }
 
 .letter-container {
   height: 58px;
-  padding: 1.0625rem 2.25rem;
+  padding: 0.7em 1.5em;
+
+  /* padding: 1.063rem 2.25rem; */
   margin: 0;
 }
 
@@ -59,8 +91,8 @@ body {
   border: none;
   border-top: 1px solid var(--color-gray-209);
   width: 100%;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .contact-card {
@@ -74,9 +106,9 @@ body {
     color 0.1s ease,
     border-radius 0.1s ease;
   cursor: pointer;
-  gap: 2.1875rem;
+  gap: 2.1875em;
   width: 100%;
-  padding: 0.9375rem 1.5rem;
+  padding: 0.9375em 1.5em;
 }
 
 .contact-card.active {
@@ -112,12 +144,19 @@ body {
 .contact-data-container {
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 0.3em;
+  min-width: 0;
 }
 
 .contact-name {
   color: var(--color-black);
   font-size: 1.25rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
 }
 
 .contact-name:active {
@@ -127,19 +166,27 @@ body {
 .contact-e-mail {
   color: var(--color-email);
   font-size: 1rem;
-  margin-bottom: 1.375em;
+
+  /* margin-bottom: 1.375em; */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
 }
 
 .contact-menu {
   object-fit: contain;
-  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+  box-shadow: 0 4px 4px var(--color-black-25);
   position: fixed;
   right: 10px;
   bottom: 96px;
   z-index: 50;
   border: 1px solid var(--color-dark);
   border-radius: 46px;
-  padding: 1.5625rem;
+
+  /* padding: 1.5625rem; */
+  padding: 1.3em;
   width: 32px;
   height: 32px;
 }
@@ -152,6 +199,11 @@ body {
 .contact-menu:active {
   background-color: var(--color-name);
   border: 1px solid var(--color-name);
+}
+
+.contact-menu img {
+  object-fit: cover;
+  max-width: none;
 }
 
 .contact-menu-text {
@@ -191,11 +243,12 @@ body {
     flex-direction: row;
     overflow: hidden;
     min-height: 0;
-    padding-right: 0;
+    padding-inline: 0;
 
     /* margin-bottom: 0; */
     padding-bottom: 0;
-    margin-top: 4.2em;
+
+    /* margin-top: 4.2em; */
   }
 
   .main-container,
@@ -228,7 +281,6 @@ body {
     max-width: 350px;
     height: 50px;
     padding: 0.75em 1em;
-    margin-right: 1.5em;
   }
 
   .button-wrapper #contact-menu-button {
@@ -247,13 +299,15 @@ body {
     overflow: visible;
     width: 100%;
     height: auto;
+    padding-top: 0;
+    padding-bottom: 1.5em;
+    padding-inline: 1.5em;
   }
 
   .button-wrapper {
     display: flex;
     justify-content: center;
     width: 100%;
-    padding-top: 1em;
-    padding-left: 1em;
+    padding-top: 2em;
   }
 }

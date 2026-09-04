@@ -50,7 +50,7 @@ function deleteContact() {
   );
 
   if (databaseIndex !== -1) allContacts.splice(databaseIndex, 1);
-  
+
   updateContactList();
   backToContactList();
   renderContactDetailsDesktopPlaceholder();
@@ -232,11 +232,10 @@ function checkInputName() {
     dialogErrorMessageName.classList.add("show");
     contactNameInput.classList.add("error-message");
     return false;
-  } 
-    dialogErrorMessageName.classList.remove("show");
-    contactNameInput.classList.remove("error-message");
-    return true;
-  
+  }
+  dialogErrorMessageName.classList.remove("show");
+  contactNameInput.classList.remove("error-message");
+  return true;
 }
 
 
@@ -247,11 +246,10 @@ function checkInputEmail() {
     dialogErrorMessageEmail.classList.add("show");
     contactEmailInput.classList.add("error-message");
     return false;
-  } 
-    dialogErrorMessageEmail.classList.remove("show");
-    contactEmailInput.classList.remove("error-message");
-    return true;
-  
+  }
+  dialogErrorMessageEmail.classList.remove("show");
+  contactEmailInput.classList.remove("error-message");
+  return true;
 }
 
 
@@ -262,11 +260,10 @@ function checkInputPhone() {
     dialogErrorMessagePhone.classList.add("show");
     contactPhoneInput.classList.add("error-message");
     return false;
-  } 
-    dialogErrorMessagePhone.classList.remove("show");
-    contactPhoneInput.classList.remove("error-message");
-    return true;
-  
+  }
+  dialogErrorMessagePhone.classList.remove("show");
+  contactPhoneInput.classList.remove("error-message");
+  return true;
 }
 
 

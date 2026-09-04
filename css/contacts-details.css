@@ -18,9 +18,9 @@
 .contact-details-title-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding-top: 4.125rem;
-  padding-bottom: 4.125rem;
+  gap: 0.5em;
+  padding-top: 4.125em;
+  padding-bottom: 4.125em;
 }
 
 .contact-details-title-container::after {
@@ -47,7 +47,7 @@
 .contact-details-name-container {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.25em;
 }
 
 .contact-details-shortcut {
@@ -57,7 +57,7 @@
   background-color: var(--background-color, rgb(77 77 255 / 100%));
   color: var(--color-white);
   font-size: 1.6875rem;
-  box-shadow: 0 0 4px rgb(0 0 0 / 40%);
+  box-shadow: 0 0 4px var(--color-black-40);
   border: 3px solid var(--color-white);
   border-radius: 70px;
   flex-shrink: 0;
@@ -74,20 +74,24 @@
 .contact-details-information-container {
   display: flex;
   flex-direction: column;
-  margin-top: 1.875rem;
-  margin-bottom: 1.875rem;
+  margin-top: 1.875em;
+  margin-bottom: 1.875em;
 }
 
 .contact-details-contact-data {
   display: flex;
   flex-direction: column;
-  gap: 0.9375rem;
+  gap: 0.9375em;
+}
+
+.contact-details-contact-data .contact-e-mail {
+  margin-bottom: 1.375em;
 }
 
 /*  ##### Contact options ##### */
 
 .contact-option-menu-overlay {
-  background-color: rgb(0 0 0 / 10%);
+  background-color: var(--color-black-10);
   position: fixed;
   top: 0;
   left: 0;
@@ -111,10 +115,10 @@
   display: flex;
   flex-direction: column;
   background-color: var(--color-white);
-  color: rgb(42 54 71 / 100%);
+  color: var(--color-dark);
   font-size: 1rem;
   border-radius: 20px 20px 0;
-  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+  box-shadow: 0 4px 4px var(--color-black-25);
   position: fixed;
   bottom: 90px;
   right: 10px;
@@ -127,10 +131,10 @@
     opacity 0.3s ease-out,
     visibility 0.3s ease-out;
   contain: paint layout;
-  gap: 0.5rem;
+  gap: 0.5em;
   width: 116px;
   height: 100px;
-  padding: 0.625rem;
+  padding: 0.625em;
 }
 
 .contact-option-menu-container.show {
@@ -194,7 +198,7 @@
   .contact-details-title-container::after {
     grid-column: 2;
     grid-row: 1;
-    width: 3px;
+    width: 0.1875em;
     height: 3.6875em;
     margin: 0;
   }
