@@ -1,7 +1,7 @@
 // Templates - Contacts page
 
 function getContactTemplate(contactData) {
-  return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails(${contactData.id})">
+  return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
             <span class="contact-shortcut">${contactData.shortcut}</span>
             <div class="contact-data-container">
               <span class="contact-name">${contactData.name}</span>
