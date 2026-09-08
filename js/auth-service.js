@@ -20,13 +20,9 @@ async function loginWithEmail(email, password) {
 
 // Creates a guest user without checking credentials
 async function loginAsGuest() {
-  const userGuest = {
-    name: "Guest",
-    email: "none",
-    password: "none",
-    isGuest: true,
-  };
-  return userGuest;
+  const userCredential = await window.signInAnonymously(window.auth);
+  const user = userCredential.user;
+  return { name: "Guest", uid: user.uid, isGuest: true };
 }
 
 // Saves a new user to localStorage (mock) instead of a real backend for now
@@ -47,23 +43,3 @@ async function registerWithEmail(name, email, password) {
   // return await response.json();
   return { uid, name, email };
 }
-// die funktion muss neu angepasst werden
-// async function findRegisterMailMatch(signupUserMailCheck) {
-//   const authFetch = await fetch(BASE_URL_USERS);
-//   const authUsers = await authFetch.json();
-//   const registeredUsers =
-//     JSON.parse(localStorage.getItem("registeredUsers")) || [];
-//   const dataLocalStorage = JSON.parse(localStorage.getItem("registeredUsers"));
-//   const authDataBase = authUsers.find(function (entry) {
-//     return entry.email === signupUserMailCheck.email;
-//   });
-
-//   const authLocalStorage = dataLocalStorage.find(function (entry) {
-//     return entry.email === signupUserMailCheck.email;
-//   });
-
-//   return authUsers.find(function (entry) {
-
-//     return entry.email === signupUserMailCheck.email;
-//   });
-// }
