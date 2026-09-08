@@ -50,13 +50,6 @@ h4 {
     2. MAIN - CONTACT LIST
     ==================================================================================================== */
 
-body#page {
-  overflow: auto;
-
-  /* height: auto;
-  min-height: 100dvh; */
-}
-
 .main-container {
   background-color: var(--color-white);
 
@@ -262,11 +255,12 @@ body#page {
     flex: 0 0 40%;
     overflow-y: auto;
     scrollbar-width: thin;
-    gap: 1em;
-    height: 100%;
     position: relative;
     z-index: 10;
     box-shadow: 4px 0 6px var(--color-black-10);
+    gap: 1em;
+    height: 100%;
+    max-width: 430px;
   }
 
   .contact-menu {

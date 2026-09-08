@@ -63,7 +63,7 @@
 }
 
 .close-button {
-  color: white;
+  color: var(--color-white);
 }
 
 .close-button-container .close-button:hover {

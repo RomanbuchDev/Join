@@ -4,11 +4,16 @@
 
 const allContacts = [];
 
+const BASE_URL =
+  "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app";
+const CATEGORY = "contacts";
+
 // Functions:
 
 async function fetchAllContacts() {
   try {
-    const response = await fetch("../js/contact-list.json");
+    // const response = await fetch("../js/contact-list.json");
+    const response = await fetch(`${BASE_URL}/${CATEGORY}.json`);
     const responseAsJSON = await response.json();
     return saveContacts(responseAsJSON);
   } catch (error) {
@@ -19,13 +24,14 @@ async function fetchAllContacts() {
 
 function saveContacts(responseAsJSON) {
   allContacts.length = 0;
-  for (let index = 0; index < responseAsJSON.length; index++) {
-    const contact = responseAsJSON[index];
-    getContactShortcut(contact);
-    prepareContactColor(contact);
+  const contactIDs = Object.keys(responseAsJSON);
+
+  for (let index = 0; index < contactIDs.length; index++) {
+    const databaseID = contactIDs[index];
+    const contact = responseAsJSON[databaseID];
+    contact.id = databaseID;
     allContacts.push(contact);
   }
-  return allContacts;
 }
 
 
@@ -61,4 +67,60 @@ function calculateContactIconColor(contactShortcut) {
   const b = (40 + (25 - value2) * 7).toFixed(0);
 
   return `rgba(${r} ${g} ${b} / 100%)`;
+}
+
+
+async function addContactToDatabase(newContactData) {
+  try {
+    const response = await fetch(`${BASE_URL}/${CATEGORY}.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newContactData),
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("Error saving data:", error);
+  }
+}
+
+
+function getContactDataForDatabase() {
+  return {
+    name: currentContactData.name,
+    email: currentContactData.email,
+    phone: currentContactData.phone,
+    shortcut: currentContactData.shortcut,
+    shortcutColor: currentContactData.shortcutColor,
+  };
+}
+
+
+async function editContactInDatabase(contactId) {
+  try {
+    const response = await fetch(`${BASE_URL}/${CATEGORY}/${contactId}.json`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(getContactDataForDatabase()),
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("Error saving data:", error);
+  }
+}
+
+
+async function deleteContactInDatabase(contactId) {
+  try {
+    const response = await fetch(`${BASE_URL}/${CATEGORY}/${contactId}.json`, {
+      method: "DELETE",
+    });
+    const responseAsJSON = await response.json();
+    return responseAsJSON;
+  } catch (error) {
+    console.error("Error deleting data:", error);
+  }
 }

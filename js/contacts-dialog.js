@@ -44,33 +44,54 @@ function updateContactList() {
 }
 
 
-function deleteContact() {
+function updateUIAfterDeleteContact() {
+  updateContactList();
+  backToContactList();
+  renderContactDetailsDesktopPlaceholder();
+  showToastMessageContactDeleted();
+}
+
+
+async function deleteContact() {
   const databaseIndex = allContacts.findIndex(
     (contact) => contact.id === currentContactData.id,
   );
 
   if (databaseIndex !== -1) allContacts.splice(databaseIndex, 1);
 
-  updateContactList();
-  backToContactList();
-  renderContactDetailsDesktopPlaceholder();
-  showToastMessageContactDeleted();
+  await deleteContactInDatabase(currentContactData.id);
+
+  updateUIAfterDeleteContact();
   closeMobileContactOptions();
   closeContactDeletion();
   closeDialog();
 }
 
 
-function saveContactData() {
-  if (!checkContactFormValidation()) return;
-  if (checkInputData() === false) return;
+function updateCurrentContactObject() {
   currentContactData.name = contactName.value;
   currentContactData.email = contactEmail.value;
   currentContactData.phone = contactPhone.value;
+  getContactShortcut(currentContactData);
+  prepareContactColor(currentContactData);
+}
 
+
+function updateUIAfterSaveContactData(contactID) {
   updateContactList();
-  showContactDetails(currentContactData.id);
+  showContactDetails(contactID);
   showToastMessageContactEdited();
+}
+
+
+async function saveContactData() {
+  if (!checkContactFormValidation()) return;
+  if (checkInputData() === false) return;
+
+  updateCurrentContactObject();
+  await editContactInDatabase(currentContactData.id);
+
+  updateUIAfterSaveContactData(currentContactData.id);
   closeMobileContactOptions();
   closeDialog();
 }
@@ -192,7 +213,7 @@ function resetFormInputs() {
 
 function createContactObject() {
   return {
-    id: allContacts.length > 0 ? allContacts[allContacts.length - 1].id + 1 : 1,
+    // id: allContacts.length > 0 ? allContacts[allContacts.length - 1].id + 1 : 1,
     name: contactName.value,
     email: contactEmail.value,
     phone: contactPhone.value,
@@ -200,12 +221,28 @@ function createContactObject() {
 }
 
 
-function createContact() {
-  if (!checkContactFormValidation()) return;
-  if (checkInputData() === false) return;
+function assignDatabaseResponseToContact(newContactData, databaseResponse) {
+  if (databaseResponse && databaseResponse.name) {
+    newContactData.id = databaseResponse.name;
+  } else {
+    console.error("No database ID generated!");
+  }
+}
+
+
+function assignShortcutAndColorToContact() {
   const newContactData = createContactObject();
   getContactShortcut(newContactData);
   prepareContactColor(newContactData);
+  return newContactData;
+}
+
+
+async function createContact() {
+  if (!checkContactFormValidation() || checkInputData() === false) return;
+  const newContactData = assignShortcutAndColorToContact();
+  const databaseResponse = await addContactToDatabase(newContactData);
+  assignDatabaseResponseToContact(newContactData, databaseResponse);
   allContacts.push(newContactData);
   updateContactList();
   showToastMessageContactCreated();
