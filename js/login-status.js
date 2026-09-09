@@ -42,4 +42,25 @@ async function loadCurrentUserProfile(user) {
   window.dispatchEvent(new Event("authReady"));
 }
 
+/**
+ * Gibt den eingeloggten User zurück, sobald er feststeht — direkt, falls window.currentUser
+ * schon gesetzt ist, sonst wartet die Funktion automatisch auf das authReady-Event.
+ * Für andere Seiten gedacht, die uid/name/email für die eigene GUI brauchen (z.B. Header,
+ * Avatar-Initialen), ohne sich selbst um das authReady-Timing kümmern zu müssen.
+ * @returns {Promise<Object>} Der eingeloggte User ({ uid, name, email } bzw. { uid, name: "Guest", isGuest: true }).
+ */
+function getCurrentUser() {
+  return new Promise((resolve) => {
+    if (window.currentUser) {
+      resolve(window.currentUser);
+      return;
+    }
+    window.addEventListener("authReady", () => resolve(window.currentUser), {
+      once: true,
+    });
+  });
+}
+
+window.getCurrentUser = getCurrentUser;
+
 window.onAuthStateChanged(window.auth, handleAuthStateChange);
