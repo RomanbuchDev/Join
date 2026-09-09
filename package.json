@@ -1,6 +1,10 @@
 {
   "name": "modul-10-join",
   "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "firebase": "^10.0.0"
+  },
   "private": true,
   "description": "Clean-Code-Prüfung für HTML, CSS und JS via GitHub Actions.",
   "devDependencies": {

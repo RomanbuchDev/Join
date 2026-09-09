@@ -1,5 +1,25 @@
 let tasksData = [];
 
+// const BASE_URL = "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app";
+// const TASKS_URL = BASE_URL + "/tasks";
+
+
+// async function addTaskToDatabase(newTaskData) {
+//   try {
+//     const response = await fetch(TASKS_URL, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify(newTaskData)
+//     });
+//     const result = await response.json();
+//     console.log("Task added to database:", result);
+//   } catch (error) {
+//     console.error("Error adding task to database:", error);
+//   }
+// }
+
 async function initBoard() {
   await fetchAllTasks();
   await fetchAllContacts();
