@@ -44,10 +44,20 @@ async function registerWithEmail(name, email, password) {
   );
   const uid = userCredential.user.uid;
   const idToken = await userCredential.user.getIdToken();
+  await saveUserProfile(uid, { name, email }, idToken);
+  return { uid, name, email };
+}
+
+/**
+ * Speichert das Profil (ohne Passwort) unter /users/{uid} in der Realtime Database.
+ * @param {string} uid - Die Firebase-Auth-uid des Users.
+ * @param {Object} profile - Die Profildaten ({ name, email }).
+ * @param {string} idToken - Das Firebase-ID-Token für die authentifizierte Anfrage.
+ */
+async function saveUserProfile(uid, profile, idToken) {
   await fetch(`${window.firebaseUrl}users/${uid}.json?auth=${idToken}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email }),
+    body: JSON.stringify(profile),
   });
-  return { uid, name, email };
 }
