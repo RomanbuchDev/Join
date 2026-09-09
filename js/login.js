@@ -5,13 +5,11 @@ function init() {
   setupEventListeners();
 }
 
-
 window.addEventListener("pageshow", (event) => {
   if (event.persisted) {
     resetLoginFormState();
   }
 });
-
 
 document.querySelector(".splash-logo").addEventListener("animationend", () => {
   document.getElementById("splashScreen").style.display = "none";
@@ -38,7 +36,6 @@ function loginEventListener(form) {
   form.addEventListener("submit", handleLoginSubmit);
 }
 
-
 /**
  * Wechselt das Schloss-Icon, je nachdem ob das Passwort-Feld leer ist oder nicht.
  */
@@ -56,7 +53,6 @@ function inputPasswordCheck() {
   });
 }
 
-
 /**
  * Reagiert auf Klicks auf das Sichtbarkeits-Icon.
  */
@@ -73,7 +69,6 @@ function visibilityEventListener() {
     visibilityIconSwish(icon, inputPasswordCheck);
   });
 }
-
 
 /**
  * Schaltet zwischen sichtbarem und verstecktem Passwort um (inkl. Icon-Austausch).
@@ -273,6 +268,5 @@ function resetLoginFormState() {
   markFieldError("exampleInputPassword1", false);
   document.getElementById("loginError").innerText = "";
 }
-
 
 init();
