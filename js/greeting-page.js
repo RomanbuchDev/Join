@@ -3,26 +3,23 @@ setTimeout(() => {
 }, 3000);
 
 /**
- * Startet die Begrüßung, sobald der eingeloggte User feststeht — entweder sofort,
- * falls window.currentUser schon gesetzt ist, oder sobald das authReady-Event feuert.
+ * Startet die Begrüßung, sobald der eingeloggte User feststeht.
  */
-function initGreeting() {
-  if (window.currentUser) {
-    greetingUser();
-    return;
-  }
-  window.addEventListener("authReady", greetingUser);
+async function initGreeting() {
+  const user = await window.getCurrentUser();
+  greetingUser(user);
 }
 
 /**
- * Zeigt die passende Begrüßung (Gast oder mit Namen) anhand von window.currentUser an.
+ * Zeigt die passende Begrüßung (Gast oder mit Namen) an.
+ * @param {Object} user - Der eingeloggte User ({ uid, name, email } bzw. Gast-Objekt).
  */
-function greetingUser() {
-  if (window.currentUser.isGuest) {
+function greetingUser(user) {
+  if (user.isGuest) {
     document.getElementById("greetingMessage").innerText = "Good morning!";
     document.getElementById("userName").innerText = "";
   } else {
     document.getElementById("greetingMessage").innerText = "Good morning,";
-    document.getElementById("userName").innerText = window.currentUser.name;
+    document.getElementById("userName").innerText = user.name;
   }
 }
