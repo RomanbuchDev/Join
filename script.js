@@ -27,6 +27,7 @@
 // (ohne login-status.js) reicht dort.
 // ================================================================
 
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import {
   getAuth,
@@ -35,6 +36,7 @@ import {
   signInAnonymously,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBqzMjMR3tovxxV8gao0Up7JaYSZ4nJwc8",
@@ -45,6 +47,7 @@ const firebaseConfig = {
   messagingSenderId: "103364081217",
   appId: "1:103364081217:web:76f0c6cf56e2c3acd4f8c0",
 };
+
 
 const app = initializeApp(firebaseConfig);
 

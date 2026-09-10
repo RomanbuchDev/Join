@@ -11,9 +11,7 @@ window.addEventListener("pageshow", (event) => {
   }
 });
 
-/**
- * Registriert alle Event-Listener für die Signup-Seite (Formular-Submit, Sichtbarkeits-Icon, Zustand zurücksetzen).
- */
+/** Registriert alle Event-Listener für die Signup-Seite (Formular-Submit, Sichtbarkeits-Icon, Zustand zurücksetzen). */
 function setupEventListeners() {
   const form = document.getElementById("signupForm");
   signupEventListener(form);
@@ -84,12 +82,7 @@ function visibilityEventListener(inputId, iconId) {
   });
 }
 
-/**
- * Schaltet zwischen sichtbarem und verstecktem Passwort um (inkl. Icon-Austausch).
- * @param {HTMLImageElement} icon - Das Sichtbarkeits-Icon.
- * @param {HTMLInputElement} inputPasswordCheck - Das Passwort-Eingabefeld.
- * @param {string} iconId - Die ID des Sichtbarkeits-Icons (zum erneuten Abrufen nach dem Wechsel).
- */
+/** Schaltet zwischen sichtbarem und verstecktem Passwort um (inkl. Icon-Austausch). @param {HTMLImageElement} icon - Das Sichtbarkeits-Icon. @param {HTMLInputElement} inputPasswordCheck - Das Passwort-Eingabefeld. @param {string} iconId - Die ID des Sichtbarkeits-Icons (zum erneuten Abrufen nach dem Wechsel). */
 function visibilityIconSwish(icon, inputPasswordCheck, iconId) {
   const iconSrc = icon.getAttribute("src");
   const iconVisibilityOn = "../assets/icons/visibility.svg";
@@ -105,10 +98,7 @@ function visibilityIconSwish(icon, inputPasswordCheck, iconId) {
   return;
 }
 
-/**
- * Verarbeitet das Absenden des Formulars: liest die Werte, validiert sie, startet bei Erfolg die Registrierung.
- * @param {SubmitEvent} event - Das Submit-Event des Formulars.
- */
+/** Verarbeitet das Absenden des Formulars: liest die Werte, validiert sie, startet bei Erfolg die Registrierung. @param {SubmitEvent} event - Das Submit-Event des Formulars. */
 async function handleSignupSubmit(event) {
   event.preventDefault();
   const signupUserData = getSignupFormValues();
@@ -119,10 +109,7 @@ async function handleSignupSubmit(event) {
   await attemptSignup(signupUserData);
 }
 
-/**
- * Versucht die Registrierung mit den eingegebenen Daten durchzuführen.
- * @param {Object} signupUserData - Die eingegebenen Formulardaten (Name, Email, Passwort, Passwort-Bestätigung).
- */
+/** Versucht die Registrierung mit den eingegebenen Daten durchzuführen. @param {Object} signupUserData - Die eingegebenen Formulardaten (Name, Email, Passwort, Passwort-Bestätigung). */
 async function attemptSignup(signupUserData) {
   try {
     await registerWithEmail(
@@ -152,11 +139,7 @@ function handleSignupError() {
   markFieldError("registerPassword", true);
 }
 
-/**
- * Prüft, ob alle Formulardaten gültig sind, und zeigt ggf. eine Fehlermeldung.
- * @param {Object} signupUserData - Die eingegebenen Formulardaten.
- * @returns {boolean} Ob die Eingaben gültig sind.
- */
+/** Prüft, ob alle Formulardaten gültig sind, und zeigt ggf. eine Fehlermeldung. @param {Object} signupUserData - Die eingegebenen Formulardaten. @returns {boolean} Ob die Eingaben gültig sind. */
 function isSignupInputValid(signupUserData) {
   const checks = getSignupFieldChecks(signupUserData);
   const message = getSignupErrorMessage(checks);
@@ -164,11 +147,7 @@ function isSignupInputValid(signupUserData) {
   return message === "";
 }
 
-/**
- * Prüft alle Formularfelder einzeln und bündelt die Ergebnisse in einem Objekt.
- * @param {Object} signupUserData - Die eingegebenen Formulardaten.
- * @returns {Object} Die Prüfungsergebnisse aller Felder (nameEmpty, emailCheck, passwordEmpty, confirmCheck, privacyUnchecked).
- */
+/** Prüft alle Formularfelder einzeln und bündelt die Ergebnisse in einem Objekt. @param {Object} signupUserData - Die eingegebenen Formulardaten. @returns {Object} Die Prüfungsergebnisse aller Felder (nameEmpty, emailCheck, passwordEmpty, confirmCheck, privacyUnchecked). */
 function getSignupFieldChecks(signupUserData) {
   return {
     nameEmpty: checkNameField(signupUserData.name),
@@ -212,11 +191,7 @@ function checkConfirmPasswordField(password, confirmPassword) {
   return { isEmpty, isMismatch };
 }
 
-/**
- * Baut den passenden Fehlertext aus den gebündelten Prüfungsergebnissen zusammen.
- * @param {Object} checks - Ergebnis von getSignupFieldChecks() (nameEmpty, emailCheck, passwordEmpty, confirmCheck, privacyUnchecked).
- * @returns {string} Die anzuzeigende Fehlermeldung.
- */
+/** Baut den passenden Fehlertext aus den gebündelten Prüfungsergebnissen zusammen. @param {Object} checks - Ergebnis von getSignupFieldChecks() (nameEmpty, emailCheck, passwordEmpty, confirmCheck, privacyUnchecked). @returns {string} Die anzuzeigende Fehlermeldung. */
 function getSignupErrorMessage(checks) {
   if (areAllSignupFieldsEmpty(checks)) {
     return "Please fill in all fields.";
