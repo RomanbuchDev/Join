@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 .body-signup {
   min-height: 100vh;
 }
@@ -26,9 +30,9 @@
 }
 
 .main-signup {
-  max-width: 24.75rem;
+  max-width: 25rem;
   position: relative;
-  height: 37.2rem;
+  height: 37.19rem;
   width: 100%;
   border-radius: 1.88rem;
   padding: 2rem 1rem;
@@ -41,7 +45,14 @@
   width: 2.5rem;
   position: absolute;
   left: 1rem;
-  top: 2rem;
+  top: 2.5rem;
+}
+
+/* form signup */
+form {
+  height: 100%;
+  width: 100%;
+  gap: 1rem;
 }
 
 /* Spacing & Labels */
@@ -90,6 +101,24 @@
   height: 1.5rem;
   padding: 0.25rem;
   pointer-events: none;
+}
+
+.visibility-icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.error-text {
+  height: 1rem;
+  width: 100%;
+  color: var(--color-error);
+  font-size: 0.875rem;
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
+.input-error {
+  border: 1px solid var(--color-error);
 }
 
 .heading-accent--bottom-center {
@@ -154,7 +183,7 @@
 }
 
 .signup-a {
-  color: var(--color-black-100);
+  color: var(--color-medium);
 }
 
 /* footer */
@@ -195,6 +224,13 @@
   transform: translateX(0);
 }
 
+/* teblet */
+@media (width >= 40rem) and (width < 64rem) {
+  .signup-back-vector {
+    left: 2rem;
+  }
+}
+
 /* Laptop */
 @media (width >= 64rem) {
   .app {
@@ -219,6 +255,17 @@
     padding: 0;
   }
 
+  .main-signup {
+    max-width: 37.5rem;
+    max-height: 39.38rem;
+    height: auto;
+  }
+
+  .signup-back-vector {
+    left: 3rem;
+    top: 2.5rem;
+  }
+
   .form-label {
     margin-bottom: 0;
     line-height: 0;
@@ -228,6 +275,10 @@
     width: 26.375rem;
     height: 3rem;
     margin-bottom: 1.25rem;
+  }
+
+  .input-bar .input-wrapper:last-of-type {
+    margin-bottom: 0.5rem;
   }
 
   .footer-signup {
