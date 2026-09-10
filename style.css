@@ -61,6 +61,50 @@ h1 {
   cursor: pointer;
 }
 
+.user-menu {
+  position: relative;
+}
+
+.user-menu-dropdown {
+  width: 9.3em;
+  padding: 1em 1em 1em 1.2em;
+  height: 11.3em;
+  gap: 1.4em;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: -0.7em;
+  border-radius: 20px 0 20px 20px;
+  background-color: var(--color-dark);
+}
+
+.user-menu-item > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.user-menu-item {
+  text-decoration: none;
+  color: var(--color-gray-209);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-inline: -0.5em;
+  padding-inline: 0.5em;
+  padding-block: 0.6em;
+  margin-block: -0.6em;
+}
+
+.user-menu-logout {
+  text-decoration: none;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
 .main-nav {
   position: fixed;
   bottom: 0;
@@ -140,7 +184,7 @@ h1 {
   .main-header {
     grid-area: header;
     position: static;
-    padding: 1.6em 1em;
+    padding: 1em 1em;
     width: auto;
     display: flex;
     align-items: center;
@@ -159,6 +203,26 @@ h1 {
   .main-header-help {
     display: block;
     margin-inline-end: 1em;
+  }
+
+  .user-avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 35px;
+  }
+
+  .user-avatar span {
+    font-size: 1.3rem;
+  }
+
+  .user-menu-dropdown {
+    height: 9.3em;
+    top: 100%;
+    margin-block-start: 1em;
+  }
+
+  .user-menu-item--help {
+    display: none;
   }
 
   .main-nav {
@@ -242,6 +306,10 @@ h1 {
 
   .main-header-help:hover {
     transform: scale(1.1);
+  }
+
+  .user-menu-item:hover {
+    background-color: var(--color-medium);
   }
 
   .main-nav-item:not(:has(a[aria-current="page"])):hover {
