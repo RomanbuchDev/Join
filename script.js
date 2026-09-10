@@ -27,16 +27,14 @@
 // (ohne login-status.js) reicht dort.
 // ================================================================
 
-// Firebase SDK-Dateien werden selbst gehostet (js/vendor/), nicht per CDN geladen —
-// vermeidet, dass beim Laden der Datei die Besucher-IP an Google geht.
-import { initializeApp } from "./js/vendor/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInAnonymously,
   onAuthStateChanged,
-} from "./js/vendor/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBqzMjMR3tovxxV8gao0Up7JaYSZ4nJwc8",
