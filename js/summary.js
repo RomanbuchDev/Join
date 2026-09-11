@@ -1,44 +1,42 @@
 let tasks = [];
 
 async function init() {
+  await window.getCurrentUser();
   await getSummaryData();
   getStatusInformation();
 }
 
 
 async function getSummaryData() {
-  const response = await fetch("../js/tasks.json");
+  const idToken = await window.auth.currentUser.getIdToken();
+  const response = await fetch(
+    `https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${idToken}`,
+  );
   const data = await response.json();
-
-  tasks = data;
+  tasks = Object.values(data);
 }
 
 
 function getStatusInformation() {
+  const urgentTasks = getStatusUrgent();
+  const summaryList = document.querySelector("#summary_list");
   const statusCounts = getStatusCounts();
-  logStatusCounts(statusCounts);
+  summaryList.innerHTML = "";
+  summaryList.innerHTML = generateSummaryHTM(statusCounts, tasks, urgentTasks);
 }
 
 
 function getStatusCounts() {
-  const statusCounts = { todo: 0, inProgress: 0, awaitFeedback: 0, done: 0 };
+  const statusCounts = { toDo: 0, inProgress: 0, awaitFeedback: 0, done: 0 };
 
   for (const task of tasks) {
-    statusCounts.todo += countStatus(task, "todo");
-    statusCounts.inProgress += countStatus(task, "in-progress");
-    statusCounts.awaitFeedback += countStatus(task, "await-feedback");
+    statusCounts.toDo += countStatus(task, "toDo");
+    statusCounts.inProgress += countStatus(task, "inProgress");
+    statusCounts.awaitFeedback += countStatus(task, "awaitFeedback");
     statusCounts.done += countStatus(task, "done");
   }
 
   return statusCounts;
-}
-
-
-function logStatusCounts(statusCounts) {
-  console.log("Status ToDo: ", statusCounts.todo);
-  console.log("Status In Progress: ", statusCounts.inProgress);
-  console.log("Status Await Feedback: ", statusCounts.awaitFeedback);
-  console.log("Status Done: ", statusCounts.done);
 }
 
 
@@ -48,6 +46,20 @@ function countStatus(task, status) {
     counter++;
   }
   return counter;
+}
+
+
+function getStatusUrgent() {
+  let counterUrgent = 0;
+
+  for (let i = 0; i < tasks.length; i++) {
+    const task = tasks[i];
+    if (task.priority === "urgent") {
+      counterUrgent++;
+    }
+  }
+
+  return counterUrgent;
 }
 
 

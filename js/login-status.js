@@ -4,25 +4,52 @@
  * No further setup needed — runs automatically on load.
  */
 
-
 /**
- * Checks whether a user is currently logged in.
- * Redirects to the login page if no user is found in localStorage.
- * @returns {boolean} True if a user is logged in, false otherwise.
+ * Reagiert auf Änderungen des Login-Status: leitet aus, wenn niemand eingeloggt ist,
+ * lädt sonst das Profil des eingeloggten Users nach.
+ * @param {Object|null} user - Das Firebase-User-Objekt, oder null wenn ausgeloggt.
  */
-function loginStatus() {
-    let currentUser;
-    try {
-        currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    } catch (error) {
-        currentUser = null;
-    }
-    if (!currentUser) {
-        window.location.href = "../index.html";
-        return false;
-    }
-    return true;
+function handleAuthStateChange(user) {
+  if (!user) {
+    window.location.href = "../index.html";
+    return;
+  }
+  if (user.isAnonymous) {
+    window.currentUser = { uid: user.uid, name: "Guest", isGuest: true };
+    window.dispatchEvent(new Event("authReady"));
+    return;
+  }
+  loadCurrentUserProfile(user);
 }
 
+/** Lädt die Profildaten (Name) des eingeloggten Users aus der Realtime Database, macht sie global über window.currentUser verfügbar und feuert danach das authReady-Event, damit andere Seiten (z.B. greeting-page.js) darauf reagieren können. @param {Object} user - Das Firebase-User-Objekt (uid, email). */
+async function loadCurrentUserProfile(user) {
+  const idToken = await user.getIdToken();
+  const response = await fetch(
+    `${window.firebaseUrl}users/${user.uid}.json?auth=${idToken}`,
+  );
+  const profile = await response.json();
+  window.currentUser = {
+    uid: user.uid,
+    name: profile.name,
+    email: user.email,
+  };
+  window.dispatchEvent(new Event("authReady"));
+}
 
-loginStatus();
+/** Gibt den eingeloggten User zurück, sobald er feststeht — direkt, falls window.currentUser schon gesetzt ist, sonst wartet die Funktion automatisch auf das authReady-Event. Für andere Seiten gedacht, die uid/name/email für die eigene GUI brauchen (z.B. Header, Avatar-Initialen), ohne sich selbst um das authReady-Timing kümmern zu müssen. @returns {Promise<Object>} Der eingeloggte User ({ uid, name, email } bzw. { uid, name: "Guest", isGuest: true }). */
+function getCurrentUser() {
+  return new Promise((resolve) => {
+    if (window.currentUser) {
+      resolve(window.currentUser);
+      return;
+    }
+    window.addEventListener("authReady", () => resolve(window.currentUser), {
+      once: true,
+    });
+  });
+}
+
+window.getCurrentUser = getCurrentUser;
+
+window.onAuthStateChanged(window.auth, handleAuthStateChange);
