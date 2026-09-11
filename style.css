@@ -184,7 +184,7 @@ h1 {
   .main-header {
     grid-area: header;
     position: static;
-    padding: 1em 1em;
+    padding: 1em;
     width: auto;
     display: flex;
     align-items: center;
