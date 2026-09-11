@@ -1,17 +1,17 @@
 let tasks = [];
 
 async function init() {
+  await window.getCurrentUser();
   await getSummaryData();
   getStatusInformation();
 }
 
 async function getSummaryData() {
+  const idToken = await window.auth.currentUser.getIdToken();
   const response = await fetch(
-    "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
+    `https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${idToken}`,
   );
   const data = await response.json();
-  console.log(response.status);
-  console.log(data);
   tasks = Object.values(data);
 }
 
