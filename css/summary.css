@@ -5,7 +5,7 @@ main section {
 
 main {
   padding-inline: 1rem;
-  padding-block-start: 2rem;
+  padding-block-start: 4rem;
 }
 
 .summary-header {
@@ -98,7 +98,6 @@ main {
 
 .card-number {
   grid-area: number;
-  font-weight: 600;
   padding-left: 8px;
   align-self: flex-end;
 }
@@ -166,6 +165,7 @@ main {
 .summary-card-number {
   font-size: 2.2rem;
   line-height: 1;
+  font-weight: 600;
 }
 
 .summary-card-label {
