@@ -126,9 +126,10 @@ async function attemptSignup(signupUserData) {
 
 /** Leitet nach erfolgreicher Registrierung zur Login-Seite weiter (kein Auto-Login). */
 function handleSignupSuccess() {
+  document.getElementById("signupToast").classList.add("show");
   setTimeout(() => {
     window.location.href = "../index.html";
-  }, 1500);
+  }, 3000);
 }
 
 /** Baut die Fehlermeldung anhand des Firebase-Fehlercodes und markiert das betroffene Feld. @param {Object} error - Der von Firebase Auth geworfene Fehler. @returns {string} Die anzuzeigende Fehlermeldung. */
