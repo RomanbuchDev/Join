@@ -50,6 +50,17 @@ function getCurrentUser() {
   });
 }
 
+/** Meldet den eingeloggten User über Firebase Auth ab und leitet danach zur Login-Seite weiter. */
+async function handleLogoutClick() {
+  await window.signOut(window.auth);
+  window.location.href = "../index.html";
+}
+
+const logoutButton = document.querySelector(".user-menu-logout");
+if (logoutButton) {
+  logoutButton.addEventListener("click", handleLogoutClick);
+}
+
 window.getCurrentUser = getCurrentUser;
 
 window.onAuthStateChanged(window.auth, handleAuthStateChange);
