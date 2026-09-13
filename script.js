@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signInAnonymously,
   onAuthStateChanged,
+  signOut,
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -23,5 +24,6 @@ window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
 window.signInWithEmailAndPassword = signInWithEmailAndPassword;
 window.signInAnonymously = signInAnonymously;
 window.onAuthStateChanged = onAuthStateChanged;
+window.signOut = signOut;
 window.firebaseUrl =
   "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app/";
