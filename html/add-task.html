@@ -31,7 +31,74 @@
         <button type="button" class="user-avatar"><span>SM</span></button>
       </header>
 
-      <main class="main"></main>
+      <main class="main">
+        <header class="add-task-header">
+          <h1>Add Task</h1>
+        </header>
+
+        <form id="task-form">
+          <label class="required-label" for="title">Title </label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            placeholder="Enter a title"
+          />
+
+          <label for="description">Description</label>
+          <textarea
+            name="description"
+            id="description"
+            placeholder="Enter a Description"
+          ></textarea>
+
+          <label class="required-label" for="due-date">Due date</label>
+          <input type="date" name="due-date" id="due-date" />
+
+          <input type="radio" name="priority" value="urgent" />
+          <label>Urgent</label>
+
+          <input type="radio" name="priority" value="medium" />
+          <label>Medium</label>
+
+          <input type="radio" name="priority" value="low" />
+          <label>Low</label>
+
+          <label for="assigned-to">Assigned to</label>
+          <select id="assigned-to" name="assignedTo">
+            <option value="" disabled selected>
+              Select contacts to assign
+            </option>
+            <!-- Optionen kommen später mit JS -->
+          </select>
+
+          <label class="required-label" for="category">Category</label>
+          <select name="category" id="category">
+            <option value="" disabled selected>Select task category</option>
+            <option value="technical-task">Technical Task</option>
+            <option value="user-story">User Story</option>
+          </select>
+
+          <label for="subtasks">Subtasks</label>
+          <div class="subtask-input">
+            <input id="subtask" type="text" placeholder="Add new subtask" />
+
+            <button type="button">✕</button>
+            <button type="button">✓</button>
+          </div>
+
+          <ul class="subtask-list"></ul>
+          <span
+            ><span class="required-marker" aria-hidden="true">*</span>This field
+            is required</span
+          >
+
+          <div class="form-actions">
+            <button type="reset">Clear</button>
+            <button type="submit">Create Task</button>
+          </div>
+        </form>
+      </main>
 
       <nav class="main-nav">
         <img
