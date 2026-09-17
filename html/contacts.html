@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="../css/contacts-dialog.css" />
     <link rel="stylesheet" href="../style.css" />
     <!-- JavaScript files -->
+    <script type="module" src="../script.js"></script>
+    <script src="../js/login-status.js" defer></script>
     <script src="../js/template.js" defer></script>
     <script src="../js/contact-utils.js" defer></script>
     <script src="../js/contacts-dialog.js" defer></script>
@@ -296,7 +298,7 @@
           <!-- Delete contact - No button -->
           <button
             type="button"
-            class="button-basic button-secondary delete-question-no"
+            class="button-basic button-secondary delete-question-button"
             id="delete-question-no-button"
             onclick="closeContactDeletion()"
           >
@@ -305,7 +307,7 @@
           <!-- Delete contact - Yes button -->
           <button
             type="submit"
-            class="button-basic button-primary delete-question-yes"
+            class="button-basic button-primary delete-question-button"
             id="delete-question-yes-button"
             onclick="deleteContact()"
             autofocus
@@ -314,6 +316,41 @@
           </button>
         </div>
       </form>
+    </dialog>
+
+    <!-- Dialog for connection error database -->
+    <dialog
+      class="connection-error-database-container"
+      id="connection-error-database-dialog"
+    >
+      <div class="connection-error-database-content">
+        <h4>Connection error</h4>
+        <p>
+          No connection to the database. Please try again or check your internet
+          connection.
+        </p>
+        <div class="connection-error-database-button-container">
+          <!-- Close button -->
+          <button
+            type="button"
+            class="button-basic button-secondary connection-error-database-button"
+            id="connection-error-database-close-button"
+            onclick="closeDialogConnectionErrorDatabase()"
+          >
+            Close
+          </button>
+          <!-- Reload button -->
+          <button
+            type="submit"
+            class="button-basic button-primary connection-error-database-button"
+            id="connection-error-database-retry-button"
+            onclick="reloadPage()"
+            autofocus
+          >
+            Reload
+          </button>
+        </div>
+      </div>
     </dialog>
 
     <!-- Dialog toast message - Contact successfully created -->
@@ -338,6 +375,15 @@
       id="toast-message-contact-deleted"
     >
       Contact successfully deleted
+    </div>
+
+    <!-- Contact list toast message - You cannot delete your own account -->
+    <div
+      class="toast-message toast-own-account-no-delete"
+      id="toast-message-own-account-no-delete"
+    >
+      <!-- You cannot delete your own account -->
+      Cannot delete own account
     </div>
   </body>
 </html>

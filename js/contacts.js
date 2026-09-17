@@ -20,6 +20,12 @@ const messageContactEdited = document.getElementById(
 const messageContactDeleted = document.getElementById(
   "toast-message-contact-deleted",
 );
+const messageOwnAccountNoDelete = document.getElementById(
+  "toast-message-own-account-no-delete",
+);
+const dialogBoxConnectionErrorDatabase = document.getElementById(
+  "connection-error-database-dialog",
+);
 
 let currentContactData;
 let lastScrollPosition = 0;
@@ -90,12 +96,14 @@ async function init() {
 
 
 function lastPositionAfterWebsiteLoading() {
-  requestAnimationFrame(() => {
-    window.scrollTo({
-      top: lastScrollPosition,
-      behavior: "instant",
+  if (mainView) {
+    requestAnimationFrame(() => {
+      mainView.scrollTo({
+        top: lastScrollPosition,
+        behavior: "instant",
+      });
     });
-  });
+  }
 }
 
 
@@ -105,7 +113,11 @@ function assignAndCreateContacts(letter, contact, lastNameLetter) {
   );
 
   if (lastNameLetter === letter) {
-    contactCategoryGrid.innerHTML += getContactTemplate(contact);
+    if (contact.isOwnAccount || contact.isGuest) {
+      contactCategoryGrid.innerHTML += getOwnContactTemplate(contact);
+    } else {
+      contactCategoryGrid.innerHTML += getContactTemplate(contact);
+    }
   }
 }
 
@@ -232,7 +244,7 @@ function renderContactDetails(contactID) {
 
 
 function showContactDetails(contactID) {
-  lastScrollPosition = window.scrollY;
+  lastScrollPosition = mainView.scrollTop;
   highlightActivateContact(contactID);
   toggleContactPageView(contactDetails, contactList);
   contactDetails.classList.remove("show-animation");
@@ -304,4 +316,31 @@ function renderContactDetailsDesktopPlaceholder() {
     const contactDetailsPlaceholder = getContactDetailsPlaceholderTemplate();
     contactDetails.innerHTML = contactDetailsPlaceholder;
   }
+}
+
+
+function hideToastMessageOwnAccountNoDelete() {
+  messageOwnAccountNoDelete.classList.remove("show");
+}
+
+
+function showToastMessageOwnAccountNoDelete() {
+  messageOwnAccountNoDelete.classList.add("show");
+  setTimeout(hideToastMessageOwnAccountNoDelete, 3000);
+  dialogBox.close();
+}
+
+
+function closeDialogConnectionErrorDatabase() {
+  dialogBoxConnectionErrorDatabase.close();
+}
+
+
+function reloadPage() {
+  window.location.reload();
+}
+
+
+function openDialogConnectionErrorDatabase() {
+  dialogBoxConnectionErrorDatabase.showModal();
 }
