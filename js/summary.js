@@ -6,7 +6,6 @@ async function init() {
   getStatusInformation();
 }
 
-
 async function getSummaryData() {
   const idToken = await window.auth.currentUser.getIdToken();
   const response = await fetch(
@@ -16,7 +15,6 @@ async function getSummaryData() {
   tasks = Object.values(data);
 }
 
-
 function getStatusInformation() {
   const urgentTasks = getStatusUrgent();
   const summaryList = document.querySelector("#summary_list");
@@ -24,7 +22,6 @@ function getStatusInformation() {
   summaryList.innerHTML = "";
   summaryList.innerHTML = generateSummaryHTM(statusCounts, tasks, urgentTasks);
 }
-
 
 function getStatusCounts() {
   const statusCounts = { toDo: 0, inProgress: 0, awaitFeedback: 0, done: 0 };
@@ -39,7 +36,6 @@ function getStatusCounts() {
   return statusCounts;
 }
 
-
 function countStatus(task, status) {
   let counter = 0;
   if (task.status === status) {
@@ -47,7 +43,6 @@ function countStatus(task, status) {
   }
   return counter;
 }
-
 
 function getStatusUrgent() {
   let counterUrgent = 0;
@@ -62,6 +57,13 @@ function getStatusUrgent() {
   return counterUrgent;
 }
 
+function toggleUserMenu(button) {
+  const userMenu = document.querySelector("#user-menu-dropdown");
+  userMenu.classList.toggle("is-open");
+  console.log(userMenu.classList.contains("is-open"));
+  const isOpen = userMenu.classList.contains("is-open");
+  button.setAttribute("aria-expanded", isOpen);
+}
 
 function changeFillIcon(element, action) {
   const circle = element.querySelector(".icon_circle");
@@ -70,7 +72,6 @@ function changeFillIcon(element, action) {
   circle.setAttribute("fill", action === "start" ? "white" : "#2A3647");
   motif.setAttribute("fill", action === "start" ? "#2A3647" : "white");
 }
-
 
 function changeStrokeIcon(element, action) {
   const circle = element.querySelector(".icon_circle");
