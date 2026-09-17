@@ -46,7 +46,6 @@
   background: transparent;
   height: 100%;
   width: 100%;
-  margin: 0;
 }
 
 .contact-form-header-container {
@@ -143,6 +142,7 @@
 }
 
 .contact-form-input input {
+  background-color: transparent;
   font-size: 1.25rem;
   border: none;
   outline: none;
@@ -152,6 +152,16 @@
 
 .contact-form-input:focus-within {
   border-color: var(--color-medium);
+}
+
+.contact-form-input.readonly {
+  background-color: var(--color-black-10);
+  cursor: not-allowed;
+}
+
+.contact-form-input.readonly input {
+  color: var(--color-black-40);
+  cursor: not-allowed;
 }
 
 .dialog-error-message-container {
@@ -197,10 +207,7 @@
   display: none;
 }
 
-.delete-contact-data {
-  max-width: 140px;
-}
-
+.delete-contact-data,
 .save-contact-data {
   max-width: 140px;
 }
@@ -216,7 +223,7 @@
 .toast-contact-created.show,
 .toast-contact-edited.show,
 .toast-contact-deleted.show {
-  bottom: 150px;
+  bottom: 200px;
 }
 
 .toast-contact-edited {
@@ -257,12 +264,9 @@
   padding-inline: 1.5em;
 }
 
-.delete-question-no {
-  max-width: 140px;
-}
-
-.delete-question-yes {
-  max-width: 140px;
+.delete-question-button {
+  max-width: 100px;
+  width: 100%;
 }
 
 /*  ==================================================================================================== 
@@ -272,10 +276,6 @@
 @media (width >= 64em) {
   .contact-form-container {
     transform: translateX(100%);
-    transition:
-      transform 0.3s ease-out,
-      display 0.3s ease-out allow-discrete;
-    contain: paint layout;
     top: 180px;
     z-index: 200;
     max-width: 1212px;
@@ -292,7 +292,6 @@
   .contact-form-container form {
     display: grid;
     grid-template-columns: 3fr 2fr 3fr;
-    align-items: stretch;
     height: 100%;
   }
 

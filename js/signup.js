@@ -119,24 +119,35 @@ async function attemptSignup(signupUserData) {
     );
     handleSignupSuccess();
   } catch (error) {
-    handleSignupError();
+    handleSignupError(error);
     document.getElementById("signup").disabled = false;
   }
 }
 
 /** Leitet nach erfolgreicher Registrierung zur Login-Seite weiter (kein Auto-Login). */
 function handleSignupSuccess() {
+  document.getElementById("signupToast").classList.add("show");
   setTimeout(() => {
     window.location.href = "../index.html";
-  }, 1500);
+  }, 3000);
+}
+
+/** Baut die Fehlermeldung anhand des Firebase-Fehlercodes und markiert das betroffene Feld. @param {Object} error - Der von Firebase Auth geworfene Fehler. @returns {string} Die anzuzeigende Fehlermeldung. */
+function getSignupServerErrorMessage(error) {
+  if (error.code === "auth/email-already-in-use") {
+    markFieldError("registerEmail", true);
+    return "This email address is already registered!";
+  } else if (error.code === "auth/weak-password") {
+    markFieldError("registerPassword", true);
+    return "Password must be at least 6 characters.";
+  }
+  return "Registration failed. Please try again.";
 }
 
 /** Zeigt eine Fehlermeldung nach fehlgeschlagener Registrierung an. */
-function handleSignupError() {
+function handleSignupError(error) {
   document.getElementById("signupError").innerText =
-    "Password or email is incorrect!";
-  markFieldError("registerEmail", true);
-  markFieldError("registerPassword", true);
+    getSignupServerErrorMessage(error);
 }
 
 /** Prüft, ob alle Formulardaten gültig sind, und zeigt ggf. eine Fehlermeldung. @param {Object} signupUserData - Die eingegebenen Formulardaten. @returns {boolean} Ob die Eingaben gültig sind. */

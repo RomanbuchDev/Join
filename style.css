@@ -54,7 +54,7 @@ h1 {
   font-weight: 700;
   width: 2.5rem;
   height: 2.5rem;
-  border: 2px solid var(--color-dark);
+  border: 3px solid var(--color-dark);
   border-radius: 30px;
   background-color: var(--color-white);
   transition: fill 0s ease 125ms;
@@ -74,9 +74,22 @@ h1 {
   flex-direction: column;
   position: absolute;
   top: 100%;
-  right: -0.7em;
+  right: 0%;
   border-radius: 20px 0 20px 20px;
   background-color: var(--color-dark);
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 250ms ease,
+    opacity 250ms ease,
+    visibility 250ms;
+}
+
+.user-menu-dropdown.is-open {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
 }
 
 .user-menu-item > a {
@@ -103,6 +116,7 @@ h1 {
   background: none;
   border: 0;
   padding: 0;
+  cursor: pointer;
 }
 
 .main-nav {
@@ -206,13 +220,13 @@ h1 {
   }
 
   .user-avatar {
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 35px;
   }
 
   .user-avatar span {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 
   .user-menu-dropdown {
