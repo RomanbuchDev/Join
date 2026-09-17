@@ -143,15 +143,20 @@
   opacity: 1;
 }
 
+.toast-own-account-no-delete.show {
+  text-align: center;
+  bottom: 200px;
+}
+
+.toast-own-account-no-delete {
+  background-color: rgb(205 80 0 / 100%);
+}
+
 /*  ==================================================================================================== 
     2. OTHER
     ==================================================================================================== */
 
 @media (width >= 64em) {
-  /* #contact-details.hidden {
-    display: none;
-  } */
-
   #contact-details {
     background-color: var(--color-bg-main);
     overflow: hidden;

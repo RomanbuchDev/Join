@@ -48,7 +48,7 @@ function updateUIAfterDeleteContact() {
   updateContactList();
   backToContactList();
   renderContactDetailsDesktopPlaceholder();
-  showToastMessageContactDeleted();
+  // showToastMessageContactDeleted();
 }
 
 
@@ -77,19 +77,44 @@ function updateCurrentContactObject() {
 }
 
 
+function toggleEmailInput() {
+  contactEmail.value = currentContactData.email;
+
+  if (currentContactData.isOwnAccount === true) {
+    contactEmail.readOnly = true;
+    contactEmailInput.classList.add("readonly");
+  } else {
+    contactEmail.readOnly = false;
+    contactEmailInput.classList.remove("readonly");
+  }
+}
+
+
+async function contactSaveLocation() {
+  if (currentContactData.isGuest === true) {
+    myAccount = { ...currentContactData };
+    localStorage.setItem("guest", JSON.stringify(myAccount));
+  } else if (currentContactData.isOwnAccount === true) {
+    myAccount = { ...currentContactData };
+    localStorage.setItem("account", JSON.stringify(myAccount));
+  } else {
+    await editContactInDatabase(currentContactData.id);
+  }
+}
+
+
 function updateUIAfterSaveContactData(contactID) {
   updateContactList();
   showContactDetails(contactID);
-  showToastMessageContactEdited();
+  // showToastMessageContactEdited();
 }
 
 
 async function saveContactData() {
-  if (!checkContactFormValidation()) return;
-  if (checkInputData() === false) return;
+  if (!checkContactFormValidation() || checkInputData() === false) return;
 
   updateCurrentContactObject();
-  await editContactInDatabase(currentContactData.id);
+  await contactSaveLocation();
 
   updateUIAfterSaveContactData(currentContactData.id);
   closeMobileContactOptions();
@@ -116,7 +141,7 @@ function editContactDetails() {
   dialogSubtitle.style.display = "none";
 
   showContactData();
-
+  toggleEmailInput();
   dialogCreateContactButton.classList.add("hidden");
   dialogCancelButton.classList.add("hidden");
   dialogDeleteButton.classList.remove("hidden");
@@ -171,6 +196,17 @@ function showToastMessageContactCreated() {
 
 
 function openDialogDeleteQuestion() {
+  const currentContact = allContacts.find(
+    (contact) => contact.id === currentContactData.id,
+  );
+
+  if (!currentContact) return;
+
+  if (currentContact.isOwnAccount || currentContact.isGuest) {
+    showToastMessageOwnAccountNoDelete();
+    return;
+  }
+
   dialogBoxDeleteQuestion.showModal();
 }
 
@@ -245,7 +281,7 @@ async function createContact() {
   assignDatabaseResponseToContact(newContactData, databaseResponse);
   allContacts.push(newContactData);
   updateContactList();
-  showToastMessageContactCreated();
+  // showToastMessageContactCreated();
   clearErrorMessages();
   closeDialog();
 }

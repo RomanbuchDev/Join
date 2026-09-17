@@ -203,9 +203,7 @@ form {
 }
 
 .toast {
-  position: absolute;
-  top: 8rem;
-  right: 0.5rem;
+  position: fixed;
   padding: 0.5rem;
   width: auto;
   color: var(--color-bg-main);
@@ -216,12 +214,14 @@ form {
   user-select: none;
   border: 1px solid var(--color-gray-104);
   border-radius: 0.5rem;
-  transform: translateX(120%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 120vh);
   transition: transform 300ms ease-out;
 }
 
 .toast.show {
-  transform: translateX(0);
+  transform: translate(-50%, -50%);
 }
 
 /* teblet */
