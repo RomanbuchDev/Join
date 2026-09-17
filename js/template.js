@@ -11,6 +11,20 @@ function getContactTemplate(contactData) {
 }
 
 
+function getOwnContactTemplate(contactData) {
+  return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
+            <div class="shortcut-wrapper">
+              <span class="contact-shortcut">${contactData.shortcut}</span>
+              <span class="own-account-badge-on-shortcut">My Account</span>
+            </div>
+            <div class="contact-data-container">
+              <span class="contact-name">${contactData.name}</span>
+              <span class="contact-e-mail">${contactData.email}</span>
+            </div>
+          </button>`;
+}
+
+
 function getContactDetailsTemplate(contactData) {
   return `<div class="contact-details-header-container">
         <div class="contact-details-title-container">

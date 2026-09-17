@@ -3,6 +3,7 @@
 // Variables:
 
 const allContacts = [];
+let myAccount = null;
 
 const BASE_URL =
   "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app";
@@ -10,19 +11,73 @@ const CATEGORY = "contacts";
 
 // Functions:
 
-async function fetchAllContacts() {
-  try {
-    // const response = await fetch("../js/contact-list.json");
-    const response = await fetch(`${BASE_URL}/${CATEGORY}.json`);
-    const responseAsJSON = await response.json();
-    return saveContacts(responseAsJSON);
-  } catch (error) {
-    console.error("Error loading data!", error);
+async function getCurrentUserAccount() {
+  const currentUserAccount = await window.getCurrentUser();
+  console.log(currentUserAccount);
+
+  const isGuestUser = currentUserAccount.isGuest === true;
+
+  return {
+    id: currentUserAccount.uid,
+    name: currentUserAccount.name,
+    email: currentUserAccount.email || "name@example.com",
+    phone: "+49 123 4567890",
+    isOwnAccount: !isGuestUser,
+    isGuest: isGuestUser,
+  };
+
+  // Aktueller Stand:
+  // return {
+  //   id: "123",
+  //   name: "Eingeloggter Test-Benutzer",
+  //   email: "test@test.de",
+  //   isOwnAccount: true
+  // };
+}
+
+
+function getSavedUserData(currentUser) {
+  if (currentUser.isGuest === true) {
+    const savedGuestData = localStorage.getItem("guest");
+    myAccount = savedGuestData ? JSON.parse(savedGuestData) : currentUser;
+  } else {
+    const savedAccountData = localStorage.getItem("account");
+    myAccount = savedAccountData ? JSON.parse(savedAccountData) : currentUser;
   }
 }
 
 
-function saveContacts(responseAsJSON) {
+async function saveOwnAccountData() {
+  const currentUser = await getCurrentUserAccount();
+
+  if (!currentUser) return;
+
+  getSavedUserData(currentUser);
+
+  console.log(myAccount);
+  getContactShortcut(myAccount);
+  prepareContactColor(myAccount);
+  allContacts.push(myAccount);
+}
+
+
+async function fetchAllContacts() {
+  try {
+    await window.getCurrentUser();
+    const idToken = await window.auth.currentUser.getIdToken();
+    const response = await fetch(
+      `${BASE_URL}/${CATEGORY}.json?auth=${idToken}`,
+    );
+
+    const responseAsJSON = await response.json();
+    return saveContacts(responseAsJSON);
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  }
+}
+
+
+async function saveContacts(responseAsJSON) {
   allContacts.length = 0;
   const contactIDs = Object.keys(responseAsJSON);
 
@@ -32,6 +87,7 @@ function saveContacts(responseAsJSON) {
     contact.id = databaseID;
     allContacts.push(contact);
   }
+  await saveOwnAccountData();
 }
 
 
@@ -70,18 +126,40 @@ function calculateContactIconColor(contactShortcut) {
 }
 
 
+async function databaseRequest(url, method, data = null) {
+  const options = {
+    method: method,
+    headers: { "Content-Type": "application/json" },
+    ...(data && { body: JSON.stringify(data) })
+  };
+  const response = await fetch(url, options);
+  return response.json();
+}
+
+
 async function addContactToDatabase(newContactData) {
   try {
-    const response = await fetch(`${BASE_URL}/${CATEGORY}.json`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newContactData),
-    });
-    return await response.json();
+    await window.getCurrentUser();
+    const idToken = await window.auth.currentUser.getIdToken();
+    const url = `${BASE_URL}/${CATEGORY}.json?auth=${idToken}`;
+    showToastMessageContactCreated();
+    return await databaseRequest(url, "POST", newContactData);
+
+    // Aktueller Stand:
+    // const response = await fetch(
+    //   `${BASE_URL}/${CATEGORY}.json?auth=${idToken}`,
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(newContactData),
+    //   },
+    // );
+    // showToastMessageContactCreated();
+    // return await response.json();
   } catch (error) {
-    console.error("Error saving data:", error);
+    openDialogConnectionErrorDatabase();
   }
 }
 
@@ -99,28 +177,49 @@ function getContactDataForDatabase() {
 
 async function editContactInDatabase(contactId) {
   try {
-    const response = await fetch(`${BASE_URL}/${CATEGORY}/${contactId}.json`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(getContactDataForDatabase()),
-    });
-    return await response.json();
+    await window.getCurrentUser();
+    const idToken = await window.auth.currentUser.getIdToken();
+    const url = `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
+    showToastMessageContactEdited();
+    return await databaseRequest(url, "PUT", getContactDataForDatabase());
+
+    // Aktueller Stand:
+    // const response = await fetch(
+    //   `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`,
+    //   {
+    //     method: "PUT",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(getContactDataForDatabase()),
+    //   },
+    // );
+    // showToastMessageContactEdited();
+    // return await response.json();
   } catch (error) {
-    console.error("Error saving data:", error);
+    openDialogConnectionErrorDatabase();
   }
 }
 
 
 async function deleteContactInDatabase(contactId) {
   try {
-    const response = await fetch(`${BASE_URL}/${CATEGORY}/${contactId}.json`, {
-      method: "DELETE",
-    });
-    const responseAsJSON = await response.json();
-    return responseAsJSON;
+    await window.getCurrentUser();
+    const idToken = await window.auth.currentUser.getIdToken();
+    const url = `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
+    showToastMessageContactDeleted();
+    return await databaseRequest(url, "DELETE");
+
+    // Aktueller Stand:
+    // const response = await fetch(
+    //   `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`,
+    //   {
+    //     method: "DELETE",
+    //   },
+    // );
+    // showToastMessageContactDeleted();
+    // return await response.json();
   } catch (error) {
-    console.error("Error deleting data:", error);
+    openDialogConnectionErrorDatabase();
   }
 }
