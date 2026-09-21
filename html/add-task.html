@@ -3,17 +3,238 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="../assets/icons/join-logo.svg"
-    />
-    <link rel="stylesheet" href="../css/reset_stylesheet.css" />
+    <title>Add Task - Join</title>
+    <link rel="icon" type="images/" href="/assets/icons/join-logo.svg" />
+    <link rel="stylesheet" href="../css/reset-stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/add-task.css" />
     <link rel="stylesheet" href="../style.css" />
-    <title>Join - Add Task</title>
+    <script type="module" src="../script.js"></script>
+    <script src="../js/login-status.js" defer></script>
+    <script src="../js/toggle-user-menu.js" defer></script>
   </head>
+  <body>
+    <div id="page">
+      <header class="main-header">
+        <a class="main-header-logo" href=""
+          ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
+        /></a>
 
-  <body></body>
+        <p class="main-header-title">Kanban Project Management Tool</p>
+
+        <a
+          href="./help.html"
+          class="main-header-help"
+          aria-label="Link to Help page"
+        >
+          <img src="../assets/icons/help.svg" alt="" />
+        </a>
+
+        <div class="user-menu">
+          <button
+            type="button"
+            class="user-avatar"
+            onclick="toggleUserMenu(this)"
+            aria-expanded="false"
+            aria-controls="user-menu-dropdown"
+            aria-label="Open user menu"
+          >
+            <span>SM</span>
+          </button>
+
+          <ul id="user-menu-dropdown" class="user-menu-dropdown">
+            <li class="user-menu-item user-menu-item--help">
+              <a href="./help.html">Help</a>
+            </li>
+            <li class="user-menu-item">
+              <a href="./imprint.html">Legal Notice</a>
+            </li>
+            <li class="user-menu-item">
+              <a href="./privacy-policy.html">Privacy Policy</a>
+            </li>
+            <li class="user-menu-item user-menu-item--logout">
+              <button type="button" class="user-menu-logout">Log out</button>
+            </li>
+          </ul>
+        </div>
+      </header>
+
+      <main class="main add-task-main">
+        <header class="add-task-header">
+          <h1>Add Task</h1>
+        </header>
+
+        <form id="task-form">
+          <div class="form-content">
+            <div class="form-field form-field--title">
+              <label class="required-label" for="title">Title</label>
+              <input
+                class="form-control form-control--title"
+                id="title"
+                name="title"
+                type="text"
+                placeholder="Enter a title"
+              />
+            </div>
+
+            <div class="form-field form-field--description">
+              <label for="description">Description</label>
+              <textarea
+                class="form-control form-control--description"
+                name="description"
+                id="description"
+                placeholder="Enter a Description"
+              ></textarea>
+            </div>
+
+            <div class="form-field form-field--due-date">
+              <label class="required-label" for="due-date">Due date</label>
+              <input
+                class="form-control form-control--date"
+                type="date"
+                name="due-date"
+                id="due-date"
+              />
+            </div>
+
+            <fieldset class="form-field form-field--priority">
+              <legend>Priority</legend>
+
+              <div class="priority-options">
+                <div class="priority-option">
+                  <input
+                    class="priority-radio"
+                    type="radio"
+                    id="priority-urgent"
+                    name="priority"
+                    value="urgent"
+                  />
+                  <label for="priority-urgent">Urgent</label>
+                </div>
+
+                <div class="priority-option">
+                  <input
+                    class="priority-radio"
+                    type="radio"
+                    id="priority-medium"
+                    name="priority"
+                    value="medium"
+                  />
+                  <label for="priority-medium">Medium</label>
+                </div>
+
+                <div class="priority-option">
+                  <input
+                    class="priority-radio"
+                    type="radio"
+                    id="priority-low"
+                    name="priority"
+                    value="low"
+                  />
+                  <label for="priority-low">Low</label>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="form-field form-field--assigned">
+              <label for="assigned-to">Assigned to</label>
+              <select
+                class="form-control form-control--select"
+                id="assigned-to"
+                name="assignedTo"
+              >
+                <option value="" disabled selected>
+                  Select contacts to assign
+                </option>
+                <!-- Optionen kommen später mit JS -->
+              </select>
+            </div>
+
+            <div class="form-field form-field--category">
+              <label class="required-label" for="category">Category</label>
+              <select name="category" id="category">
+                <option value="" disabled selected>Select task category</option>
+                <option value="technical-task">Technical Task</option>
+                <option value="user-story">User Story</option>
+              </select>
+            </div>
+
+            <div class="form-field form-field--subtasks">
+              <label for="subtask">Subtasks</label>
+
+              <div class="subtask-input">
+                <input id="subtask" type="text" placeholder="Add new subtask" />
+
+                <button type="button">✕</button>
+                <button type="button">✓</button>
+              </div>
+
+              <ul class="subtask-list"></ul>
+            </div>
+
+            <span class="required-hint">
+              <span class="required-marker" aria-hidden="true">*</span>
+              This field is required
+            </span>
+          </div>
+          <div class="form-actions">
+            <button type="reset" class="form-action form-action--clear">
+              Clear
+            </button>
+            <button type="submit" class="form-action form-action--create">
+              Create Task
+            </button>
+          </div>
+        </form>
+      </main>
+
+      <nav class="main-nav">
+        <img
+          class="nav-join-img"
+          src="../assets/icons/join-logo-white.svg"
+          alt=""
+        />
+        <ul class="main-nav-list">
+          <li class="main-nav-item">
+            <a href="../html/summary.html">
+              <img src="../assets/icons/summary-icon.svg" alt="" />
+              <span>Summary</span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/add-task.html" aria-current="page">
+              <img src="../assets/icons/addtask-icon.svg" alt="" />
+              <span> Add Task </span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/board.html">
+              <img src="../assets/icons/board-icon.svg" alt="" />
+              <span> Board </span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/contacts.html">
+              <img src="../assets/icons/contact-icon.svg" alt="" />
+              <span> Contacts </span>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="main-nav-legal">
+          <li>
+            <a href="../html/privacy-policy.html">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="../html/imprint.htmlfig fig">Legal Notice</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
 </html>
