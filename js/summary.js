@@ -63,15 +63,6 @@ function getStatusUrgent() {
 }
 
 
-function toggleUserMenu(button) {
-  const userMenu = document.querySelector("#user-menu-dropdown");
-  userMenu.classList.toggle("is-open");
-  console.log(userMenu.classList.contains("is-open"));
-  const isOpen = userMenu.classList.contains("is-open");
-  button.setAttribute("aria-expanded", isOpen);
-}
-
-
 function changeFillIcon(element, action) {
   const circle = element.querySelector(".icon_circle");
   const motif = element.querySelector(".icon_motif");

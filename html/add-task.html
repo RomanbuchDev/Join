@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/add-task.css" />
     <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../script.js"></script>
+    <script src="../js/login-status.js" defer></script>
+    <script src="../js/toggle-user-menu.js" defer></script>
   </head>
   <body>
     <div id="page">
@@ -28,74 +31,160 @@
           <img src="../assets/icons/help.svg" alt="" />
         </a>
 
-        <button type="button" class="user-avatar"><span>SM</span></button>
+        <div class="user-menu">
+          <button
+            type="button"
+            class="user-avatar"
+            onclick="toggleUserMenu(this)"
+            aria-expanded="false"
+            aria-controls="user-menu-dropdown"
+            aria-label="Open user menu"
+          >
+            <span>SM</span>
+          </button>
+
+          <ul id="user-menu-dropdown" class="user-menu-dropdown">
+            <li class="user-menu-item user-menu-item--help">
+              <a href="./help.html">Help</a>
+            </li>
+            <li class="user-menu-item">
+              <a href="./imprint.html">Legal Notice</a>
+            </li>
+            <li class="user-menu-item">
+              <a href="./privacy-policy.html">Privacy Policy</a>
+            </li>
+            <li class="user-menu-item user-menu-item--logout">
+              <button type="button" class="user-menu-logout">Log out</button>
+            </li>
+          </ul>
+        </div>
       </header>
 
-      <main class="main">
+      <main class="main add-task-main">
         <header class="add-task-header">
           <h1>Add Task</h1>
         </header>
 
         <form id="task-form">
-          <label class="required-label" for="title">Title </label>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            placeholder="Enter a title"
-          />
+          <div class="form-content">
+            <div class="form-field form-field--title">
+              <label class="required-label" for="title">Title</label>
+              <input
+                class="form-control form-control--title"
+                id="title"
+                name="title"
+                type="text"
+                placeholder="Enter a title"
+              />
+            </div>
 
-          <label for="description">Description</label>
-          <textarea
-            name="description"
-            id="description"
-            placeholder="Enter a Description"
-          ></textarea>
+            <div class="form-field form-field--description">
+              <label for="description">Description</label>
+              <textarea
+                class="form-control form-control--description"
+                name="description"
+                id="description"
+                placeholder="Enter a Description"
+              ></textarea>
+            </div>
 
-          <label class="required-label" for="due-date">Due date</label>
-          <input type="date" name="due-date" id="due-date" />
+            <div class="form-field form-field--due-date">
+              <label class="required-label" for="due-date">Due date</label>
+              <input
+                class="form-control form-control--date"
+                type="date"
+                name="due-date"
+                id="due-date"
+              />
+            </div>
 
-          <input type="radio" name="priority" value="urgent" />
-          <label>Urgent</label>
+            <fieldset class="form-field form-field--priority">
+              <legend>Priority</legend>
 
-          <input type="radio" name="priority" value="medium" />
-          <label>Medium</label>
+              <div class="priority-options">
+                <div class="priority-option">
+                  <input
+                    class="priority-radio"
+                    type="radio"
+                    id="priority-urgent"
+                    name="priority"
+                    value="urgent"
+                  />
+                  <label for="priority-urgent">Urgent</label>
+                </div>
 
-          <input type="radio" name="priority" value="low" />
-          <label>Low</label>
+                <div class="priority-option">
+                  <input
+                    class="priority-radio"
+                    type="radio"
+                    id="priority-medium"
+                    name="priority"
+                    value="medium"
+                  />
+                  <label for="priority-medium">Medium</label>
+                </div>
 
-          <label for="assigned-to">Assigned to</label>
-          <select id="assigned-to" name="assignedTo">
-            <option value="" disabled selected>
-              Select contacts to assign
-            </option>
-            <!-- Optionen kommen später mit JS -->
-          </select>
+                <div class="priority-option">
+                  <input
+                    class="priority-radio"
+                    type="radio"
+                    id="priority-low"
+                    name="priority"
+                    value="low"
+                  />
+                  <label for="priority-low">Low</label>
+                </div>
+              </div>
+            </fieldset>
 
-          <label class="required-label" for="category">Category</label>
-          <select name="category" id="category">
-            <option value="" disabled selected>Select task category</option>
-            <option value="technical-task">Technical Task</option>
-            <option value="user-story">User Story</option>
-          </select>
+            <div class="form-field form-field--assigned">
+              <label for="assigned-to">Assigned to</label>
+              <select
+                class="form-control form-control--select"
+                id="assigned-to"
+                name="assignedTo"
+              >
+                <option value="" disabled selected>
+                  Select contacts to assign
+                </option>
+                <!-- Optionen kommen später mit JS -->
+              </select>
+            </div>
 
-          <label for="subtasks">Subtasks</label>
-          <div class="subtask-input">
-            <input id="subtask" type="text" placeholder="Add new subtask" />
+            <div class="form-field form-field--category">
+              <label class="required-label" for="category">Category</label>
+              <select name="category" id="category">
+                <option value="" disabled selected>Select task category</option>
+                <option value="technical-task">Technical Task</option>
+                <option value="user-story">User Story</option>
+              </select>
+            </div>
 
-            <button type="button">✕</button>
-            <button type="button">✓</button>
+            <div class="form-field form-field--subtasks">
+              <label for="subtask">Subtasks</label>
+
+              <div class="subtask-input">
+                <input id="subtask" type="text" placeholder="Add new subtask" />
+
+                <button type="button">✕</button>
+                <button type="button">✓</button>
+              </div>
+
+              <ul class="subtask-list"></ul>
+            </div>
+
+            <span class="required-hint">
+              <span class="required-marker" aria-hidden="true">*</span>
+              This field is required
+            </span>
           </div>
-
-          <ul class="subtask-list"></ul>
-          <span
-            ><span class="required-marker" aria-hidden="true">*</span>This field
-            is required</span
-          >
-
           <div class="form-actions">
-            <button type="reset">Clear</button>
-            <button type="submit">Create Task</button>
+            <button type="reset" class="form-action form-action--clear">
+              Clear
+            </button>
+            <button type="submit" class="form-action form-action--create">
+              Create Task
+            </button>
           </div>
         </form>
       </main>
