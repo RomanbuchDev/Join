@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "firebase": "^10.0.0"
+    "firebase": "^10.14.1"
   },
   "private": true,
   "description": "Clean-Code-Prüfung für HTML, CSS und JS via GitHub Actions.",
