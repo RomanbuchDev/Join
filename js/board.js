@@ -1,5 +1,14 @@
 let tasksData = [];
 
+/**
+ * Initializes the board view.
+ * Loads all tasks and all contacts first, then renders the tasks into their columns.
+ * Contacts must be loaded before rendering, because the task avatars depend on them.
+ *
+ * @async
+ * @function initBoard
+ * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
+ */
 async function initBoard() {
   await fetchAllTasks();
   await fetchAllContacts();
