@@ -24,10 +24,12 @@ function setupEventListeners() {
   inputPasswordCheck();
 }
 
+
 /** Reagiert auf das Absenden des Login-Formulars. @param {HTMLFormElement} form - Das Login-Formular-Element. */
 function loginEventListener(form) {
   form.addEventListener("submit", handleLoginSubmit);
 }
+
 
 /** Wechselt das Schloss-Icon, je nachdem ob das Passwort-Feld leer ist oder nicht. */
 function inputPasswordCheck() {
@@ -44,6 +46,7 @@ function inputPasswordCheck() {
   });
 }
 
+
 /** Reagiert auf Klicks auf das Sichtbarkeits-Icon. */
 function visibilityEventListener() {
   const inputPasswordCheck = document.getElementById("exampleInputPassword1");
@@ -58,6 +61,7 @@ function visibilityEventListener() {
     visibilityIconSwish(icon, inputPasswordCheck);
   });
 }
+
 
 /** Schaltet zwischen sichtbarem und verstecktem Passwort um (inkl. Icon-Austausch). @param {HTMLImageElement} icon - Das Sichtbarkeits-Icon. @param {HTMLInputElement} inputPasswordCheck - Das Passwort-Eingabefeld. */
 function visibilityIconSwish(icon, inputPasswordCheck) {
@@ -75,6 +79,7 @@ function visibilityIconSwish(icon, inputPasswordCheck) {
   return;
 }
 
+
 /** Verarbeitet das Absenden des Formulars: liest die Werte, validiert sie, startet bei Erfolg den Login. @param {SubmitEvent} event - Das Submit-Event des Formulars. */
 async function handleLoginSubmit(event) {
   event.preventDefault();
@@ -85,6 +90,7 @@ async function handleLoginSubmit(event) {
   document.getElementById("loginBtn").disabled = true;
   await attemptLogin(loginUserData);
 }
+
 
 /** Versucht den Login mit den eingegebenen Daten durchzuführen. @param {Object} loginUserData - Die eingegebenen Formulardaten (Email, Passwort). */
 async function attemptLogin(loginUserData) {
@@ -97,6 +103,7 @@ async function attemptLogin(loginUserData) {
   }
 }
 
+
 /** Reagiert auf Klicks auf den Gast-Login-Button. @param {HTMLButtonElement} formGuest - Der Gast-Login-Button. */
 function guestLoginEventListener(formGuest) {
   formGuest.addEventListener("click", async function (event) {
@@ -107,12 +114,14 @@ function guestLoginEventListener(formGuest) {
   });
 }
 
+
 /** Leitet nach erfolgreichem Login weiter — die Sitzung selbst verwaltet Firebase Auth. */
 function handleLoginSuccess() {
   setTimeout(() => {
     window.location.href = "./html/greeting-page.html";
   }, 1500);
 }
+
 
 /** Zeigt eine Fehlermeldung nach fehlgeschlagenem Login an. */
 function handleLoginError() {
@@ -121,6 +130,7 @@ function handleLoginError() {
   markFieldError("exampleInputEmail1", true);
   markFieldError("exampleInputPassword1", true);
 }
+
 
 /** Prüft, ob die eingegebenen Login-Daten gültig sind, und zeigt ggf. eine Fehlermeldung. @param {Object} loginUserData - Die eingegebenen Formulardaten. @returns {boolean} Ob die Eingaben gültig sind. */
 function isLoginInputValid(loginUserData) {
@@ -131,6 +141,7 @@ function isLoginInputValid(loginUserData) {
   return message === "";
 }
 
+
 /** Prüft, ob das Email-Feld leer oder ungültig ist. @param {string} email - Die eingegebene Email-Adresse. @returns {{isEmpty: boolean, isInvalid: boolean}} Ergebnis der Prüfung. */
 function checkEmailField(email) {
   const isEmpty = email.trim() === "";
@@ -139,12 +150,14 @@ function checkEmailField(email) {
   return { isEmpty, isInvalid };
 }
 
+
 /** Prüft, ob das Passwort-Feld leer ist. @param {string} password - Das eingegebene Passwort. @returns {boolean} Ob das Feld leer ist. */
 function checkPasswordField(password) {
   const isEmpty = password.trim() === "";
   markFieldError("exampleInputPassword1", isEmpty);
   return isEmpty;
 }
+
 
 /** Baut den passenden Fehlertext aus den Email-/Passwort-Prüfungen zusammen. @param {{isEmpty: boolean, isInvalid: boolean}} emailCheck - Ergebnis der Email-Prüfung. @param {boolean} passwordEmpty - Ob das Passwort-Feld leer ist. @returns {string} Die anzuzeigende Fehlermeldung. */
 function getLoginErrorMessage(emailCheck, passwordEmpty) {
@@ -158,6 +171,7 @@ function getLoginErrorMessage(emailCheck, passwordEmpty) {
   return getPasswordErrorMessage(passwordEmpty);
 }
 
+
 /** Baut den Fehlertext für das Email-Feld. @param {{isEmpty: boolean, isInvalid: boolean}} emailCheck - Ergebnis der Email-Prüfung. @returns {string} Fehlertext oder leerer String, wenn kein Fehler vorliegt. */
 function getEmailErrorMessage(emailCheck) {
   if (emailCheck.isEmpty) {
@@ -169,6 +183,7 @@ function getEmailErrorMessage(emailCheck) {
   return "";
 }
 
+
 /** Baut den Fehlertext für das Passwort-Feld. @param {boolean} isEmpty - Ob das Passwort-Feld leer ist. @returns {string} Fehlertext oder leerer String, wenn kein Fehler vorliegt. */
 function getPasswordErrorMessage(isEmpty) {
   if (isEmpty) {
@@ -176,6 +191,7 @@ function getPasswordErrorMessage(isEmpty) {
   }
   return "";
 }
+
 
 /** Setzt oder entfernt die Fehler-Markierung an einem Eingabefeld. @param {string} inputId - Die ID des Eingabefelds. @param {boolean} isEmpty - Ob das Feld als fehlerhaft markiert werden soll. */
 function markFieldError(inputId, isEmpty) {
@@ -187,6 +203,7 @@ function markFieldError(inputId, isEmpty) {
   }
 }
 
+
 /** Liest Email und Passwort aus dem Formular aus. @returns {Object} Die eingegebenen Formulardaten. */
 function getLoginFormValues() {
   const inputEmail = document.getElementById("exampleInputEmail1").value;
@@ -197,6 +214,7 @@ function getLoginFormValues() {
   };
   return loginUserData;
 }
+
 
 /** Setzt Button- und Fehlerzustand zurück, wenn die Seite (erneut) angezeigt wird. */
 function resetLoginFormState() {

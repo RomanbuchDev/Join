@@ -8,6 +8,7 @@ async function initGreeting() {
   greetingUser(user);
 }
 
+
 /** Zeigt die passende Begrüßung (Gast oder mit Namen) an. @param {Object} user - Der eingeloggte User ({ uid, name, email } bzw. Gast-Objekt). */
 function greetingUser(user) {
   if (user.isGuest) {

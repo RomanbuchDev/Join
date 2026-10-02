@@ -6,6 +6,33 @@ const FUNCTION_VALUES = new Set([
   "FunctionExpression",
 ]);
 
+function checkBody(context, node) {
+  node.body.forEach((current, index) => {
+    if (index > 0) {
+      checkPair(context, node.body[index - 1], current);
+    }
+  });
+}
+
+
+function checkPair(context, previous, next) {
+  if (!isFunctionLike(previous) || !isFunctionLike(next)) {
+    return;
+  }
+  ckeckSpacing(context, previous, next);
+}
+
+
+function isFunctionLike(node) {
+  const target = unwrapExport(node);
+  return (
+    target.type === "FunctionDeclaration" ||
+    target.type === "MethodDefinition" ||
+    isFunctionVariable(target)
+  );
+}
+
+
 function unwrapExport(node) {
   return node.declaration || node;
 }
@@ -21,13 +48,26 @@ function isFunctionVariable(node) {
 }
 
 
-function isFunctionLike(node) {
-  const target = unwrapExport(node);
-  return (
-    target.type === "FunctionDeclaration" ||
-    target.type === "MethodDefinition" ||
-    isFunctionVariable(target)
-  );
+function ckeckSpacing(context, previous, next) {
+  const start = firstLeadingNode(context, previous, next);
+  const actual = countBlankLines(previous, start);
+  if (actual !== REQUIRED_BLANK_LINES) {
+    context.report({
+      node: next,
+      messageId: "spacing",
+      data: { actual },
+      fix: buildFix(previous, start),
+    });
+  }
+}
+
+
+function firstLeadingNode(context, previous, next) {
+  const source = context.sourceCode ?? context.getSourceCode();
+  const comments = source
+    .getCommentsBefore(next)
+    .filter((c) => c.loc.start.line > previous.loc.end.line);
+  return comments[0] || next;
 }
 
 
@@ -43,30 +83,6 @@ function buildFix(previous, next) {
     fixer.replaceTextRange([previous.range[1], next.range[0]], whitespace);
 }
 
-
-function checkPair(context, previous, next) {
-  if (!isFunctionLike(previous) || !isFunctionLike(next)) {
-    return;
-  }
-  const actual = countBlankLines(previous, next);
-  if (actual !== REQUIRED_BLANK_LINES) {
-    context.report({
-      node: next,
-      messageId: "spacing",
-      data: { actual },
-      fix: buildFix(previous, next),
-    });
-  }
-}
-
-
-function checkBody(context, node) {
-  node.body.forEach((current, index) => {
-    if (index > 0) {
-      checkPair(context, node.body[index - 1], current);
-    }
-  });
-}
 
 const rule = {
   meta: {

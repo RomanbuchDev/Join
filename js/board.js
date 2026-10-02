@@ -1,5 +1,11 @@
 let tasksData = [];
 
+/**
+ * Initializes the board view.
+ * Loads all tasks and all contacts first, then renders the tasks into their columns.
+ * Contacts must be loaded before rendering, because the task avatars depend on them.
+ * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
+ */
 async function initBoard() {
   await fetchAllTasks();
   await fetchAllContacts();
@@ -7,6 +13,10 @@ async function initBoard() {
 }
 
 
+/**
+ * Fetches all tasks from tasks.json and stores them in tasksData.
+ * @returns {Promise<void>}
+ */
 async function fetchAllTasks() {
   try {
     const response = await fetch("../js/tasks.json");
@@ -18,6 +28,11 @@ async function fetchAllTasks() {
 }
 
 
+/**
+ * Renders all given tasks into their corresponding columns.
+ * @param {Array<Object>} tasksData - The list of task objects to render.
+ * @returns {void}
+ */
 function renderTasks(tasksData) {
   for (let i = 0; i < tasksData.length; i++) {
     const taskID = tasksData[i].id;
@@ -27,6 +42,11 @@ function renderTasks(tasksData) {
 }
 
 
+/**
+ * Renders a single task card into its column, including the progress bar if subtasks exist.
+ * @param {string} taskID - The ID of the task to render.
+ * @returns {void}
+ */
 function renderOneTask(taskID) {
   const {category, title, description, priority, assignedTo, status: columnName, subtasks} 
       = tasksData[tasksData.findIndex(task => task.id === taskID)];
