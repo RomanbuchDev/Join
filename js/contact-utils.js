@@ -11,9 +11,13 @@ const CATEGORY = "contacts";
 
 // Functions:
 
+/**
+ * Gets own account or guest account data and creates object.
+ * @async
+ * @returns {Object} Own account or guest account object.
+ */
 async function getCurrentUserAccount() {
   const currentUserAccount = await window.getCurrentUser();
-  console.log(currentUserAccount);
 
   const isGuestUser = currentUserAccount.isGuest === true;
 
@@ -25,17 +29,13 @@ async function getCurrentUserAccount() {
     isOwnAccount: !isGuestUser,
     isGuest: isGuestUser,
   };
-
-  // Aktueller Stand:
-  // return {
-  //   id: "123",
-  //   name: "Eingeloggter Test-Benutzer",
-  //   email: "test@test.de",
-  //   isOwnAccount: true
-  // };
 }
 
 
+/**
+ * Gets own account or guest account data from local storage.
+ * @param {Object} currentUser - Own account or guest account object. 
+ */
 function getSavedUserData(currentUser) {
   if (currentUser.isGuest === true) {
     const savedGuestData = localStorage.getItem("guest");
@@ -47,6 +47,10 @@ function getSavedUserData(currentUser) {
 }
 
 
+/**
+ * Saves own account or guest account object with shortcut and shortcut color in local array.
+ * @async
+ */
 async function saveOwnAccountData() {
   const currentUser = await getCurrentUserAccount();
 
@@ -54,13 +58,17 @@ async function saveOwnAccountData() {
 
   getSavedUserData(currentUser);
 
-  console.log(myAccount);
   getContactShortcut(myAccount);
   prepareContactColor(myAccount);
   allContacts.push(myAccount);
 }
 
 
+/**
+ * Loads all contacts data from the database.
+ * @async
+ * @returns {Promise<Object>} Contacts data.
+ */
 async function fetchAllContacts() {
   try {
     await window.getCurrentUser();
@@ -77,6 +85,11 @@ async function fetchAllContacts() {
 }
 
 
+/**
+ * Saves all contacts data with ID from database in local array.
+ * @async
+ * @param {Object} responseAsJSON - Object with all contacts data.
+ */
 async function saveContacts(responseAsJSON) {
   allContacts.length = 0;
   const contactIDs = Object.keys(responseAsJSON);
@@ -91,6 +104,10 @@ async function saveContacts(responseAsJSON) {
 }
 
 
+/**
+ * Creates contact shortcut (first letter of first and last name) for every contact.
+ * @param {Object} contact - Object with contact data. 
+ */
 function getContactShortcut(contact) {
   const contactNameParts = contact.name.trim().split(/\s+/);
 
@@ -103,12 +120,21 @@ function getContactShortcut(contact) {
 }
 
 
+/**
+ * Adds the calculated shortcut color to the contact.
+ * @param {Object} contact - Object with contact data. 
+ */
 function prepareContactColor(contact) {
   const shortcutColor = calculateContactIconColor(contact.shortcut);
   contact.shortcutColor = shortcutColor;
 }
 
 
+/**
+ * Calculates the shortcut color with the shortcut letters.
+ * @param {string} contactShortcut - Contact shortcut. 
+ * @returns {string} The RGBA color code for CSS.
+ */
 function calculateContactIconColor(contactShortcut) {
   const correctShortcut = contactShortcut.toUpperCase();
 
@@ -126,6 +152,14 @@ function calculateContactIconColor(contactShortcut) {
 }
 
 
+/**
+ * Performs a general database query (fetch).
+ * @async
+ * @param {string} url - The URL of the database. 
+ * @param {string} method - The HTTP method. 
+ * @param {Object} data - Optional data for request body.  
+ * @returns {Promise<Object>} The answer of the database as JSON.
+ */
 async function databaseRequest(url, method, data = null) {
   const options = {
     method: method,
@@ -137,6 +171,12 @@ async function databaseRequest(url, method, data = null) {
 }
 
 
+/**
+ * Adds contact data to the database.
+ * @async
+ * @param {Object} newContactData - Object with contact data.
+ * @returns {Promise<Object>} The created contact.
+ */
 async function addContactToDatabase(newContactData) {
   try {
     await window.getCurrentUser();
@@ -144,26 +184,16 @@ async function addContactToDatabase(newContactData) {
     const url = `${BASE_URL}/${CATEGORY}.json?auth=${idToken}`;
     showToastMessageContactCreated();
     return await databaseRequest(url, "POST", newContactData);
-
-    // Aktueller Stand:
-    // const response = await fetch(
-    //   `${BASE_URL}/${CATEGORY}.json?auth=${idToken}`,
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(newContactData),
-    //   },
-    // );
-    // showToastMessageContactCreated();
-    // return await response.json();
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }
 }
 
 
+/**
+ * Creates the complete contact object for the database.
+ * @returns {Object} The complete contact object.
+ */
 function getContactDataForDatabase() {
   return {
     name: currentContactData.name,
@@ -175,6 +205,12 @@ function getContactDataForDatabase() {
 }
 
 
+/**
+ * Updates the contact data in the database.
+ * @async
+ * @param {string} contactId - Contact ID number. 
+ * @returns {Promise<Object>} The updated contact data.
+ */
 async function editContactInDatabase(contactId) {
   try {
     await window.getCurrentUser();
@@ -182,26 +218,18 @@ async function editContactInDatabase(contactId) {
     const url = `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
     showToastMessageContactEdited();
     return await databaseRequest(url, "PUT", getContactDataForDatabase());
-
-    // Aktueller Stand:
-    // const response = await fetch(
-    //   `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`,
-    //   {
-    //     method: "PUT",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(getContactDataForDatabase()),
-    //   },
-    // );
-    // showToastMessageContactEdited();
-    // return await response.json();
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }
 }
 
 
+/**
+ * Deletes the contact data in the database.
+ * @async
+ * @param {string} contactId - Contact ID number. 
+ * @returns {Promise<void>}
+ */
 async function deleteContactInDatabase(contactId) {
   try {
     await window.getCurrentUser();
@@ -209,16 +237,6 @@ async function deleteContactInDatabase(contactId) {
     const url = `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
     showToastMessageContactDeleted();
     return await databaseRequest(url, "DELETE");
-
-    // Aktueller Stand:
-    // const response = await fetch(
-    //   `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`,
-    //   {
-    //     method: "DELETE",
-    //   },
-    // );
-    // showToastMessageContactDeleted();
-    // return await response.json();
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }

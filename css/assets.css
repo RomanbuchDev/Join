@@ -16,7 +16,7 @@
     box-shadow 0.1s ease;
   cursor: pointer;
   gap: 0.25em;
-  height: 3em;
+  height: 51px;
   padding: 1em;
 }
 
@@ -127,7 +127,7 @@
 
 @media (width >= 64em) {
   .button-basic {
-    height: 3.5em;
+    height: 56px;
   }
 
   .back-button {

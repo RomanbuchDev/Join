@@ -1,5 +1,11 @@
 // Templates - Contacts page
 
+
+/**
+ * Creates the HTML structure for contacts in the contact list.
+ * @param {Object} contactData - Object with contact data.
+ * @returns {string} The HTML item for the contact.
+ */
 function getContactTemplate(contactData) {
   return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
             <span class="contact-shortcut">${contactData.shortcut}</span>
@@ -11,6 +17,11 @@ function getContactTemplate(contactData) {
 }
 
 
+/**
+ * Creates the HTML structure for the own account or guest account in the contact list.
+ * @param {Object} contactData - Object with contact data.
+ * @returns {string} The HTML item for the own account or guest account.
+ */
 function getOwnContactTemplate(contactData) {
   return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
             <div class="shortcut-wrapper">
@@ -25,6 +36,11 @@ function getOwnContactTemplate(contactData) {
 }
 
 
+/**
+ * Creates the HTML structure for the contact details view.
+ * @param {Object} contactData - Object with contact data.
+ * @returns {string} The HTML item for the contact details view.
+ */
 function getContactDetailsTemplate(contactData) {
   return `<div class="contact-details-header-container">
         <div class="contact-details-title-container">
@@ -68,12 +84,17 @@ function getContactDetailsTemplate(contactData) {
       </div>
 
       <!-- Contact details option menu button -->
-      <button class="button-basic button-primary contact-menu" id="contact-menu-button" onclick="toggleMobileContactOptions()">
+      <button class="button-basic button-primary contact-menu" id="edit-contact-menu-button" onclick="toggleMobileContactOptions()" aria-expanded="false" aria-controls="contact-options" aria-label="Open contact details option menu">
         <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
       </button>`;
 }
 
 
+/**
+ * Creates the HTML structure for the letter category in the contact list.
+ * @param {string} letter - The first letter from the last name of the contact.
+ * @returns {string} The HTML item for the letter category.
+ */
 function getLetterCategoryTemplate(letter) {
   return `<section id="letter-category-${letter}">
         <div>
@@ -86,6 +107,10 @@ function getLetterCategoryTemplate(letter) {
 }
 
 
+/**
+ * Creates the HTML structure for the placeholder of the contact details view.
+ * @returns {string} The HTML item for the placeholder.
+ */
 function getContactDetailsPlaceholderTemplate() {
   return `<div class="contact-details-header-container">
         <div class="contact-details-title-container">
