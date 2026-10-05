@@ -18,9 +18,10 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps-legacy
+          protocol: ftps
           local-dir: "./"
           server-dir: "/"
+          security: loose
           exclude: |
             **/.git*
             **/.git*/**
