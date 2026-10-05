@@ -22,8 +22,7 @@ jobs:
           lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_HOST" -e "
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
-            set ssl:verify-certificate yes;
-            set ssl:ca-file /etc/ssl/certs/ca-certificates.crt;
+            set ssl:verify-certificate no;
             mirror --reverse --verbose \
               --exclude-glob .git/ \
               --exclude-glob .github/ \
