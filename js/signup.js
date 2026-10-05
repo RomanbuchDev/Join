@@ -1,8 +1,11 @@
-/** Startet das Setup, sobald die Seite geladen ist. */
+/**
+ * Startet das Setup, sobald die Seite geladen ist.
+ */
 function init() {
   setupEventListeners();
   updateSignupButtonState();
 }
+
 
 window.addEventListener("pageshow", (event) => {
   if (event.persisted) {
@@ -11,7 +14,10 @@ window.addEventListener("pageshow", (event) => {
   }
 });
 
-/** Registriert alle Event-Listener für die Signup-Seite (Formular-Submit, Sichtbarkeits-Icon, Zustand zurücksetzen). */
+
+/**
+ * Registriert alle Event-Listener für die Signup-Seite (Formular-Submit, Sichtbarkeits-Icon, Zustand zurücksetzen).
+ */
 function setupEventListeners() {
   const form = document.getElementById("signupForm");
   signupEventListener(form);
@@ -21,7 +27,9 @@ function setupEventListeners() {
 }
 
 
-/** Registriert die Sichtbarkeits-Icon-Listener für beide Passwortfelder. */
+/**
+ * Registriert die Sichtbarkeits-Icon-Listener für beide Passwortfelder.
+ */
 function setupPasswordVisibilityListeners() {
   visibilityEventListener("registerPassword", "visibility-icon-password");
   inputPasswordCheck("registerPassword", "visibility-icon-password");
@@ -30,7 +38,9 @@ function setupPasswordVisibilityListeners() {
 }
 
 
-/** Registriert Listener auf allen Pflichtfeldern/der Checkbox, die den Button-Status neu berechnen. */
+/**
+ * Registriert Listener auf allen Pflichtfeldern/der Checkbox, die den Button-Status neu berechnen.
+ */
 function setupButtonStateListeners() {
   const requiredFieldIds = [
     "registerName",
@@ -43,7 +53,11 @@ function setupButtonStateListeners() {
 }
 
 
-/** Hängt einen Listener an ein Element, der den Sign-up-Button-Status neu berechnet. @param {string} elementId @param {string} eventType */
+/**
+ * Hängt einen Listener an ein Element, der den Sign-up-Button-Status neu berechnet.
+ * @param {string} elementId
+ * @param {string} eventType
+ */
 function addButtonStateListener(elementId, eventType) {
   document
     .getElementById(elementId)
@@ -51,13 +65,20 @@ function addButtonStateListener(elementId, eventType) {
 }
 
 
-/** Reagiert auf das Absenden des Signup-Formulars. @param {HTMLFormElement} form */
+/**
+ * Reagiert auf das Absenden des Signup-Formulars.
+ * @param {HTMLFormElement} form
+ */
 function signupEventListener(form) {
   form.addEventListener("submit", handleSignupSubmit);
 }
 
 
-/** Wechselt das Schloss-Icon je nach Inhalt des Passwort-Felds. @param {string} inputId @param {string} iconId */
+/**
+ * Wechselt das Schloss-Icon je nach Inhalt des Passwort-Felds.
+ * @param {string} inputId
+ * @param {string} iconId
+ */
 function inputPasswordCheck(inputId, iconId) {
   const inputPasswordCheck = document.getElementById(inputId);
   const icon = document.getElementById(iconId);
@@ -73,7 +94,11 @@ function inputPasswordCheck(inputId, iconId) {
 }
 
 
-/** Reagiert auf Klicks auf das Sichtbarkeits-Icon. @param {string} inputId @param {string} iconId */
+/**
+ * Reagiert auf Klicks auf das Sichtbarkeits-Icon.
+ * @param {string} inputId
+ * @param {string} iconId
+ */
 function visibilityEventListener(inputId, iconId) {
   const inputPasswordCheck = document.getElementById(inputId);
   const icon = document.getElementById(iconId);
@@ -89,7 +114,12 @@ function visibilityEventListener(inputId, iconId) {
 }
 
 
-/** Schaltet zwischen sichtbarem und verstecktem Passwort um (inkl. Icon-Austausch). @param {HTMLImageElement} icon - Das Sichtbarkeits-Icon. @param {HTMLInputElement} inputPasswordCheck - Das Passwort-Eingabefeld. @param {string} iconId - Die ID des Sichtbarkeits-Icons (zum erneuten Abrufen nach dem Wechsel). */
+/**
+ * Schaltet zwischen sichtbarem und verstecktem Passwort um (inkl. Icon-Austausch).
+ * @param {HTMLImageElement} icon - Das Sichtbarkeits-Icon.
+ * @param {HTMLInputElement} inputPasswordCheck - Das Passwort-Eingabefeld.
+ * @param {string} iconId - Die ID des Sichtbarkeits-Icons (zum erneuten Abrufen nach dem Wechsel).
+ */
 function visibilityIconSwish(icon, inputPasswordCheck, iconId) {
   const iconSrc = icon.getAttribute("src");
   const iconVisibilityOn = "../assets/icons/visibility.svg";
@@ -106,7 +136,10 @@ function visibilityIconSwish(icon, inputPasswordCheck, iconId) {
 }
 
 
-/** Verarbeitet das Absenden des Formulars: liest die Werte, validiert sie, startet bei Erfolg die Registrierung. @param {SubmitEvent} event - Das Submit-Event des Formulars. */
+/**
+ * Verarbeitet das Absenden des Formulars: liest die Werte, validiert sie, startet bei Erfolg die Registrierung.
+ * @param {SubmitEvent} event - Das Submit-Event des Formulars.
+ */
 async function handleSignupSubmit(event) {
   event.preventDefault();
   const signupUserData = getSignupFormValues();
@@ -118,7 +151,10 @@ async function handleSignupSubmit(event) {
 }
 
 
-/** Versucht die Registrierung mit den eingegebenen Daten durchzuführen. @param {Object} signupUserData - Die eingegebenen Formulardaten (Name, Email, Passwort, Passwort-Bestätigung). */
+/**
+ * Versucht die Registrierung mit den eingegebenen Daten durchzuführen.
+ * @param {Object} signupUserData - Die eingegebenen Formulardaten (Name, Email, Passwort, Passwort-Bestätigung).
+ */
 async function attemptSignup(signupUserData) {
   try {
     await registerWithEmail(
@@ -134,7 +170,9 @@ async function attemptSignup(signupUserData) {
 }
 
 
-/** Leitet nach erfolgreicher Registrierung zur Login-Seite weiter (kein Auto-Login). */
+/**
+ * Leitet nach erfolgreicher Registrierung zur Login-Seite weiter (kein Auto-Login).
+ */
 function handleSignupSuccess() {
   document.getElementById("signupToast").classList.add("show");
   setTimeout(() => {
@@ -143,7 +181,11 @@ function handleSignupSuccess() {
 }
 
 
-/** Baut die Fehlermeldung anhand des Firebase-Fehlercodes und markiert das betroffene Feld. @param {Object} error - Der von Firebase Auth geworfene Fehler. @returns {string} Die anzuzeigende Fehlermeldung. */
+/**
+ * Baut die Fehlermeldung anhand des Firebase-Fehlercodes und markiert das betroffene Feld.
+ * @param {Object} error - Der von Firebase Auth geworfene Fehler.
+ * @returns {string} Die anzuzeigende Fehlermeldung.
+ */
 function getSignupServerErrorMessage(error) {
   if (error.code === "auth/email-already-in-use") {
     markFieldError("registerEmail", true);
@@ -156,14 +198,20 @@ function getSignupServerErrorMessage(error) {
 }
 
 
-/** Zeigt eine Fehlermeldung nach fehlgeschlagener Registrierung an. */
+/**
+ * Zeigt eine Fehlermeldung nach fehlgeschlagener Registrierung an.
+ */
 function handleSignupError(error) {
   document.getElementById("signupError").innerText =
     getSignupServerErrorMessage(error);
 }
 
 
-/** Prüft, ob alle Formulardaten gültig sind, und zeigt ggf. eine Fehlermeldung. @param {Object} signupUserData - Die eingegebenen Formulardaten. @returns {boolean} Ob die Eingaben gültig sind. */
+/**
+ * Prüft, ob alle Formulardaten gültig sind, und zeigt ggf. eine Fehlermeldung.
+ * @param {Object} signupUserData - Die eingegebenen Formulardaten.
+ * @returns {boolean} Ob die Eingaben gültig sind.
+ */
 function isSignupInputValid(signupUserData) {
   const checks = getSignupFieldChecks(signupUserData);
   const message = getSignupErrorMessage(checks);
@@ -172,136 +220,10 @@ function isSignupInputValid(signupUserData) {
 }
 
 
-/** Prüft alle Formularfelder einzeln und bündelt die Ergebnisse in einem Objekt. @param {Object} signupUserData - Die eingegebenen Formulardaten. @returns {Object} Die Prüfungsergebnisse aller Felder (nameEmpty, emailCheck, passwordEmpty, confirmCheck, privacyUnchecked). */
-function getSignupFieldChecks(signupUserData) {
-  return {
-    nameEmpty: checkNameField(signupUserData.name),
-    emailCheck: checkEmailField(signupUserData.email),
-    passwordEmpty: checkPasswordField(signupUserData.password),
-    confirmCheck: checkConfirmPasswordField(
-      signupUserData.password,
-      signupUserData.confirmPassword,
-    ),
-    privacyUnchecked: checkPrivacyField(signupUserData.privacyChecked),
-  };
-}
-
-
-/** Prüft, ob das Namensfeld leer ist. @param {string} name @returns {boolean} */
-function checkNameField(name) {
-  const isEmpty = name.trim() === "";
-  markFieldError("registerName", isEmpty);
-  return isEmpty;
-}
-
-
-/** Prüft, ob das Email-Feld leer oder ungültig ist. @param {string} email @returns {{isEmpty: boolean, isInvalid: boolean}} */
-function checkEmailField(email) {
-  const isEmpty = email.trim() === "";
-  const isInvalid = !isEmpty && (!email.includes("@") || !email.includes("."));
-  markFieldError("registerEmail", isEmpty || isInvalid);
-  return { isEmpty, isInvalid };
-}
-
-
-/** Prüft, ob das Passwort-Feld leer ist. @param {string} password @returns {boolean} */
-function checkPasswordField(password) {
-  const isEmpty = password.trim() === "";
-  markFieldError("registerPassword", isEmpty);
-  return isEmpty;
-}
-
-
-/** Prüft, ob die Bestätigung leer ist oder nicht mit dem Passwort übereinstimmt. @param {string} password @param {string} confirmPassword @returns {{isEmpty: boolean, isMismatch: boolean}} */
-function checkConfirmPasswordField(password, confirmPassword) {
-  const isEmpty = confirmPassword.trim() === "";
-  const isMismatch = !isEmpty && confirmPassword !== password;
-  markFieldError("registerConfirmPassword", isEmpty || isMismatch);
-  return { isEmpty, isMismatch };
-}
-
-
-/** Baut den passenden Fehlertext aus den gebündelten Prüfungsergebnissen zusammen. @param {Object} checks - Ergebnis von getSignupFieldChecks() (nameEmpty, emailCheck, passwordEmpty, confirmCheck, privacyUnchecked). @returns {string} Die anzuzeigende Fehlermeldung. */
-function getSignupErrorMessage(checks) {
-  if (areAllSignupFieldsEmpty(checks)) {
-    return "Please fill in all fields.";
-  }
-  const messages = [
-    getNameErrorMessage(checks.nameEmpty),
-    getEmailErrorMessage(checks.emailCheck),
-    getPasswordErrorMessage(checks.passwordEmpty),
-    getConfirmPasswordErrorMessage(checks.confirmCheck),
-    getPrivacyErrorMessage(checks.privacyUnchecked),
-  ];
-  return messages.find((message) => message) || "";
-}
-
-
-/** Prüft, ob Name, Email, Passwort und Bestätigung alle leer sind. @param {Object} checks @returns {boolean} */
-function areAllSignupFieldsEmpty(checks) {
-  return (
-    checks.nameEmpty &&
-    checks.emailCheck.isEmpty &&
-    checks.passwordEmpty &&
-    checks.confirmCheck.isEmpty
-  );
-}
-
-
-/** Baut den Fehlertext für das Namensfeld. @param {boolean} nameEmpty @returns {string} */
-function getNameErrorMessage(nameEmpty) {
-  if (nameEmpty) {
-    return "Please fill in Name field.";
-  }
-  return "";
-}
-
-
-/** Baut den Fehlertext für das Email-Feld. @param {{isEmpty: boolean, isInvalid: boolean}} emailCheck @returns {string} */
-function getEmailErrorMessage(emailCheck) {
-  if (emailCheck.isEmpty) {
-    return "Please fill in Email field.";
-  }
-  if (emailCheck.isInvalid) {
-    return "Please enter a valid email address.";
-  }
-  return "";
-}
-
-
-/** Baut den Fehlertext für das Passwort-Feld. @param {boolean} isEmpty @returns {string} */
-function getPasswordErrorMessage(isEmpty) {
-  if (isEmpty) {
-    return "Please fill in Password field.";
-  }
-  return "";
-}
-
-
-/** Baut den Fehlertext für die Passwort-Bestätigung. @param {{isEmpty: boolean, isMismatch: boolean}} confirmCheck @returns {string} */
-function getConfirmPasswordErrorMessage(confirmCheck) {
-  if (confirmCheck.isEmpty) {
-    return "Please confirm your password.";
-  }
-  if (confirmCheck.isMismatch) {
-    return "Passwords do not match.";
-  }
-  return "";
-}
-
-
-/** Setzt oder entfernt die Fehler-Markierung an einem Eingabefeld. @param {string} inputId @param {boolean} isEmpty */
-function markFieldError(inputId, isEmpty) {
-  const input = document.getElementById(inputId);
-  if (isEmpty) {
-    input.classList.add("input-error");
-  } else {
-    input.classList.remove("input-error");
-  }
-}
-
-
-/** Liest Name, Email, Passwort, Bestätigung und Datenschutz-Checkbox aus dem Formular aus. @returns {Object} */
+/**
+ * Liest Name, Email, Passwort, Bestätigung und Datenschutz-Checkbox aus dem Formular aus.
+ * @returns {Object}
+ */
 function getSignupFormValues() {
   return {
     name: getFieldValue("registerName"),
@@ -313,13 +235,19 @@ function getSignupFormValues() {
 }
 
 
-/** Liest den Wert eines Eingabefelds aus. @param {string} inputId @returns {string} */
+/**
+ * Liest den Wert eines Eingabefelds aus.
+ * @param {string} inputId
+ * @returns {string}
+ */
 function getFieldValue(inputId) {
   return document.getElementById(inputId).value;
 }
 
 
-/** Setzt Button- und Fehlerzustand zurück, wenn die Seite (erneut) angezeigt wird. */
+/**
+ * Setzt Button- und Fehlerzustand zurück, wenn die Seite (erneut) angezeigt wird.
+ */
 function resetSignupFormState() {
   document.getElementById("signup").disabled = false;
   markFieldError("registerName", false);
@@ -331,27 +259,13 @@ function resetSignupFormState() {
 }
 
 
-/** Aktiviert/deaktiviert den Sign-up-Button anhand des Datenschutz-Checkbox-Status. */
+/**
+ * Aktiviert/deaktiviert den Sign-up-Button anhand des Datenschutz-Checkbox-Status.
+ */
 function updateSignupButtonState() {
   const checkboxChecked = document.getElementById("privacyCheck").checked;
   document.getElementById("signup").disabled = !checkboxChecked;
 }
 
-
-/** Prüft, ob die Datenschutz-Checkbox angehakt ist. @param {boolean} isChecked @returns {boolean} */
-function checkPrivacyField(isChecked) {
-  const isUnchecked = !isChecked;
-  markFieldError("privacyCheckField", isUnchecked);
-  return isUnchecked;
-}
-
-
-/** Baut den Fehlertext für die Datenschutz-Checkbox. @param {boolean} isUnchecked @returns {string} */
-function getPrivacyErrorMessage(isUnchecked) {
-  if (isUnchecked) {
-    return "Please accept the privacy policy.";
-  }
-  return "";
-}
 
 init();
