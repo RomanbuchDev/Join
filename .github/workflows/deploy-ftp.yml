@@ -18,12 +18,14 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local_dir: "./deploy"
-          remote_dir: "/"
-          exclude:
-            .git*
-            .github/**
-            node_modules/**
+          local-dir: "./"
+          server-dir: "/"
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
             quality/**
             package.json
             package-lock.json
+            README.md
+            LICENSE.md
