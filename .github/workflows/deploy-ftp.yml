@@ -13,10 +13,17 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Deploy to FTP/FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_HOST }}
-          user: ${{ secrets.FTP_USERNAME }}
+          username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local_dir: "./deploy"
           remote_dir: "/"
+          exclude:
+            .git*
+            .github/**
+            node_modules/**
+            quality/**
+            package.json
+            package-lock.json
