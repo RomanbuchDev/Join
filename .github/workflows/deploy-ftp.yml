@@ -12,22 +12,46 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Deploy to FTP/FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          log-level: verbose
-          local-dir: "./"
-          server-dir: "/"
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            quality/**
-            package.json
-            package-lock.json
-            README.md
-            LICENSE.md
+      # - name: Deploy to FTP/FTPS
+      #   uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+      #   with:
+      #     server: ${{ secrets.FTP_HOST }}
+      #     username: ${{ secrets.FTP_USERNAME }}
+      #     password: ${{ secrets.FTP_PASSWORD }}
+      #     protocol: ftps
+      #     log-level: verbose
+      #     local-dir: "./"
+      #     server-dir: "/"
+      #     exclude: |
+      #       **/.git*
+      #       **/.git*/**
+      #       **/node_modules/**
+      #       quality/**
+      #       package.json
+      #       package-lock.json
+      #       README.md
+      #       LICENSE.md
+
+      - name: Deploy via lftp
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y lftp
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_HOST" -e "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate no;
+            mirror --reverse --verbose \
+              --exclude-glob .git/ \
+              --exclude-glob .github/ \
+              --exclude-glob .gitignore \
+              --exclude-glob node_modules/ \
+              --exclude-glob quality/ \
+              --exclude-glob package.json \
+              --exclude-glob package-lock.json \
+              --exclude-glob README.md \
+              --exclude-glob LICENSE.md \
+              ./ /;
+            quit"
