@@ -12,26 +12,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      # - name: Deploy to FTP/FTPS
-      #   uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-      #   with:
-      #     server: ${{ secrets.FTP_HOST }}
-      #     username: ${{ secrets.FTP_USERNAME }}
-      #     password: ${{ secrets.FTP_PASSWORD }}
-      #     protocol: ftps
-      #     log-level: verbose
-      #     local-dir: "./"
-      #     server-dir: "/"
-      #     exclude: |
-      #       **/.git*
-      #       **/.git*/**
-      #       **/node_modules/**
-      #       quality/**
-      #       package.json
-      #       package-lock.json
-      #       README.md
-      #       LICENSE.md
-
       - name: Deploy via lftp
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
@@ -42,7 +22,7 @@ jobs:
           lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_HOST" -e "
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
-            set ssl:verify-certificate no;
+            set ssl:verify-certificate yes;
             mirror --reverse --verbose \
               --exclude-glob .git/ \
               --exclude-glob .github/ \
