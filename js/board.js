@@ -62,6 +62,12 @@ function renderOneTask(taskID) {
 }
 
 
+/**
+ * Renders a progress bar for a task based on its subtasks.
+ * @param {string} taskID - The ID of the task for which to render the progress bar.
+ * @param {Array<Object>} taskSubtasks - The list of subtasks for the task.
+ * @returns {void}
+ */
 function renderProgressBar(taskID, taskSubtasks) {
   const doneSubtasks = checkDoneSubtasks(taskSubtasks);
   document.getElementById(`progressContainer${taskID}`).innerHTML
