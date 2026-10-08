@@ -251,25 +251,12 @@ button:focus-visible {
   margin-left: -0.5em;
 }
 
-/* Label and AvatarColors: Interim status, final solution with JS */
-.color-label-user-story {
+.category-color-user-story {
   background-color: var(--color-label-user-story);
 }
 
-.color-label-technical-task {
+.category-color-technical-task {
   background-color: var(--color-label-technical-task);
-}
-
-.color-avatar-1 {
-  background-color: var(--color-prio-low);
-}
-
-.color-avatar-2 {
-  background-color: var(--color-prio-medium);
-}
-
-.color-avatar-3 {
-  background-color: var(--color-email);
 }
 
 @media (width >= 64em) {
