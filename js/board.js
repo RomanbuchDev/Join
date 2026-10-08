@@ -1,4 +1,4 @@
-let tasksData = [];
+const tasksData = [];
 
 /**
  * Initializes the board view.
@@ -7,6 +7,7 @@ let tasksData = [];
  * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
  */
 async function initBoard() {
+  await window.getCurrentUser();
   await fetchAllTasks();
   await fetchAllContacts();
   renderTasks(tasksData);
@@ -19,12 +20,22 @@ async function initBoard() {
  */
 async function fetchAllTasks() {
   try {
-    const response = await fetch("../js/tasks.json");
+    const idToken = await window.auth.currentUser.getIdToken();
+    const response = await fetch(`${window.firebaseUrl}/tasks.json?auth=${idToken}`);
     const responseToJson = await response.json();
-    tasksData = responseToJson;
+    storeTasks(responseToJson);
   } catch (error) {
     console.error(error);
   }
+}
+
+
+function storeTasks(tasksObject) {
+  for (const [taskID, taskData] of Object.entries(tasksObject)) {
+    taskData.taskID = taskID;
+    tasksData.push(taskData);
+  } 
+  // console.log("Tasks loaded:", tasksData);
 }
 
 
@@ -35,7 +46,7 @@ async function fetchAllTasks() {
  */
 function renderTasks(tasksData) {
   for (let i = 0; i < tasksData.length; i++) {
-    const taskID = tasksData[i].id;
+    const taskID = tasksData[i].taskID;
     renderOneTask(taskID)
   }
   checkForEmptyColumn()
@@ -48,17 +59,25 @@ function renderTasks(tasksData) {
  * @returns {void}
  */
 function renderOneTask(taskID) {
-  const {category, title, description, priority, assignedTo, status: columnName, subtasks} 
-      = tasksData[tasksData.findIndex(task => task.id === taskID)];
-  const colorLabel = (category == "User Story") ? "color-label-user-story" : "color-label-technical-task";
-  document.getElementById(columnName).innerHTML 
-    += templateTaskCard({taskID, category, colorLabel, title, description, priority});
+  const {cardPlace, category, categoryColor, title, description, priority, subtasks, assignees} = createAndReturnVariablesforTask(taskID);
+  cardPlace.innerHTML += templateTaskCard(taskID, {category, categoryColor}, {title, description, priority});
   if (subtasks && subtasks.length > 0) {
     renderProgressBar(taskID, subtasks);
   } else {
     document.getElementById(`progressContainer${taskID}`).className = "task-progress d-none";
   }
-  renderTaskAvatars(taskID, assignedTo);
+  if (assignees && assignees.length > 0) {
+    renderTaskAssignees(taskID, assignees);
+  }
+}
+
+
+function createAndReturnVariablesforTask(taskID) {
+  const {category, title, description, priority, assignedTo: assignees, status: columnName, subtasks} 
+      = tasksData[tasksData.findIndex(task => task.taskID === taskID)];
+  const categoryColor = (category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
+  const cardPlace = document.getElementById(columnName);
+  return {cardPlace, category, categoryColor, title, description, priority, subtasks, assignees};
 }
 
 
@@ -84,14 +103,14 @@ function checkDoneSubtasks(taskSubtasks) {
 }
 
 
-function renderTaskAvatars(taskID, taskAvatars) {
-  for (let i = 0; i < taskAvatars.length; i++) {
-    const contactID = taskAvatars[i];
+function renderTaskAssignees(taskID, assignees) {
+  for (let i = 0; i < assignees.length; i++) {
+    const contactID = assignees[i];
     const contact = allContacts.find((c) => c.id === contactID);
-    const avatarShortcut = contact.shortcut;
-    const avatarColor = contact.shortcutColor;
-    document.getElementById(`avatarsContainer${taskID}`).innerHTML 
-      += templateTaskAvatar(avatarColor, avatarShortcut);
+    const assigneeShortcut = contact.shortcut;
+    const assigneeColor = contact.shortcutColor;
+    document.getElementById(`assigneesContainer${taskID}`).innerHTML 
+      += templateTaskAssignees(assigneeColor, assigneeShortcut);
   }
 }
 
