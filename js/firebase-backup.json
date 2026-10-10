@@ -1,0 +1,339 @@
+{
+  "contacts": {
+    "-P0qFvs8zfGoK2KNOszq": {
+      "email": "antonm@gmail.com",
+      "name": "Anton Mayer",
+      "phone": "+49 123 4567890",
+      "shortcut": "AM",
+      "shortcutColor": "rgba(40 124 131 / 100%)"
+    },
+    "-P0qG7eK1SbbC3JW2ygi": {
+      "email": "schulz@hotmail.com",
+      "name": "Anja Schulz",
+      "phone": "+49 123 4567890",
+      "shortcut": "AS",
+      "shortcutColor": "rgba(40 166 89 / 100%)"
+    },
+    "-P0qGBUZNnbuS0E7TCPw": {
+      "email": "benedikt@gmail.com",
+      "name": "Benedikt Ziegler",
+      "phone": "+49 123 4567890",
+      "shortcut": "BZ",
+      "shortcutColor": "rgba(47 215 40 / 100%)"
+    },
+    "-P0qGFf5oQqcYLv3D8Pm": {
+      "email": "davidberg@gmail.com",
+      "name": "David Eisenberg",
+      "phone": "+49 123 4567890",
+      "shortcut": "DE",
+      "shortcutColor": "rgba(61 68 187 / 100%)"
+    },
+    "-P0qGJL7d5iBdqYCE0vA": {
+      "email": "eva@gmail.com",
+      "name": "Eva Fischer",
+      "phone": "+49 123 4567890",
+      "shortcut": "EF",
+      "shortcutColor": "rgba(68 75 180 / 100%)"
+    },
+    "-P0qGMckhAKC6RslX_8C": {
+      "email": "emmanuelma@gmail.com",
+      "name": "Emmanuel Mauer",
+      "phone": "+49 123 4567890",
+      "shortcut": "EM",
+      "shortcutColor": "rgba(68 124 131 / 100%)"
+    },
+    "-P0qGPpsc3csxCpMnhWT": {
+      "email": "bauer@gmail.com",
+      "name": "Marcel Bauer",
+      "phone": "+49 123 4567890",
+      "shortcut": "MB",
+      "shortcutColor": "rgba(124 47 208 / 100%)"
+    },
+    "-P0qGTqRTGBHqHBx4f7n": {
+      "email": "wolf@gmail.com",
+      "name": "Tatjana Wolf",
+      "phone": "+49 123 4567890",
+      "shortcut": "TW",
+      "shortcutColor": "rgba(173 194 61 / 100%)"
+    }
+  },
+  "tasks": {
+    "-P1701uUKDiyQHooM3gX": {
+      "assignedTo": [
+        "-P0qGMckhAKC6RslX_8C",
+        "-P0qGPpsc3csxCpMnhWT",
+        "-P0qFvs8zfGoK2KNOszq"
+      ],
+      "category": "User Story",
+      "description": "Build the main page that fetches Pokemon from the PokeAPI and displays them as a scrollable list with a live search input.",
+      "dueDate": "2026-11-15",
+      "position": 0,
+      "priority": "medium",
+      "status": "toDo",
+      "subtasks": [
+        {
+          "done": true,
+          "text": "Fetch first 20 Pokemon from PokeAPI"
+        },
+        {
+          "done": false,
+          "text": "Render Pokemon cards in a grid"
+        },
+        {
+          "done": false,
+          "text": "Implement search input with filtering"
+        }
+      ],
+      "title": "Pokemon List View & Search Bar"
+    },
+    "-P1701zqkHsqGfDUns9V": {
+      "category": "User Story",
+      "description": "Create a detail overlay that opens on card click and shows stats, abilities, and types for the selected Pokemon.",
+      "dueDate": "2026-11-18",
+      "position": 1,
+      "priority": "urgent",
+      "status": "toDo",
+      "subtasks": [
+        {
+          "done": true,
+          "text": "Design overlay layout"
+        },
+        {
+          "done": true,
+          "text": "Fetch detail data by Pokemon ID"
+        },
+        {
+          "done": false,
+          "text": "Display base stats as bar chart"
+        }
+      ],
+      "title": "Pokemon Detail Overlay"
+    },
+    "-P1702-HzqPUuocSfZr6": {
+      "assignedTo": [
+        "-P0qGFf5oQqcYLv3D8Pm"
+      ],
+      "category": "User Story",
+      "description": "Add filter controls so users can narrow the Pokemon list down by type (e.g. fire, water, grass).",
+      "dueDate": "2026-11-20",
+      "position": 0,
+      "priority": "medium",
+      "status": "inProgress",
+      "subtasks": [
+        {
+          "done": false,
+          "text": "Create type filter dropdown"
+        },
+        {
+          "done": false,
+          "text": "Apply filter logic to rendered list"
+        }
+      ],
+      "title": "Type & Stats Filter"
+    },
+    "-P1702-idaIPNzxQd2Zk": {
+      "assignedTo": [
+        "-P0qGJL7d5iBdqYCE0vA",
+        "-P0qGMckhAKC6RslX_8C"
+      ],
+      "category": "User Story",
+      "description": "Allow users to mark Pokemon as favorites and view a separate favorites list persisted in local storage.",
+      "dueDate": "2026-11-22",
+      "position": 2,
+      "priority": "low",
+      "status": "toDo",
+      "subtasks": [
+        {
+          "done": false,
+          "text": "Add favorite toggle button on cards"
+        },
+        {
+          "done": false,
+          "text": "Persist favorites in localStorage"
+        },
+        {
+          "done": false,
+          "text": "Build favorites-only view"
+        },
+        {
+          "done": false,
+          "text": "Sync favorite state on page reload"
+        }
+      ],
+      "title": "Favorites / Bookmark System"
+    },
+    "-P17020BZJNPbmhOEX2X": {
+      "assignedTo": [
+        "-P0qGPpsc3csxCpMnhWT",
+        "-P0qGTqRTGBHqHBx4f7n",
+        "-P0qFvs8zfGoK2KNOszq"
+      ],
+      "category": "User Story",
+      "description": "Show a loading spinner during API calls and add a button to load the next batch of Pokemon.",
+      "dueDate": "2026-11-25",
+      "position": 1,
+      "priority": "medium",
+      "status": "inProgress",
+      "title": "Loading Spinner & Load-More Pagination"
+    },
+    "-P17020fFz9aN5T7eqsq": {
+      "assignedTo": [
+        "-P0qGBUZNnbuS0E7TCPw",
+        "-P0qGFf5oQqcYLv3D8Pm",
+        "-P0qGJL7d5iBdqYCE0vA",
+        "-P0qGMckhAKC6RslX_8C"
+      ],
+      "category": "User Story",
+      "description": "Adapt the list, search bar, and detail overlay so the app is fully usable on mobile screen sizes.",
+      "dueDate": "2026-11-28",
+      "position": 3,
+      "priority": "low",
+      "status": "toDo",
+      "subtasks": [
+        {
+          "done": false,
+          "text": "Adjust grid breakpoints for mobile"
+        },
+        {
+          "done": false,
+          "text": "Make overlay full-screen on small viewports"
+        },
+        {
+          "done": false,
+          "text": "Test on real mobile devices"
+        }
+      ],
+      "title": "Responsive Mobile Layout"
+    },
+    "-P170216DWykCsJB7op4": {
+      "assignedTo": [
+        "-P0qFvs8zfGoK2KNOszq",
+        "-P0qG7eK1SbbC3JW2ygi"
+      ],
+      "category": "Technical Task",
+      "description": "Set up a central fetch service for the PokeAPI and cache already-loaded Pokemon to avoid duplicate requests.",
+      "dueDate": "2026-11-10",
+      "position": 0,
+      "priority": "urgent",
+      "status": "done",
+      "subtasks": [
+        {
+          "done": true,
+          "text": "Create fetch wrapper function"
+        },
+        {
+          "done": true,
+          "text": "Add in-memory cache for requested Pokemon"
+        }
+      ],
+      "title": "PokeAPI Fetch & Data Caching Setup"
+    },
+    "-P17021_6tUw9TlXLZm5": {
+      "assignedTo": [
+        "-P0qGTqRTGBHqHBx4f7n"
+      ],
+      "category": "Technical Task",
+      "description": "Add consistent error handling and a fallback UI message whenever a PokeAPI request fails or times out.",
+      "dueDate": "2026-11-12",
+      "position": 0,
+      "priority": "medium",
+      "status": "inProgress",
+      "title": "Error Handling for API Requests"
+    },
+    "-P17022-OraSrRUkkIRQ": {
+      "assignedTo": [
+        "-P0qGMckhAKC6RslX_8C",
+        "-P0qGPpsc3csxCpMnhWT"
+      ],
+      "category": "Technical Task",
+      "description": "Extract the Pokemon card and detail overlay markup into reusable template functions, following the project's max-14-lines-per-function rule.",
+      "dueDate": "2026-11-14",
+      "position": 2,
+      "priority": "medium",
+      "status": "inProgress",
+      "subtasks": [
+        {
+          "done": true,
+          "text": "Create getPokemonCardTemplate()"
+        },
+        {
+          "done": false,
+          "text": "Create getPokemonDetailTemplate()"
+        },
+        {
+          "done": false,
+          "text": "Split templates into template.js"
+        }
+      ],
+      "title": "Build Reusable Card & Overlay Templates"
+    },
+    "-P17022Rfby8_A79SMeM": {
+      "assignedTo": [
+        "-P0qFvs8zfGoK2KNOszq"
+      ],
+      "category": "Technical Task",
+      "description": "Wire up the existing CI/CD pipeline so the Pokedex build is linted, tested, and deployed automatically on merge to main.",
+      "dueDate": "2026-11-30",
+      "position": 4,
+      "priority": "low",
+      "status": "toDo",
+      "subtasks": [
+        {
+          "done": true,
+          "text": "Verify code-quality workflow passes"
+        },
+        {
+          "done": true,
+          "text": "Configure deploy-ftp.yml exclude list"
+        },
+        {
+          "done": false,
+          "text": "Confirm branch protection rules"
+        }
+      ],
+      "title": "Deploy Project via FTP & GitHub Actions"
+    }
+  },
+  "users": {
+    "Fg1bbzaCrROVZmRVtd0f1UxI8DI3": {
+      "email": "sara.hoffmann@join.de",
+      "name": "Sara Hoffmann"
+    },
+    "S021oOSWvfXh6kumS3OJldOaLhq2": {
+      "email": "alex-sonne@join.de",
+      "name": "alex haus"
+    },
+    "hIr3mdZPchUxHUu0IzJuH3dt3Sh2": {
+      "email": "alex-test@join.de",
+      "name": "alex epp"
+    },
+    "icJMWYmiuBe0FCh2z4ZrzMcCMBF3": {
+      "email": "kjhjhvjhv@dedfjfkj.com",
+      "name": "jkkj"
+    },
+    "jnxmXVgkRxfdqiuc4i0gyVzSYNL2": {
+      "email": "alex-haus@join.de",
+      "name": "alex haus"
+    },
+    "p3RzBmF854Q39sOFsPKenTEQQDW2": {
+      "email": "timo@join.de",
+      "name": "Test Benutzer"
+    },
+    "wnzjQ4PWv0TAI4SmDmS9WRBXstw2": {
+      "email": "alex-mond@join.de",
+      "name": "alex"
+    },
+    "wo51lqCC22VYFc1eBberQgr9SGU2": {
+      "email": "jonas.becker@join.de",
+      "name": "Jonas Becker"
+    },
+    "x5ES19e4NQee6Rq5MLIuBvIKhhU2": {
+      "email": "alex-baum@join.de",
+      "name": "Alex Baum"
+    },
+    "xMM1USwb44X8R62NVQuiMcDMNYS2": {
+      "email": "alex-boss@join.de",
+      "name": "alex"
+    }
+  }
+}
