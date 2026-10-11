@@ -37,9 +37,9 @@ function templateTaskAssignees(assigneeColor, assigneeShortcut) {
 }
 
 
-function templateEmptyColumn(columnName) {
+function templateEmptyColumn(searchInput, columnName) {
   return `
     <div class="empty-board-column d-flex">
-      <p>No tasks ${columnName}</p>
+      <p>No tasks ${searchInput}${columnName}</p>
     </div>`
 }
