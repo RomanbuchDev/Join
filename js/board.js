@@ -1,6 +1,7 @@
 const tasks = [];
 const allFetchedTaskIDs = [];
 let allFetchedTasksAreRendered = true;
+const searchInputfieldRef = document.getElementById("searchInputfield");
 
 /**
  * Initializes the board view.
@@ -12,7 +13,7 @@ async function initBoard() {
   await window.getCurrentUser();
   await fetchAllTasks();
   await fetchAllContacts();
-  renderTasks(allFetchedTaskIDs);
+  renderTasks(allFetchedTaskIDs, searchInput="");
 }
 
 
@@ -47,12 +48,12 @@ function storeTasksInArray(tasksInObject) {
  * @param {Array<Object>} tasks - The list of task objects to render.
  * @returns {void}
  */
-function renderTasks(tasks) {
+function renderTasks(tasks, searchInput) {
   clearAllColumns();
   for (let i = 0; i < tasks.length; i++) {
     renderOneTask(tasks[i])
   }
-  checkForEmptyColumn()
+  checkForEmptyColumn(searchInput)
 }
 
 
@@ -126,13 +127,14 @@ function renderTaskAssignees(taskID, assignees) {
 }
 
 
-function checkForEmptyColumn() {
+function checkForEmptyColumn(searchInput) {
   const columns = document.querySelectorAll(".tasks-section");
   for (let i = 0; i < columns.length; i++) {
     if (!columns[i].innerText) {
       const emptyColumnID = columns[i].id;
       const emptyColumnName = getColumnName(emptyColumnID)
-      document.getElementById(emptyColumnID).innerHTML = templateEmptyColumn(emptyColumnName);
+      document.getElementById(emptyColumnID).innerHTML 
+        = templateEmptyColumn(searchInput, emptyColumnName);
     }
   }
 }
@@ -148,47 +150,45 @@ function getColumnName(columnID) {
     case "awaitFeedback": columnName = "Await feedback";
       break;
     case "done": columnName = "Done";
-      break;
   }
   return columnName;
 }
 
 
-function handleSearchRequest(searchInput) {
-  const trimmedInput = searchInput.trim();
-  const validStatus = searchInputIsValide(trimmedInput);
-  switch (validStatus) {
-    case false:
-      checkForRenderedTasksAndRenderUserFeedback(`Search input "${trimmedInput}" is too short. Minimum length is 3 characters.`);
+function handleSearchRequest() {
+  const trimmedInput = searchInputfieldRef.value.trim();
+  switch (validateSearchInput(trimmedInput)) {
+    case "empty":
+      checkForRenderedTasksAndClearInput();
       break;
-    case true:
+    case "too short":
+      checkForRenderedTasksAndClearInput();
+      renderUserFeedback(`Search input "${trimmedInput}" is too short. Minimum length is 3 characters.`);
+      break;
+    case "valid": 
       processSearch(trimmedInput);
-      break;
   }
 }
 
 
-function searchInputIsValide(trimmedInput) {
-  if (trimmedInput.length < 3) {
-    return false;
+function validateSearchInput(trimmedInput) {
+  switch (true) {
+    case trimmedInput.length === 0:
+      return "empty";
+    case trimmedInput.length < 3:
+      return "too short";
+    case trimmedInput.length >= 3:
+      return "valid";
   }
-  return true;
 }
 
 
-function checkForRenderedTasksAndRenderUserFeedback(message) {
-  checkForRenderedTasks()
-  renderUserFeedback(message)
-}
-
-
-function checkForRenderedTasks() {
-  console.log("start checkForRenderedTasks");
+function checkForRenderedTasksAndClearInput() {
   if (!allFetchedTasksAreRendered) {
-      console.log("continuing checkForRenderedTasks");
-      renderTasks(allFetchedTaskIDs);
-      allFetchedTasksAreRendered = true;
-    }
+    renderTasks(allFetchedTaskIDs, searchInput="");
+    allFetchedTasksAreRendered = true;
+  }
+  searchInputfieldRef.value = "";
 }
 
 
@@ -199,12 +199,15 @@ function renderUserFeedback(message){
 
 function processSearch(trimmedInput) {
   const matchingTasks = findMatchingTasks(trimmedInput);
-  if (matchingTasks.length < 1) {
-    checkForRenderedTasksAndRenderUserFeedback(`No tasks found for input: "${trimmedInput}"`);
-  }
-  else {
-    renderTasks(matchingTasks);
-    allFetchedTasksAreRendered = false;
+  const matching = matchingTasks.length > 0 ? "found" : "not found";
+  switch (matching) {
+    case "not found":
+      checkForRenderedTasksAndClearInput();
+      renderUserFeedback(`No tasks found for input: "${trimmedInput}"`);
+      break;
+    case "found":
+      renderTasks(matchingTasks, searchInput=`with "${trimmedInput}" `);
+      allFetchedTasksAreRendered = false;
   }
 }
 
@@ -219,14 +222,13 @@ function findMatchingTasks(trimmedInput) {
       matchingTasks.push(taskID);
     }
   }
-  console.log("Matching tasks:", matchingTasks);
   return matchingTasks;
 }
 
 
 function doesTaskMatchSearchTerms(sourceString, searchTerms) {
-  for (let j = 0; j < searchTerms.length; j++) {
-    const term = searchTerms[j];
+  for (let i = 0; i < searchTerms.length; i++) {
+    const term = searchTerms[i];
     if (!sourceString.includes(term)) {
       return false;
     }

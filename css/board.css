@@ -122,6 +122,7 @@ button:focus-visible {
 .empty-board-column {
   justify-content: center;
   align-items: center;
+  text-align: center;
   min-height: 3em;
   color: var(--color-gray-168);
   background-color: var(--color-gray-231);
