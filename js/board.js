@@ -1,5 +1,7 @@
-const tasks = [];
-const allFetchedTaskIDs = [];
+const allContacts = [];
+const allFetchedContactsIDs = [];
+const allTasks = [];
+const allFetchedTasksIDs = [];
 let allFetchedTasksAreRendered = true;
 const searchInputfieldRef = document.getElementById("searchInputfield");
 
@@ -11,47 +13,64 @@ const searchInputfieldRef = document.getElementById("searchInputfield");
  */
 async function initBoard() {
   await window.getCurrentUser();
-  await fetchAllTasks();
-  await fetchAllContacts();
-  renderTasks(allFetchedTaskIDs, searchInput="");
+  await fetchAllData("tasks");
+  await fetchAllData("contacts");
+  renderTasks(allFetchedTasksIDs, searchInput="");
 }
 
 
 /**
- * Fetches all tasks from tasks.json and stores them in tasks.
+ * Fetches all data of a specific category from the Firebase database.
+ * @param {string} dataCategory - The category of data to fetch (e.g., "tasks", "contacts").
  * @returns {Promise<void>}
  */
-async function fetchAllTasks() {
+async function fetchAllData(dataCategory) {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
-    const response = await fetch(`${window.firebaseUrl}/tasks.json?auth=${idToken}`);
+    const response = await fetch(`${window.firebaseUrl}/${dataCategory}.json?auth=${idToken}`);
     const responseToJson = await response.json();
-    storeTasksInArray(responseToJson);
+    storeData(dataCategory, responseToJson);
   } catch (error) {
     console.error(error);
   }
 }
 
 
-function storeTasksInArray(tasksInObject) {
-  for (const [taskID, taskData] of Object.entries(tasksInObject)) {
-    allFetchedTaskIDs.push(taskID);
-    taskData.taskID = taskID;
-    tasks.push(taskData);
-  } 
-  console.log("Tasks loaded:", tasks);
+function storeData(dataCategory, dataObject) {
+  switch (dataCategory) {
+    case "tasks":
+      storeDataInArray(dataObject, allFetchedTasksIDs, allTasks);
+      console.log("tasks loaded:", allTasks);
+      break;
+    case "contacts":
+      storeDataInArray(dataObject, allFetchedContactsIDs, allContacts);
+      console.log("contacts loaded:", allContacts);
+      break;
+    default:
+      console.error(`Unknown data category: ${dataCategory}`);
+  }
+}
+
+
+function storeDataInArray(dataObject, targetArrayIDs, targetArray) {
+  for (const [id, data] of Object.entries(dataObject)) {
+    targetArrayIDs.push(id);
+    data.id = id;
+    targetArray.push(data);
+  }
 }
 
 
 /**
  * Renders all given tasks into their corresponding columns.
- * @param {Array<Object>} tasks - The list of task objects to render.
+ * @param {Array<Object>} currentTasksArray - The list of task objects to render.
+ * @param {string} searchInput - The search input to filter tasks.
  * @returns {void}
  */
-function renderTasks(tasks, searchInput) {
+function renderTasks(currentTasksArray, searchInput) {
   clearAllColumns();
-  for (let i = 0; i < tasks.length; i++) {
-    renderOneTask(tasks[i])
+  for (let i = 0; i < currentTasksArray.length; i++) {
+    renderOneTask(currentTasksArray[i])
   }
   checkForEmptyColumn(searchInput)
 }
@@ -86,7 +105,7 @@ function renderOneTask(taskID) {
 
 function createAndReturnVariablesforTask(taskID) {
   const {category, title, description, priority, assignedTo: assignees, status: columnName, subtasks} 
-      = tasks[tasks.findIndex(task => task.taskID === taskID)];
+      = allTasks[allTasks.findIndex(task => task.id === taskID)];
   const categoryColor = (category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
   const cardPlace = document.getElementById(columnName);
   return {cardPlace, category, categoryColor, title, description, priority, subtasks, assignees};
@@ -185,7 +204,7 @@ function validateSearchInput(trimmedInput) {
 
 function checkForRenderedTasksAndClearInput() {
   if (!allFetchedTasksAreRendered) {
-    renderTasks(allFetchedTaskIDs, searchInput="");
+    renderTasks(allFetchedTasksIDs, searchInput="");
     allFetchedTasksAreRendered = true;
   }
   searchInputfieldRef.value = "";
