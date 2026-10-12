@@ -1,11 +1,12 @@
-setTimeout(() => {
-  window.location.href = "./summary.html";
-}, 3000);
+// setTimeout(() => {
+//   window.location.href = "./summary.html";
+// }, 3000);
 
 /** Startet die Begrüßung, sobald der eingeloggte User feststeht. */
 async function initGreeting() {
   const user = await window.getCurrentUser();
   greetingUser(user);
+  initAvatar(user);
 }
 
 
