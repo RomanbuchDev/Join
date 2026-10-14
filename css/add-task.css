@@ -33,6 +33,8 @@
   overflow-y: auto;
   padding-block-end: 10em;
   padding-inline: 1em;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .add-task-layout {
@@ -100,11 +102,30 @@
 
 .form-control {
   width: 100%;
-  font: inherit;
   padding: 0.65em 1em;
   border: 1px solid var(--color-gray-104);
   border-radius: 10px;
   background-color: var(--color-white);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.form-control--select {
+  appearance: none;
+  background-image: url("../assets/icons/drop-arrow.svg");
+  background-repeat: no-repeat;
+  background-position: right 0.75em center;
+  background-size: 1.2em;
+  padding-inline-end: 2em;
+}
+
+.form-control--select:has(.select-placeholder:checked) {
+  color: var(--color-gray-104);
+}
+
+.select-placeholder {
+  color: var(--color-gray-104);
 }
 
 .form-field--description {
@@ -121,8 +142,56 @@
   grid-area: due-date;
 }
 
+#due-date {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  color: var(--color-dark);
+}
+
+#due-date::-webkit-datetime-edit {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-gray-104);
+}
+
 .form-field--priority {
   grid-area: priority;
+  padding-block: 0 0.5em;
+}
+
+.priority-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75em;
+}
+
+.priority-option {
+  min-width: 0;
+}
+
+.priority-option label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25em;
+  padding: 0.75em 0.25em;
+  border: 1px solid var(--color-gray);
+  border-radius: 10px;
+  background-color: var(--color-white);
+  box-shadow: 0 2px 4px var(--color-black-10);
+  cursor: pointer;
+  width: 100%;
+  min-width: 6em;
+}
+
+.priority-option input {
+  position: absolute;
+  opacity: 0;
+}
+
+.priority-option input:checked + label {
+  color: var(--color-white);
 }
 
 .priority-options {
@@ -133,23 +202,18 @@
 
 .priority-option label {
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 0.5em;
   padding: 0.75em;
-  border: 1px solid var(--color-gray);
-  border-radius: 10px;
-  background-color: var(--color-white);
-  cursor: pointer;
 }
 
-.priority-option input {
-  position: absolute;
-  opacity: 0;
+.form-field--priority > legend {
+  margin-block-end: 0.5em;
 }
 
-.priority-option input:checked + label {
-  color: var(--color-white);
+.priority-icon {
+  width: 1em;
+  height: auto;
+  flex-shrink: 0;
 }
 
 .form-field--assigned {
@@ -162,4 +226,61 @@
 
 .form-field--subtasks {
   grid-area: subtasks;
+}
+
+.subtask-input {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  padding-inline: 1em;
+
+  border: 1px solid var(--color-gray-104);
+  border-radius: 10px;
+  background-color: var(--color-white);
+}
+
+.subtask-input input {
+  flex: 1;
+  min-width: 0;
+
+  font: inherit;
+  padding-block: 0.65em;
+
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+}
+
+.subtask-input button {
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.subtask-input button:first-of-type {
+  border-inline-end: 1px solid var(--color-gray-209);
+}
+
+.priority-option label {
+  gap: 0.25em;
+}
+
+.priority-radio[value="urgent"]:checked + label {
+  background-color: var(--color-prio-urgent);
+  color: var(--color-white);
+}
+
+.priority-radio[value="medium"]:checked + label {
+  background-color: var(--color-prio-medium);
+  color: var(--color-white);
+}
+
+.priority-radio[value="low"]:checked + label {
+  background-color: var(--color-prio-low);
+  color: var(--color-white);
+}
+
+.required-marker {
+  color: var(--color-error);
 }
