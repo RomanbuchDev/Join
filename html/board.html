@@ -17,7 +17,7 @@
     <script type="module" src="../script.js"></script>
     <script src="../js/login-status.js" defer></script>
     <script src="../js/board-templates.js" defer></script>
-    <script src="../js/contact-utils.js" defer></script>
+    <!-- <script src="../js/contact-utils.js" defer></script> -->
     <script src="../js/board.js" defer></script>
     <script src="../js/board-cardmovement.js" defer></script>
 
@@ -67,13 +67,14 @@
           <section class="find-addtask-container d-flex">
             <div class="find-container d-flex">
               <input
-                id="ID_find-task"
+                id="searchInputfield"
                 class="find-input-field"
                 type="text"
                 placeholder="Find Task"
                 aria-label="Search tasks"
               />
               <button
+                onclick="handleSearchRequest()"
                 class="find-button button-reset"
                 type="button"
                 aria-label="Submit search"
