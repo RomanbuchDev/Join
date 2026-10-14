@@ -1,7 +1,7 @@
 /*  ====================================================================================================
     CONTACTS.CSS - CONTACTS PAGE - MOBILE VERSION (min-width: 320px)
     ====================================================================================================
-    1. STANDARDS (only for testing)
+    1. STANDARDS (HTML, body, titles)
     2. MAIN - CONTACT LIST (Contact categories, contacts)
     3. OTHER (Desktop responsive)
     ==================================================================================================== */
@@ -198,43 +198,7 @@ body .user-menu-dropdown {
   display: none;
 }
 
-/* No connection to database */
-
-.connection-error-database-container {
-  background-color: var(--color-white);
-  border: none;
-  border-radius: 30px;
-  box-shadow: 0 0 4px var(--color-black-40);
-  contain: paint layout;
-  z-index: 200;
-  margin: auto;
-  padding: 1.875em 1.5em;
-  width: calc(100% - 28px);
-  max-width: 396px;
-  max-height: calc(100dvh - 160px);
-}
-
-.connection-error-database-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1em;
-}
-
-.connection-error-database-button-container {
-  display: flex;
-  justify-content: center;
-  gap: 1.25em;
-  width: 100%;
-  padding-inline: 1.5em;
-}
-
-.connection-error-database-button {
-  min-width: 100px;
-}
-
-/* Logged-in user */
+/* ##### Logged-in user ##### */
 
 .shortcut-wrapper {
   position: relative;

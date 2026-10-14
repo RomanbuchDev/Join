@@ -5,26 +5,14 @@
 const contactList = document.getElementById("contact-list");
 const contactDetails = document.getElementById("contact-details");
 const contactOptionMenu = document.getElementById("contact-options");
-const contactOptionMenuOverlay = document.getElementById(
-  "contact-options-overlay",
-);
+const contactOptionMenuOverlay = document.getElementById("contact-options-overlay");
 const mainView = document.getElementById("main-view");
-const dialogBoxDeleteQuestion = document.getElementById(
-  "delete-question-dialog",
-);
-const messageContactDeleted = document.getElementById(
-  "toast-message-contact-deleted",
-);
-const messageOwnAccountNoDelete = document.getElementById(
-  "toast-message-own-account-no-delete",
-);
-const dialogBoxConnectionErrorDatabase = document.getElementById(
-  "connection-error-database-dialog",
-);
+const dialogBoxDeleteQuestion = document.getElementById("delete-question-dialog");
+const messageContactDeleted = document.getElementById("toast-message-contact-deleted");
+const messageOwnAccountNoDelete = document.getElementById("toast-message-own-account-no-delete");
 
 let currentContactData;
 let lastScrollPosition = 0;
-
 
 // Functions:
 
@@ -42,9 +30,7 @@ async function init() {
 }
 
 
-/**
- * Saves the last scroll position when changing the view from contact list to contact details (mobile).
- */
+/** Saves the last scroll position when changing the view from contact list to contact details (mobile). */
 function lastPositionAfterWebsiteLoading() {
   if (mainView) {
     requestAnimationFrame(() => {
@@ -59,14 +45,12 @@ function lastPositionAfterWebsiteLoading() {
 
 /**
  * Creates contacts and own account in the contact list. The contact list is organized by the first letter of the last name. The contacts and own account are assigned to the corresponding letter.
- * @param {string} letter - All letters from all contact last names. 
- * @param {Object} contact - Contact objects. 
- * @param {string} lastNameLetter - The first letter of every contact last name. 
+ * @param {string} letter - All letters from all contact last names.
+ * @param {Object} contact - Contact objects.
+ * @param {string} lastNameLetter - The first letter of every contact last name.
  */
 function assignAndCreateContacts(letter, contact, lastNameLetter) {
-  const contactCategoryGrid = document.getElementById(
-    "contact-grid-" + lastNameLetter,
-  );
+  const contactCategoryGrid = document.getElementById("contact-grid-" + lastNameLetter);
 
   if (lastNameLetter === letter) {
     if (contact.isOwnAccount || contact.isGuest) {
@@ -76,6 +60,7 @@ function assignAndCreateContacts(letter, contact, lastNameLetter) {
     }
   }
 }
+
 
 /**
  * Saves the first letter of every last name from the database.
@@ -124,7 +109,7 @@ function sortAlphabetList(alphabetList) {
 
 /**
  * Sets the calculated color code to every contact ID.
- * @param {HTMLButtonElement} contactID - The contact button elements for every contact.   
+ * @param {HTMLButtonElement} contactID - The contact button elements for every contact.  
  * @param {string} shortcutColor - The RGBA color string.  
  */
 function setContactIconColor(contactID, shortcutColor) {
@@ -180,7 +165,7 @@ async function renderContactList() {
 
 /**
  * Creates the shortcut (first letter of first and last name) of every contact.
- * @param {string} name - The name of every contact. 
+ * @param {string} name - The name of every contact.
  * @returns {string} Contact shortcut.
  */
 function createContactShortcut(name) {
@@ -196,8 +181,8 @@ function createContactShortcut(name) {
 
 
 /**
- * Changes name font color and element background color of the contact after clicking (desktop). 
- * @param {string} contactID - Contact ID number. 
+ * Changes name font color and element background color of the contact after clicking (desktop).
+ * @param {string} contactID - Contact ID number.
  */
 function highlightActivateContact(contactID) {
   const contactCards = document.querySelectorAll(".contact-card");
@@ -213,9 +198,7 @@ function highlightActivateContact(contactID) {
 }
 
 
-/**
- * Shows contact details animation when clicking on a contact in contact list (desktop).
- */
+/** Shows contact details animation when clicking on a contact in contact list (desktop). */
 function showContactDetailsDesktopAnimation() {
   setTimeout(() => {
     contactDetails.classList.add("show-animation");
@@ -235,9 +218,7 @@ function renderContactDetails(contactID) {
 
   contactDetails.innerHTML = contactDetailsData;
 
-  const contactShortcutID = document.getElementById(
-    `contact-details-shortcut-${contact.id}`,
-  );
+  const contactShortcutID = document.getElementById(`contact-details-shortcut-${contact.id}`);
 
   const shortcutColor = calculateContactIconColor(shortcut);
   setContactIconColor(contactShortcutID, shortcutColor);
@@ -262,9 +243,7 @@ function showContactDetails(contactID) {
 }
 
 
-/**
- * Changes the view back from contact details to contact list at the last scroll position (desktop).
- */
+/** Changes the view back from contact details to contact list at the last scroll position (desktop). */
 function backToContactList() {
   toggleContactPageView(contactList, contactDetails);
 
@@ -277,7 +256,7 @@ function backToContactList() {
 
 /**
  * Toggles the contact page view. Shows contact list and hide contact details (mobile).
- * @param {HTMLDivElement|null} show - Contact list DIV element. 
+ * @param {HTMLDivElement|null} show - Contact list DIV element.
  * @param {HTMLElement|null} hide - Contact details ASIDE element.
  */
 function toggleContactPageView(show, hide) {
@@ -287,25 +266,22 @@ function toggleContactPageView(show, hide) {
 }
 
 
-/**
- * Shows the contact options menu by clicking on the contact option button in contact details view (mobile).
- */
-function toggleMobileContactOptions() {
+/** Shows the contact options menu by clicking on the contact option button in contact details view (mobile). */
+function showMobileContactOptions() {
   const contactOptionMenuButton = document.getElementById("edit-contact-menu-button");
   const editButton = contactOptionMenu.querySelector(".option-button");
 
   if (contactOptionMenu && contactOptionMenuOverlay) {
     contactOptionMenu.classList.add("show");
     contactOptionMenuOverlay.classList.add("show");
-    if (contactOptionMenuButton) contactOptionMenuButton.setAttribute("aria-expanded", "true");
+    if (contactOptionMenuButton)
+      contactOptionMenuButton.setAttribute("aria-expanded", "true");
     if (editButton) editButton.focus();
   }
 }
 
 
-/**
- * Closes the contact options menu by clicking on the background of the overlay in contact details view (mobile).
- */
+/** Closes the contact options menu by clicking on the background of the overlay in contact details view (mobile). */
 function closeMobileContactOptions() {
   const contactOptionMenuButton = document.getElementById("edit-contact-menu-button");
 
@@ -319,12 +295,13 @@ function closeMobileContactOptions() {
 }
 
 
-/**
- * Closes the contact options menu by pressing the escape key in contact details view (mobile).
- */
+/** Closes the contact options menu by pressing the escape key in contact details view (mobile). */
 function closeMobileContactOptionsEscapeKey() {
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && contactOptionMenu.classList.contains("show")) {
+    if (
+      event.key === "Escape" &&
+      contactOptionMenu.classList.contains("show")
+    ) {
       closeMobileContactOptions();
     }
   });
@@ -347,9 +324,7 @@ function handleContactFormSubmit(event) {
 }
 
 
-/**
- * Renders the contact details placeholder into the HTML container (desktop).
- */
+/** Renders the contact details placeholder into the HTML container (desktop). */
 function renderContactDetailsDesktopPlaceholder() {
   if (window.innerWidth >= 1024) {
     const contactDetailsPlaceholder = getContactDetailsPlaceholderTemplate();
@@ -358,38 +333,33 @@ function renderContactDetailsDesktopPlaceholder() {
 }
 
 
-/**
- * Shows and hides the toast message that the own account cannot be deleted.
- */
-function showToastMessageOwnAccountNoDelete() {
-  messageOwnAccountNoDelete.classList.add("show");
-  dialogBox.close();
-
-  setTimeout(() => {
-    messageOwnAccountNoDelete.classList.remove("show");
-  }, 3000);
-}
-
-
-/**
- * Closes the dialog window showing the database connection error.
- */
+/** Closes the dialog window showing the database connection error. */
 function closeDialogConnectionErrorDatabase() {
-  dialogBoxConnectionErrorDatabase.close();
+  const dialogBoxConnectionErrorDatabase = document.getElementById("connection-error-database-dialog");
+
+  if (dialogBoxConnectionErrorDatabase) {
+    dialogBoxConnectionErrorDatabase.remove();
+  }
 }
 
 
-/**
- * Reloads the page.
- */
+/** Reloads the page. */
 function reloadPage() {
   window.location.reload();
 }
 
 
-/**
- * Opens the dialog window showing the database connection error.
- */
+/** Opens the dialog window showing the database connection error. */
 function openDialogConnectionErrorDatabase() {
-  dialogBoxConnectionErrorDatabase.showModal();
+  const openErrorMessage = document.getElementById("connection-error-database-dialog");
+  if (openErrorMessage) return;
+
+  const errorMessage = getConnectionErrorDatabaseTemplate();
+  document.body.insertAdjacentHTML("beforeend", errorMessage);
+
+  const dialogBoxConnectionErrorDatabase = document.getElementById("connection-error-database-dialog");
+
+  if (dialogBoxConnectionErrorDatabase) {
+    dialogBoxConnectionErrorDatabase.showModal();
+  }
 }

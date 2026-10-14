@@ -143,12 +143,9 @@
   opacity: 1;
 }
 
-.toast-own-account-no-delete.show {
-  text-align: center;
-  bottom: 200px;
-}
+/* ##### Toast message - No delete of own account */
 
-.toast-own-account-no-delete {
+.toast-message-own-account-no-delete {
   background-color: rgb(205 80 0 / 100%);
 }
 

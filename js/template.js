@@ -1,6 +1,5 @@
 // Templates - Contacts page
 
-
 /**
  * Creates the HTML structure for contacts in the contact list.
  * @param {Object} contactData - Object with contact data.
@@ -84,7 +83,7 @@ function getContactDetailsTemplate(contactData) {
       </div>
 
       <!-- Contact details option menu button -->
-      <button class="button-basic button-primary contact-menu" id="edit-contact-menu-button" onclick="toggleMobileContactOptions()" aria-expanded="false" aria-controls="contact-options" aria-label="Open contact details option menu">
+      <button class="button-basic button-primary contact-menu" id="edit-contact-menu-button" onclick="showMobileContactOptions()" aria-expanded="false" aria-controls="contact-options" aria-label="Open contact details option menu">
         <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
       </button>`;
 }
@@ -117,4 +116,48 @@ function getContactDetailsPlaceholderTemplate() {
           <span class="contact-details-title">Contacts</span>
           <span class="contact-details-subtitle">Better with a team</span>
         </div>`;
+}
+
+
+/**
+ * Creates the HTML structure for the database connection error dialog.
+ * @returns {string} The HTML item for the dialog.
+ */
+function getConnectionErrorDatabaseTemplate() {
+  return `<dialog
+      class="connection-error-database-container"
+      id="connection-error-database-dialog"
+      role="alertdialog"
+      aria-labelledby="connection-error-database-title"
+      aria-describedby="connection-error-database-text"
+    >
+      <div class="connection-error-database-content">
+        <h4 id="connection-error-database-title">Connection error</h4>
+        <p id="connection-error-database-text">
+          No connection to the database. Please try again or check your internet
+          connection.
+        </p>
+        <div class="connection-error-database-button-container">
+          <!-- Close button -->
+          <button
+            type="button"
+            class="button-basic button-secondary connection-error-database-button"
+            id="connection-error-database-close-button"
+            onclick="closeDialogConnectionErrorDatabase()"
+          >
+            Close
+          </button>
+          <!-- Reload button -->
+          <button
+            type="button"
+            class="button-basic button-primary connection-error-database-button"
+            id="connection-error-database-retry-button"
+            onclick="reloadPage()"
+            autofocus
+          >
+            Reload
+          </button>
+        </div>
+      </div>
+    </dialog>`;
 }

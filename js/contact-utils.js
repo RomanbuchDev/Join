@@ -3,11 +3,9 @@
 // Variables:
 
 const allContacts = [];
-let myAccount = null;
-
-const BASE_URL =
-  "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app";
 const CATEGORY = "contacts";
+
+let myAccount = null;
 
 // Functions:
 
@@ -34,7 +32,7 @@ async function getCurrentUserAccount() {
 
 /**
  * Gets own account or guest account data from local storage.
- * @param {Object} currentUser - Own account or guest account object. 
+ * @param {Object} currentUser - Own account or guest account object.
  */
 function getSavedUserData(currentUser) {
   if (currentUser.isGuest === true) {
@@ -73,9 +71,7 @@ async function fetchAllContacts() {
   try {
     await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
-    const response = await fetch(
-      `${BASE_URL}/${CATEGORY}.json?auth=${idToken}`,
-    );
+    const response = await fetch(`${window.firebaseUrl}/${CATEGORY}.json?auth=${idToken}`);
 
     const responseAsJSON = await response.json();
     return saveContacts(responseAsJSON);
@@ -106,7 +102,7 @@ async function saveContacts(responseAsJSON) {
 
 /**
  * Creates contact shortcut (first letter of first and last name) for every contact.
- * @param {Object} contact - Object with contact data. 
+ * @param {Object} contact - Object with contact data.
  */
 function getContactShortcut(contact) {
   const contactNameParts = contact.name.trim().split(/\s+/);
@@ -122,7 +118,7 @@ function getContactShortcut(contact) {
 
 /**
  * Adds the calculated shortcut color to the contact.
- * @param {Object} contact - Object with contact data. 
+ * @param {Object} contact - Object with contact data.
  */
 function prepareContactColor(contact) {
   const shortcutColor = calculateContactIconColor(contact.shortcut);
@@ -132,7 +128,7 @@ function prepareContactColor(contact) {
 
 /**
  * Calculates the shortcut color with the shortcut letters.
- * @param {string} contactShortcut - Contact shortcut. 
+ * @param {string} contactShortcut - Contact shortcut.
  * @returns {string} The RGBA color code for CSS.
  */
 function calculateContactIconColor(contactShortcut) {
@@ -155,8 +151,8 @@ function calculateContactIconColor(contactShortcut) {
 /**
  * Performs a general database query (fetch).
  * @async
- * @param {string} url - The URL of the database. 
- * @param {string} method - The HTTP method. 
+ * @param {string} url - The URL of the database.
+ * @param {string} method - The HTTP method.
  * @param {Object} data - Optional data for request body.  
  * @returns {Promise<Object>} The answer of the database as JSON.
  */
@@ -164,7 +160,7 @@ async function databaseRequest(url, method, data = null) {
   const options = {
     method: method,
     headers: { "Content-Type": "application/json" },
-    ...(data && { body: JSON.stringify(data) })
+    ...(data && { body: JSON.stringify(data) }),
   };
   const response = await fetch(url, options);
   return response.json();
@@ -181,8 +177,9 @@ async function addContactToDatabase(newContactData) {
   try {
     await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
-    const url = `${BASE_URL}/${CATEGORY}.json?auth=${idToken}`;
-    showToastMessageContactCreated();
+    const url = `${window.firebaseUrl}/${CATEGORY}.json?auth=${idToken}`;
+    // showToastMessageContactCreated();
+    showToastMessage("Contact successfully created", "toast-message-new");
     return await databaseRequest(url, "POST", newContactData);
   } catch (error) {
     openDialogConnectionErrorDatabase();
@@ -208,15 +205,16 @@ function getContactDataForDatabase() {
 /**
  * Updates the contact data in the database.
  * @async
- * @param {string} contactId - Contact ID number. 
+ * @param {string} contactId - Contact ID number.
  * @returns {Promise<Object>} The updated contact data.
  */
 async function editContactInDatabase(contactId) {
   try {
     await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
-    const url = `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
-    showToastMessageContactEdited();
+    const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
+    // showToastMessageContactEdited();
+    showToastMessage("Contact successfully edited", "toast-message-edit");
     return await databaseRequest(url, "PUT", getContactDataForDatabase());
   } catch (error) {
     openDialogConnectionErrorDatabase();
@@ -227,17 +225,48 @@ async function editContactInDatabase(contactId) {
 /**
  * Deletes the contact data in the database.
  * @async
- * @param {string} contactId - Contact ID number. 
+ * @param {string} contactId - Contact ID number.
  * @returns {Promise<void>}
  */
 async function deleteContactInDatabase(contactId) {
   try {
     await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
-    const url = `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
-    showToastMessageContactDeleted();
+    const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
+    // showToastMessageContactDeleted();
+    showToastMessage("Contact successfully deleted", "toast-message-delete");
     return await databaseRequest(url, "DELETE");
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }
+}
+
+
+
+
+
+
+
+// Toast Message NEU
+
+const toastMessage = document.getElementById("toast-message");
+
+let toastMessageTime;
+
+
+
+function showToastMessage(text, statusClass) {
+  if (toastMessageTime) clearTimeout(toastMessageTime);
+  toastMessage.className = "toast-message";
+
+  toastMessage.textContent = text;
+  toastMessage.classList.add("show", statusClass);
+
+  toastMessageTime = setTimeout(() => {
+    toastMessage.classList.remove("show");
+    toastMessage.addEventListener("transitionend", function toastMessageTransitionEnd() {
+      toastMessage.classList.remove(statusClass);
+      toastMessage.removeEventListener("transitionend", toastMessageTransitionEnd);
+  });
+  }, 3000);
 }

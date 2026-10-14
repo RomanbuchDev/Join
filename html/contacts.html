@@ -28,10 +28,9 @@
     <script src="../js/contacts-dialog.js" defer></script>
     <script src="../js/contacts.js" defer></script>
   </head>
-
   <body onload="init()" class="main-page" id="page">
     <!-- Header -->
-    <header class="main-header">
+    <header class="main-header" aria-label="Main page">
       <a class="main-header-logo" href=""
         ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
       /></a>
@@ -183,7 +182,7 @@
       </ul>
     </nav>
 
-    <!-- Dialog window to add or edit contact -->
+    <!-- Dialog window to add or edit contacts -->
     <dialog class="contact-form-container" id="contacts-dialog">
       <form>
         <!-- Dialog header -->
@@ -217,7 +216,6 @@
             />
           </div>
         </header>
-
         <!-- Dialog main -->
         <div class="contact-form-main-wrapper">
           <div class="contact-form-main-container">
@@ -226,6 +224,7 @@
                 type="text"
                 placeholder="Name"
                 id="input-contact-name-dialog"
+                maxlength="21"
                 aria-invalid="false"
                 aria-describedby="error-message-name"
               />
@@ -240,6 +239,7 @@
                 type="text"
                 placeholder="Email"
                 id="input-contact-email-dialog"
+                maxlength="41"
                 aria-invalid="false"
                 aria-describedby="error-message-email"
               />
@@ -254,6 +254,7 @@
                 type="tel"
                 placeholder="Phone"
                 id="input-contact-phone-dialog"
+                maxlength="21"
                 aria-invalid="false"
                 aria-describedby="error-message-phone"
               />
@@ -272,11 +273,11 @@
                 >Please enter a valid email address.</span
               >
               <span class="dialog-error-message" id="error-message-phone"
-                >Only numbers and the + sign are allowed. Please try again.</span
+                >Only numbers and the + sign are allowed. Please try
+                again.</span
               >
             </div>
           </div>
-
           <!-- Dialog footer -->
           <footer class="contact-form-footer">
             <!-- Cancel button -->
@@ -364,74 +365,7 @@
       </form>
     </dialog>
 
-    <!-- Dialog for connection error database -->
-    <dialog
-      class="connection-error-database-container"
-      id="connection-error-database-dialog"
-      role="alertdialog"
-      aria-labelledby="connection-error-database-title"
-      aria-describedby="connection-error-database-text"
-    >
-      <div class="connection-error-database-content">
-        <h4 id="connection-error-database-title">Connection error</h4>
-        <p id="connection-error-database-text">
-          No connection to the database. Please try again or check your internet
-          connection.
-        </p>
-        <div class="connection-error-database-button-container">
-          <!-- Close button -->
-          <button
-            type="button"
-            class="button-basic button-secondary connection-error-database-button"
-            id="connection-error-database-close-button"
-            onclick="closeDialogConnectionErrorDatabase()"
-          >
-            Close
-          </button>
-          <!-- Reload button -->
-          <button
-            type="button"
-            class="button-basic button-primary connection-error-database-button"
-            id="connection-error-database-retry-button"
-            onclick="reloadPage()"
-            autofocus
-          >
-            Reload
-          </button>
-        </div>
-      </div>
-    </dialog>
-
-    <!-- Dialog toast message - Contact successfully created -->
-    <div
-      class="toast-message toast-contact-created"
-      id="toast-message-contact-created"
-    >
-      Contact successfully created
-    </div>
-
-    <!-- Dialog toast message - Contact successfully edited -->
-    <div
-      class="toast-message toast-contact-edited"
-      id="toast-message-contact-edited"
-    >
-      Contact successfully edited
-    </div>
-
-    <!-- Dialog toast message - Contact successfully deleted -->
-    <div
-      class="toast-message toast-contact-deleted"
-      id="toast-message-contact-deleted"
-    >
-      Contact successfully deleted
-    </div>
-
-    <!-- Contact list toast message - You cannot delete your own account -->
-    <div
-      class="toast-message toast-own-account-no-delete"
-      id="toast-message-own-account-no-delete"
-    >
-      Cannot delete own account
-    </div>
+    <!-- Toast messages -->
+    <div class="toast-message" id="toast-message"></div>
   </body>
 </html>
