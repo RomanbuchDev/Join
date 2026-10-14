@@ -178,7 +178,6 @@ async function addContactToDatabase(newContactData) {
     await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
     const url = `${window.firebaseUrl}/${CATEGORY}.json?auth=${idToken}`;
-    // showToastMessageContactCreated();
     showToastMessage("Contact successfully created", "toast-message-new");
     return await databaseRequest(url, "POST", newContactData);
   } catch (error) {
@@ -213,7 +212,6 @@ async function editContactInDatabase(contactId) {
     await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
     const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
-    // showToastMessageContactEdited();
     showToastMessage("Contact successfully edited", "toast-message-edit");
     return await databaseRequest(url, "PUT", getContactDataForDatabase());
   } catch (error) {
@@ -233,7 +231,6 @@ async function deleteContactInDatabase(contactId) {
     await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
     const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
-    // showToastMessageContactDeleted();
     showToastMessage("Contact successfully deleted", "toast-message-delete");
     return await databaseRequest(url, "DELETE");
   } catch (error) {
