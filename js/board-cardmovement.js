@@ -8,6 +8,16 @@ let activeTasksSection = null;
 const taskSections = document.querySelectorAll(".tasks-section");
 
 
+function initTaskSectionDragScroll() {
+  taskSections.forEach((section) => {
+    section.addEventListener("mousedown", handleDragStart);
+    section.addEventListener("mouseleave", handleDragEnd);
+    section.addEventListener("mouseup", handleDragEnd);
+    section.addEventListener("mousemove", handleDragMove);
+  });
+}
+
+
 function handleDragStart(event) {
   activeTasksSection = event.currentTarget;
   isDragging = true;
@@ -35,15 +45,6 @@ function handleDragMove(event) {
   activeTasksSection.scrollLeft = dragScrollLeft - walk;
 }
 
-
-function initTaskSectionDragScroll() {
-  taskSections.forEach((section) => {
-    section.addEventListener("mousedown", handleDragStart);
-    section.addEventListener("mouseleave", handleDragEnd);
-    section.addEventListener("mouseup", handleDragEnd);
-    section.addEventListener("mousemove", handleDragMove);
-  });
-}
 
 
 initTaskSectionDragScroll();
