@@ -239,17 +239,11 @@ async function deleteContactInDatabase(contactId) {
 }
 
 
-
-
-
-
-
 // Toast Message NEU
 
 const toastMessage = document.getElementById("toast-message");
 
 let toastMessageTime;
-
 
 
 function showToastMessage(text, statusClass) {
