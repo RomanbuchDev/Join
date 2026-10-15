@@ -13,57 +13,15 @@
 
     <script type="module" src="../js/firebase-init.js"></script>
     <script defer src="../script.js"></script>
+    <script src="../js/template.js" defer></script>
     <script src="../js/login-status.js" defer></script>
-    <script src="../js/toggle-user-menu.js" defer></script>
-    <script src="../js/header-footer.js" defer></script>
     <script src="../js/greeting-page.js" defer></script>
     <title>Join - Greeting</title>
   </head>
   <body onload="initGreeting()">
     <div id="page">
-      <header class="main-header">
-        <a class="main-header-logo" href="./summary.html"
-          ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
-        /></a>
+      <header class="main-header" id="header"></header>
 
-        <p class="main-header-title">Kanban Project Management Tool</p>
-
-        <a
-          href="./help.html"
-          class="main-header-help"
-          aria-label="Link to Help page"
-        >
-          <img src="../assets/icons/help.svg" alt="" />
-        </a>
-
-        <div class="user-menu">
-          <button
-            type="button"
-            class="user-avatar"
-            onclick="toggleUserMenu(this)"
-            aria-expanded="false"
-            aria-controls="user-menu-dropdown"
-            aria-label="Open user menu"
-          >
-            <span id="avatarShortcut"></span>
-          </button>
-
-          <ul id="user-menu-dropdown" class="user-menu-dropdown">
-            <li class="user-menu-item user-menu-item--help">
-              <a href="./help.html">Help</a>
-            </li>
-            <li class="user-menu-item">
-              <a href="./imprint.html">Legal Notice</a>
-            </li>
-            <li class="user-menu-item">
-              <a href="./privacy-policy.html">Privacy Policy</a>
-            </li>
-            <li class="user-menu-item user-menu-item--logout">
-              <button type="button" class="user-menu-logout">Log out</button>
-            </li>
-          </ul>
-        </div>
-      </header>
       <main class="main main-greeting dpf-center">
         <section class="dpf-flex-column-center greeting-content">
           <p id="greetingMessage" class="greeting-text"></p>

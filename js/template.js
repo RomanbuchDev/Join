@@ -93,3 +93,46 @@ function getContactDetailsPlaceholderTemplate() {
           <span class="contact-details-subtitle">Better with a team</span>
         </div>`;
 }
+
+
+function templateHeader(avatarShortcut) {
+  return `
+    <a class="main-header-logo" href="./summary.html"
+          ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
+        /></a>
+        <p class="main-header-title">Kanban Project Management Tool</p>
+        <a
+          href="./help.html"
+          class="main-header-help"
+          aria-label="Link to Help page"
+        >
+          <img src="../assets/icons/help.svg" alt="" />
+        </a>
+        <div class="user-menu">
+          <button
+            type="button"
+            class="user-avatar"
+            onclick="toggleUserMenu(this)"
+            aria-expanded="false"
+            aria-controls="user-menu-dropdown"
+            aria-label="Open user menu"
+          >${avatarShortcut}
+          </button>
+
+          <ul id="user-menu-dropdown" class="user-menu-dropdown">
+            <li class="user-menu-item user-menu-item--help">
+              <a href="./help.html">Help</a>
+            </li>
+            <li class="user-menu-item">
+              <a href="./imprint.html">Legal Notice</a>
+            </li>
+            <li class="user-menu-item">
+              <a href="./privacy-policy.html">Privacy Policy</a>
+            </li>
+            <li class="user-menu-item user-menu-item--logout">
+              <button type="button" class="user-menu-logout">Log out</button>
+            </li>
+          </ul>
+        </div>
+    `
+}
