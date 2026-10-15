@@ -24,14 +24,14 @@
     <script defer src="../script.js"></script>
     <script src="../js/login-status.js" defer></script>
     <script src="../js/template.js" defer></script>
+    <script src="../js/toggle-user-menu.js" defer></script>
     <script src="../js/contact-utils.js" defer></script>
     <script src="../js/contacts-dialog.js" defer></script>
     <script src="../js/contacts.js" defer></script>
   </head>
-
   <body onload="init()" class="main-page" id="page">
     <!-- Header -->
-    <header class="main-header" aria-label="Main">
+    <header class="main-header" aria-label="Main page">
       <a class="main-header-logo" href=""
         ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
       /></a>
@@ -46,7 +46,33 @@
         <img src="../assets/icons/help.svg" alt="" />
       </a>
 
-      <button type="button" class="user-avatar"><span>SM</span></button>
+      <div class="user-menu">
+        <button
+          type="button"
+          class="user-avatar"
+          onclick="toggleUserMenu(this)"
+          aria-expanded="false"
+          aria-controls="user-menu-dropdown"
+          aria-label="Open user menu"
+        >
+          <span>SM</span>
+        </button>
+
+        <ul id="user-menu-dropdown" class="user-menu-dropdown">
+          <li class="user-menu-item user-menu-item--help">
+            <a href="./help.html">Help</a>
+          </li>
+          <li class="user-menu-item">
+            <a href="./imprint.html">Legal Notice</a>
+          </li>
+          <li class="user-menu-item">
+            <a href="./privacy-policy.html">Privacy Policy</a>
+          </li>
+          <li class="user-menu-item user-menu-item--logout">
+            <button type="button" class="user-menu-logout">Log out</button>
+          </li>
+        </ul>
+      </div>
     </header>
 
     <!-- Main -->
@@ -57,8 +83,10 @@
           <button
             type="button"
             class="button-basic button-primary contact-menu show"
-            id="contact-menu-button"
+            id="add-contact-menu-button"
             onclick="openDialog()"
+            aria-haspopup="dialog"
+            aria-label="Add contact"
           >
             <span class="contact-menu-text">Add new contact</span>
             <img
@@ -155,7 +183,7 @@
       </ul>
     </nav>
 
-    <!-- Dialog window to add contact -->
+    <!-- Dialog window to add or edit contacts -->
     <dialog class="contact-form-container" id="contacts-dialog">
       <form>
         <!-- Dialog header -->
@@ -189,112 +217,131 @@
             />
           </div>
         </header>
-
         <!-- Dialog main -->
-        <div class="contact-form-main-container">
-          <div class="contact-form-input" id="input-name-dialog">
-            <input
-              type="text"
-              placeholder="Name"
-              id="input-contact-name-dialog"
-            />
-            <img
-              src="../assets/icons/contacts/person_icon_input.png"
-              alt="Person input icon"
-            />
-          </div>
+        <div class="contact-form-main-wrapper">
+          <div class="contact-form-main-container">
+            <div class="contact-form-input" id="input-name-dialog">
+              <input
+                type="text"
+                placeholder="Name"
+                id="input-contact-name-dialog"
+                maxlength="21"
+                aria-invalid="false"
+                aria-describedby="error-message-name"
+              />
+              <img
+                src="../assets/icons/contacts/person_icon_input.png"
+                alt="Person input icon"
+              />
+            </div>
 
-          <div class="contact-form-input" id="input-email-dialog">
-            <input
-              type="text"
-              placeholder="Email"
-              id="input-contact-email-dialog"
-            />
-            <img
-              src="../assets/icons/contacts/email_icon_input.png"
-              alt="Email input icon"
-            />
-          </div>
+            <div class="contact-form-input" id="input-email-dialog">
+              <input
+                type="text"
+                placeholder="Email"
+                id="input-contact-email-dialog"
+                maxlength="41"
+                aria-invalid="false"
+                aria-describedby="error-message-email"
+              />
+              <img
+                src="../assets/icons/contacts/email_icon_input.png"
+                alt="Email input icon"
+              />
+            </div>
 
-          <div class="contact-form-input" id="input-phone-dialog">
-            <input
-              type="tel"
-              placeholder="Phone"
-              id="input-contact-phone-dialog"
-            />
-            <img
-              src="../assets/icons/contacts/phone_icon_input.png"
-              alt="Phone input icon"
-            />
+            <div class="contact-form-input" id="input-phone-dialog">
+              <input
+                type="tel"
+                placeholder="Phone"
+                id="input-contact-phone-dialog"
+                maxlength="21"
+                aria-invalid="false"
+                aria-describedby="error-message-phone"
+              />
+              <img
+                src="../assets/icons/contacts/phone_icon_input.png"
+                alt="Phone input icon"
+              />
+            </div>
+            <!-- Dialog error messages -->
+            <div class="dialog-error-message-container" id="error-message">
+              <span class="dialog-error-message" id="error-message-name"
+                >Name is a required information field! Please enter a
+                name.</span
+              >
+              <span class="dialog-error-message" id="error-message-email"
+                >Please enter a valid email address.</span
+              >
+              <span class="dialog-error-message" id="error-message-phone"
+                >Only numbers and the + sign are allowed. Please try
+                again.</span
+              >
+            </div>
           </div>
-          <!-- Test for dialog error messages -->
-          <div class="dialog-error-message-container" id="error-message">
-            <span class="dialog-error-message" id="error-message-name"
-              >Name is a required information field! Please enter a name.</span
+          <!-- Dialog footer -->
+          <footer class="contact-form-footer">
+            <!-- Cancel button -->
+            <button
+              type="button"
+              class="button-basic button-secondary delete-contact-data"
+              id="dialog-cancel-button"
+              onclick="closeDialog()"
             >
-            <span class="dialog-error-message" id="error-message-email"
-              >Please enter a valid email address.</span
+              <span>Cancel</span>
+              <span class="close-button">&times;</span>
+            </button>
+            <!-- Create contact button -->
+            <button
+              type="submit"
+              class="button-basic button-primary"
+              id="dialog-create-contact-button"
             >
-            <span class="dialog-error-message" id="error-message-phone"
-              >Only numbes and the + sign are allowed. Please try again.</span
+              <span>Create contact</span>
+              <img
+                src="../assets/icons/contacts/check_icon.png"
+                alt="Check icon"
+              />
+            </button>
+            <!-- Delete button -->
+            <button
+              type="button"
+              class="button-basic button-secondary delete-contact-data hidden"
+              id="dialog-delete-button"
+              onclick="openDialogDeleteQuestion()"
             >
-          </div>
+              Delete
+            </button>
+            <!-- Save button -->
+            <button
+              type="submit"
+              class="button-basic button-primary save-contact-data hidden"
+              id="dialog-save-button"
+            >
+              Save
+              <img
+                src="../assets/icons/contacts/check_icon.png"
+                alt="Save icon"
+              />
+            </button>
+          </footer>
         </div>
-
-        <!-- Dialog footer -->
-        <footer class="contact-form-footer">
-          <!-- Cancel button -->
-          <button
-            type="button"
-            class="button-basic button-secondary delete-contact-data"
-            id="dialog-cancel-button"
-            onclick="closeDialog()"
-          >
-            <span>Cancel</span>
-            <span class="close-button">&times;</span>
-          </button>
-          <!-- Create contact button -->
-          <button
-            type="submit"
-            class="button-basic button-primary"
-            id="dialog-create-contact-button"
-          >
-            <span>Create contact</span>
-            <img
-              src="../assets/icons/contacts/check_icon.png"
-              alt="Check icon"
-            />
-          </button>
-          <!-- Delete button -->
-          <button
-            type="button"
-            class="button-basic button-secondary delete-contact-data hidden"
-            id="dialog-delete-button"
-            onclick="openDialogDeleteQuestion()"
-          >
-            Delete
-          </button>
-          <!-- Save button -->
-          <button
-            type="submit"
-            class="button-basic button-primary save-contact-data hidden"
-            id="dialog-save-button"
-          >
-            Save
-            <img
-              src="../assets/icons/contacts/check_icon.png"
-              alt="Save icon"
-            />
-          </button>
-        </footer>
       </form>
     </dialog>
 
     <!-- Dialog for delete contact question -->
-    <dialog class="delete-question-container" id="delete-question-dialog">
+    <dialog
+      class="delete-question-container"
+      id="delete-question-dialog"
+      role="alertdialog"
+      aria-labelledby="delete-question-title"
+      aria-describedby="delete-question-text"
+    >
       <form method="dialog">
-        <h4>Delete contact</h4>
-        <p>Do you really want to delete this contact?</p>
+        <h4 id="delete-question-title">Delete contact</h4>
+        <p id="delete-question-text">
+          Do you really want to delete this contact?
+        </p>
         <div class="delete-question-button-container">
           <!-- Delete contact - No button -->
           <button
@@ -319,72 +366,7 @@
       </form>
     </dialog>
 
-    <!-- Dialog for connection error database -->
-    <dialog
-      class="connection-error-database-container"
-      id="connection-error-database-dialog"
-    >
-      <div class="connection-error-database-content">
-        <h4>Connection error</h4>
-        <p>
-          No connection to the database. Please try again or check your internet
-          connection.
-        </p>
-        <div class="connection-error-database-button-container">
-          <!-- Close button -->
-          <button
-            type="button"
-            class="button-basic button-secondary connection-error-database-button"
-            id="connection-error-database-close-button"
-            onclick="closeDialogConnectionErrorDatabase()"
-          >
-            Close
-          </button>
-          <!-- Reload button -->
-          <button
-            type="submit"
-            class="button-basic button-primary connection-error-database-button"
-            id="connection-error-database-retry-button"
-            onclick="reloadPage()"
-            autofocus
-          >
-            Reload
-          </button>
-        </div>
-      </div>
-    </dialog>
-
-    <!-- Dialog toast message - Contact successfully created -->
-    <div
-      class="toast-message toast-contact-created"
-      id="toast-message-contact-created"
-    >
-      Contact successfully created
-    </div>
-
-    <!-- Dialog toast message - Contact successfully edited -->
-    <div
-      class="toast-message toast-contact-edited"
-      id="toast-message-contact-edited"
-    >
-      Contact successfully edited
-    </div>
-
-    <!-- Dialog toast message - Contact successfully deleted -->
-    <div
-      class="toast-message toast-contact-deleted"
-      id="toast-message-contact-deleted"
-    >
-      Contact successfully deleted
-    </div>
-
-    <!-- Contact list toast message - You cannot delete your own account -->
-    <div
-      class="toast-message toast-own-account-no-delete"
-      id="toast-message-own-account-no-delete"
-    >
-      <!-- You cannot delete your own account -->
-      Cannot delete own account
-    </div>
+    <!-- Toast messages -->
+    <div class="toast-message" id="toast-message"></div>
   </body>
 </html>
