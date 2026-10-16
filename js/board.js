@@ -6,22 +6,6 @@ let allFetchedTasksAreRendered = true;
 const searchInputfieldRef = document.getElementById("searchInputfield");
 
 /**
- * Escapes characters with a special meaning in HTML, so that text is displayed as plain text
- * and not interpreted as markup. Safe for HTML content and for quoted attribute values.
- * @param {*} text - The value to escape; it is converted to a string first.
- * @returns {string} The escaped text.
- */
-function escapeHtml(text) {
-  return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-
-/**
  * Initializes the board view.
  * Loads all tasks and all contacts first, then renders the tasks into their columns.
  * Contacts must be loaded before rendering, because the task assignees depend on them.
@@ -248,11 +232,11 @@ function handleSearchRequest() {
   const trimmedInput = searchInputfieldRef.value.trim();
   switch (validateSearchInput(trimmedInput)) {
     case "empty":
-      checkForRenderedTasksAndClearInput();
+      checkForRenderedTasks("empty");
       break;
     case "too short":
-      checkForRenderedTasksAndClearInput();
-      renderUserFeedback(`Search input "${trimmedInput}" is too short. Minimum length is 3 characters.`);
+      checkForRenderedTasks();
+      showUserFeedback(`Please enter at least 3 characters.`);
       break;
     case "valid": 
       processSearch(trimmedInput);
@@ -278,25 +262,19 @@ function validateSearchInput(trimmedInput) {
 
 
 /**
- * Re-renders all tasks if a filtered list is shown and clears the search field.
+ * Re-renders all tasks if a filtered list is shown, and clears the search input and feedback if the search was empty.
+ * @param {string} [searchStatus=""] - The status of the search input ("empty" or "").
  * @returns {void}
  */
-function checkForRenderedTasksAndClearInput() {
+function checkForRenderedTasks(searchStatus="") {
   if (!allFetchedTasksAreRendered) {
     renderTasks(allFetchedTasksIDs);
     allFetchedTasksAreRendered = true;
   }
-  searchInputfieldRef.value = "";
-}
-
-
-/**
- * Outputs a feedback message to the user.
- * @param {string} message - The message to show.
- * @returns {void}
- */
-function renderUserFeedback(message) {
-  console.error(message);
+  if (searchStatus === "empty") {
+    searchInputfieldRef.value = "";
+    clearUserFeedback();
+  }
 }
 
 
@@ -310,11 +288,12 @@ function processSearch(validInput) {
   const matching = matchingTasks.length > 0 ? "found" : "not found";
   switch (matching) {
     case "not found":
-      checkForRenderedTasksAndClearInput();
-      renderUserFeedback(`No tasks found for input: "${validInput}"`);
+      checkForRenderedTasks();
+      showUserFeedback(`No tasks found.`);
       break;
     case "found":
       renderTasks(matchingTasks, `with "${validInput}" `);
+      clearUserFeedback();
       allFetchedTasksAreRendered = false;
   }
 }
@@ -353,4 +332,25 @@ function doesTaskMatchSearchTerms(sourceString, searchTerms) {
     }
   }
   return true;
+}
+
+
+/**
+ * Outputs a feedback message to the user.
+ * @param {string} message - The message to show.
+ * @returns {void}
+ */
+function showUserFeedback(message) {
+  document.getElementsByClassName("find-container")[0].classList.add("input-error");
+  document.getElementById("searchErrorMessage").textContent = message;
+}
+
+
+/**
+ * Clears any feedback message shown to the user.
+ * @returns {void}
+ */
+function clearUserFeedback() {
+  document.getElementsByClassName("find-container")[0].classList.remove("input-error");
+  document.getElementById("searchErrorMessage").textContent = "";
 }

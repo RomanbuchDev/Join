@@ -103,7 +103,8 @@
 
 input.input-error,
 textarea.input-error,
-div.input-error {
+div.input-error,
+div.input-error:focus-within {
   border: 1px solid var(--color-error);
 }
 
