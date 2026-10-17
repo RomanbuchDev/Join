@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/responsive.css" />
     <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/assets.css" />
     <link rel="stylesheet" href="../css/signup.css" />
     <link rel="stylesheet" href="../style.css" />
 
@@ -48,6 +49,7 @@
                 placeholder="Name"
                 class="form-control"
                 id="registerName"
+                maxlength="50"
               />
               <img
                 src="../assets/icons/login-person.svg"
@@ -62,6 +64,7 @@
                 placeholder="Email"
                 class="form-control"
                 id="registerEmail"
+                maxlength="254"
               />
               <img src="../assets/icons/mail.svg" class="input-icon" alt="" />
             </div>
@@ -72,6 +75,7 @@
                 placeholder="Password"
                 class="form-control"
                 id="registerPassword"
+                maxlength="64"
               />
               <img
                 src="../assets/icons/lock.svg"
@@ -87,6 +91,7 @@
                 placeholder="Confirm Password"
                 class="form-control"
                 id="registerConfirmPassword"
+                maxlength="64"
               />
               <img
                 src="../assets/icons/lock.svg"
@@ -113,7 +118,11 @@
             </div>
 
             <div class="dpf-column-spc-between-center">
-              <button type="submit" class="btn btn-primary" id="signup">
+              <button
+                type="submit"
+                class="button-basic button-primary"
+                id="signup"
+              >
                 Sign up
               </button>
             </div>
