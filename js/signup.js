@@ -1,5 +1,5 @@
 /**
- * Startet das Setup, sobald die Seite geladen ist.
+ * Starts the setup as soon as the page has loaded.
  */
 function init() {
   setupEventListeners();
@@ -16,7 +16,7 @@ window.addEventListener("pageshow", (event) => {
 
 
 /**
- * Registriert alle Event-Listener für die Signup-Seite (Formular-Submit, Sichtbarkeits-Icon, Zustand zurücksetzen).
+ * Registers all event listeners for the signup page (form submit, visibility icon, resetting state).
  */
 function setupEventListeners() {
   const form = document.getElementById("signupForm");
@@ -24,11 +24,45 @@ function setupEventListeners() {
   resetSignupFormState();
   setupPasswordVisibilityListeners();
   setupButtonStateListeners();
+  setupFieldValidationListeners();
 }
 
 
 /**
- * Registriert die Sichtbarkeits-Icon-Listener für beide Passwortfelder.
+ * Attaches an input listener to an element that runs the given callback.
+ * @param {string} elementId - The ID of the input element.
+ * @param {Function} callback - The function to run on input.
+ */
+function addFieldListener(elementId, callback) {
+  document.getElementById(elementId).addEventListener("input", callback);
+}
+
+
+/**
+ * Re-validates the confirm-password field live, using the current values of both password fields.
+ */
+function validatePasswordFieldsLive() {
+  checkConfirmPasswordField(getFieldValue("registerPassword"), getFieldValue("registerConfirmPassword"));
+}
+
+
+/**
+ * Registers input listeners on name, email, password and confirm-password so each field's
+ * error marking updates live while typing, not just on submit.
+ */
+function setupFieldValidationListeners() {
+  addFieldListener("registerName", () => checkNameField(getFieldValue("registerName")));
+  addFieldListener("registerEmail", () => checkEmailField(getFieldValue("registerEmail")));
+  addFieldListener("registerPassword", () => {
+    checkPasswordField(getFieldValue("registerPassword"));
+    validatePasswordFieldsLive();
+  });
+  addFieldListener("registerConfirmPassword", validatePasswordFieldsLive);
+}
+
+
+/**
+ * Registers the visibility icon listeners for both password fields.
  */
 function setupPasswordVisibilityListeners() {
   visibilityEventListener("registerPassword", "visibility-icon-password");
@@ -39,7 +73,7 @@ function setupPasswordVisibilityListeners() {
 
 
 /**
- * Registriert Listener auf allen Pflichtfeldern/der Checkbox, die den Button-Status neu berechnen.
+ * Registers listeners on all required fields/the checkbox that recalculate the button state.
  */
 function setupButtonStateListeners() {
   const requiredFieldIds = [
@@ -54,7 +88,7 @@ function setupButtonStateListeners() {
 
 
 /**
- * Hängt einen Listener an ein Element, der den Sign-up-Button-Status neu berechnet.
+ * Attaches a listener to an element that recalculates the sign-up button state.
  * @param {string} elementId
  * @param {string} eventType
  */
@@ -66,7 +100,7 @@ function addButtonStateListener(elementId, eventType) {
 
 
 /**
- * Reagiert auf das Absenden des Signup-Formulars.
+ * Reacts to the signup form being submitted.
  * @param {HTMLFormElement} form
  */
 function signupEventListener(form) {
@@ -75,7 +109,7 @@ function signupEventListener(form) {
 
 
 /**
- * Wechselt das Schloss-Icon je nach Inhalt des Passwort-Felds.
+ * Switches the lock icon depending on the content of the password field.
  * @param {string} inputId
  * @param {string} iconId
  */
@@ -95,7 +129,7 @@ function inputPasswordCheck(inputId, iconId) {
 
 
 /**
- * Reagiert auf Klicks auf das Sichtbarkeits-Icon.
+ * Reacts to clicks on the visibility icon.
  * @param {string} inputId
  * @param {string} iconId
  */
@@ -115,10 +149,10 @@ function visibilityEventListener(inputId, iconId) {
 
 
 /**
- * Schaltet zwischen sichtbarem und verstecktem Passwort um (inkl. Icon-Austausch).
- * @param {HTMLImageElement} icon - Das Sichtbarkeits-Icon.
- * @param {HTMLInputElement} inputPasswordCheck - Das Passwort-Eingabefeld.
- * @param {string} iconId - Die ID des Sichtbarkeits-Icons (zum erneuten Abrufen nach dem Wechsel).
+ * Toggles between visible and hidden password (including icon swap).
+ * @param {HTMLImageElement} icon - The visibility icon.
+ * @param {HTMLInputElement} inputPasswordCheck - The password input field.
+ * @param {string} iconId - The ID of the visibility icon (to re-fetch it after the swap).
  */
 function visibilityIconSwish(icon, inputPasswordCheck, iconId) {
   const iconSrc = icon.getAttribute("src");
@@ -137,8 +171,8 @@ function visibilityIconSwish(icon, inputPasswordCheck, iconId) {
 
 
 /**
- * Verarbeitet das Absenden des Formulars: liest die Werte, validiert sie, startet bei Erfolg die Registrierung.
- * @param {SubmitEvent} event - Das Submit-Event des Formulars.
+ * Processes the form submission: reads the values, validates them, starts the registration on success.
+ * @param {SubmitEvent} event - The form's submit event.
  */
 async function handleSignupSubmit(event) {
   event.preventDefault();
@@ -152,8 +186,8 @@ async function handleSignupSubmit(event) {
 
 
 /**
- * Versucht die Registrierung mit den eingegebenen Daten durchzuführen.
- * @param {Object} signupUserData - Die eingegebenen Formulardaten (Name, Email, Passwort, Passwort-Bestätigung).
+ * Attempts to register with the entered data.
+ * @param {Object} signupUserData - The entered form data (name, email, password, confirm password).
  */
 async function attemptSignup(signupUserData) {
   try {
@@ -171,7 +205,7 @@ async function attemptSignup(signupUserData) {
 
 
 /**
- * Leitet nach erfolgreicher Registrierung zur Login-Seite weiter (kein Auto-Login).
+ * Redirects to the login page after a successful registration (no auto-login).
  */
 function handleSignupSuccess() {
   document.getElementById("signupToast").classList.add("show");
@@ -182,9 +216,9 @@ function handleSignupSuccess() {
 
 
 /**
- * Baut die Fehlermeldung anhand des Firebase-Fehlercodes und markiert das betroffene Feld.
- * @param {Object} error - Der von Firebase Auth geworfene Fehler.
- * @returns {string} Die anzuzeigende Fehlermeldung.
+ * Builds the error message based on the Firebase error code and marks the affected field.
+ * @param {Object} error - The error thrown by Firebase Auth.
+ * @returns {string} The error message to display.
  */
 function getSignupServerErrorMessage(error) {
   if (error.code === "auth/email-already-in-use") {
@@ -199,7 +233,7 @@ function getSignupServerErrorMessage(error) {
 
 
 /**
- * Zeigt eine Fehlermeldung nach fehlgeschlagener Registrierung an.
+ * Shows an error message after a failed registration.
  */
 function handleSignupError(error) {
   document.getElementById("signupError").innerText =
@@ -208,9 +242,9 @@ function handleSignupError(error) {
 
 
 /**
- * Prüft, ob alle Formulardaten gültig sind, und zeigt ggf. eine Fehlermeldung.
- * @param {Object} signupUserData - Die eingegebenen Formulardaten.
- * @returns {boolean} Ob die Eingaben gültig sind.
+ * Checks whether all form data is valid and shows an error message if not.
+ * @param {Object} signupUserData - The entered form data.
+ * @returns {boolean} Whether the input is valid.
  */
 function isSignupInputValid(signupUserData) {
   const checks = getSignupFieldChecks(signupUserData);
@@ -221,7 +255,7 @@ function isSignupInputValid(signupUserData) {
 
 
 /**
- * Liest Name, Email, Passwort, Bestätigung und Datenschutz-Checkbox aus dem Formular aus.
+ * Reads name, email, password, confirm password, and the privacy checkbox from the form.
  * @returns {Object}
  */
 function getSignupFormValues() {
@@ -236,7 +270,7 @@ function getSignupFormValues() {
 
 
 /**
- * Liest den Wert eines Eingabefelds aus.
+ * Reads the value of an input field.
  * @param {string} inputId
  * @returns {string}
  */
@@ -246,7 +280,7 @@ function getFieldValue(inputId) {
 
 
 /**
- * Setzt Button- und Fehlerzustand zurück, wenn die Seite (erneut) angezeigt wird.
+ * Resets the button and error state when the page is (re-)shown.
  */
 function resetSignupFormState() {
   document.getElementById("signup").disabled = false;
@@ -260,7 +294,7 @@ function resetSignupFormState() {
 
 
 /**
- * Aktiviert/deaktiviert den Sign-up-Button anhand des Datenschutz-Checkbox-Status.
+ * Enables/disables the sign-up button based on the privacy checkbox state.
  */
 function updateSignupButtonState() {
   const checkboxChecked = document.getElementById("privacyCheck").checked;
