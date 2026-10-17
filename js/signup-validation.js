@@ -1,7 +1,7 @@
 /**
- * Prüft alle Formularfelder einzeln und bündelt die Ergebnisse in einem Objekt.
- * @param {Object} signupUserData - Die eingegebenen Formulardaten.
- * @returns {Object} Die Prüfungsergebnisse aller Felder (nameEmpty, emailCheck, passwordEmpty, confirmCheck, privacyUnchecked).
+ * Checks every form field individually and bundles the results into one object.
+ * @param {Object} signupUserData - The entered form data.
+ * @returns {Object} The check results for all fields (nameEmpty, emailCheck, passwordEmpty, confirmCheck, privacyUnchecked).
  */
 function getSignupFieldChecks(signupUserData) {
   return {
@@ -18,7 +18,7 @@ function getSignupFieldChecks(signupUserData) {
 
 
 /**
- * Prüft, ob das Namensfeld leer ist.
+ * Checks whether the name field is empty.
  * @param {string} name
  * @returns {boolean}
  */
@@ -30,7 +30,7 @@ function checkNameField(name) {
 
 
 /**
- * Prüft, ob das Email-Feld leer oder ungültig ist.
+ * Checks whether the email field is empty or invalid.
  * @param {string} email
  * @returns {{isEmpty: boolean, isInvalid: boolean}}
  */
@@ -43,7 +43,7 @@ function checkEmailField(email) {
 
 
 /**
- * Prüft, ob das Passwort-Feld leer ist.
+ * Checks whether the password field is empty.
  * @param {string} password
  * @returns {boolean}
  */
@@ -55,7 +55,7 @@ function checkPasswordField(password) {
 
 
 /**
- * Prüft, ob die Bestätigung leer ist oder nicht mit dem Passwort übereinstimmt.
+ * Checks whether the confirmation is empty or doesn't match the password.
  * @param {string} password
  * @param {string} confirmPassword
  * @returns {{isEmpty: boolean, isMismatch: boolean}}
@@ -69,9 +69,9 @@ function checkConfirmPasswordField(password, confirmPassword) {
 
 
 /**
- * Baut den passenden Fehlertext aus den gebündelten Prüfungsergebnissen zusammen.
- * @param {Object} checks - Ergebnis von getSignupFieldChecks() (nameEmpty, emailCheck, passwordEmpty, confirmCheck, privacyUnchecked).
- * @returns {string} Die anzuzeigende Fehlermeldung.
+ * Builds the matching error text from the bundled check results.
+ * @param {Object} checks - Result of getSignupFieldChecks() (nameEmpty, emailCheck, passwordEmpty, confirmCheck, privacyUnchecked).
+ * @returns {string} The error message to display.
  */
 function getSignupErrorMessage(checks) {
   if (areAllSignupFieldsEmpty(checks)) {
@@ -89,7 +89,7 @@ function getSignupErrorMessage(checks) {
 
 
 /**
- * Prüft, ob Name, Email, Passwort und Bestätigung alle leer sind.
+ * Checks whether name, email, password, and confirmation are all empty.
  * @param {Object} checks
  * @returns {boolean}
  */
@@ -104,7 +104,7 @@ function areAllSignupFieldsEmpty(checks) {
 
 
 /**
- * Baut den Fehlertext für das Namensfeld.
+ * Builds the error text for the name field.
  * @param {boolean} nameEmpty
  * @returns {string}
  */
@@ -117,7 +117,7 @@ function getNameErrorMessage(nameEmpty) {
 
 
 /**
- * Baut den Fehlertext für das Email-Feld.
+ * Builds the error text for the email field.
  * @param {{isEmpty: boolean, isInvalid: boolean}} emailCheck
  * @returns {string}
  */
@@ -133,7 +133,7 @@ function getEmailErrorMessage(emailCheck) {
 
 
 /**
- * Baut den Fehlertext für das Passwort-Feld.
+ * Builds the error text for the password field.
  * @param {boolean} isEmpty
  * @returns {string}
  */
@@ -146,7 +146,7 @@ function getPasswordErrorMessage(isEmpty) {
 
 
 /**
- * Baut den Fehlertext für die Passwort-Bestätigung.
+ * Builds the error text for the password confirmation.
  * @param {{isEmpty: boolean, isMismatch: boolean}} confirmCheck
  * @returns {string}
  */
@@ -162,7 +162,7 @@ function getConfirmPasswordErrorMessage(confirmCheck) {
 
 
 /**
- * Setzt oder entfernt die Fehler-Markierung an einem Eingabefeld.
+ * Sets or removes the error marking on an input field.
  * @param {string} inputId
  * @param {boolean} isEmpty
  */
@@ -177,7 +177,7 @@ function markFieldError(inputId, isEmpty) {
 
 
 /**
- * Prüft, ob die Datenschutz-Checkbox angehakt ist.
+ * Checks whether the privacy checkbox is checked.
  * @param {boolean} isChecked
  * @returns {boolean}
  */
@@ -189,7 +189,7 @@ function checkPrivacyField(isChecked) {
 
 
 /**
- * Baut den Fehlertext für die Datenschutz-Checkbox.
+ * Builds the error text for the privacy checkbox.
  * @param {boolean} isUnchecked
  * @returns {string}
  */
