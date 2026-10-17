@@ -1,22 +1,22 @@
 function templateTaskCard(taskID, {category, categoryColor}, {title, description, priority}) {
-  return `
-    <div class="task-card d-flex">
-      <p class="task-label ${categoryColor}">${category}</p>
+  return /*html*/ `
+    <div class="task-card d-flex" draggable="true">
+      <p class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(category)}</p>
       <div class="task-title-description-container d-flex">
-        <h3>${title}</h3>
+        <h3>${escapeHtml(title)}</h3>
         <p class="task-description">
-          ${description}
+          ${escapeHtml(description)}
         </p>
       </div>
-      <div id="progressContainer${taskID}" class="task-progress d-flex">
+      <div id="progressContainer${escapeHtml(taskID)}" class="task-progress d-flex">
       </div>
       <div class="task-card-footer d-flex">
-        <div id="assigneesContainer${taskID}" class="task-avatars-container d-flex">
+        <div id="assigneesContainer${escapeHtml(taskID)}" class="task-avatars-container d-flex">
         </div>
         <div class="priority-icon d-flex">
           <img
-            src="../assets/icons/prio-${priority}-symbol.svg"
-            alt="${priority} priority task"
+            src="../assets/icons/prio-${escapeHtml(priority)}-symbol.svg"
+            alt="${escapeHtml(priority)} priority task"
           />
         </div>
       </div>
@@ -25,21 +25,21 @@ function templateTaskCard(taskID, {category, categoryColor}, {title, description
 
 
 function templateProgressBar(doneSubtasks, subtasksLength) {
-  return `
+  return /*html*/ `
     <progress value="${doneSubtasks}" max="${subtasksLength}"></progress>
     <p>${doneSubtasks}/${subtasksLength} Subtasks</p>`
 }
 
 
 function templateTaskAssignees(assigneeColor, assigneeShortcut) {
-  return `
-    <span class="task-avatar d-flex" style="background-color:${assigneeColor}">${assigneeShortcut}</span>`
+  return /*html*/ `
+    <span class="task-avatar d-flex" style="background-color:${escapeHtml(assigneeColor)}">${escapeHtml(assigneeShortcut)}</span>`
 }
 
 
-function templateEmptyColumn(columnName) {
-  return `
+function templateEmptyColumn(activeSearch, columnName) {
+  return /*html*/ `
     <div class="empty-board-column d-flex">
-      <p>No tasks ${columnName}</p>
+      <p>No tasks ${escapeHtml(activeSearch)}${escapeHtml(columnName)}</p>
     </div>`
 }

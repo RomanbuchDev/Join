@@ -67,6 +67,7 @@ async function handleLogoutClick() {
   window.location.href = "../index.html";
 }
 
+
 const logoutButton = document.querySelector(".user-menu-logout");
 if (logoutButton) {
   logoutButton.addEventListener("click", handleLogoutClick);

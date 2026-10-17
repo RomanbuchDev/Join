@@ -1,8 +1,15 @@
 /*  ==================================================================================================== 
     ASSETS.CSS - FOR ALL PAGES
+    ====================================================================================================
+    1. USER INTERFACE ELEMENTS (Buttons, toast messages, error dialog message)
+    2. OTHER (Desktop responsive)
     ==================================================================================================== */
 
-/* Basic button structure for all buttons */
+/*  ==================================================================================================== 
+    1. USER INTERFACE ELEMENTS
+    ==================================================================================================== */
+
+/* ##### Basic button structure for all buttons ##### */
 
 .button-basic {
   display: flex;
@@ -16,11 +23,11 @@
     box-shadow 0.1s ease;
   cursor: pointer;
   gap: 0.25em;
-  height: 3em;
+  height: 51px;
   padding: 1em;
 }
 
-/* Button for confirmation (login, sign up, create task, add task, new contact, create contact, save) */
+/* ##### Button structure for confirmation (login, sign up, create task, add task, new contact, create contact, save) ##### */
 
 .button-primary {
   background-color: var(--color-dark);
@@ -39,7 +46,7 @@
   box-shadow: 0 4px 4px var(--color-black-25);
 }
 
-/* Basic button structure for rejection (clear, cancel, delete) */
+/* ##### Button structure for rejection (clear, cancel, delete) ##### */
 
 .button-secondary {
   background-color: var(--color-white);
@@ -58,7 +65,7 @@
   box-shadow: 0 4px 4px var(--color-black-25);
 }
 
-/* Basic toast messages structure */
+/* ##### Basic toast messages structure ##### */
 
 .toast-message {
   color: var(--color-white);
@@ -67,16 +74,41 @@
   border-radius: 20px;
   box-shadow: 0 0 4px var(--color-black-40);
   position: fixed;
-  bottom: -80px;
+  bottom: 200px;
   left: 50%;
   z-index: 300;
   white-space: nowrap;
-  transform: translateX(-50%);
-  transition: bottom 0.3s ease-out;
+  transform: translate(-50%, 300px);
+  transition: transform 0.3s ease-out;
   padding: 1.125em 0.625em;
 }
 
-/* Back button */
+.toast-message.show {
+  transform: translate(-50%, 0);
+}
+
+.toast-message-new {
+  background-color: var(--color-dark);
+}
+
+.toast-message-edit {
+  background-color: rgb(22 153 70 / 100%);
+}
+
+.toast-message-delete {
+  background-color: rgb(235 20 40 / 100%);
+}
+
+/* ##### Input field border color error ##### */
+
+input.input-error,
+textarea.input-error,
+div.input-error,
+div.input-error:focus-within {
+  border: 1px solid var(--color-error);
+}
+
+/* ##### Back button structure ##### */
 
 .back-button {
   background: none;
@@ -89,7 +121,7 @@
   height: 32px;
 }
 
-/* Close button */
+/* ##### Close button structure ##### */
 
 .close-button {
   display: inline-flex;
@@ -104,7 +136,7 @@
   height: 24px;
 }
 
-/* Option button */
+/* ##### Option menu button structure ##### */
 
 .option-button {
   display: flex;
@@ -123,11 +155,49 @@
   font-weight: 700;
 }
 
-/* ##### Other ##### */
+/* ##### No connection to database ##### */
+
+.connection-error-database-container {
+  background-color: var(--color-white);
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 0 4px var(--color-black-40);
+  contain: paint layout;
+  z-index: 200;
+  margin: auto;
+  padding: 1.875em 1.5em;
+  width: calc(100% - 28px);
+  max-width: 396px;
+  max-height: calc(100dvh - 160px);
+}
+
+.connection-error-database-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1em;
+}
+
+.connection-error-database-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.25em;
+  width: 100%;
+  padding-inline: 1.5em;
+}
+
+.connection-error-database-button {
+  min-width: 100px;
+}
+
+/*  ==================================================================================================== 
+    2. OTHER
+    ==================================================================================================== */
 
 @media (width >= 64em) {
   .button-basic {
-    height: 3.5em;
+    height: 56px;
   }
 
   .back-button {

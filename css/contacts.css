@@ -1,10 +1,9 @@
 /*  ====================================================================================================
     CONTACTS.CSS - CONTACTS PAGE - MOBILE VERSION (min-width: 320px)
     ====================================================================================================
-    1. STANDARDS (only for testing)
+    1. STANDARDS (HTML, body, titles)
     2. MAIN - CONTACT LIST (Contact categories, contacts)
     3. OTHER (Desktop responsive)
-    ...
     ==================================================================================================== */
 
 /*  ==================================================================================================== 
@@ -46,17 +45,17 @@ h4 {
   font-weight: 700;
 }
 
+/* Notiz: Nur vorübergehend einfügen bis zum nächsten Update von Main */
+body .user-menu-dropdown {
+  transform: translateX(1em);
+}
+
 /*  ==================================================================================================== 
     2. MAIN - CONTACT LIST
     ==================================================================================================== */
 
 .main-container {
   background-color: var(--color-white);
-
-  /* margin-top: 4.7em; */
-
-  /* margin-bottom: 8em; */
-
   min-width: 0;
   padding-left: 0.875em;
   padding-right: 0.875em;
@@ -75,8 +74,6 @@ h4 {
 .letter-container {
   height: 58px;
   padding: 0.7em 1.5em;
-
-  /* padding: 1.063rem 2.25rem; */
   margin: 0;
 }
 
@@ -160,8 +157,6 @@ h4 {
 .contact-e-mail {
   color: var(--color-email);
   font-size: 1rem;
-
-  /* margin-bottom: 1.375em; */
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
@@ -179,8 +174,6 @@ h4 {
   z-index: 50;
   border: 1px solid var(--color-dark);
   border-radius: 46px;
-
-  /* padding: 1.5625rem; */
   padding: 1.3em;
   width: 32px;
   height: 32px;
@@ -205,44 +198,7 @@ h4 {
   display: none;
 }
 
-/* Test - Keine Verbindung zur Datenbank */
-
-.connection-error-database-container {
-  background-color: var(--color-white);
-  border: none;
-  border-radius: 30px;
-  box-shadow: 0 0 4px var(--color-black-40);
-  contain: paint layout;
-  z-index: 200;
-  margin: auto;
-  padding: 1.875em 1.5em;
-  width: calc(100% - 28px);
-  max-width: 396px;
-  max-height: calc(100dvh - 160px);
-}
-
-.connection-error-database-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1em;
-}
-
-.connection-error-database-button-container {
-  display: flex;
-  justify-content: center;
-  gap: 1.25em;
-  width: 100%;
-  padding-inline: 1.5em;
-}
-
-.delete-question-button {
-  max-width: 100px;
-  width: 100%;
-}
-
-/* Test - Eingeloggter Benutzer */
+/* ##### Logged-in user ##### */
 
 .shortcut-wrapper {
   position: relative;
@@ -289,11 +245,6 @@ h4 {
     margin: 0;
   }
 
-  /* body .fixed-footer {
-    position: static;
-    width: 100%;
-  } */
-
   .main-container {
     grid-area: main;
     display: flex;
@@ -301,11 +252,7 @@ h4 {
     overflow: hidden;
     min-height: 0;
     padding-inline: 0;
-
-    /* margin-bottom: 0; */
     padding-bottom: 0;
-
-    /* margin-top: 4.2em; */
   }
 
   .main-container,
@@ -341,7 +288,7 @@ h4 {
     padding: 0.75em 1em;
   }
 
-  .button-wrapper #contact-menu-button {
+  .button-wrapper #add-contact-menu-button {
     display: flex;
   }
 

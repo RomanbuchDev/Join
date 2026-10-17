@@ -6,58 +6,75 @@
     <link rel="icon" href="../assets/icons/join-logo.svg" />
     <link rel="stylesheet" href="../css/reset-stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
+    <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/dpf-flex-utils.css" />
     <link rel="stylesheet" href="../css/greeting-page.css" />
-    <link rel="stylesheet" href="../css/login.css" />
     <link rel="stylesheet" href="../style.css" />
 
-    <script type="module" src="../script.js"></script>
+    <script type="module" src="../js/firebase-init.js"></script>
+    <script defer src="../script.js"></script>
+    <script src="../js/template.js" defer></script>
     <script src="../js/login-status.js" defer></script>
     <script src="../js/greeting-page.js" defer></script>
     <title>Join - Greeting</title>
   </head>
-  <body class="greeting-text-body" onload="initGreeting()">
-    <header class="main-header">
-      <a href="./summary.html"
-        ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
-      /></a>
+  <body onload="initGreeting()">
+    <div id="page">
+      <header class="main-header" id="header"></header>
 
-      <button type="button" class="user-avatar"><span>SM</span></button>
-    </header>
-    <main class="dpf-center main-greeting">
-      <section class="dpf-flex-column-center greeting-content">
-        <p id="greetingMessage" class="greeting-text"></p>
-        <p id="userName" class="greeting-user"></p>
-      </section>
-    </main>
+      <main class="main main-greeting dpf-center">
+        <section class="dpf-flex-column-center greeting-content">
+          <p id="greetingMessage" class="greeting-text"></p>
+          <p id="userName" class="greeting-user"></p>
+        </section>
+      </main>
 
-    <nav class="main-nav">
-      <ul class="main-nav-list">
-        <li class="main-nav-item">
-          <a href="./summary.html">
-            <img src="../assets/icons/summary-icon.svg" alt="" />
-            <span>Summary</span>
-          </a>
-        </li>
-        <li class="main-nav-item">
-          <a href="./add-task.html">
-            <img src="../assets/icons/addtask-icon.svg" alt="" />
-            <span> Add Task </span>
-          </a>
-        </li>
-        <li class="main-nav-item">
-          <a href="./board.html">
-            <img src="../assets/icons/board-icon.svg" alt="" />
-            <span> Board </span>
-          </a>
-        </li>
-        <li class="main-nav-item">
-          <a href="./contact.html">
-            <img src="../assets/icons/contact-icon.svg" alt="" />
-            <span> Contacts </span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+      <nav class="main-nav">
+        <img
+          class="nav-join-img"
+          src="../assets/icons/join-logo-white.svg"
+          alt=""
+        />
+        <ul class="main-nav-list">
+          <li class="main-nav-item">
+            <a href="../html/summary.html">
+              <img src="../assets/icons/summary-icon.svg" alt="" />
+              <span>Summary</span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/add-task.html">
+              <img src="../assets/icons/addtask-icon.svg" alt="" />
+              <span> Add Task </span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/board.html">
+              <img src="../assets/icons/board-icon.svg" alt="" />
+              <span> Board </span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/contacts.html">
+              <img src="../assets/icons/contact-icon.svg" alt="" />
+              <span> Contacts </span>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="main-nav-legal">
+          <li>
+            <a href="../html/privacy-policy.html">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="../html/imprint.html">Legal Notice</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </body>
 </html>
