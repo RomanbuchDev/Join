@@ -55,6 +55,8 @@ async function initHeader() {
   initAvatar(user);
   return user;
 }
+
+
 /**
  * Escapes characters with a special meaning in HTML, so that text is displayed as plain text
  * and not interpreted as markup. Safe for HTML content and for quoted attribute values.
