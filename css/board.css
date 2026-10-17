@@ -82,12 +82,18 @@ button:focus-visible {
   gap: 2em;
 }
 
+.find-message-container-wrapper {
+  flex-direction: column;
+  gap: 0.5em;
+  flex: 1;
+  width: 100%;
+}
+
 .find-container {
   background-color: var(--color-white);
   border: 1px solid var(--color-gray-168);
   border-radius: 10px;
   padding: 0.5em 1em;
-  width: 100%;
 }
 
 .find-container:focus-within {
@@ -106,6 +112,10 @@ button:focus-visible {
 .find-button {
   border-left: 1px solid var(--color-gray-168);
   padding-left: 16px;
+}
+
+.search-error-message-container {
+  color: var(--color-error);
 }
 
 .board-section {
