@@ -1,8 +1,10 @@
-const allContacts = [];
-const allFetchedContactsIDs = [];
-const allTasks = [];
-const allFetchedTasksIDs = [];
-let allFetchedTasksAreRendered = true;
+const allContacts = {};
+// const allContactsArray = [];
+// const allFetchedContactsIDs = [];
+const allTasks = {};
+// const allTasksArray = [];
+// const allFetchedTasksIDs = [];
+let allFetchedTasksAreRendered = false;
 const searchInputfieldRef = document.getElementById("searchInputfield");
 
 /**
@@ -15,7 +17,9 @@ async function initBoard() {
   await window.getCurrentUser();
   await fetchAllData("tasks");
   await fetchAllData("contacts");
-  renderTasks(allFetchedTasksIDs);
+  // renderTasks(allFetchedTasksIDs);
+  renderTasks(Object.keys(allTasks));
+  allFetchedTasksAreRendered = true;
 }
 
 
@@ -48,12 +52,16 @@ async function fetchAllData(dataCategory) {
 function storeData(dataCategory, dataObject) {
   switch (dataCategory) {
     case "tasks":
-      storeDataInArray(dataObject, allFetchedTasksIDs, allTasks);
+      Object.assign(allTasks, dataObject);
       console.log("tasks loaded:", allTasks);
+      // storeDataInArray(dataObject, allFetchedTasksIDs, allTasksArray);
+      // console.log("tasks loaded:", allTasksArray);
       break;
     case "contacts":
-      storeDataInArray(dataObject, allFetchedContactsIDs, allContacts);
+      Object.assign(allContacts, dataObject);
       console.log("contacts loaded:", allContacts);
+      // storeDataInArray(dataObject, allFetchedContactsIDs, allContactsArray);
+      // console.log("contacts loaded:", allContactsArray);
       break;
     default:
       console.error(`Unknown data category: ${dataCategory}`);
@@ -61,21 +69,21 @@ function storeData(dataCategory, dataObject) {
 }
 
 
-/**
- * Adds each entry of the data object, with its ID, to the target arrays.
- * @param {Object} dataObject - The fetched data, keyed by ID.
- * @param {string[]} targetArrayIDs - The array collecting the IDs.
- * @param {Object[]} targetArray - The array collecting the entries.
- * @returns {void}
- */
-function storeDataInArray(dataObject, targetArrayIDs, targetArray) {
-  if (!dataObject) return;
-  for (const [id, data] of Object.entries(dataObject)) {
-    targetArrayIDs.push(id);
-    data.id = id;
-    targetArray.push(data);
-  }
-}
+// /**
+//  * Adds each entry of the data object, with its ID, to the target arrays.
+//  * @param {Object} dataObject - The fetched data, keyed by ID.
+//  * @param {string[]} targetArrayIDs - The array collecting the IDs.
+//  * @param {Object[]} targetArray - The array collecting the entries.
+//  * @returns {void}
+//  */
+// function storeDataInArray(dataObject, targetArrayIDs, targetArray) {
+//   if (!dataObject) return;
+//   for (const [id, data] of Object.entries(dataObject)) {
+//     targetArrayIDs.push(id);
+//     data.id = id;
+//     targetArray.push(data);
+//   }
+// }
 
 
 /**
@@ -133,7 +141,8 @@ function renderOneTask(taskID) {
  */
 function createAndReturnVariablesforTask(taskID) {
   const {category, title, description, priority, assignedTo: assignees, status: columnName, subtasks} 
-      = allTasks[allTasks.findIndex(task => task.id === taskID)];
+    = allTasks[taskID];
+    // = allTasksArray[allTasksArray.findIndex(task => task.id === taskID)];
   const categoryColor = (category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
   const cardPlace = document.getElementById(columnName);
   return {cardPlace, category, categoryColor, title, description, priority, subtasks, assignees};
@@ -176,7 +185,8 @@ function checkDoneSubtasks(subtasks) {
 function renderTaskAssignees(taskID, assignees) {
   for (let i = 0; i < assignees.length; i++) {
     const contactID = assignees[i];
-    const contact = allContacts.find((c) => c.id === contactID);
+    // const contact = allContactsArray.find((c) => c.id === contactID);
+    const contact = allContacts[contactID];
     if (!contact) continue;
     const assigneeShortcut = contact.shortcut;
     const assigneeColor = contact.shortcutColor;
@@ -268,7 +278,8 @@ function validateSearchInput(trimmedInput) {
  */
 function checkForRenderedTasks(searchStatus="") {
   if (!allFetchedTasksAreRendered) {
-    renderTasks(allFetchedTasksIDs);
+    // renderTasks(allFetchedTasksIDs);
+    renderTasks(Object.keys(allTasks));
     allFetchedTasksAreRendered = true;
   }
   if (searchStatus === "empty") {
@@ -305,13 +316,15 @@ function processSearch(validInput) {
  * @returns {string[]} The array of taskIDs of the matching tasks.
  */
 function findMatchingTasks(validInput) {
+  const allTasksIDs = Object.keys(allTasks);
   const matchingTasks = [];
   const searchTerms = validInput.toLowerCase().split(" ");
-  for (let i = 0; i < allTasks.length; i++) {
-    const {id, title, description} = allTasks[i];
+  for (let i = 0; i < allTasksIDs.length; i++) {
+    const taskID = allTasksIDs[i];
+    const {title, description} = allTasks[taskID];
     const sourceString = `${title} ${description}`.toLowerCase();
     if (doesTaskMatchSearchTerms(sourceString, searchTerms)) {
-      matchingTasks.push(id);
+      matchingTasks.push(taskID);
     }
   }
   return matchingTasks;
