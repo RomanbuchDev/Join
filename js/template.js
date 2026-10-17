@@ -184,9 +184,8 @@ function templateHeader(avatarShortcut) {
             aria-expanded="false"
             aria-controls="user-menu-dropdown"
             aria-label="Open user menu"
-          >${avatarShortcut}
+          ><span>${avatarShortcut}</span>
           </button>
-
           <ul id="user-menu-dropdown" class="user-menu-dropdown">
             <li class="user-menu-item user-menu-item--help">
               <a href="./help.html">Help</a>
@@ -198,9 +197,9 @@ function templateHeader(avatarShortcut) {
               <a href="./privacy-policy.html">Privacy Policy</a>
             </li>
             <li class="user-menu-item user-menu-item--logout">
-              <button type="button" class="user-menu-logout">Log out</button>
+              <button type="button" class="user-menu-logout" onclick="handleLogoutClick()">Log out</button>
             </li>
           </ul>
         </div>
-    `
+    `;
 }
