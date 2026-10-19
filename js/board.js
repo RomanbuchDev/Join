@@ -44,7 +44,7 @@ async function fetchAllData(dataCategory) {
 
 
 /**
- * Stores fetched data in the arrays matching its category.
+ * Stores fetched data in the objects matching its category.
  * @param {string} dataCategory - The data category ("tasks" or "contacts").
  * @param {Object} dataObject - The fetched data, keyed by ID.
  * @returns {void}

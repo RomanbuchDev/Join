@@ -15,16 +15,18 @@
 <div align="center">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="html5 logo"  />
     <img width="12" />
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo" />
+    <img width="12" />
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo"  />
     <img width="12" />
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo" />
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg" height="40" alt="firebase logo" />
 
 </div>
 <img/>
 
 <div align="center">
 
-🌐 Live-Ansicht des Projekts: 👉 [GitHub Pages](https://romanbuchdev.github.io/Join/)
+🌐 Live-Ansicht des Projekts: 👉 [GitHub Pages](https://romanbuchdev.github.io/Join/) 👉 [FTP-Server](https://join-3233.developerakademie.net/)
 
 </div>
 
@@ -34,34 +36,6 @@
 - **Elena Hiener** (GitHub: [ElenaH-2026](https://github.com/ElenaH-2026))
 - **Roman Buchmüller** (GitHub: [RomanbuchDev](https://github.com/RomanbuchDev))
 - **Timo Indlekofer** (GitHub: [TimoIndlekofer](https://github.com/TimoIndlekofer))
-
-## 📋 Projektregeln
-
-### Beispiel:
-
-Feature-Branch:
-
-```text
-feat/5-contacts-basic-structure
-```
-
-Commit:
-
-```text
-"feat: issue 5: Add page structure in contacts.html"
-```
-
-### Übersicht:
-
-| Featurebranch    | Commit Präfix | Anwendung                                                  |
-| ---------------- | ------------- | ---------------------------------------------------------- |
-| `feat/#-...`     | `feat:`       | neue Funktion hinzufügen                                   |
-| `fix/#-...`      | `fix:`        | Fehler beheben                                             |
-| `docs/#-...`     | `docs:`       | README oder Dokumentation ändern                           |
-| `style/#-...`    | `style:`      | nur Formatierung ändern, ohne die Funktion zu verändern    |
-| `refactor/#-...` | `refactor:`   | bestehenden Code verbessern oder umbauen                   |
-| `chore/#-...`    | `chore:`      | Ordner, Dateien, Konfiguration oder Projektstruktur ändern |
-| `test/#-...`     | `test:`       | Tests hinzufügen oder ändern                               |
 
 ## 📑 Inhaltsverzeichnis
 
@@ -91,7 +65,7 @@ git clone https://github.com/RomanbuchDev/Join.git
 cd Join
 ```
 
-4. Installiere die Abhaengigkeiten:
+4. Installiere die Abhängigkeiten:
 
 ```bash
 npm install
@@ -124,7 +98,7 @@ http://<deine_ip>:<live-server-port>
 │   LICENSE.md
 │   package.json
 │   package-lock.json
-│   index.html  --> Alex
+│   index.html
 │   style.css
 │   script.js
 │
@@ -139,17 +113,16 @@ http://<deine_ip>:<live-server-port>
 ├───assets/
 │   ├───fonts/
 │   └───icons/
-│       .DS_Store (-> .gitignore - Was ist das nochmal??)
 │
 ├───html/
 │       add-task.html
-│       board.html --> Elena
-│       contact.html --> Timo
-│       greeting-page.html  --> Alex
-│       imprint.html --> Roman
+│       board.html
+│       contacts.html
+│       greeting-page.html
+│       imprint.html
 │       privacy-policy.html
-│       signup.html  --> Alex
-│       summary.html  --> Roman
+│       signup.html
+│       summary.html
 │
 ├───css/
 │
