@@ -1,9 +1,5 @@
 const allContacts = {};
-// const allContactsArray = [];
-// const allFetchedContactsIDs = [];
 const allTasks = {};
-// const allTasksArray = [];
-// const allFetchedTasksIDs = [];
 let allFetchedTasksAreRendered = false;
 const searchInputfieldRef = document.getElementById("searchInputfield");
 
@@ -17,7 +13,6 @@ async function initBoard() {
   await window.getCurrentUser();
   await fetchAllData("tasks");
   await fetchAllData("contacts");
-  // renderTasks(allFetchedTasksIDs);
   renderTasks(Object.keys(allTasks));
   allFetchedTasksAreRendered = true;
 }
@@ -54,36 +49,15 @@ function storeData(dataCategory, dataObject) {
     case "tasks":
       Object.assign(allTasks, dataObject);
       console.log("tasks loaded:", allTasks);
-      // storeDataInArray(dataObject, allFetchedTasksIDs, allTasksArray);
-      // console.log("tasks loaded:", allTasksArray);
       break;
     case "contacts":
       Object.assign(allContacts, dataObject);
       console.log("contacts loaded:", allContacts);
-      // storeDataInArray(dataObject, allFetchedContactsIDs, allContactsArray);
-      // console.log("contacts loaded:", allContactsArray);
       break;
     default:
       console.error(`Unknown data category: ${dataCategory}`);
   }
 }
-
-
-// /**
-//  * Adds each entry of the data object, with its ID, to the target arrays.
-//  * @param {Object} dataObject - The fetched data, keyed by ID.
-//  * @param {string[]} targetArrayIDs - The array collecting the IDs.
-//  * @param {Object[]} targetArray - The array collecting the entries.
-//  * @returns {void}
-//  */
-// function storeDataInArray(dataObject, targetArrayIDs, targetArray) {
-//   if (!dataObject) return;
-//   for (const [id, data] of Object.entries(dataObject)) {
-//     targetArrayIDs.push(id);
-//     data.id = id;
-//     targetArray.push(data);
-//   }
-// }
 
 
 /**
@@ -115,22 +89,23 @@ function clearAllColumns() {
 
 /**
  * Renders a single task card into its column, 
- * including the progress bar and assignees if subtasks / assignees exist.
+ * including the description, progress bar and assignees if these information exist.
  * @param {string} taskID - The ID of the task to render.
  * @returns {void}
  */
 function renderOneTask(taskID) {
   const {cardPlace, category, categoryColor, title, description, priority, subtasks, assignees} 
     = createAndReturnVariablesforTask(taskID);
-  cardPlace.innerHTML += templateTaskCard(taskID, {category, categoryColor}, {title, description, priority});
-  if (subtasks && subtasks.length > 0) {
-    renderProgressBar(taskID, subtasks);
-  } else {
-    document.getElementById(`progressContainer${taskID}`).className = "task-progress d-none";
-  }
-  if (assignees && assignees.length > 0) {
-    renderTaskAssignees(taskID, assignees);
-  }
+  cardPlace.innerHTML += templateTaskCard(taskID, {category, categoryColor}, {title, priority});
+
+  const descriptionRef = document.getElementById(`description${taskID}`);
+  (description && description.trim() !== "") && (descriptionRef.textContent = description);
+
+  const progressContainerRef = document.getElementById(`progressContainer${taskID}`);
+  (subtasks && subtasks.length > 0) ? renderProgressBar(subtasks, progressContainerRef) : progressContainerRef.classList.add("d-none");
+  
+  const assigneesContainerRef = document.getElementById(`assigneesContainer${taskID}`);
+  (assignees && assignees.length > 0) && renderTaskAssignees(assignees, assigneesContainerRef);
 }
 
 
@@ -142,7 +117,6 @@ function renderOneTask(taskID) {
 function createAndReturnVariablesforTask(taskID) {
   const {category, title, description, priority, assignedTo: assignees, status: columnName, subtasks} 
     = allTasks[taskID];
-    // = allTasksArray[allTasksArray.findIndex(task => task.id === taskID)];
   const categoryColor = (category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
   const cardPlace = document.getElementById(columnName);
   return {cardPlace, category, categoryColor, title, description, priority, subtasks, assignees};
@@ -151,14 +125,13 @@ function createAndReturnVariablesforTask(taskID) {
 
 /**
  * Renders a progress bar for a task based on its subtasks.
- * @param {string} taskID - The ID of the task for which to render the progress bar.
  * @param {Object[]} subtasks - The array of subtasks for the task.
+ * @param {HTMLElement} ContainerRef - The reference to the container element where the progress bar will be rendered.
  * @returns {void}
  */
-function renderProgressBar(taskID, subtasks) {
+function renderProgressBar(subtasks, ContainerRef) {
   const doneSubtasks = checkDoneSubtasks(subtasks);
-  document.getElementById(`progressContainer${taskID}`).innerHTML
-    = templateProgressBar(doneSubtasks, subtasks.length);
+  ContainerRef.innerHTML = templateProgressBar(doneSubtasks, subtasks.length);
 }
 
 
@@ -178,20 +151,18 @@ function checkDoneSubtasks(subtasks) {
 
 /**
  * Renders the avatars of all assignees on a task card.
- * @param {string} taskID - The ID of the task for which to render the assignees.
  * @param {string[]} assignees - The array of contact IDs of the assignees.
+ * @param {HTMLElement} ContainerRef - The reference to the container element where the assignees will be rendered.
  * @returns {void}
  */
-function renderTaskAssignees(taskID, assignees) {
+function renderTaskAssignees(assignees, ContainerRef) {
   for (let i = 0; i < assignees.length; i++) {
     const contactID = assignees[i];
-    // const contact = allContactsArray.find((c) => c.id === contactID);
     const contact = allContacts[contactID];
     if (!contact) continue;
     const assigneeShortcut = contact.shortcut;
     const assigneeColor = contact.shortcutColor;
-    document.getElementById(`assigneesContainer${taskID}`).innerHTML 
-      += templateTaskAssignees(assigneeColor, assigneeShortcut);
+    ContainerRef.innerHTML += templateTaskAssignees(assigneeColor, assigneeShortcut);
   }
 }
 

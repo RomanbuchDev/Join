@@ -37,6 +37,8 @@
 - **Roman Buchmüller** (GitHub: [RomanbuchDev](https://github.com/RomanbuchDev))
 - **Timo Indlekofer** (GitHub: [TimoIndlekofer](https://github.com/TimoIndlekofer))
 
+👉 hier gehts zum [Projekt-Wiki](https://github.com/RomanbuchDev/Join/wiki)
+
 ## 📑 Inhaltsverzeichnis
 
 🚀 [Quickstart](#-quickstart)

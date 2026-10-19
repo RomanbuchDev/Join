@@ -1,12 +1,10 @@
-function templateTaskCard(taskID, {category, categoryColor}, {title, description, priority}) {
+function templateTaskCard(taskID, {category, categoryColor}, {title, priority}) {
   return /*html*/ `
     <div class="task-card d-flex" draggable="true">
       <p class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(category)}</p>
       <div class="task-title-description-container d-flex">
         <h3>${escapeHtml(title)}</h3>
-        <p class="task-description">
-          ${escapeHtml(description)}
-        </p>
+        <p id="description${escapeHtml(taskID)}" class="task-description"></p>
       </div>
       <div id="progressContainer${escapeHtml(taskID)}" class="task-progress d-flex">
       </div>
