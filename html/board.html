@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="../style.css" />
 
     <script type="module" src="../js/firebase-init.js"></script>
-    <script defer src="../script.js"></script>
+    <script src="../script.js" defer></script>
+    <script src="../js/template.js" defer></script>
     <script src="../js/login-status.js" defer></script>
     <script src="../js/board-templates.js" defer></script>
     <script src="../js/board.js" defer></script>
@@ -28,11 +29,11 @@
 
   <body onload="initBoard()">
     <div id="page">
-      <header class="main-header">
-        <a href="./summary.html">
+      <header id="header" class="main-header">
+        <!-- <a href="./summary.html">
           <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
         </a>
-        <button type="button" class="user-avatar"><span>G</span></button>
+        <button type="button" class="user-avatar"><span>G</span></button> -->
       </header>
 
       <main class="main board-main-content">
@@ -44,8 +45,7 @@
               class="button-reset"
               type="button"
               aria-label="Add new task"
-            >
-            </button>
+            ></button>
           </section>
           <section class="find-addtask-container d-flex">
             <div class="find-message-container-wrapper d-flex">
@@ -94,8 +94,7 @@
                 class="button-reset"
                 type="button"
                 aria-label="Add new task"
-              >
-              </button>
+              ></button>
             </div>
             <section id="toDo" class="tasks-section d-flex"></section>
           </section>
@@ -107,11 +106,9 @@
                 class="button-reset"
                 type="button"
                 aria-label="Add new task"
-              >
-              </button>
+              ></button>
             </div>
-            <section id="inProgress" class="tasks-section d-flex">
-            </section>
+            <section id="inProgress" class="tasks-section d-flex"></section>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
@@ -121,8 +118,7 @@
                 class="button-reset"
                 type="button"
                 aria-label="Add new task"
-              >
-              </button>
+              ></button>
             </div>
             <section id="awaitFeedback" class="tasks-section d-flex"></section>
           </section>

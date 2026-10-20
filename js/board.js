@@ -13,7 +13,8 @@ let allFetchedTasksAreRendered = false;
  * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
  */
 async function initBoard() {
-  await window.getCurrentUser();
+  const user = await window.getCurrentUser();
+  await initAvatar(user);
   renderAddTaskButtons();
   await fetchAllData("tasks");
   await fetchAllData("contacts");
