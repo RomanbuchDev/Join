@@ -20,6 +20,7 @@
     <script src="../js/login-status.js" defer></script>
     <script src="../js/board-templates.js" defer></script>
     <script src="../js/board.js" defer></script>
+    <script src="../js/board-search.js" defer></script>
     <script src="../js/board-cardmovement.js" defer></script>
 
     <title>Join - Board</title>
@@ -39,30 +40,11 @@
           <section class="h-addtask-container d-flex">
             <h1>Board</h1>
             <button
+              id="addTaskButtonH1"
               class="button-reset"
               type="button"
               aria-label="Add new task"
             >
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 40 40"
-                class="svg-fill svg-width-height-40px"
-              >
-                <rect width="40" height="40" rx="10" />
-                <path
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  d="M20 10V30"
-                />
-                <path
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  d="M30 20L10.0005 20.138"
-                />
-              </svg>
             </button>
           </section>
           <section class="find-addtask-container d-flex">
@@ -108,28 +90,11 @@
             <div class="h-addtask-container d-flex">
               <h2>To do</h2>
               <button
+                id="addTaskButtonToDo"
                 class="button-reset"
                 type="button"
                 aria-label="Add new task"
               >
-                <svg
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32 32"
-                  class="svg-fill svg-width-height-32px"
-                >
-                  <rect width="30" height="30" rx="10" />
-                  <rect
-                    x="2"
-                    y="2"
-                    width="26"
-                    height="26"
-                    rx="8"
-                    fill="rgba(246 247 248 / 100%)"
-                  />
-                  <rect x="14" y="6.5" width="2" height="17" rx="1" />
-                  <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
-                </svg>
               </button>
             </div>
             <section id="toDo" class="tasks-section d-flex"></section>
@@ -138,62 +103,25 @@
             <div class="h-addtask-container d-flex">
               <h2>In progress</h2>
               <button
+                id="addTaskButtonInProgress"
                 class="button-reset"
                 type="button"
                 aria-label="Add new task"
               >
-                <svg
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32 32"
-                  class="svg-fill svg-width-height-32px"
-                >
-                  <rect width="30" height="30" rx="10" />
-                  <rect
-                    x="2"
-                    y="2"
-                    width="26"
-                    height="26"
-                    rx="8"
-                    fill="rgba(246 247 248 / 100%)"
-                  />
-                  <rect x="14" y="6.5" width="2" height="17" rx="1" />
-                  <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
-                </svg>
               </button>
             </div>
             <section id="inProgress" class="tasks-section d-flex">
-              <!-- <div class="empty-board-column d-flex">
-              <p>No tasks "Column Name"</p>
-            </div> -->
             </section>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
               <h2>Await feedback</h2>
               <button
+                id="addTaskButtonAwaitFeedback"
                 class="button-reset"
                 type="button"
                 aria-label="Add new task"
               >
-                <svg
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32 32"
-                  class="svg-fill svg-width-height-32px"
-                >
-                  <rect width="30" height="30" rx="10" />
-                  <rect
-                    x="2"
-                    y="2"
-                    width="26"
-                    height="26"
-                    rx="8"
-                    fill="rgba(246 247 248 / 100%)"
-                  />
-                  <rect x="14" y="6.5" width="2" height="17" rx="1" />
-                  <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
-                </svg>
               </button>
             </div>
             <section id="awaitFeedback" class="tasks-section d-flex"></section>
