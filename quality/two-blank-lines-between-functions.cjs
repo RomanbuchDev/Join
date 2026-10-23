@@ -16,10 +16,18 @@ function checkBody(context, node) {
 
 
 function checkPair(context, previous, next) {
-  if (!isFunctionLike(previous) || !isFunctionLike(next)) {
+  if (hasRegionMarker(context, previous, next) || !isFunctionLike(previous) || !isFunctionLike(next)) {
     return;
   }
   ckeckSpacing(context, previous, next);
+}
+
+
+function hasRegionMarker(context, previous, next) {
+  const source = context.sourceCode ?? context.getSourceCode()
+  return source
+    .getCommentsBefore(next)
+    .some((c) => c.loc.start.line > previous.loc.end.line && /^\s*#(end)?region\b/.test(c.value));
 }
 
 

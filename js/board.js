@@ -1,10 +1,11 @@
-const allContacts = [];
-const allFetchedContactsIDs = [];
-const allTasks = [];
-const allFetchedTasksIDs = [];
-let allFetchedTasksAreRendered = true;
-const searchInputfieldRef = document.getElementById("searchInputfield");
+// #region variables
+const allContacts = {};
+const allTasks = {};
+let allFetchedTasksAreRendered = false;
+// #endregion
 
+
+// #region init
 /**
  * Initializes the board view.
  * Loads all tasks and all contacts first, then renders the tasks into their columns.
@@ -12,17 +13,42 @@ const searchInputfieldRef = document.getElementById("searchInputfield");
  * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
  */
 async function initBoard() {
-  await window.getCurrentUser();
+  const user = await window.getCurrentUser();
+  await initAvatar(user);
+  renderAddTaskButtons();
   await fetchAllData("tasks");
   await fetchAllData("contacts");
-  renderTasks(allFetchedTasksIDs);
+  renderTasks(Object.keys(allTasks));
+  allFetchedTasksAreRendered = true;
 }
 
 
 /**
+ * Renders the Add Task Buttons.
+ * Each button is only rendered if its container exists on the current page.
+ * @returns {void} Nothing; the button SVGs are written into their containers, missing containers are skipped.
+ */
+function renderAddTaskButtons() {
+  try {
+    document.getElementById("addTaskButtonH1").innerHTML = templateAddTaskH1SVG();
+  } catch {}
+  const columnButtons = ["addTaskButtonToDo", "addTaskButtonInProgress", "addTaskButtonAwaitFeedback"]
+  for (const button of columnButtons) {
+    try {
+      document.getElementById(button).innerHTML = templateAddTaskColumnSVG();
+    } catch {}
+  }
+}
+
+
+// #endregion
+
+
+// #region data loading
+/**
  * Fetches all data of a specific category from the Firebase database.
  * @param {string} dataCategory - The category of data to fetch ("tasks", "contacts").
- * @returns {Promise<void>}
+ * @returns {Promise<void>} Resolves once the data is fetched and stored; errors are logged and not thrown.
  */
 async function fetchAllData(dataCategory) {
   try {
@@ -40,49 +66,32 @@ async function fetchAllData(dataCategory) {
 
 
 /**
- * Stores fetched data in the arrays matching its category.
+ * Stores fetched data in the objects matching its category.
  * @param {string} dataCategory - The data category ("tasks" or "contacts").
- * @param {Object} dataObject - The fetched data, keyed by ID.
- * @returns {void}
+ * @param {Object<string, Object>} dataObject - The fetched data, keyed by ID.
+ * @returns {void} Nothing; the data is merged into allTasks or allContacts.
  */
 function storeData(dataCategory, dataObject) {
   switch (dataCategory) {
     case "tasks":
-      storeDataInArray(dataObject, allFetchedTasksIDs, allTasks);
-      console.log("tasks loaded:", allTasks);
+      Object.assign(allTasks, dataObject);
       break;
     case "contacts":
-      storeDataInArray(dataObject, allFetchedContactsIDs, allContacts);
-      console.log("contacts loaded:", allContacts);
+      Object.assign(allContacts, dataObject);
       break;
-    default:
-      console.error(`Unknown data category: ${dataCategory}`);
   }
 }
 
 
-/**
- * Adds each entry of the data object, with its ID, to the target arrays.
- * @param {Object} dataObject - The fetched data, keyed by ID.
- * @param {string[]} targetArrayIDs - The array collecting the IDs.
- * @param {Object[]} targetArray - The array collecting the entries.
- * @returns {void}
- */
-function storeDataInArray(dataObject, targetArrayIDs, targetArray) {
-  if (!dataObject) return;
-  for (const [id, data] of Object.entries(dataObject)) {
-    targetArrayIDs.push(id);
-    data.id = id;
-    targetArray.push(data);
-  }
-}
+// #endregion
 
 
+// #region task rendering
 /**
  * Renders all given tasks into their corresponding columns.
  * @param {string[]} currentTasksArrayIDs - The array of task IDs to render.
  * @param {string} [activeSearch=""] - The active search text, used in the placeholder for empty columns.
- * @returns {void}
+ * @returns {void} Nothing; the columns are cleared and filled with the given tasks.
  */
 function renderTasks(currentTasksArrayIDs, activeSearch="") {
   clearAllColumns();
@@ -94,62 +103,69 @@ function renderTasks(currentTasksArrayIDs, activeSearch="") {
 
 
 /**
- * Empties all task columns.
- * @returns {void}
- */
-function clearAllColumns() {
-  const columns = document.querySelectorAll(".tasks-section");
-  for (let i = 0; i < columns.length; i++) {
-    columns[i].innerHTML = "";
-  }
-}
-
-
-/**
  * Renders a single task card into its column, 
- * including the progress bar and assignees if subtasks / assignees exist.
+ * including the description, progress bar and assignees if this information exists.
  * @param {string} taskID - The ID of the task to render.
- * @returns {void}
+ * @returns {void} Nothing; the task card is added to its column in the DOM.
  */
 function renderOneTask(taskID) {
-  const {cardPlace, category, categoryColor, title, description, priority, subtasks, assignees} 
-    = createAndReturnVariablesforTask(taskID);
-  cardPlace.innerHTML += templateTaskCard(taskID, {category, categoryColor}, {title, description, priority});
-  if (subtasks && subtasks.length > 0) {
-    renderProgressBar(taskID, subtasks);
-  } else {
-    document.getElementById(`progressContainer${taskID}`).className = "task-progress d-none";
-  }
-  if (assignees && assignees.length > 0) {
-    renderTaskAssignees(taskID, assignees);
-  }
+  const {cardPlace, category, categoryColor, title, priority, description, subtasks, assignees} 
+    = createAndReturnVariablesForTask(taskID);
+  cardPlace.innerHTML += templateTaskCard(taskID, {category, categoryColor}, {title, priority});
+  renderDescription(taskID, description);
+  renderProgressBar(taskID, subtasks);
+  renderTaskAssignees(taskID, assignees)
 }
 
 
 /**
  * Collects the data needed to render a task card.
  * @param {string} taskID - The ID of the task to render.
- * @returns {Object} The target column element, category data, texts, priority, subtasks and assignees.
+ * @returns {{cardPlace: (HTMLElement), category: string, categoryColor: string, title: string, priority: string, description: (string|undefined), subtasks: (Object[]|undefined), assignees: (string[]|undefined)}}
+ * The target column element, category and its color class, title, priority, description, subtasks and assignees.
  */
-function createAndReturnVariablesforTask(taskID) {
+function createAndReturnVariablesForTask(taskID) {
   const {category, title, description, priority, assignedTo: assignees, status: columnName, subtasks} 
-      = allTasks[allTasks.findIndex(task => task.id === taskID)];
+    = allTasks[taskID];
   const categoryColor = (category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
   const cardPlace = document.getElementById(columnName);
-  return {cardPlace, category, categoryColor, title, description, priority, subtasks, assignees};
+  return {cardPlace, category, categoryColor, title, priority, description, subtasks, assignees};
+}
+
+
+// #endregion
+
+
+// #region task card details
+/**
+ * Renders the description for a task card if it exists.
+ * @param {string} taskID - The ID of the task for which to render the description.
+ * @param {(string|undefined)} description - The description text to render.
+ * @returns {void} Nothing; the description is written into the task card, or the card stays unchanged if there is none.
+ */
+function renderDescription(taskID, description) {
+  if (!description || description.trim() === "") {
+    return
+  }
+  const descriptionRef = document.getElementById(`description${taskID}`);
+  descriptionRef.textContent = description;
 }
 
 
 /**
- * Renders a progress bar for a task based on its subtasks.
+ * Renders a progress bar for a task based on its subtasks if they exist.
  * @param {string} taskID - The ID of the task for which to render the progress bar.
- * @param {Object[]} subtasks - The array of subtasks for the task.
- * @returns {void}
+ * @param {(Object[]|undefined)} subtasks - The array of subtasks for the task.
+ * @returns {void} Nothing; the progress bar is written into the task card, or its container is hidden if there are no subtasks.
  */
 function renderProgressBar(taskID, subtasks) {
-  const doneSubtasks = checkDoneSubtasks(subtasks);
-  document.getElementById(`progressContainer${taskID}`).innerHTML
-    = templateProgressBar(doneSubtasks, subtasks.length);
+  const progressContainerRef = document.getElementById(`progressContainer${taskID}`);
+  if (subtasks && subtasks.length > 0) {
+    const doneSubtasks = checkDoneSubtasks(subtasks);
+    progressContainerRef.innerHTML = templateProgressBar(doneSubtasks, subtasks.length);
+  } else {
+    progressContainerRef.classList.add("d-none");
+  }
 }
 
 
@@ -168,20 +184,39 @@ function checkDoneSubtasks(subtasks) {
 
 
 /**
- * Renders the avatars of all assignees on a task card.
+ * Renders the avatars of all assignees on a task card if they exist.
  * @param {string} taskID - The ID of the task for which to render the assignees.
- * @param {string[]} assignees - The array of contact IDs of the assignees.
- * @returns {void}
+ * @param {(string[]|undefined)} assignees - The array of contact IDs of the assignees.
+ * @returns {void} Nothing; the avatars are added to the task card, unknown contacts are skipped.
  */
 function renderTaskAssignees(taskID, assignees) {
+  if (!assignees || assignees.length === 0) {
+    return;
+  }
+  const assigneesContainerRef = document.getElementById(`assigneesContainer${taskID}`);
   for (let i = 0; i < assignees.length; i++) {
     const contactID = assignees[i];
-    const contact = allContacts.find((c) => c.id === contactID);
+    const contact = allContacts[contactID];
     if (!contact) continue;
     const assigneeShortcut = contact.shortcut;
     const assigneeColor = contact.shortcutColor;
-    document.getElementById(`assigneesContainer${taskID}`).innerHTML 
-      += templateTaskAssignees(assigneeColor, assigneeShortcut);
+    assigneesContainerRef.innerHTML += templateTaskAssignees(assigneeColor, assigneeShortcut);
+  }
+}
+
+
+// #endregion
+
+
+// #region columns
+/**
+ * Empties all task columns.
+ * @returns {void} Nothing; the content of every column is removed from the DOM.
+ */
+function clearAllColumns() {
+  const columns = document.querySelectorAll(".tasks-section");
+  for (let i = 0; i < columns.length; i++) {
+    columns[i].innerHTML = "";
   }
 }
 
@@ -189,7 +224,7 @@ function renderTaskAssignees(taskID, assignees) {
 /**
  * Renders a placeholder into every empty column.
  * @param {string} activeSearch - The active search text, used in the placeholder for empty columns.
- * @returns {void}
+ * @returns {void} Nothing; the placeholder is written into each empty column.
  */
 function checkForEmptyColumn(activeSearch) {
   const columns = document.querySelectorAll(".tasks-section");
@@ -224,133 +259,4 @@ function getColumnName(columnID) {
 }
 
 
-/**
- * Handles a search request based on the search input field.
- * @returns {void}
- */
-function handleSearchRequest() {
-  const trimmedInput = searchInputfieldRef.value.trim();
-  switch (validateSearchInput(trimmedInput)) {
-    case "empty":
-      checkForRenderedTasks("empty");
-      break;
-    case "too short":
-      checkForRenderedTasks();
-      showUserFeedback(`Please enter at least 3 characters.`);
-      break;
-    case "valid": 
-      processSearch(trimmedInput);
-  }
-}
-
-
-/**
- * Validates the length of the search input.
- * @param {string} trimmedInput - The trimmed search input.
- * @returns {string} "empty", "too short" or "valid".
- */
-function validateSearchInput(trimmedInput) {
-  switch (true) {
-    case trimmedInput.length === 0:
-      return "empty";
-    case trimmedInput.length >= 1 && trimmedInput.length <= 2:
-      return "too short";
-    case trimmedInput.length >= 3:
-      return "valid";
-  }
-}
-
-
-/**
- * Re-renders all tasks if a filtered list is shown, and clears the search input and feedback if the search was empty.
- * @param {string} [searchStatus=""] - The status of the search input ("empty" or "").
- * @returns {void}
- */
-function checkForRenderedTasks(searchStatus="") {
-  if (!allFetchedTasksAreRendered) {
-    renderTasks(allFetchedTasksIDs);
-    allFetchedTasksAreRendered = true;
-  }
-  if (searchStatus === "empty") {
-    searchInputfieldRef.value = "";
-    clearUserFeedback();
-  }
-}
-
-
-/**
- * Searches the tasks and renders the matches, or gives feedback if none are found.
- * @param {string} validInput - The valid search input.
- * @returns {void}
- */
-function processSearch(validInput) {
-  const matchingTasks = findMatchingTasks(validInput);
-  const matching = matchingTasks.length > 0 ? "found" : "not found";
-  switch (matching) {
-    case "not found":
-      checkForRenderedTasks();
-      showUserFeedback(`No tasks found.`);
-      break;
-    case "found":
-      renderTasks(matchingTasks, `with "${validInput}" `);
-      clearUserFeedback();
-      allFetchedTasksAreRendered = false;
-  }
-}
-
-
-/**
- * Finds all tasks whose title and description contain every search term.
- * @param {string} validInput - The valid search input.
- * @returns {string[]} The array of taskIDs of the matching tasks.
- */
-function findMatchingTasks(validInput) {
-  const matchingTasks = [];
-  const searchTerms = validInput.toLowerCase().split(" ");
-  for (let i = 0; i < allTasks.length; i++) {
-    const {id, title, description} = allTasks[i];
-    const sourceString = `${title} ${description}`.toLowerCase();
-    if (doesTaskMatchSearchTerms(sourceString, searchTerms)) {
-      matchingTasks.push(id);
-    }
-  }
-  return matchingTasks;
-}
-
-
-/**
- * Checks whether a text contains all search terms.
- * @param {string} sourceString - The lowercase text to search in.
- * @param {string[]} searchTerms - The array of lowercase search terms.
- * @returns {boolean} True if every term is contained.
- */
-function doesTaskMatchSearchTerms(sourceString, searchTerms) {
-  for (let i = 0; i < searchTerms.length; i++) {
-    const term = searchTerms[i];
-    if (!sourceString.includes(term)) {
-      return false;
-    }
-  }
-  return true;
-}
-
-
-/**
- * Outputs a feedback message to the user.
- * @param {string} message - The message to show.
- * @returns {void}
- */
-function showUserFeedback(message) {
-  document.getElementsByClassName("find-container")[0].classList.add("input-error");
-  document.getElementById("searchErrorMessage").textContent = message;
-}
-
-
-/**
- * Clears any feedback message shown to the user.
- * @returns {void}
- */
-function clearUserFeedback() {
-  document.getElementsByClassName("find-container")[0].classList.remove("input-error");
-  document.getElementById("searchErrorMessage").textContent = "";
-}
+// #endregion
