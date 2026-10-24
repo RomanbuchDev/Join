@@ -194,9 +194,7 @@ function openDialogDeleteQuestion() {
   const currentContact = allContacts.find((contact) => contact.id === currentContactData.id);
 
   if (currentContact.isOwnAccount || currentContact.isGuest) {
-    // showToastMessageOwnAccountNoDelete();
     showToastMessage("Cannot delete own account", "toast-message-own-account-no-delete");
-    // contactEmailInput.classList.remove("readonly");
     return;
   }
   dialogBoxDeleteQuestion.showModal();

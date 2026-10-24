@@ -4,6 +4,7 @@
 
 const allContacts = [];
 const CATEGORY = "contacts";
+const TASKS = "tasks";
 
 let myAccount = null;
 
@@ -65,7 +66,7 @@ async function saveOwnAccountData() {
 /**
  * Loads all contacts data from the database.
  * @async
- * @returns {Promise<Object>} Contacts data.
+ * @returns {Promise<Object>} Contact data.
  */
 async function fetchAllContacts() {
   try {
@@ -84,7 +85,7 @@ async function fetchAllContacts() {
 /**
  * Saves all contacts data with ID from database in local array.
  * @async
- * @param {Object} responseAsJSON - Object with all contacts data.
+ * @param {Object} responseAsJSON - Object with all contact data.
  */
 async function saveContacts(responseAsJSON) {
   allContacts.length = 0;
@@ -127,12 +128,22 @@ function prepareContactColor(contact) {
 
 
 /**
+ * Corrects the shortcut when creating a new contact.
+ * @param {string} contactShortcut - The first letter of firstname and lastname of a contact. 
+ * @returns {string} The corrected contact shortcut.
+ */
+function getCorrectShortcut(contactShortcut) {
+  return contactShortcut.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+
+/**
  * Calculates the shortcut color with the shortcut letters.
  * @param {string} contactShortcut - Contact shortcut.
  * @returns {string} The RGBA color code for CSS.
  */
 function calculateContactIconColor(contactShortcut) {
-  const correctShortcut = contactShortcut.toUpperCase();
+  const correctShortcut = getCorrectShortcut(contactShortcut);
 
   const firstNameLetter = correctShortcut[0] || "X";
   const LastNameLetter = correctShortcut[1] || firstNameLetter;
@@ -232,7 +243,72 @@ async function deleteContactInDatabase(contactId) {
     const idToken = await window.auth.currentUser.getIdToken();
     const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
     showToastMessage("Contact successfully deleted", "toast-message-delete");
+    await deleteContactsInTask(contactId);
     return await databaseRequest(url, "DELETE");
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  }
+}
+
+
+// Test - Kontakte in den Tasks auf der Board-Seite entfernen
+
+/**
+ * Updates the contacts in the task and in the database.
+ * @async
+ * @param {string} currentTaskID - Task ID number. 
+ * @param {string[]} contacts - All contact ID numbers of the task. 
+ * @param {string} contactId - Contact ID number. 
+ * @returns {Promise<Object>} The updated contacts from the task. 
+ */
+async function updateContactsInTask(currentTaskID, contacts, contactId) {
+  try {
+    await window.getCurrentUser();
+    const idToken = await window.auth.currentUser.getIdToken();
+    const contactsIndex = contacts.indexOf(contactId);
+    if (contactsIndex === -1) return;
+
+    contacts.splice(contactsIndex, 1);
+    const taskURL = window.firebaseUrl + TASKS + "/" + currentTaskID + ".json" + "?auth=" + idToken;
+    await fetch(taskURL, { method: "PATCH", body: JSON.stringify({ assignedTo: contacts }) });
+  } catch (error) {
+    openDialogConnectionErrorDatabase();    
+  }
+}
+
+
+/**
+ * Saves all task and contact ID numbers from the tasks.
+ * @async
+ * @param {Object} responseAsJSON - Object with all task data.
+ * @param {string} contactId - Contact ID number. 
+ */
+async function checkContactsInTask(responseAsJSON, contactId) {
+  const taskIDs = Object.keys(responseAsJSON);
+  
+  for (let index = 0; index < taskIDs.length; index++) {
+    const currentTaskID = taskIDs[index];
+    const contacts = responseAsJSON[currentTaskID].assignedTo || [];
+    await updateContactsInTask(currentTaskID, contacts, contactId);
+  }  
+}
+
+
+/**
+ * Deletes the contact in the task and in the database. Gets and saves all task data.
+ * @async
+ * @param {string} contactId - Contact ID number.
+ * @returns {Promise<Object>} Task data. 
+ */
+async function deleteContactsInTask(contactId) {
+  try {
+    await window.getCurrentUser();
+    const idToken = await window.auth.currentUser.getIdToken();
+    const url = `${window.firebaseUrl}${TASKS}.json?auth=${idToken}`;
+    const response = await fetch(url);
+    const responseAsJSON = await response.json() || {};
+
+    await checkContactsInTask(responseAsJSON, contactId);
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }
@@ -245,19 +321,34 @@ const toastMessage = document.getElementById("toast-message");
 
 let toastMessageTime;
 
+/**
+ * Hides the toast message and removes the CSS status class.
+ * @param {string} statusClass - The CSS class for the background color.
+ */
+function hideToastMessage(statusClass) {
+  toastMessage.classList.remove("show");
+  toastMessage.addEventListener("transitionend", function toastMessageTransitionEnd() {
+    toastMessage.classList.remove(statusClass);
+    toastMessage.hidePopover();
+    toastMessage.removeEventListener("transitionend", toastMessageTransitionEnd);
+  });
+}
 
+
+/**
+ * Shows a toast message for a short time.
+ * @param {string} text - The toast message text.
+ * @param {string} statusClass - The CSS class for the background color.
+ */
 function showToastMessage(text, statusClass) {
   if (toastMessageTime) clearTimeout(toastMessageTime);
   toastMessage.className = "toast-message";
-
   toastMessage.textContent = text;
+
+  toastMessage.showPopover();
   toastMessage.classList.add("show", statusClass);
 
   toastMessageTime = setTimeout(() => {
-    toastMessage.classList.remove("show");
-    toastMessage.addEventListener("transitionend", function toastMessageTransitionEnd() {
-      toastMessage.classList.remove(statusClass);
-      toastMessage.removeEventListener("transitionend", toastMessageTransitionEnd);
-  });
+    hideToastMessage(statusClass);
   }, 3000);
 }
