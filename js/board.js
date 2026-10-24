@@ -1,11 +1,11 @@
-// #region variables
+// #region VARIABLES
 const allContacts = {};
 const allTasks = {};
 let allFetchedTasksAreRendered = false;
 // #endregion
 
 
-// #region init
+// #region INIT
 /**
  * Initializes the board view.
  * Loads all tasks and all contacts first, then renders the tasks into their columns.
@@ -43,7 +43,7 @@ function renderAddTaskButtons() {
 // #endregion
 
 
-// #region fetch
+// #region FETCH
 /**
  * Fetches all data of a specific category from the Firebase database.
  * @param {string} dataCategory - The category of data to fetch ("tasks", "contacts").
@@ -83,17 +83,18 @@ function storeData(dataCategory, dataObject) {
 // #endregion
 
 
-// #region render
+// #region RENDER
 /**
- * Renders all given tasks into their corresponding columns.
- * @param {string[]} currentTasksArrayIDs - The array of task IDs to render.
+ * Renders all given tasks into their corresponding columns based on their position.
+ * @param {string[]} currentTasksIDs - The array of task IDs to render.
  * @param {string} [activeSearch=""] - The active search text, used in the placeholder for empty columns.
  * @returns {void} Nothing; the columns are cleared and filled with the given tasks.
  */
-function renderTasks(currentTasksArrayIDs, activeSearch="") {
+function renderTasks(currentTasksIDs, activeSearch="") {
   clearAllColumns();
-  for (let i = 0; i < currentTasksArrayIDs.length; i++) {
-    renderOneTask(currentTasksArrayIDs[i]);
+  const sortedTasksIDs = currentTasksIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
+  for (let i = 0; i < sortedTasksIDs.length; i++) {
+    renderOneTask(sortedTasksIDs[i]);
   }
   checkForEmptyColumn(activeSearch);
 }
@@ -131,7 +132,7 @@ function createAndReturnVariablesForTask(taskID) {
 // #endregion
 
 
-// #region rend details
+// #region REND DETAILS
 /**
  * Renders the description for a task card if it exists.
  * @param {string} taskID - The ID of the task for which to render the description.
@@ -201,7 +202,7 @@ function renderTaskAssignees(taskID, assignees) {
 // #endregion
 
 
-// #region columns
+// #region COLUMNS
 /**
  * Empties all task columns.
  * @returns {void} Nothing; the content of every column is removed from the DOM.
