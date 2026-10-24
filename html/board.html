@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en">
+  <!-- #region MARK: head 
+  -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,25 +18,22 @@
     <link rel="stylesheet" href="../style.css" />
 
     <script type="module" src="../js/firebase-init.js"></script>
-    <script src="../script.js" defer></script>
-    <script src="../js/template.js" defer></script>
-    <script src="../js/login-status.js" defer></script>
-    <script src="../js/board-templates.js" defer></script>
-    <script src="../js/board.js" defer></script>
-    <script src="../js/board-search.js" defer></script>
-    <script src="../js/board-cardmovement.js" defer></script>
+    <script defer src="../script.js"></script>
+    <script defer src="../js/template.js"></script>
+    <script defer src="../js/login-status.js"></script>
+    <script defer src="../js/board-templates.js"></script>
+    <script defer src="../js/board.js"></script>
+    <script defer src="../js/board-search.js"></script>
+    <script defer src="../js/board-cardmovement.js"></script>
 
     <title>Join - Board</title>
   </head>
 
+  <!-- #region MARK: body 
+  -->
   <body onload="initBoard()">
     <div id="page">
-      <header id="header" class="main-header">
-        <!-- <a href="./summary.html">
-          <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
-        </a>
-        <button type="button" class="user-avatar"><span>G</span></button> -->
-      </header>
+      <header id="header" class="main-header"></header>
 
       <main class="main board-main-content">
         <section class="h1-find-addtask-section d-flex">
@@ -47,6 +46,9 @@
               aria-label="Add new task"
             ></button>
           </section>
+
+          <!-- #region MARK: search 
+          -->
           <section class="find-addtask-container d-flex">
             <div class="find-message-container-wrapper d-flex">
               <div class="find-container d-flex">
@@ -85,6 +87,8 @@
           </section>
         </section>
 
+        <!-- #region MARK: columns 
+        -->
         <section class="board-section d-flex">
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
@@ -96,7 +100,7 @@
                 aria-label="Add new task"
               ></button>
             </div>
-            <section id="toDo" class="tasks-section d-flex"></section>
+            <ol id="toDo" class="tasks-section d-flex"></ol>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
@@ -108,7 +112,7 @@
                 aria-label="Add new task"
               ></button>
             </div>
-            <section id="inProgress" class="tasks-section d-flex"></section>
+            <ol id="inProgress" class="tasks-section d-flex"></ol>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
@@ -120,17 +124,19 @@
                 aria-label="Add new task"
               ></button>
             </div>
-            <section id="awaitFeedback" class="tasks-section d-flex"></section>
+            <ol id="awaitFeedback" class="tasks-section d-flex"></ol>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
               <h2>Done</h2>
             </div>
-            <section id="done" class="tasks-section d-flex"></section>
+            <ol id="done" class="tasks-section d-flex"></ol>
           </section>
         </section>
       </main>
 
+      <!-- #region MARK: navbar 
+      -->
       <nav class="main-nav">
         <img
           class="nav-join-img"

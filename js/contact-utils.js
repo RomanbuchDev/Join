@@ -70,7 +70,6 @@ async function saveOwnAccountData() {
  */
 async function fetchAllContacts() {
   try {
-    await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
     const response = await fetch(`${window.firebaseUrl}/${CATEGORY}.json?auth=${idToken}`);
 
@@ -186,7 +185,6 @@ async function databaseRequest(url, method, data = null) {
  */
 async function addContactToDatabase(newContactData) {
   try {
-    await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
     const url = `${window.firebaseUrl}/${CATEGORY}.json?auth=${idToken}`;
     showToastMessage("Contact successfully created", "toast-message-new");
@@ -220,7 +218,6 @@ function getContactDataForDatabase() {
  */
 async function editContactInDatabase(contactId) {
   try {
-    await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
     const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
     showToastMessage("Contact successfully edited", "toast-message-edit");
@@ -239,7 +236,6 @@ async function editContactInDatabase(contactId) {
  */
 async function deleteContactInDatabase(contactId) {
   try {
-    await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
     const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
     showToastMessage("Contact successfully deleted", "toast-message-delete");
@@ -312,43 +308,4 @@ async function deleteContactsInTask(contactId) {
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }
-}
-
-
-// Toast Message NEU
-
-const toastMessage = document.getElementById("toast-message");
-
-let toastMessageTime;
-
-/**
- * Hides the toast message and removes the CSS status class.
- * @param {string} statusClass - The CSS class for the background color.
- */
-function hideToastMessage(statusClass) {
-  toastMessage.classList.remove("show");
-  toastMessage.addEventListener("transitionend", function toastMessageTransitionEnd() {
-    toastMessage.classList.remove(statusClass);
-    toastMessage.hidePopover();
-    toastMessage.removeEventListener("transitionend", toastMessageTransitionEnd);
-  });
-}
-
-
-/**
- * Shows a toast message for a short time.
- * @param {string} text - The toast message text.
- * @param {string} statusClass - The CSS class for the background color.
- */
-function showToastMessage(text, statusClass) {
-  if (toastMessageTime) clearTimeout(toastMessageTime);
-  toastMessage.className = "toast-message";
-  toastMessage.textContent = text;
-
-  toastMessage.showPopover();
-  toastMessage.classList.add("show", statusClass);
-
-  toastMessageTime = setTimeout(() => {
-    hideToastMessage(statusClass);
-  }, 3000);
 }
