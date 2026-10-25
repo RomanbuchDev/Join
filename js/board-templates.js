@@ -1,3 +1,4 @@
+// #region task card
 /**
  * Returns the HTML template of a task card.
  * Description, progress bar and assignees are filled in afterwards.
@@ -12,7 +13,7 @@
  */
 function templateTaskCard(taskID, {category, categoryColor}, {title, priority}) {
   return /*html*/ `
-    <div class="task-card d-flex" draggable="true">
+    <li class="task-card d-flex" draggable="true">
       <p class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(category)}</p>
       <div class="task-title-description-container d-flex">
         <h3>${escapeHtml(title)}</h3>
@@ -21,8 +22,8 @@ function templateTaskCard(taskID, {category, categoryColor}, {title, priority}) 
       <div id="progressContainer${escapeHtml(taskID)}" class="task-progress d-flex">
       </div>
       <div class="task-card-footer d-flex">
-        <div id="assigneesContainer${escapeHtml(taskID)}" class="task-avatars-container d-flex">
-        </div>
+        <ul id="assigneesContainer${escapeHtml(taskID)}" class="task-avatars-container d-flex">
+        </ul>
         <div class="priority-icon d-flex">
           <img
             src="../assets/icons/prio-${escapeHtml(priority)}-symbol.svg"
@@ -30,10 +31,12 @@ function templateTaskCard(taskID, {category, categoryColor}, {title, priority}) 
           />
         </div>
       </div>
-    </div>`;
+    </li>`;
 }
+// #endregion
 
 
+// #region task details
 /**
  * Returns the HTML template of the progress bar of a task card.
  * @param {number} doneSubtasks - The number of completed subtasks.
@@ -55,7 +58,7 @@ function templateProgressBar(doneSubtasks, subtasksLength) {
  */
 function templateTaskAssignees(assigneeColor, assigneeShortcut) {
   return /*html*/ `
-    <span class="task-avatar d-flex" style="background-color:${escapeHtml(assigneeColor)}">${escapeHtml(assigneeShortcut)}</span>`
+    <li class="task-avatar d-flex" style="background-color:${escapeHtml(assigneeColor)}">${escapeHtml(assigneeShortcut)}</li>`
 }
 
 
@@ -71,8 +74,10 @@ function templateEmptyColumn(activeSearch, columnName) {
       <p>No tasks ${escapeHtml(activeSearch)}${escapeHtml(columnName)}</p>
     </div>`
 }
+// #endregion
 
 
+// #region buttons
 /**
  * Returns the SVG of the Add Task button next to the headline.
  * @returns {string} The SVG markup of the button.
@@ -127,3 +132,4 @@ function templateAddTaskColumnSVG() {
       <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
     </svg>`;
 }
+// #endregion

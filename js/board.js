@@ -13,8 +13,9 @@ let allFetchedTasksAreRendered = false;
  * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
  */
 async function initBoard() {
-  const user = await window.getCurrentUser();
-  await initAvatar(user);
+  await initHeader()
+  // const user = await window.getCurrentUser();
+  // await initAvatar(user);
   renderAddTaskButtons();
   await fetchAllData("tasks");
   await fetchAllData("contacts");
@@ -39,12 +40,10 @@ function renderAddTaskButtons() {
     } catch {}
   }
 }
-
-
 // #endregion
 
 
-// #region data loading
+// #region fetch
 /**
  * Fetches all data of a specific category from the Firebase database.
  * @param {string} dataCategory - The category of data to fetch ("tasks", "contacts").
@@ -81,12 +80,10 @@ function storeData(dataCategory, dataObject) {
       break;
   }
 }
-
-
 // #endregion
 
 
-// #region task rendering
+// #region render
 /**
  * Renders all given tasks into their corresponding columns.
  * @param {string[]} currentTasksArrayIDs - The array of task IDs to render.
@@ -131,12 +128,10 @@ function createAndReturnVariablesForTask(taskID) {
   const cardPlace = document.getElementById(columnName);
   return {cardPlace, category, categoryColor, title, priority, description, subtasks, assignees};
 }
-
-
 // #endregion
 
 
-// #region task card details
+// #region rend details
 /**
  * Renders the description for a task card if it exists.
  * @param {string} taskID - The ID of the task for which to render the description.
@@ -203,8 +198,6 @@ function renderTaskAssignees(taskID, assignees) {
     assigneesContainerRef.innerHTML += templateTaskAssignees(assigneeColor, assigneeShortcut);
   }
 }
-
-
 // #endregion
 
 
@@ -257,6 +250,4 @@ function getColumnName(columnID) {
   }
   return columnName;
 }
-
-
 // #endregion

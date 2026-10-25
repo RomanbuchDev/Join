@@ -1,6 +1,6 @@
 // JavaScript file for contacts page
 
-// Variables:
+// #region Variables:
 
 const contactList = document.getElementById("contact-list");
 const contactDetails = document.getElementById("contact-details");
@@ -14,13 +14,14 @@ const messageOwnAccountNoDelete = document.getElementById("toast-message-own-acc
 let currentContactData;
 let lastScrollPosition = 0;
 
-// Functions:
+// #region Functions:
 
 /**
  * Functions for initial page start.
  * @async
  */
-async function init() {
+async function initContacts() {
+  await initHeader()
   await fetchAllContacts();
   renderContactList();
   activateContactFormSubmissionType();
@@ -329,37 +330,5 @@ function renderContactDetailsDesktopPlaceholder() {
   if (window.innerWidth >= 1024) {
     const contactDetailsPlaceholder = getContactDetailsPlaceholderTemplate();
     contactDetails.innerHTML = contactDetailsPlaceholder;
-  }
-}
-
-
-/** Closes the dialog window showing the database connection error. */
-function closeDialogConnectionErrorDatabase() {
-  const dialogBoxConnectionErrorDatabase = document.getElementById("connection-error-database-dialog");
-
-  if (dialogBoxConnectionErrorDatabase) {
-    dialogBoxConnectionErrorDatabase.remove();
-  }
-}
-
-
-/** Reloads the page. */
-function reloadPage() {
-  window.location.reload();
-}
-
-
-/** Opens the dialog window showing the database connection error. */
-function openDialogConnectionErrorDatabase() {
-  const openErrorMessage = document.getElementById("connection-error-database-dialog");
-  if (openErrorMessage) return;
-
-  const errorMessage = getConnectionErrorDatabaseTemplate();
-  document.body.insertAdjacentHTML("beforeend", errorMessage);
-
-  const dialogBoxConnectionErrorDatabase = document.getElementById("connection-error-database-dialog");
-
-  if (dialogBoxConnectionErrorDatabase) {
-    dialogBoxConnectionErrorDatabase.showModal();
   }
 }

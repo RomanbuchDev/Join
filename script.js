@@ -1,3 +1,7 @@
+const toastMessage = document.getElementById("toast-message");
+
+let toastMessageTime;
+
 /**
  * Renders the header with the avatar initials of the given user.
  * @param {Object} user - The logged-in user ({ uid, name, email, isGuest }).
@@ -70,4 +74,69 @@ function escapeHtml(text) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+
+/**
+ * Hides the toast message and removes the CSS status class.
+ * @param {string} statusClass - The CSS class for the background color.
+ */
+function hideToastMessage(statusClass) {
+  toastMessage.classList.remove("show");
+  toastMessage.addEventListener("transitionend", function toastMessageTransitionEnd() {
+    toastMessage.classList.remove(statusClass);
+    toastMessage.hidePopover();
+    toastMessage.removeEventListener("transitionend", toastMessageTransitionEnd);
+  });
+}
+
+
+/**
+ * Shows a toast message for a short time.
+ * @param {string} text - The toast message text.
+ * @param {string} statusClass - The CSS class for the background color.
+ */
+function showToastMessage(text, statusClass) {
+  if (toastMessageTime) clearTimeout(toastMessageTime);
+  toastMessage.className = "toast-message";
+  toastMessage.textContent = text;
+
+  toastMessage.showPopover();
+  toastMessage.classList.add("show", statusClass);
+
+  toastMessageTime = setTimeout(() => {
+    hideToastMessage(statusClass);
+  }, 3000);
+}
+
+
+/** Closes the dialog window showing the database connection error. */
+function closeDialogConnectionErrorDatabase() {
+  const dialogBoxConnectionErrorDatabase = document.getElementById("connection-error-database-dialog");
+
+  if (dialogBoxConnectionErrorDatabase) {
+    dialogBoxConnectionErrorDatabase.remove();
+  }
+}
+
+
+/** Reloads the page. */
+function reloadPage() {
+  window.location.reload();
+}
+
+
+/** Opens the dialog window showing the database connection error. */
+function openDialogConnectionErrorDatabase() {
+  const openErrorMessage = document.getElementById("connection-error-database-dialog");
+  if (openErrorMessage) return;
+
+  const errorMessage = getConnectionErrorDatabaseTemplate();
+  document.body.insertAdjacentHTML("beforeend", errorMessage);
+
+  const dialogBoxConnectionErrorDatabase = document.getElementById("connection-error-database-dialog");
+
+  if (dialogBoxConnectionErrorDatabase) {
+    dialogBoxConnectionErrorDatabase.showModal();
+  }
 }
