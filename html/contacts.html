@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="de">
+  <!-- #region MARK: head 
+  -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,58 +24,19 @@
     <!-- JavaScript files -->
     <script type="module" src="../js/firebase-init.js"></script>
     <script defer src="../script.js"></script>
-    <script src="../js/login-status.js" defer></script>
-    <script src="../js/template.js" defer></script>
-    <script src="../js/toggle-user-menu.js" defer></script>
-    <script src="../js/contact-utils.js" defer></script>
-    <script src="../js/contacts-dialog.js" defer></script>
-    <script src="../js/contacts.js" defer></script>
+    <script defer src="../js/login-status.js"></script>
+    <script defer src="../js/template.js"></script>
+    <script defer src="../js/toggle-user-menu.js"></script>
+    <script defer src="../js/contact-utils.js"></script>
+    <script defer src="../js/contacts-dialog.js"></script>
+    <script defer src="../js/contacts.js"></script>
   </head>
-  <body onload="init()" class="main-page" id="page">
+
+  <!-- #region MARK: body 
+  -->
+  <body onload="initContacts()" class="main-page" id="page">
     <!-- Header -->
-    <header class="main-header" aria-label="Main page">
-      <a class="main-header-logo" href=""
-        ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
-      /></a>
-
-      <p class="main-header-title">Kanban Project Management Tool</p>
-
-      <a
-        href="./help.html"
-        class="main-header-help"
-        aria-label="Link to Help page"
-      >
-        <img src="../assets/icons/help.svg" alt="" />
-      </a>
-
-      <div class="user-menu">
-        <button
-          type="button"
-          class="user-avatar"
-          onclick="toggleUserMenu(this)"
-          aria-expanded="false"
-          aria-controls="user-menu-dropdown"
-          aria-label="Open user menu"
-        >
-          <span>SM</span>
-        </button>
-
-        <ul id="user-menu-dropdown" class="user-menu-dropdown">
-          <li class="user-menu-item user-menu-item--help">
-            <a href="./help.html">Help</a>
-          </li>
-          <li class="user-menu-item">
-            <a href="./imprint.html">Legal Notice</a>
-          </li>
-          <li class="user-menu-item">
-            <a href="./privacy-policy.html">Privacy Policy</a>
-          </li>
-          <li class="user-menu-item user-menu-item--logout">
-            <button type="button" class="user-menu-logout">Log out</button>
-          </li>
-        </ul>
-      </div>
-    </header>
+    <header id="header" class="main-header" aria-label="Main page"></header>
 
     <!-- Main -->
     <main class="main-container main" id="main-view">
@@ -135,6 +98,8 @@
       </div>
     </main>
 
+    <!-- #region MARK: navbar 
+    -->
     <!-- Navigation (at footer in mobile / on left side in Desktop) -->
     <nav class="main-nav">
       <img
@@ -183,6 +148,8 @@
       </ul>
     </nav>
 
+    <!-- #region MARK: dialog add 
+    -->
     <!-- Dialog window to add or edit contacts -->
     <dialog class="contact-form-container" id="contacts-dialog">
       <form>
@@ -329,6 +296,8 @@
       </form>
     </dialog>
 
+    <!-- #region MARK: dialog delete 
+    -->
     <!-- Dialog for delete contact question -->
     <dialog
       class="delete-question-container"
@@ -367,6 +336,6 @@
     </dialog>
 
     <!-- Toast messages -->
-    <div class="toast-message" id="toast-message"></div>
+    <div class="toast-message" id="toast-message" popover="manual"></div>
   </body>
 </html>
