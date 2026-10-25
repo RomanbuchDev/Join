@@ -1,4 +1,8 @@
-// #region task card
+/**
+ * JavaScript file for the templates of the board page.
+ */
+
+// #region TASK CARD
 /**
  * Returns the HTML template of a task card.
  * Description, progress bar and assignees are filled in afterwards.
@@ -13,7 +17,7 @@
  */
 function templateTaskCard(taskID, {category, categoryColor}, {title, priority}) {
   return /*html*/ `
-    <li class="task-card d-flex" draggable="true">
+    <li data-task-id="${escapeHtml(taskID)}" class="task-card d-flex" draggable="true">
       <p class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(category)}</p>
       <div class="task-title-description-container d-flex">
         <h3>${escapeHtml(title)}</h3>
@@ -36,7 +40,7 @@ function templateTaskCard(taskID, {category, categoryColor}, {title, priority}) 
 // #endregion
 
 
-// #region task details
+// #region TASK DETAILS
 /**
  * Returns the HTML template of the progress bar of a task card.
  * @param {number} doneSubtasks - The number of completed subtasks.
@@ -77,7 +81,7 @@ function templateEmptyColumn(activeSearch, columnName) {
 // #endregion
 
 
-// #region buttons
+// #region BUTTONS
 /**
  * Returns the SVG of the Add Task button next to the headline.
  * @returns {string} The SVG markup of the button.
