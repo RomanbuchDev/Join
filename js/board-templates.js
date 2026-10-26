@@ -18,9 +18,9 @@
 function templateTaskCard(taskID, {category, categoryColor}, {title, priority}) {
   return /*html*/ `
     <li data-task-id="${escapeHtml(taskID)}" class="task-card d-flex" draggable="true">
-      <p class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(category)}</p>
+      <h3 class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(category)}</h3>
       <div class="task-title-description-container d-flex">
-        <h3>${escapeHtml(title)}</h3>
+        <h4>${escapeHtml(title)}</h4>
         <p id="description${escapeHtml(taskID)}" class="task-description"></p>
       </div>
       <div id="progressContainer${escapeHtml(taskID)}" class="task-progress d-flex">
@@ -29,7 +29,7 @@ function templateTaskCard(taskID, {category, categoryColor}, {title, priority}) 
         <ul id="assigneesContainer${escapeHtml(taskID)}" class="task-avatars-container d-flex">
         </ul>
         <div class="priority-icon d-flex">
-          <img
+          <img draggable="false"
             src="../assets/icons/prio-${escapeHtml(priority)}-symbol.svg"
             alt="${escapeHtml(priority)} priority task"
           />

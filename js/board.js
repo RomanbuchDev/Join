@@ -5,7 +5,7 @@
 // #region VARIABLES
 const allContacts = {};
 const allTasks = {};
-const columns = document.querySelectorAll(".tasks-list")
+const columns = document.querySelectorAll(".tasks-list");
 let allFetchedTasksAreRendered = false;
 // #endregion
 
@@ -96,9 +96,8 @@ function storeData(dataCategory, dataObject) {
 function renderTasks(currentTasksIDs, activeSearch="") {
   clearAllColumns();
   const sortedTasksIDs = currentTasksIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
-  for (let i = 0; i < sortedTasksIDs.length; i++) {
-    renderOneTask(sortedTasksIDs[i]);
-  }
+  sortedTasksIDs.forEach(renderOneTask);
+  activateDragStartEnd();
   checkForEmptyColumn(activeSearch);
 }
 
@@ -175,9 +174,7 @@ function renderProgressBar(taskID, subtasks) {
  */
 function checkDoneSubtasks(subtasks) {
   let counter = 0;
-  for (let i = 0; i < subtasks.length; i++) {
-    counter += subtasks[i].done ? 1 : 0;
-  }
+  subtasks.forEach((subtask) => {counter += subtask.done ? 1 : 0;})
   return counter;
 }
 
@@ -211,9 +208,7 @@ function renderTaskAssignees(taskID, assignees) {
  * @returns {void} Nothing; the content of every column is removed from the DOM.
  */
 function clearAllColumns() {
-  for (let i = 0; i < columns.length; i++) {
-    columns[i].innerHTML = "";
-  }
+  columns.forEach((column) => {column.innerHTML = ""})
 }
 
 
