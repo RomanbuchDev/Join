@@ -11,28 +11,27 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
-      - name: Prepare deploy directory (git archive)
-        run: |
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          mkdir -p deploy
-          git archive --format=tar HEAD | tar -x -C deploy
-
-      - name: Ensure docker home writable
-        run: |
-          mkdir -p "$RUNNER_TEMP/_github_home"
-          chmod -R 0777 "$RUNNER_TEMP/_github_home"
-
-      - name: Deploy to FTP/FTPS
-        uses: airvzxf/ftp-deployment-action@v2
+      - name: Deploy via lftp
         env:
-          HOME: /github/workspace
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          user: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local_dir: "./deploy"
-          remote_dir: "/"
-          ssl_verify_certificate: "false"
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y lftp
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_HOST" -e "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate no;
+            mirror --reverse --verbose \
+              --exclude-glob .git/ \
+              --exclude-glob .github/ \
+              --exclude-glob .gitignore \
+              --exclude-glob node_modules/ \
+              --exclude-glob quality/ \
+              --exclude-glob package.json \
+              --exclude-glob package-lock.json \
+              --exclude-glob README.md \
+              --exclude-glob LICENSE.md \
+              ./ /;
+            quit"

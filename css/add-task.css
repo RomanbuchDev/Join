@@ -1,0 +1,165 @@
+.add-task-main {
+  display: flex;
+  flex-direction: column;
+}
+
+#task-form {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.add-task-header {
+  position: sticky;
+  top: 0;
+  padding: 2em 1em 0.3em;
+  background-color: var(--color-bg-main);
+}
+
+.form-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "title"
+    "description"
+    "due-date"
+    "priority"
+    "assigned"
+    "category"
+    "subtasks";
+  gap: 1.5rem;
+  min-height: 0;
+  overflow-y: auto;
+  padding-block-end: 10em;
+  padding-inline: 1em;
+}
+
+.add-task-layout {
+  display: grid;
+  grid-template-rows:
+    auto
+    minmax(0, 1fr)
+    auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.form-actions {
+  position: fixed;
+  bottom: 5rem;
+  inset-inline: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1em;
+  padding: 0.75em 1em;
+  background-color: var(--color-bg-main);
+}
+
+.form-action {
+  font-size: 1rem;
+  padding: 0.75em 1em;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.form-action--clear {
+  background-color: transparent;
+  color: var(--color-dark);
+  border: 1px solid var(--color-dark);
+}
+
+.form-action--create {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  border: 1px solid var(--color-dark);
+  font-weight: 700;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.form-field > label {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.required-label::after {
+  content: "*";
+  color: red;
+}
+
+.form-field--title {
+  grid-area: title;
+  padding-top: 1em;
+}
+
+.form-control {
+  width: 100%;
+  font: inherit;
+  padding: 0.65em 1em;
+  border: 1px solid var(--color-gray-104);
+  border-radius: 10px;
+  background-color: var(--color-white);
+}
+
+.form-field--description {
+  grid-area: description;
+}
+
+.form-control--description {
+  padding-inline: 1em;
+  padding-block: 0.9em 1.5em;
+  resize: none;
+}
+
+.form-field--due-date {
+  grid-area: due-date;
+}
+
+.form-field--priority {
+  grid-area: priority;
+}
+
+.priority-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75em;
+}
+
+.priority-option label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.75em;
+  border: 1px solid var(--color-gray);
+  border-radius: 10px;
+  background-color: var(--color-white);
+  cursor: pointer;
+}
+
+.priority-option input {
+  position: absolute;
+  opacity: 0;
+}
+
+.priority-option input:checked + label {
+  color: var(--color-white);
+}
+
+.form-field--assigned {
+  grid-area: assigned;
+}
+
+.form-field--category {
+  grid-area: category;
+}
+
+.form-field--subtasks {
+  grid-area: subtasks;
+}
