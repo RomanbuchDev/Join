@@ -68,19 +68,21 @@
 /* ##### Basic toast messages structure ##### */
 
 .toast-message {
+  background: transparent;
   color: var(--color-white);
   font-size: 1.25rem;
   border: none;
   border-radius: 20px;
   box-shadow: 0 0 4px var(--color-black-40);
   position: fixed;
-  bottom: 200px;
+  top: unset;
+  bottom: 300px;
   left: 50%;
-  z-index: 300;
   white-space: nowrap;
   transform: translate(-50%, 300px);
   transition: transform 0.3s ease-out;
   padding: 1.125em 0.625em;
+  margin: 0 auto;
 }
 
 .toast-message.show {
