@@ -4,8 +4,8 @@ async function init() {
   await window.getCurrentUser();
   await getSummaryData();
   getStatusInformation();
+  renderDates();
 }
-
 
 async function getSummaryData() {
   const idToken = await window.auth.currentUser.getIdToken();
@@ -16,7 +16,6 @@ async function getSummaryData() {
   tasks = Object.values(data);
 }
 
-
 function getStatusInformation() {
   const urgentTasks = getStatusUrgent();
   const summaryList = document.querySelector("#summary_list");
@@ -24,7 +23,6 @@ function getStatusInformation() {
   summaryList.innerHTML = "";
   summaryList.innerHTML = generateSummaryHTM(statusCounts, tasks, urgentTasks);
 }
-
 
 function getStatusCounts() {
   const statusCounts = { toDo: 0, inProgress: 0, awaitFeedback: 0, done: 0 };
@@ -39,7 +37,6 @@ function getStatusCounts() {
   return statusCounts;
 }
 
-
 function countStatus(task, status) {
   let counter = 0;
   if (task.status === status) {
@@ -47,7 +44,6 @@ function countStatus(task, status) {
   }
   return counter;
 }
-
 
 function getStatusUrgent() {
   let counterUrgent = 0;
@@ -62,7 +58,7 @@ function getStatusUrgent() {
   return counterUrgent;
 }
 
-
+//fragen ob wir nicht eine js machen was nicht in den fierbase kommt//
 function toggleUserMenu(button) {
   const userMenu = document.querySelector("#user-menu-dropdown");
   userMenu.classList.toggle("is-open");
@@ -70,7 +66,6 @@ function toggleUserMenu(button) {
   const isOpen = userMenu.classList.contains("is-open");
   button.setAttribute("aria-expanded", isOpen);
 }
-
 
 function changeFillIcon(element, action) {
   const circle = element.querySelector(".icon_circle");
@@ -80,13 +75,50 @@ function changeFillIcon(element, action) {
   motif.setAttribute("fill", action === "start" ? "#2A3647" : "white");
 }
 
-
 function changeStrokeIcon(element, action) {
   const circle = element.querySelector(".icon_circle");
   const motif = element.querySelector(".icon_motif");
 
   circle.setAttribute("fill", action === "start" ? "white" : "#2A3647");
   motif.setAttribute("stroke", action === "start" ? "#2A3647" : "white");
+}
+
+function renderDates() {
+  const now = new Date().setHours(0, 0, 0, 0);
+  let nextTask;
+
+  for (let i = 0; i < tasks.length; i++) {
+    const dueDate = new Date(tasks[i].dueDate + "T00:00:00").getTime();
+
+    if (dueDate >= now) {
+      if (nextTask === undefined) {
+        nextTask = tasks[i];
+      } else {
+        const nextDueDate = new Date(nextTask.dueDate + "T00:00:00").getTime();
+
+        if (dueDate < nextDueDate) {
+          nextTask = tasks[i];
+        }
+      }
+    }
+  }
+  const deadlineElement = document.getElementById("upcoming-deadline");
+
+  if (nextTask === undefined) {
+    deadlineElement.textContent = "No upcoming deadline";
+    return;
+  }
+
+  const deadline = new Date(nextTask.dueDate + "T00:00:00");
+
+  const formattedDate = deadline.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  deadlineElement.dateTime = nextTask.dueDate;
+  deadlineElement.textContent = formattedDate;
 }
 
 init();
