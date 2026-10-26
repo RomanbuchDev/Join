@@ -1,6 +1,6 @@
 // JavaScript file for contacts dialog
 
-// Variables:
+// #region Variables:
 
 const dialogBox = document.getElementById("contacts-dialog");
 const dialogBoxButton = document.getElementById("add-contact-menu-button");
@@ -25,7 +25,7 @@ const originalErrorMessageName = dialogErrorMessageName.textContent;
 const originalErrorMessageEmail = dialogErrorMessageEmail.textContent;
 const originalErrorMessagePhone = dialogErrorMessagePhone.textContent;
 
-// Functions:
+// #region Functions:
 
 /** Activates the event handling for the submission of the contact form. */
 function activateContactFormSubmissionType() {

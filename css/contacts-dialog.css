@@ -374,3 +374,9 @@
     gap: 0.25em;
   }
 }
+
+@media (width >= 80em) {
+  .contact-form-container {
+    bottom: 0;
+  }
+}

@@ -1,6 +1,6 @@
 // JavasScript utility functions - Contacts page
 
-// Variables:
+// #region Variables:
 
 const allContacts = [];
 const CATEGORY = "contacts";
@@ -8,7 +8,7 @@ const TASKS = "tasks";
 
 let myAccount = null;
 
-// Functions:
+// #region Functions:
 
 /**
  * Gets own account or guest account data and creates object.
