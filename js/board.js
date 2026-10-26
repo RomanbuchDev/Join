@@ -1,11 +1,16 @@
-// #region variables
+/**
+ * JavaScript file for the initiation (fetch and tasks rendering) of the board page.
+ */
+
+// #region VARIABLES
 const allContacts = {};
 const allTasks = {};
+const columns = document.querySelectorAll(".tasks-list");
 let allFetchedTasksAreRendered = false;
 // #endregion
 
 
-// #region init
+// #region INIT
 /**
  * Initializes the board view.
  * Loads all tasks and all contacts first, then renders the tasks into their columns.
@@ -14,8 +19,6 @@ let allFetchedTasksAreRendered = false;
  */
 async function initBoard() {
   await initHeader()
-  // const user = await window.getCurrentUser();
-  // await initAvatar(user);
   renderAddTaskButtons();
   await fetchAllData("tasks");
   await fetchAllData("contacts");
@@ -43,7 +46,7 @@ function renderAddTaskButtons() {
 // #endregion
 
 
-// #region fetch
+// #region FETCH
 /**
  * Fetches all data of a specific category from the Firebase database.
  * @param {string} dataCategory - The category of data to fetch ("tasks", "contacts").
@@ -83,18 +86,18 @@ function storeData(dataCategory, dataObject) {
 // #endregion
 
 
-// #region render
+// #region RENDER TASK
 /**
- * Renders all given tasks into their corresponding columns.
- * @param {string[]} currentTasksArrayIDs - The array of task IDs to render.
+ * Renders all given tasks into their corresponding columns based on their position.
+ * @param {string[]} currentTasksIDs - The array of task IDs to render.
  * @param {string} [activeSearch=""] - The active search text, used in the placeholder for empty columns.
  * @returns {void} Nothing; the columns are cleared and filled with the given tasks.
  */
-function renderTasks(currentTasksArrayIDs, activeSearch="") {
+function renderTasks(currentTasksIDs, activeSearch="") {
   clearAllColumns();
-  for (let i = 0; i < currentTasksArrayIDs.length; i++) {
-    renderOneTask(currentTasksArrayIDs[i]);
-  }
+  const sortedTasksIDs = currentTasksIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
+  sortedTasksIDs.forEach(renderOneTask);
+  activateDragStartEnd();
   checkForEmptyColumn(activeSearch);
 }
 
@@ -131,7 +134,7 @@ function createAndReturnVariablesForTask(taskID) {
 // #endregion
 
 
-// #region rend details
+// #region T. DETAILS
 /**
  * Renders the description for a task card if it exists.
  * @param {string} taskID - The ID of the task for which to render the description.
@@ -171,9 +174,7 @@ function renderProgressBar(taskID, subtasks) {
  */
 function checkDoneSubtasks(subtasks) {
   let counter = 0;
-  for (let i = 0; i < subtasks.length; i++) {
-    counter += subtasks[i].done ? 1 : 0;
-  }
+  subtasks.forEach((subtask) => {counter += subtask.done ? 1 : 0;})
   return counter;
 }
 
@@ -201,16 +202,13 @@ function renderTaskAssignees(taskID, assignees) {
 // #endregion
 
 
-// #region columns
+// #region COLUMNS
 /**
  * Empties all task columns.
  * @returns {void} Nothing; the content of every column is removed from the DOM.
  */
 function clearAllColumns() {
-  const columns = document.querySelectorAll(".tasks-section");
-  for (let i = 0; i < columns.length; i++) {
-    columns[i].innerHTML = "";
-  }
+  columns.forEach((column) => {column.innerHTML = ""})
 }
 
 
@@ -220,7 +218,6 @@ function clearAllColumns() {
  * @returns {void} Nothing; the placeholder is written into each empty column.
  */
 function checkForEmptyColumn(activeSearch) {
-  const columns = document.querySelectorAll(".tasks-section");
   for (let i = 0; i < columns.length; i++) {
     if (!columns[i].innerText) {
       const emptyColumnID = columns[i].id;

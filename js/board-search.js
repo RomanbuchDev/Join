@@ -1,5 +1,13 @@
-const searchInputfieldRef = document.getElementById("searchInputfield");
+/**
+ * JavaScript file for the search functionality on the board page.
+ */
 
+// #region VARIABLES
+const searchInputfieldRef = document.getElementById("searchInputfield");
+// #endregion
+
+
+// #region SEARCH
 /**
  * Handles a search request based on the search input field.
  * Validates the input, then either shows all tasks, gives feedback or renders the matching tasks.
@@ -39,23 +47,6 @@ function validateSearchInput(trimmedInput) {
 
 
 /**
- * Re-renders all tasks if a filtered list is shown, and clears the search input and feedback if the search was empty.
- * @param {string} [searchStatus=""] - The status of the search input ("empty" or "").
- * @returns {void} Nothing; the board, the search input and the feedback message are updated as needed.
- */
-function checkForRenderedTasks(searchStatus="") {
-  if (!allFetchedTasksAreRendered) {
-    renderTasks(Object.keys(allTasks));
-    allFetchedTasksAreRendered = true;
-  }
-  if (searchStatus === "empty") {
-    searchInputfieldRef.value = "";
-    clearUserFeedback();
-  }
-}
-
-
-/**
  * Searches the tasks and renders the matches, or gives feedback if none are found.
  * @param {string} validInput - The valid search input.
  * @returns {void} Nothing; the matching tasks are rendered or a feedback message is shown.
@@ -76,6 +67,25 @@ function processSearch(validInput) {
 }
 
 
+/**
+ * Re-renders all tasks if a filtered list is shown, and clears the search input and feedback if the search was empty.
+ * @param {string} [searchStatus=""] - The status of the search input ("empty" or "").
+ * @returns {void} Nothing; the board, the search input and the feedback message are updated as needed.
+ */
+function checkForRenderedTasks(searchStatus="") {
+  if (!allFetchedTasksAreRendered) {
+    renderTasks(Object.keys(allTasks));
+    allFetchedTasksAreRendered = true;
+  }
+  if (searchStatus === "empty") {
+    searchInputfieldRef.value = "";
+    clearUserFeedback();
+  }
+}
+// #endregion
+
+
+// #region MATCHING
 /**
  * Finds all tasks whose title and description contain every search term.
  * @param {string} validInput - The valid search input.
@@ -112,8 +122,10 @@ function doesTaskMatchSearchTerms(sourceString, searchTerms) {
   }
   return true;
 }
+// #endregion
 
 
+// #region FEEDBACK
 /**
  * Outputs a feedback message to the user.
  * @param {string} message - The message to show.
@@ -133,3 +145,4 @@ function clearUserFeedback() {
   document.getElementsByClassName("find-container")[0].classList.remove("input-error");
   document.getElementById("searchErrorMessage").textContent = "";
 }
+// #endregion
