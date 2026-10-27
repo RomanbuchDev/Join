@@ -255,9 +255,11 @@
 @media (width >= 64em) {
   .contact-form-container {
     transform: translateX(100%);
-    top: 180px;
+    top: 82.56px;
+    bottom: 80px;
     max-width: 1212px;
     max-height: 592px;
+    margin: auto;
   }
 
   .contact-form-container[open] {
@@ -370,5 +372,11 @@
     justify-content: center;
     align-items: center;
     gap: 0.25em;
+  }
+}
+
+@media (width >= 80em) {
+  .contact-form-container {
+    bottom: 0;
   }
 }

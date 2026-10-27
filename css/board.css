@@ -9,20 +9,25 @@
   display: none;
 }
 
-h2,
-h3 {
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--color-dark);
+/* #endregion */
+
+/* #region MARK: drag drop 
+*/
+.placeholder {
+  border: 1px dashed var(--color-gray-168);
+  border-radius: 24px;
 }
 
-h2 {
-  font-size: 1.75rem;
+.dragged-task {
+  opacity: 0.2;
 }
 
-h3 {
-  font-size: 1rem;
+.drag-ghost {
+  opacity: 1;
+  transform: rotate(5deg);
 }
+
+/* #endregion */
 
 input:focus-visible,
 button:focus-visible {
@@ -144,7 +149,7 @@ button:focus-visible {
   width: 100%;
 }
 
-.tasks-section {
+.tasks-list {
   gap: 1em;
   margin: -1em;
   padding: 1em;
@@ -154,13 +159,8 @@ button:focus-visible {
   -ms-overflow-style: none;
 }
 
-.tasks-section::-webkit-scrollbar {
+.tasks-list::-webkit-scrollbar {
   display: none;
-}
-
-.tasks-section.dragging {
-  cursor: grabbing;
-  user-select: none;
 }
 
 .task-card {
@@ -179,7 +179,6 @@ button:focus-visible {
   align-self: flex-start;
   color: var(--color-white);
   font-size: 1rem;
-  font-weight: 400;
   border-radius: 8px;
   padding: 0.25em 1em;
 }
@@ -307,7 +306,7 @@ button:focus-visible {
     min-width: 15.75em;
   }
 
-  .tasks-section {
+  .tasks-list {
     flex-direction: column;
     margin: 0;
     padding: 0;

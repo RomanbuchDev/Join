@@ -148,6 +148,7 @@ body .user-menu-dropdown {
   line-clamp: 1;
   overflow: hidden;
   word-break: break-all;
+  text-transform: capitalize;
 }
 
 .contact-name:active {
