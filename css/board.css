@@ -1,3 +1,5 @@
+/* #region MARK: display 
+*/
 .d-flex {
   display: flex;
 }
@@ -7,20 +9,25 @@
   display: none;
 }
 
-h2,
-h3 {
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--color-dark);
+/* #endregion */
+
+/* #region MARK: drag drop 
+*/
+.placeholder {
+  border: 1px dashed var(--color-gray-168);
+  border-radius: 24px;
 }
 
-h2 {
-  font-size: 1.75rem;
+.dragged-task {
+  opacity: 0.2;
 }
 
-h3 {
-  font-size: 1rem;
+.drag-ghost {
+  opacity: 1;
+  transform: rotate(5deg);
 }
+
+/* #endregion */
 
 input:focus-visible,
 button:focus-visible {
@@ -82,12 +89,18 @@ button:focus-visible {
   gap: 2em;
 }
 
+.find-message-container-wrapper {
+  flex-direction: column;
+  gap: 0.5em;
+  flex: 1;
+  width: 100%;
+}
+
 .find-container {
   background-color: var(--color-white);
   border: 1px solid var(--color-gray-168);
   border-radius: 10px;
   padding: 0.5em 1em;
-  width: 100%;
 }
 
 .find-container:focus-within {
@@ -108,6 +121,10 @@ button:focus-visible {
   padding-left: 16px;
 }
 
+.search-error-message-container {
+  color: var(--color-error);
+}
+
 .board-section {
   flex-direction: column;
   margin: 1.5em 0;
@@ -122,6 +139,7 @@ button:focus-visible {
 .empty-board-column {
   justify-content: center;
   align-items: center;
+  text-align: center;
   min-height: 3em;
   color: var(--color-gray-168);
   background-color: var(--color-gray-231);
@@ -131,7 +149,7 @@ button:focus-visible {
   width: 100%;
 }
 
-.tasks-section {
+.tasks-list {
   gap: 1em;
   margin: -1em;
   padding: 1em;
@@ -141,13 +159,8 @@ button:focus-visible {
   -ms-overflow-style: none;
 }
 
-.tasks-section::-webkit-scrollbar {
+.tasks-list::-webkit-scrollbar {
   display: none;
-}
-
-.tasks-section.dragging {
-  cursor: grabbing;
-  user-select: none;
 }
 
 .task-card {
@@ -166,7 +179,6 @@ button:focus-visible {
   align-self: flex-start;
   color: var(--color-white);
   font-size: 1rem;
-  font-weight: 400;
   border-radius: 8px;
   padding: 0.25em 1em;
 }
@@ -251,25 +263,12 @@ button:focus-visible {
   margin-left: -0.5em;
 }
 
-/* Label and AvatarColors: Interim status, final solution with JS */
-.color-label-user-story {
+.category-color-user-story {
   background-color: var(--color-label-user-story);
 }
 
-.color-label-technical-task {
+.category-color-technical-task {
   background-color: var(--color-label-technical-task);
-}
-
-.color-avatar-1 {
-  background-color: var(--color-prio-low);
-}
-
-.color-avatar-2 {
-  background-color: var(--color-prio-medium);
-}
-
-.color-avatar-3 {
-  background-color: var(--color-email);
 }
 
 @media (width >= 64em) {
@@ -307,7 +306,7 @@ button:focus-visible {
     min-width: 15.75em;
   }
 
-  .tasks-section {
+  .tasks-list {
     flex-direction: column;
     margin: 0;
     padding: 0;

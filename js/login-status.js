@@ -5,9 +5,9 @@
  */
 
 /**
- * Reagiert auf Änderungen des Login-Status: leitet aus, wenn niemand eingeloggt ist,
- * lädt sonst das Profil des eingeloggten Users nach.
- * @param {Object|null} user - Das Firebase-User-Objekt, oder null wenn ausgeloggt.
+ * Reacts to changes in the login status: redirects if nobody is logged in,
+ * otherwise loads the logged-in user's profile.
+ * @param {Object|null} user - The Firebase user object, or null if logged out.
  */
 function handleAuthStateChange(user) {
   if (!user) {
@@ -22,7 +22,13 @@ function handleAuthStateChange(user) {
   loadCurrentUserProfile(user);
 }
 
-/** Lädt die Profildaten (Name) des eingeloggten Users aus der Realtime Database, macht sie global über window.currentUser verfügbar und feuert danach das authReady-Event, damit andere Seiten (z.B. greeting-page.js) darauf reagieren können. @param {Object} user - Das Firebase-User-Objekt (uid, email). */
+
+/**
+ * Loads the logged-in user's profile data (name) from the Realtime Database, makes it globally
+ * available via window.currentUser, and then fires the authReady event so other pages
+ * (e.g. greeting-page.js) can react to it.
+ * @param {Object} user - The Firebase user object (uid, email).
+ */
 async function loadCurrentUserProfile(user) {
   const idToken = await user.getIdToken();
   const response = await fetch(
@@ -37,7 +43,14 @@ async function loadCurrentUserProfile(user) {
   window.dispatchEvent(new Event("authReady"));
 }
 
-/** Gibt den eingeloggten User zurück, sobald er feststeht — direkt, falls window.currentUser schon gesetzt ist, sonst wartet die Funktion automatisch auf das authReady-Event. Für andere Seiten gedacht, die uid/name/email für die eigene GUI brauchen (z.B. Header, Avatar-Initialen), ohne sich selbst um das authReady-Timing kümmern zu müssen. @returns {Promise<Object>} Der eingeloggte User ({ uid, name, email } bzw. { uid, name: "Guest", isGuest: true }). */
+
+/**
+ * Returns the logged-in user as soon as it is known — directly if window.currentUser is already
+ * set, otherwise the function automatically waits for the authReady event. Meant for other pages
+ * that need uid/name/email for their own GUI (e.g. header, avatar initials) without having to
+ * handle the authReady timing themselves.
+ * @returns {Promise<Object>} The logged-in user ({ uid, name, email } or { uid, name: "Guest", isGuest: true }).
+ */
 function getCurrentUser() {
   return new Promise((resolve) => {
     if (window.currentUser) {
@@ -50,11 +63,15 @@ function getCurrentUser() {
   });
 }
 
-/** Meldet den eingeloggten User über Firebase Auth ab und leitet danach zur Login-Seite weiter. */
+
+/**
+ * Signs the logged-in user out via Firebase Auth and then redirects to the login page.
+ */
 async function handleLogoutClick() {
   await window.signOut(window.auth);
   window.location.href = "../index.html";
 }
+
 
 const logoutButton = document.querySelector(".user-menu-logout");
 if (logoutButton) {

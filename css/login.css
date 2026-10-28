@@ -36,10 +36,6 @@ a {
   object-position: center;
 }
 
-h1 {
-  font-size: 2.8rem;
-}
-
 /* main class */
 .main-login {
   position: relative;
@@ -130,13 +126,8 @@ form {
   box-shadow: 0 0.25rem 0.5rem var(--color-black-25);
 }
 
-.btn-secondary {
-  color: var(--color-dark);
-  background-color: var(--color-white);
-}
-
-.btn-secondary:hover {
-  box-shadow: 0 0.25rem 0.5rem var(--color-black-25);
+.btn-logins-bar .button-basic {
+  width: 100%;
 }
 
 /* footer */
@@ -210,10 +201,6 @@ form {
   font-size: 0.875rem;
   text-align: center;
   padding-top: 0.5rem;
-}
-
-.input-error {
-  border: 1px solid var(--color-error);
 }
 
 .splash-screen {
@@ -320,7 +307,11 @@ form {
     width: 6.9rem;
   }
 
-  .btn-secondary {
+  .btn-logins-bar .button-primary {
+    width: 6.9rem;
+  }
+
+  .btn-logins-bar .button-secondary {
     width: 11rem;
   }
 

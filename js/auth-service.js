@@ -1,4 +1,9 @@
-/** Prüft Email und Passwort gegen Firebase Auth und lädt danach das Profil aus der Datenbank. @param {string} email - Die eingegebene Email-Adresse. @param {string} password - Das eingegebene Passwort. @returns {Promise<Object>} Das eingeloggte User-Objekt ({ uid, name, email }). */
+/**
+ * Checks email and password against Firebase Auth and then loads the profile from the database.
+ * @param {string} email - The entered email address.
+ * @param {string} password - The entered password.
+ * @returns {Promise<Object>} The logged-in user object ({ uid, name, email }).
+ */
 async function loginWithEmail(email, password) {
   const userCredential = await window.signInWithEmailAndPassword(
     window.auth,
@@ -14,14 +19,25 @@ async function loginWithEmail(email, password) {
   return { uid: user.uid, name: profile.name, email: user.email };
 }
 
-/** Meldet einen anonymen Gast-User über Firebase Anonymous Authentication an. @returns {Promise<Object>} Das Gast-User-Objekt ({ name, uid, isGuest }). */
+
+/**
+ * Signs in an anonymous guest user via Firebase Anonymous Authentication.
+ * @returns {Promise<Object>} The guest user object ({ name, uid, isGuest }).
+ */
 async function loginAsGuest() {
   const userCredential = await window.signInAnonymously(window.auth);
   const user = userCredential.user;
   return { name: "Guest", uid: user.uid, isGuest: true };
 }
 
-/** Legt einen neuen Firebase-Auth-Account an und speichert das Profil (ohne Passwort) in der Datenbank. @param {string} name - Der Name des neuen Users. @param {string} email - Die Email-Adresse für den neuen Account. @param {string} password - Das Passwort für den neuen Account. @returns {Promise<Object>} Das neu registrierte User-Objekt ({ uid, name, email }). */
+
+/**
+ * Creates a new Firebase Auth account and saves the profile (without password) in the database.
+ * @param {string} name - The name of the new user.
+ * @param {string} email - The email address for the new account.
+ * @param {string} password - The password for the new account.
+ * @returns {Promise<Object>} The newly registered user object ({ uid, name, email }).
+ */
 async function registerWithEmail(name, email, password) {
   const userCredential = await window.createUserWithEmailAndPassword(
     window.auth,
@@ -34,7 +50,13 @@ async function registerWithEmail(name, email, password) {
   return { uid, name, email };
 }
 
-/** Speichert das Profil (ohne Passwort) unter /users/{uid} in der Realtime Database. @param {string} uid - Die Firebase-Auth-uid des Users. @param {Object} profile - Die Profildaten ({ name, email }). @param {string} idToken - Das Firebase-ID-Token für die authentifizierte Anfrage. */
+
+/**
+ * Saves the profile (without password) under /users/{uid} in the Realtime Database.
+ * @param {string} uid - The user's Firebase Auth uid.
+ * @param {Object} profile - The profile data ({ name, email }).
+ * @param {string} idToken - The Firebase ID token for the authenticated request.
+ */
 async function saveUserProfile(uid, profile, idToken) {
   await fetch(`${window.firebaseUrl}users/${uid}.json?auth=${idToken}`, {
     method: "PUT",

@@ -1,19 +1,22 @@
 // JavasScript utility functions - Contacts page
 
-// Variables:
+// #region Variables:
 
 const allContacts = [];
+const CATEGORY = "contacts";
+const TASKS = "tasks";
+
 let myAccount = null;
 
-const BASE_URL =
-  "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app";
-const CATEGORY = "contacts";
+// #region Functions:
 
-// Functions:
-
+/**
+ * Gets own account or guest account data and creates object.
+ * @async
+ * @returns {Object} Own account or guest account object.
+ */
 async function getCurrentUserAccount() {
   const currentUserAccount = await window.getCurrentUser();
-  console.log(currentUserAccount);
 
   const isGuestUser = currentUserAccount.isGuest === true;
 
@@ -25,17 +28,13 @@ async function getCurrentUserAccount() {
     isOwnAccount: !isGuestUser,
     isGuest: isGuestUser,
   };
-
-  // Aktueller Stand:
-  // return {
-  //   id: "123",
-  //   name: "Eingeloggter Test-Benutzer",
-  //   email: "test@test.de",
-  //   isOwnAccount: true
-  // };
 }
 
 
+/**
+ * Gets own account or guest account data from local storage.
+ * @param {Object} currentUser - Own account or guest account object.
+ */
 function getSavedUserData(currentUser) {
   if (currentUser.isGuest === true) {
     const savedGuestData = localStorage.getItem("guest");
@@ -47,6 +46,10 @@ function getSavedUserData(currentUser) {
 }
 
 
+/**
+ * Saves own account or guest account object with shortcut and shortcut color in local array.
+ * @async
+ */
 async function saveOwnAccountData() {
   const currentUser = await getCurrentUserAccount();
 
@@ -54,20 +57,21 @@ async function saveOwnAccountData() {
 
   getSavedUserData(currentUser);
 
-  console.log(myAccount);
   getContactShortcut(myAccount);
   prepareContactColor(myAccount);
   allContacts.push(myAccount);
 }
 
 
+/**
+ * Loads all contacts data from the database.
+ * @async
+ * @returns {Promise<Object>} Contact data.
+ */
 async function fetchAllContacts() {
   try {
-    await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
-    const response = await fetch(
-      `${BASE_URL}/${CATEGORY}.json?auth=${idToken}`,
-    );
+    const response = await fetch(`${window.firebaseUrl}/${CATEGORY}.json?auth=${idToken}`);
 
     const responseAsJSON = await response.json();
     return saveContacts(responseAsJSON);
@@ -77,6 +81,11 @@ async function fetchAllContacts() {
 }
 
 
+/**
+ * Saves all contacts data with ID from database in local array.
+ * @async
+ * @param {Object} responseAsJSON - Object with all contact data.
+ */
 async function saveContacts(responseAsJSON) {
   allContacts.length = 0;
   const contactIDs = Object.keys(responseAsJSON);
@@ -91,6 +100,10 @@ async function saveContacts(responseAsJSON) {
 }
 
 
+/**
+ * Creates contact shortcut (first letter of first and last name) for every contact.
+ * @param {Object} contact - Object with contact data.
+ */
 function getContactShortcut(contact) {
   const contactNameParts = contact.name.trim().split(/\s+/);
 
@@ -103,14 +116,33 @@ function getContactShortcut(contact) {
 }
 
 
+/**
+ * Adds the calculated shortcut color to the contact.
+ * @param {Object} contact - Object with contact data.
+ */
 function prepareContactColor(contact) {
   const shortcutColor = calculateContactIconColor(contact.shortcut);
   contact.shortcutColor = shortcutColor;
 }
 
 
+/**
+ * Corrects the shortcut when creating a new contact.
+ * @param {string} contactShortcut - The first letter of firstname and lastname of a contact. 
+ * @returns {string} The corrected contact shortcut.
+ */
+function getCorrectShortcut(contactShortcut) {
+  return contactShortcut.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+
+/**
+ * Calculates the shortcut color with the shortcut letters.
+ * @param {string} contactShortcut - Contact shortcut.
+ * @returns {string} The RGBA color code for CSS.
+ */
 function calculateContactIconColor(contactShortcut) {
-  const correctShortcut = contactShortcut.toUpperCase();
+  const correctShortcut = getCorrectShortcut(contactShortcut);
 
   const firstNameLetter = correctShortcut[0] || "X";
   const LastNameLetter = correctShortcut[1] || firstNameLetter;
@@ -126,44 +158,47 @@ function calculateContactIconColor(contactShortcut) {
 }
 
 
+/**
+ * Performs a general database query (fetch).
+ * @async
+ * @param {string} url - The URL of the database.
+ * @param {string} method - The HTTP method.
+ * @param {Object} data - Optional data for request body.  
+ * @returns {Promise<Object>} The answer of the database as JSON.
+ */
 async function databaseRequest(url, method, data = null) {
   const options = {
     method: method,
     headers: { "Content-Type": "application/json" },
-    ...(data && { body: JSON.stringify(data) })
+    ...(data && { body: JSON.stringify(data) }),
   };
   const response = await fetch(url, options);
   return response.json();
 }
 
 
+/**
+ * Adds contact data to the database.
+ * @async
+ * @param {Object} newContactData - Object with contact data.
+ * @returns {Promise<Object>} The created contact.
+ */
 async function addContactToDatabase(newContactData) {
   try {
-    await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
-    const url = `${BASE_URL}/${CATEGORY}.json?auth=${idToken}`;
-    showToastMessageContactCreated();
+    const url = `${window.firebaseUrl}/${CATEGORY}.json?auth=${idToken}`;
+    showToastMessage("Contact successfully created", "toast-message-new");
     return await databaseRequest(url, "POST", newContactData);
-
-    // Aktueller Stand:
-    // const response = await fetch(
-    //   `${BASE_URL}/${CATEGORY}.json?auth=${idToken}`,
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(newContactData),
-    //   },
-    // );
-    // showToastMessageContactCreated();
-    // return await response.json();
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }
 }
 
 
+/**
+ * Creates the complete contact object for the database.
+ * @returns {Object} The complete contact object.
+ */
 function getContactDataForDatabase() {
   return {
     name: currentContactData.name,
@@ -175,50 +210,101 @@ function getContactDataForDatabase() {
 }
 
 
+/**
+ * Updates the contact data in the database.
+ * @async
+ * @param {string} contactId - Contact ID number.
+ * @returns {Promise<Object>} The updated contact data.
+ */
 async function editContactInDatabase(contactId) {
   try {
-    await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
-    const url = `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
-    showToastMessageContactEdited();
+    const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
+    showToastMessage("Contact successfully edited", "toast-message-edit");
     return await databaseRequest(url, "PUT", getContactDataForDatabase());
-
-    // Aktueller Stand:
-    // const response = await fetch(
-    //   `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`,
-    //   {
-    //     method: "PUT",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(getContactDataForDatabase()),
-    //   },
-    // );
-    // showToastMessageContactEdited();
-    // return await response.json();
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }
 }
 
 
+/**
+ * Deletes the contact data in the database.
+ * @async
+ * @param {string} contactId - Contact ID number.
+ * @returns {Promise<void>}
+ */
 async function deleteContactInDatabase(contactId) {
+  try {
+    const idToken = await window.auth.currentUser.getIdToken();
+    const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
+    showToastMessage("Contact successfully deleted", "toast-message-delete");
+    await deleteContactsInTask(contactId);
+    return await databaseRequest(url, "DELETE");
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  }
+}
+
+
+// Test - Kontakte in den Tasks auf der Board-Seite entfernen
+
+/**
+ * Updates the contacts in the task and in the database.
+ * @async
+ * @param {string} currentTaskID - Task ID number. 
+ * @param {string[]} contacts - All contact ID numbers of the task. 
+ * @param {string} contactId - Contact ID number. 
+ * @returns {Promise<Object>} The updated contacts from the task. 
+ */
+async function updateContactsInTask(currentTaskID, contacts, contactId) {
   try {
     await window.getCurrentUser();
     const idToken = await window.auth.currentUser.getIdToken();
-    const url = `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
-    showToastMessageContactDeleted();
-    return await databaseRequest(url, "DELETE");
+    const contactsIndex = contacts.indexOf(contactId);
+    if (contactsIndex === -1) return;
 
-    // Aktueller Stand:
-    // const response = await fetch(
-    //   `${BASE_URL}/${CATEGORY}/${contactId}.json?auth=${idToken}`,
-    //   {
-    //     method: "DELETE",
-    //   },
-    // );
-    // showToastMessageContactDeleted();
-    // return await response.json();
+    contacts.splice(contactsIndex, 1);
+    const taskURL = window.firebaseUrl + TASKS + "/" + currentTaskID + ".json" + "?auth=" + idToken;
+    await fetch(taskURL, { method: "PATCH", body: JSON.stringify({ assignedTo: contacts }) });
+  } catch (error) {
+    openDialogConnectionErrorDatabase();    
+  }
+}
+
+
+/**
+ * Saves all task and contact ID numbers from the tasks.
+ * @async
+ * @param {Object} responseAsJSON - Object with all task data.
+ * @param {string} contactId - Contact ID number. 
+ */
+async function checkContactsInTask(responseAsJSON, contactId) {
+  const taskIDs = Object.keys(responseAsJSON);
+  
+  for (let index = 0; index < taskIDs.length; index++) {
+    const currentTaskID = taskIDs[index];
+    const contacts = responseAsJSON[currentTaskID].assignedTo || [];
+    await updateContactsInTask(currentTaskID, contacts, contactId);
+  }  
+}
+
+
+/**
+ * Deletes the contact in the task and in the database. Gets and saves all task data.
+ * @async
+ * @param {string} contactId - Contact ID number.
+ * @returns {Promise<Object>} Task data. 
+ */
+async function deleteContactsInTask(contactId) {
+  try {
+    await window.getCurrentUser();
+    const idToken = await window.auth.currentUser.getIdToken();
+    const url = `${window.firebaseUrl}${TASKS}.json?auth=${idToken}`;
+    const response = await fetch(url);
+    const responseAsJSON = await response.json() || {};
+
+    await checkContactsInTask(responseAsJSON, contactId);
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }
