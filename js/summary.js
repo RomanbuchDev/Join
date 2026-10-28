@@ -1,10 +1,17 @@
 let tasks = [];
 
 async function init() {
-  await window.getCurrentUser();
+  const user = await initHeader();
   await getSummaryData();
   getStatusInformation();
   renderDates();
+
+  if (user.isGuest === true) {
+    rederGreeting("");
+    return;
+  }
+
+  rederGreeting(user.name);
 }
 
 
@@ -136,6 +143,23 @@ function formatDeadline(deadline) {
     day: "numeric",
     year: "numeric",
   });
+}
+
+
+function rederGreeting(userName = "") {
+  const greetingText = document.querySelector(".greeting__text");
+  const greetingName = document.querySelector(".greeting__name");
+
+  if (userName === "") {
+    greetingText.textContent = "Good morning!";
+    greetingName.textContent = "";
+    greetingName.hidden = true;
+    return;
+  }
+
+  greetingText.textContent = "Good morning,";
+  greetingName.textContent = userName;
+  greetingName.hidden = false;
 }
 
 init();
