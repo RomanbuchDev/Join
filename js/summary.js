@@ -1,9 +1,17 @@
 let tasks = [];
 
 async function init() {
-  await window.getCurrentUser();
+  const user = await initHeader();
   await getSummaryData();
   getStatusInformation();
+  renderDates();
+
+  if (user.isGuest === true) {
+    rederGreeting("");
+    return;
+  }
+
+  rederGreeting(user.name);
 }
 
 
@@ -78,6 +86,80 @@ function changeStrokeIcon(element, action) {
 
   circle.setAttribute("fill", action === "start" ? "white" : "#2A3647");
   motif.setAttribute("stroke", action === "start" ? "#2A3647" : "white");
+}
+
+
+function renderDates() {
+  const nextTask = getNextUpcomingTask();
+  const deadlineElement = document.getElementById("upcoming-deadline");
+
+  if (!nextTask) {
+    deadlineElement.textContent = "No upcoming deadline";
+    return;
+  }
+
+  updateDeadlineElement(deadlineElement, nextTask);
+}
+
+
+function getNextUpcomingTask() {
+  const now = new Date().setHours(0, 0, 0, 0);
+  let nextTask;
+
+  for (const task of tasks) {
+    if (isEarlierUpcomingTask(task, nextTask, now)) nextTask = task;
+  }
+
+  return nextTask;
+}
+
+
+function isEarlierUpcomingTask(task, nextTask, now) {
+  const dueDate = getDueDateTime(task);
+
+  if (dueDate < now) return false;
+  if (!nextTask) return true;
+
+  return dueDate < getDueDateTime(nextTask);
+}
+
+
+function getDueDateTime(task) {
+  return new Date(task.dueDate + "T00:00:00").getTime();
+}
+
+
+function updateDeadlineElement(deadlineElement, task) {
+  const deadline = new Date(task.dueDate + "T00:00:00");
+
+  deadlineElement.dateTime = task.dueDate;
+  deadlineElement.textContent = formatDeadline(deadline);
+}
+
+
+function formatDeadline(deadline) {
+  return deadline.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+
+function rederGreeting(userName = "") {
+  const greetingText = document.querySelector(".greeting__text");
+  const greetingName = document.querySelector(".greeting__name");
+
+  if (userName === "") {
+    greetingText.textContent = "Good morning!";
+    greetingName.textContent = "";
+    greetingName.hidden = true;
+    return;
+  }
+
+  greetingText.textContent = "Good morning,";
+  greetingName.textContent = userName;
+  greetingName.hidden = false;
 }
 
 init();

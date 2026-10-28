@@ -189,6 +189,7 @@ main {
     gap: 2em 4em;
     padding-inline: 4em;
     padding-block-start: 5em;
+    padding-bottom: 4em;
   }
 
   .summary-header {
