@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/assets.css" />
-    <link rel="stylesheet" href="../css/board.css" />
     <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../css/board.css" />
 
     <script type="module" src="../js/firebase-init.js"></script>
     <script defer src="../script.js"></script>
@@ -24,19 +24,18 @@
     <script defer src="../js/board-templates.js"></script>
     <script defer src="../js/board.js"></script>
     <script defer src="../js/board-search.js"></script>
-    <script defer src="../js/board-cardmovement.js"></script>
+    <script defer src="../js/board-dragdrop.js"></script>
 
     <title>Join - Board</title>
   </head>
-
-  <!-- #region MARK: body 
-  -->
+  <!-- #endregion-->
   <body onload="initBoard()">
     <div id="page">
       <header id="header" class="main-header"></header>
-
       <main class="main board-main-content">
         <section class="h1-find-addtask-section d-flex">
+          <!-- #region MARK: h1 
+          -->
           <section class="h-addtask-container d-flex">
             <h1>Board</h1>
             <button
@@ -46,6 +45,7 @@
               aria-label="Add new task"
             ></button>
           </section>
+          <!-- #endregion-->
 
           <!-- #region MARK: search 
           -->
@@ -85,6 +85,7 @@
               Add task
             </button>
           </section>
+          <!-- #endregion-->
         </section>
 
         <!-- #region MARK: columns 
@@ -100,7 +101,7 @@
                 aria-label="Add new task"
               ></button>
             </div>
-            <ol id="toDo" class="tasks-section d-flex"></ol>
+            <ol id="toDo" class="tasks-list d-flex"></ol>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
@@ -112,7 +113,7 @@
                 aria-label="Add new task"
               ></button>
             </div>
-            <ol id="inProgress" class="tasks-section d-flex"></ol>
+            <ol id="inProgress" class="tasks-list d-flex"></ol>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
@@ -124,17 +125,17 @@
                 aria-label="Add new task"
               ></button>
             </div>
-            <ol id="awaitFeedback" class="tasks-section d-flex"></ol>
+            <ol id="awaitFeedback" class="tasks-list d-flex"></ol>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
               <h2>Done</h2>
             </div>
-            <ol id="done" class="tasks-section d-flex"></ol>
+            <ol id="done" class="tasks-list d-flex"></ol>
           </section>
         </section>
+        <!-- #endregion-->
       </main>
-
       <!-- #region MARK: navbar 
       -->
       <nav class="main-nav">
@@ -195,6 +196,7 @@
           </li>
         </ul>
       </nav>
+      <!-- #endregion-->
     </div>
   </body>
 </html>

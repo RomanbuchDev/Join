@@ -72,8 +72,8 @@ function getLastNameLetter(contact) {
   const contactNameParts = contact.name.split(" ");
 
   const letter = contactNameParts[1]
-    ? contactNameParts[1][0]
-    : contactNameParts[0][0];
+    ? contactNameParts[1][0].toUpperCase()
+    : contactNameParts[0][0].toUpperCase();
 
   return letter;
 }
