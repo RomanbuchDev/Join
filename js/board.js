@@ -19,29 +19,13 @@ let allFetchedTasksAreRendered = false;
  */
 async function initBoard() {
   await initHeader()
-  renderAddTaskButtons();
+  
   await fetchAllData("tasks");
   await fetchAllData("contacts");
   renderTasks(Object.keys(allTasks));
   allFetchedTasksAreRendered = true;
-}
-
-
-/**
- * Renders the Add Task Buttons.
- * Each button is only rendered if its container exists on the current page.
- * @returns {void} Nothing; the button SVGs are written into their containers, missing containers are skipped.
- */
-function renderAddTaskButtons() {
-  try {
-    document.getElementById("addTaskButtonH1").innerHTML = templateAddTaskH1SVG();
-  } catch {}
-  const columnButtons = ["addTaskButtonToDo", "addTaskButtonInProgress", "addTaskButtonAwaitFeedback"]
-  for (const button of columnButtons) {
-    try {
-      document.getElementById(button).innerHTML = templateAddTaskColumnSVG();
-    } catch {}
-  }
+  renderAddTaskButtons();
+  // renderSearchContainer();
 }
 // #endregion
 
@@ -230,4 +214,35 @@ function getColumnName(columnID) {
   }
   return columnName;
 }
+// #endregion
+
+
+// #region BTN SEARCH
+
+/**
+ * Renders the Add Task Buttons.
+ * Each button is only rendered if its container exists on the current page.
+ * @returns {void} Nothing; the button SVGs are written into their containers, missing containers are skipped.
+ */
+function renderAddTaskButtons() {
+  const headingButtons = ["addTaskButtonH1", "addTaskButtonSearch"]
+  for (const button of headingButtons) {
+    try {
+    document.getElementById(button).innerHTML = templateAddTaskH1SVG();
+    } catch {}
+  }
+
+  const columnButtons = ["addTaskButtonToDo", "addTaskButtonInProgress", "addTaskButtonAwaitFeedback"]
+  for (const button of columnButtons) {
+    try {
+      document.getElementById(button).innerHTML = templateAddTaskColumnSVG();
+    } catch {}
+  }
+}
+
+
+// function renderSearchContainer() {
+//   document.getElementById("searchTilMobileM").innerHTML = templateSearch("tilMobileM");
+//   document.getElementById("searchFromMobileL").innerHTML = templateSearch("FromMobileL");
+// }
 // #endregion
