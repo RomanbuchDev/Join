@@ -43,7 +43,7 @@ function getOwnContactTemplate(contactData) {
 function getContactDetailsTemplate(contactData) {
   return `<div class="contact-details-header-container">
         <div class="contact-details-title-container">
-          <span class="contact-details-title">Contacts</span>
+          <h1 class="contact-details-title">Contacts</h1>
           <span class="contact-details-subtitle">Better with a team</span>
         </div>
         <button type="button" class="back-button" onclick="backToContactList()">
@@ -113,7 +113,7 @@ function getLetterCategoryTemplate(letter) {
 function getContactDetailsPlaceholderTemplate() {
   return `<div class="contact-details-header-container">
         <div class="contact-details-title-container">
-          <span class="contact-details-title">Contacts</span>
+          <h1 class="contact-details-title">Contacts</h1>
           <span class="contact-details-subtitle">Better with a team</span>
         </div>`;
 }
