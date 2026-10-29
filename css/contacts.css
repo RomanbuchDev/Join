@@ -30,19 +30,9 @@ body {
   margin: 0;
 }
 
-h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-h3 {
-  font-size: 1.17rem;
-  font-weight: 700;
-}
-
-h4 {
-  font-size: 1rem;
-  font-weight: 700;
+body h2 {
+  font-size: 1.25rem;
+  font-weight: 400;
 }
 
 /* Notiz: Nur vorübergehend einfügen bis zum nächsten Update von Main */
@@ -73,7 +63,7 @@ body .user-menu-dropdown {
 
 .letter-container {
   height: 58px;
-  padding: 0.7em 1.5em;
+  padding: 0.85em 1.8em;
   margin: 0;
 }
 
