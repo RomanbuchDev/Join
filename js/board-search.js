@@ -14,8 +14,7 @@ let trimmedInput = "";
  * @returns {void} Nothing; the board and the feedback message are updated depending on the input.
  */
 function handleSearchRequest() {
-  // const trimmedInput = document.getElementById("searchInputfield").value.trim();
-  trimmedInput = "te";
+  trimmedInput = document.getElementById("searchInputfield").value.trim();
   switch (validateSearchInput()) {
     case "empty":
       checkForRenderedTasks("empty");
@@ -32,7 +31,6 @@ function handleSearchRequest() {
 
 /**
  * Validates the length of the search input.
- * @param {string} trimmedInput - The trimmed search input.
  * @returns {("empty"|"too short"|"valid")} The validation result of the input.
  */
 function validateSearchInput() {
@@ -49,7 +47,6 @@ function validateSearchInput() {
 
 /**
  * Searches the tasks and renders the matches, or gives feedback if none are found.
- * @param {string} validInput - The valid search input.
  * @returns {void} Nothing; the matching tasks are rendered or a feedback message is shown.
  */
 function processSearch() {
@@ -89,7 +86,6 @@ function checkForRenderedTasks(searchStatus="") {
 // #region MATCH
 /**
  * Finds all tasks whose title and description contain every search term.
- * @param {string} validInput - The valid search input.
  * @returns {string[]} The array of task IDs of the matching tasks.
  */
 function findMatchingTasks() {

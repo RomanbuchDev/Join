@@ -69,7 +69,11 @@ button:focus-visible {
 
 .board-main-content {
   padding-top: 3em;
-  padding-bottom: 5em;
+  scrollbar-width: none;
+}
+
+.board-main-content::-webkit-scrollbar {
+  display: none;
 }
 
 .headline-section {
@@ -152,6 +156,10 @@ button:focus-visible {
   padding: 1em;
   gap: 1em;
   overflow-x: auto;
+}
+
+.tasks-list:has(.empty-board-column) {
+  margin-right: 0;
 }
 
 .tasks-list::-webkit-scrollbar {
@@ -262,7 +270,7 @@ button:focus-visible {
 
 /* #region MARK: @ mobile L 
 */
-@media (width >= 32em) {
+@media (width >= 28em) {
   .d-mobile {
     display: none;
   }
@@ -270,13 +278,15 @@ button:focus-visible {
   .d-mobile-L {
     display: flex;
   }
+
   .headline-section {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     gap: 2em;
-  } 
+  }
 }
+
 /* #endregion */
 
 /* #region MARK: @ tablet 
@@ -319,14 +329,15 @@ button:focus-visible {
     max-width: 15.75em;
   }
 }
+
 /* #endregion */
 
 /* #region MARK: @ laptop 
 */
 @media (width >= 64em) {
-
   .board-main-content {
     padding: 5rem 3rem;
   }
 }
+
 /* #endregion */

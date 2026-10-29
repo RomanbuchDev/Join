@@ -25,7 +25,6 @@ async function initBoard() {
   renderTasks(Object.keys(allTasks));
   allFetchedTasksAreRendered = true;
   renderAddTaskButtons();
-  // renderSearchContainer();
 }
 // #endregion
 
@@ -239,10 +238,3 @@ function renderAddTaskButtons() {
     } catch {}
   }
 }
-
-
-// function renderSearchContainer() {
-//   document.getElementById("searchTilMobileM").innerHTML = templateSearch("tilMobileM");
-//   document.getElementById("searchFromMobileL").innerHTML = templateSearch("FromMobileL");
-// }
-// #endregion
