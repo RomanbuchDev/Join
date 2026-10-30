@@ -1,15 +1,41 @@
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg-main);
+}
+
 .main-imprint {
   grid-area: main;
+  position: relative;
   min-height: 0;
   overflow-y: auto;
-  padding: 2rem;
+  padding: 3rem 1rem 7rem 1rem;
 }
 
 h1 {
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 h2 {
-  padding-bottom: 1rem;
+  padding-bottom: 0.75rem;
+}
+
+h3 {
+  font-weight: 700 !important;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-medium);
+}
+
+section {
   padding-top: 1rem;
+}
+
+.signup-back-vector {
+  height: 2.5rem;
+  width: 2.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 2.5rem;
 }
