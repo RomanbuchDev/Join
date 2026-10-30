@@ -149,17 +149,11 @@ function formatDeadline(deadline) {
 function rederGreeting(userName = "") {
   const greetingText = document.querySelector(".greeting__text");
   const greetingName = document.querySelector(".greeting__name");
+  const greeting = getGreeting();
 
-  if (userName === "") {
-    greetingText.textContent = "Good morning!";
-    greetingName.textContent = "";
-    greetingName.hidden = true;
-    return;
-  }
-
-  greetingText.textContent = "Good morning,";
+  greetingText.textContent = userName === "" ? greeting + "!" : greeting + ",";
   greetingName.textContent = userName;
-  greetingName.hidden = false;
+  greetingName.hidden = userName === "";
 }
 
 init();

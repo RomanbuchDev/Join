@@ -83,11 +83,17 @@ function escapeHtml(text) {
  */
 function hideToastMessage(statusClass) {
   toastMessage.classList.remove("show");
-  toastMessage.addEventListener("transitionend", function toastMessageTransitionEnd() {
-    toastMessage.classList.remove(statusClass);
-    toastMessage.hidePopover();
-    toastMessage.removeEventListener("transitionend", toastMessageTransitionEnd);
-  });
+  toastMessage.addEventListener(
+    "transitionend",
+    function toastMessageTransitionEnd() {
+      toastMessage.classList.remove(statusClass);
+      toastMessage.hidePopover();
+      toastMessage.removeEventListener(
+        "transitionend",
+        toastMessageTransitionEnd,
+      );
+    },
+  );
 }
 
 
@@ -112,7 +118,9 @@ function showToastMessage(text, statusClass) {
 
 /** Closes the dialog window showing the database connection error. */
 function closeDialogConnectionErrorDatabase() {
-  const dialogBoxConnectionErrorDatabase = document.getElementById("connection-error-database-dialog");
+  const dialogBoxConnectionErrorDatabase = document.getElementById(
+    "connection-error-database-dialog",
+  );
 
   if (dialogBoxConnectionErrorDatabase) {
     dialogBoxConnectionErrorDatabase.remove();
@@ -128,15 +136,34 @@ function reloadPage() {
 
 /** Opens the dialog window showing the database connection error. */
 function openDialogConnectionErrorDatabase() {
-  const openErrorMessage = document.getElementById("connection-error-database-dialog");
+  const openErrorMessage = document.getElementById(
+    "connection-error-database-dialog",
+  );
   if (openErrorMessage) return;
 
   const errorMessage = getConnectionErrorDatabaseTemplate();
   document.body.insertAdjacentHTML("beforeend", errorMessage);
 
-  const dialogBoxConnectionErrorDatabase = document.getElementById("connection-error-database-dialog");
+  const dialogBoxConnectionErrorDatabase = document.getElementById(
+    "connection-error-database-dialog",
+  );
 
   if (dialogBoxConnectionErrorDatabase) {
     dialogBoxConnectionErrorDatabase.showModal();
   }
+}
+
+
+function getGreeting() {
+  const hour = new Date().getHours();
+
+  if (hour < 12) {
+    return "Good morning";
+  }
+
+  if (hour < 18) {
+    return "Good afternoon";
+  }
+
+  return "Good evening";
 }
