@@ -11,6 +11,7 @@ function initAvatar(user) {
   avatarExport(avatarShortcut);
 }
 
+
 /**
  * Builds the avatar initials from the user's name (first letter of the first two name parts).
  * A guest ("Guest") results in "G".
@@ -26,6 +27,7 @@ function getAvatarShortcut(user) {
   return shortcut.toUpperCase();
 }
 
+
 /**
  * Inserts the header template with the given initials into the #header element.
  * @param {string} avatarShortcut - The initials shown in the avatar button.
@@ -34,6 +36,7 @@ function avatarExport(avatarShortcut) {
   const template = templateHeader(avatarShortcut);
   document.getElementById("header").innerHTML = template;
 }
+
 
 /**
  * Opens or closes the user menu dropdown and updates aria-expanded on the avatar button.
@@ -46,6 +49,7 @@ function toggleUserMenu(button) {
   button.setAttribute("aria-expanded", isOpen);
 }
 
+
 /**
  * Waits for the logged-in user and renders the header for the current page.
  * @returns {Promise<Object>} The logged-in user.
@@ -55,6 +59,7 @@ async function initHeader() {
   initAvatar(user);
   return user;
 }
+
 
 /**
  * Escapes characters with a special meaning in HTML, so that text is displayed as plain text
@@ -70,6 +75,7 @@ function escapeHtml(text) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 }
+
 
 /**
  * Hides the toast message and removes the CSS status class.
@@ -90,6 +96,7 @@ function hideToastMessage(statusClass) {
   );
 }
 
+
 /**
  * Shows a toast message for a short time.
  * @param {string} text - The toast message text.
@@ -108,6 +115,7 @@ function showToastMessage(text, statusClass) {
   }, 3000);
 }
 
+
 /** Closes the dialog window showing the database connection error. */
 function closeDialogConnectionErrorDatabase() {
   const dialogBoxConnectionErrorDatabase = document.getElementById(
@@ -119,10 +127,12 @@ function closeDialogConnectionErrorDatabase() {
   }
 }
 
+
 /** Reloads the page. */
 function reloadPage() {
   window.location.reload();
 }
+
 
 /** Opens the dialog window showing the database connection error. */
 function openDialogConnectionErrorDatabase() {
@@ -142,6 +152,7 @@ function openDialogConnectionErrorDatabase() {
     dialogBoxConnectionErrorDatabase.showModal();
   }
 }
+
 
 function getGreeting() {
   const hour = new Date().getHours();
