@@ -7,20 +7,16 @@
  * Returns the HTML template of a task card.
  * Description, progress bar and assignees are filled in afterwards.
  * @param {string} taskID - The ID of the task.
- * @param {Object} categoryData - The category data of the task.
- * @param {string} categoryData.category - The category name shown on the card.
- * @param {string} categoryData.categoryColor - The CSS class for the color of the category label.
- * @param {Object} mainData - The main data of the task.
- * @param {string} mainData.title - The title of the task.
- * @param {string} mainData.priority - The priority of the task, used for the priority icon.
+ * @param {string} categoryColor - The CSS class for the color of the category label.
  * @returns {string} The HTML string of the task card.
  */
-function templateTaskCard(taskID, {category, categoryColor}, {title, priority}) {
+function templateTaskCard(taskID, categoryColor) {
   return /*html*/ `
-    <li data-task-id="${escapeHtml(taskID)}" class="task-card d-flex" draggable="true">
-      <h3 class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(category)}</h3>
+    <li data-task-id="${escapeHtml(taskID)}" class="task-card d-flex" draggable="true"
+      ondragstart="handleDragstart(event)" ondragend="handleDragend(event)">
+      <h3 class="task-label ${escapeHtml(categoryColor)}">${allTasks[escapeHtml(taskID)].category}</h3>
       <div class="task-title-description-container d-flex">
-        <h4>${escapeHtml(title)}</h4>
+        <h4>${allTasks[escapeHtml(taskID)].title}</h4>
         <p id="description${escapeHtml(taskID)}" class="task-description"></p>
       </div>
       <div id="progressContainer${escapeHtml(taskID)}" class="task-progress d-flex">
@@ -30,8 +26,8 @@ function templateTaskCard(taskID, {category, categoryColor}, {title, priority}) 
         </ul>
         <div class="priority-icon d-flex">
           <img draggable="false"
-            src="../assets/icons/prio-${escapeHtml(priority)}-symbol.svg"
-            alt="${escapeHtml(priority)} priority task"
+            src="../assets/icons/prio-${allTasks[escapeHtml(taskID)].priority}-symbol.svg"
+            alt="${allTasks[escapeHtml(taskID)].priority} priority task"
           />
         </div>
       </div>
@@ -62,7 +58,9 @@ function templateProgressBar(doneSubtasks, subtasksLength) {
  */
 function templateTaskAssignees(assigneeColor, assigneeShortcut) {
   return /*html*/ `
-    <li class="task-avatar d-flex" style="background-color:${escapeHtml(assigneeColor)}">${escapeHtml(assigneeShortcut)}</li>`
+    <li class="task-avatar d-flex" style="background-color:${escapeHtml(assigneeColor)}">
+      ${escapeHtml(assigneeShortcut)}
+    </li>`
 }
 
 
@@ -74,9 +72,9 @@ function templateTaskAssignees(assigneeColor, assigneeShortcut) {
  */
 function templateEmptyColumn(activeSearch, columnName) {
   return /*html*/ `
-    <div class="empty-board-column d-flex">
+    <li class="empty-board-column d-flex">
       <p>No tasks ${escapeHtml(activeSearch)}${escapeHtml(columnName)}</p>
-    </div>`
+    </li>`
 }
 // #endregion
 

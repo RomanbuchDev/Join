@@ -9,7 +9,8 @@ body {
   grid-template:
     "header" auto
     "main" minmax(0, 1fr)
-    "nav" auto / 1fr;
+    /* "nav" auto / 1fr; */
+    "nav" auto;
   overflow: hidden;
 }
 
@@ -140,13 +141,16 @@ h4 {
 }
 
 .main-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
   grid-area: nav;
+
+  /* position: fixed; */
+
+  /* bottom: 0; */
+  width: 100%;
   height: 5rem;
   background-color: var(--color-dark);
-  z-index: 1000;
+
+  /* z-index: 1000; */
 }
 
 .main-nav-list {
@@ -201,7 +205,7 @@ h4 {
 
 @media (width >= 64rem) {
   h1 {
-    font-size: 3.8rem;
+    font-size: 3.75rem;
   }
 }
 
@@ -215,19 +219,21 @@ h4 {
       "nav main main main main";
   }
 
-  .main {
+  /* .main {
     grid-area: main;
     min-height: 0;
     overflow-y: auto;
-  }
+  } */
 
   .main-header {
-    grid-area: header;
+    /* grid-area: header; */
     position: static;
     padding: 1em;
     width: auto;
-    display: flex;
-    align-items: center;
+
+    /* display: flex; */
+
+    /* align-items: center; */
     padding-inline: 4em;
   }
 
@@ -266,8 +272,9 @@ h4 {
   }
 
   .main-nav {
-    grid-area: nav;
-    position: static;
+    /* grid-area: nav; */
+
+    /* position: static; */
     width: auto;
     height: 100dvh;
     display: flex;
