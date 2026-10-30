@@ -11,7 +11,6 @@ function initAvatar(user) {
   avatarExport(avatarShortcut);
 }
 
-
 /**
  * Builds the avatar initials from the user's name (first letter of the first two name parts).
  * A guest ("Guest") results in "G".
@@ -27,7 +26,6 @@ function getAvatarShortcut(user) {
   return shortcut.toUpperCase();
 }
 
-
 /**
  * Inserts the header template with the given initials into the #header element.
  * @param {string} avatarShortcut - The initials shown in the avatar button.
@@ -36,7 +34,6 @@ function avatarExport(avatarShortcut) {
   const template = templateHeader(avatarShortcut);
   document.getElementById("header").innerHTML = template;
 }
-
 
 /**
  * Opens or closes the user menu dropdown and updates aria-expanded on the avatar button.
@@ -49,7 +46,6 @@ function toggleUserMenu(button) {
   button.setAttribute("aria-expanded", isOpen);
 }
 
-
 /**
  * Waits for the logged-in user and renders the header for the current page.
  * @returns {Promise<Object>} The logged-in user.
@@ -59,7 +55,6 @@ async function initHeader() {
   initAvatar(user);
   return user;
 }
-
 
 /**
  * Escapes characters with a special meaning in HTML, so that text is displayed as plain text
@@ -76,20 +71,24 @@ function escapeHtml(text) {
     .replaceAll("'", "&#39;");
 }
 
-
 /**
  * Hides the toast message and removes the CSS status class.
  * @param {string} statusClass - The CSS class for the background color.
  */
 function hideToastMessage(statusClass) {
   toastMessage.classList.remove("show");
-  toastMessage.addEventListener("transitionend", function toastMessageTransitionEnd() {
-    toastMessage.classList.remove(statusClass);
-    toastMessage.hidePopover();
-    toastMessage.removeEventListener("transitionend", toastMessageTransitionEnd);
-  });
+  toastMessage.addEventListener(
+    "transitionend",
+    function toastMessageTransitionEnd() {
+      toastMessage.classList.remove(statusClass);
+      toastMessage.hidePopover();
+      toastMessage.removeEventListener(
+        "transitionend",
+        toastMessageTransitionEnd,
+      );
+    },
+  );
 }
-
 
 /**
  * Shows a toast message for a short time.
@@ -109,34 +108,51 @@ function showToastMessage(text, statusClass) {
   }, 3000);
 }
 
-
 /** Closes the dialog window showing the database connection error. */
 function closeDialogConnectionErrorDatabase() {
-  const dialogBoxConnectionErrorDatabase = document.getElementById("connection-error-database-dialog");
+  const dialogBoxConnectionErrorDatabase = document.getElementById(
+    "connection-error-database-dialog",
+  );
 
   if (dialogBoxConnectionErrorDatabase) {
     dialogBoxConnectionErrorDatabase.remove();
   }
 }
 
-
 /** Reloads the page. */
 function reloadPage() {
   window.location.reload();
 }
 
-
 /** Opens the dialog window showing the database connection error. */
 function openDialogConnectionErrorDatabase() {
-  const openErrorMessage = document.getElementById("connection-error-database-dialog");
+  const openErrorMessage = document.getElementById(
+    "connection-error-database-dialog",
+  );
   if (openErrorMessage) return;
 
   const errorMessage = getConnectionErrorDatabaseTemplate();
   document.body.insertAdjacentHTML("beforeend", errorMessage);
 
-  const dialogBoxConnectionErrorDatabase = document.getElementById("connection-error-database-dialog");
+  const dialogBoxConnectionErrorDatabase = document.getElementById(
+    "connection-error-database-dialog",
+  );
 
   if (dialogBoxConnectionErrorDatabase) {
     dialogBoxConnectionErrorDatabase.showModal();
   }
+}
+
+function getGreeting() {
+  const hour = new Date().getHours();
+
+  if (hour < 12) {
+    return "Good morning";
+  }
+
+  if (hour < 18) {
+    return "Good afternoon";
+  }
+
+  return "Good evening";
 }
