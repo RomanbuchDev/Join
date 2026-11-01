@@ -33,24 +33,21 @@
     <div id="page">
       <header id="header" class="main-header"></header>
       <main class="main board-main-content">
-        <section class="h1-find-addtask-section d-flex">
-          <!-- #region MARK: h1 
+        <!-- #region MARK: headline
           -->
-          <section class="h-addtask-container d-flex">
+        <section class="headline-section d-flex">
+          <div class="headline-container d-flex">
             <h1>Board</h1>
             <button
               id="addTaskButtonH1"
-              class="button-reset"
+              class="button-reset d-mobile"
               type="button"
               aria-label="Add new task"
             ></button>
-          </section>
-          <!-- #endregion-->
+          </div>
 
-          <!-- #region MARK: search 
-          -->
           <section class="find-addtask-container d-flex">
-            <div class="find-message-container-wrapper d-flex">
+            <div class="search-error-message-container d-flex">
               <div class="find-container d-flex">
                 <input
                   id="searchInputfield"
@@ -77,16 +74,22 @@
                   </svg>
                 </button>
               </div>
-              <div class="search-error-message-container">
+              <div class="search-error-message">
                 <p id="searchErrorMessage"></p>
               </div>
             </div>
-            <button class="button-basic button-primary d-desktop" type="button">
+            <button class="button-basic button-primary d-tablet" type="button">
               Add task
             </button>
+            <button
+              id="addTaskButtonSearch"
+              class="button-reset d-mobile-L"
+              type="button"
+              aria-label="Add new task"
+            ></button>
           </section>
-          <!-- #endregion-->
         </section>
+        <!-- #endregion-->
 
         <!-- #region MARK: columns 
         -->

@@ -100,9 +100,9 @@ function generateSummaryHTM(statusCounts, tasks, urgentTasks) {
               <span class="summary-card-label label-urgent">Urgent</span>
             </div>
 
-            <div class="summary-card-deadline">
-              <time class="card-date" datetime="2026-10-16"
-                >October 16, 2026</time
+            <div  class="summary-card-deadline">
+              <time id="upcoming-deadline" class="card-date" datetime="2026-10-16"
+                >Wird geladen ....</time
               >
               <span class="summary-card-deadline-label">Upcoming Deadline</span>
             </div>

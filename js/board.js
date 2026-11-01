@@ -19,29 +19,12 @@ let allFetchedTasksAreRendered = false;
  */
 async function initBoard() {
   await initHeader()
-  renderAddTaskButtons();
+  
   await fetchAllData("tasks");
   await fetchAllData("contacts");
   renderTasks(Object.keys(allTasks));
   allFetchedTasksAreRendered = true;
-}
-
-
-/**
- * Renders the Add Task Buttons.
- * Each button is only rendered if its container exists on the current page.
- * @returns {void} Nothing; the button SVGs are written into their containers, missing containers are skipped.
- */
-function renderAddTaskButtons() {
-  try {
-    document.getElementById("addTaskButtonH1").innerHTML = templateAddTaskH1SVG();
-  } catch {}
-  const columnButtons = ["addTaskButtonToDo", "addTaskButtonInProgress", "addTaskButtonAwaitFeedback"]
-  for (const button of columnButtons) {
-    try {
-      document.getElementById(button).innerHTML = templateAddTaskColumnSVG();
-    } catch {}
-  }
+  renderAddTaskButtons();
 }
 // #endregion
 
@@ -97,7 +80,6 @@ function renderTasks(currentTasksIDs, activeSearch="") {
   clearAllColumns();
   const sortedTasksIDs = currentTasksIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
   sortedTasksIDs.forEach(renderOneTask);
-  activateDragStartEnd();
   checkForEmptyColumn(activeSearch);
 }
 
@@ -109,27 +91,12 @@ function renderTasks(currentTasksIDs, activeSearch="") {
  * @returns {void} Nothing; the task card is added to its column in the DOM.
  */
 function renderOneTask(taskID) {
-  const {cardPlace, category, categoryColor, title, priority, description, subtasks, assignees} 
-    = createAndReturnVariablesForTask(taskID);
-  cardPlace.innerHTML += templateTaskCard(taskID, {category, categoryColor}, {title, priority});
-  renderDescription(taskID, description);
-  renderProgressBar(taskID, subtasks);
-  renderTaskAssignees(taskID, assignees)
-}
-
-
-/**
- * Collects the data needed to render a task card.
- * @param {string} taskID - The ID of the task to render.
- * @returns {{cardPlace: (HTMLElement), category: string, categoryColor: string, title: string, priority: string, description: (string|undefined), subtasks: (Object[]|undefined), assignees: (string[]|undefined)}}
- * The target column element, category and its color class, title, priority, description, subtasks and assignees.
- */
-function createAndReturnVariablesForTask(taskID) {
-  const {category, title, description, priority, assignedTo: assignees, status: columnName, subtasks} 
-    = allTasks[taskID];
-  const categoryColor = (category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
-  const cardPlace = document.getElementById(columnName);
-  return {cardPlace, category, categoryColor, title, priority, description, subtasks, assignees};
+  const categoryColor = (allTasks[taskID].category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
+  const column = document.getElementById(allTasks[taskID].status);
+  column.innerHTML += templateTaskCard(taskID, categoryColor);
+  renderDescription(taskID);
+  renderProgressBar(taskID);
+  renderTaskAssignees(taskID);
 }
 // #endregion
 
@@ -138,10 +105,10 @@ function createAndReturnVariablesForTask(taskID) {
 /**
  * Renders the description for a task card if it exists.
  * @param {string} taskID - The ID of the task for which to render the description.
- * @param {(string|undefined)} description - The description text to render.
  * @returns {void} Nothing; the description is written into the task card, or the card stays unchanged if there is none.
  */
-function renderDescription(taskID, description) {
+function renderDescription(taskID) {
+  const description = allTasks[taskID].description;
   if (!description || description.trim() === "") {
     return
   }
@@ -153,10 +120,10 @@ function renderDescription(taskID, description) {
 /**
  * Renders a progress bar for a task based on its subtasks if they exist.
  * @param {string} taskID - The ID of the task for which to render the progress bar.
- * @param {(Object[]|undefined)} subtasks - The array of subtasks for the task.
  * @returns {void} Nothing; the progress bar is written into the task card, or its container is hidden if there are no subtasks.
  */
-function renderProgressBar(taskID, subtasks) {
+function renderProgressBar(taskID) {
+  const subtasks = allTasks[taskID].subtasks;
   const progressContainerRef = document.getElementById(`progressContainer${taskID}`);
   if (subtasks && subtasks.length > 0) {
     const doneSubtasks = checkDoneSubtasks(subtasks);
@@ -185,7 +152,8 @@ function checkDoneSubtasks(subtasks) {
  * @param {(string[]|undefined)} assignees - The array of contact IDs of the assignees.
  * @returns {void} Nothing; the avatars are added to the task card, unknown contacts are skipped.
  */
-function renderTaskAssignees(taskID, assignees) {
+function renderTaskAssignees(taskID) {
+  const assignees = allTasks[taskID].assignedTo;
   if (!assignees || assignees.length === 0) {
     return;
   }
@@ -194,9 +162,7 @@ function renderTaskAssignees(taskID, assignees) {
     const contactID = assignees[i];
     const contact = allContacts[contactID];
     if (!contact) continue;
-    const assigneeShortcut = contact.shortcut;
-    const assigneeColor = contact.shortcutColor;
-    assigneesContainerRef.innerHTML += templateTaskAssignees(assigneeColor, assigneeShortcut);
+    assigneesContainerRef.innerHTML += templateTaskAssignees(contact.shortcutColor, contact.shortcut);
   }
 }
 // #endregion
@@ -248,3 +214,27 @@ function getColumnName(columnID) {
   return columnName;
 }
 // #endregion
+
+
+// #region BTN SEARCH
+
+/**
+ * Renders the Add Task Buttons.
+ * Each button is only rendered if its container exists on the current page.
+ * @returns {void} Nothing; the button SVGs are written into their containers, missing containers are skipped.
+ */
+function renderAddTaskButtons() {
+  const headingButtons = ["addTaskButtonH1", "addTaskButtonSearch"]
+  for (const button of headingButtons) {
+    try {
+    document.getElementById(button).innerHTML = templateAddTaskH1SVG();
+    } catch {}
+  }
+
+  const columnButtons = ["addTaskButtonToDo", "addTaskButtonInProgress", "addTaskButtonAwaitFeedback"]
+  for (const button of columnButtons) {
+    try {
+      document.getElementById(button).innerHTML = templateAddTaskColumnSVG();
+    } catch {}
+  }
+}

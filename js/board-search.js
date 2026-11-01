@@ -3,7 +3,7 @@
  */
 
 // #region VARIABLES
-const searchInputfieldRef = document.getElementById("searchInputfield");
+let trimmedInput = "";
 // #endregion
 
 
@@ -14,8 +14,8 @@ const searchInputfieldRef = document.getElementById("searchInputfield");
  * @returns {void} Nothing; the board and the feedback message are updated depending on the input.
  */
 function handleSearchRequest() {
-  const trimmedInput = searchInputfieldRef.value.trim();
-  switch (validateSearchInput(trimmedInput)) {
+  trimmedInput = document.getElementById("searchInputfield").value.trim();
+  switch (validateSearchInput()) {
     case "empty":
       checkForRenderedTasks("empty");
       break;
@@ -24,17 +24,16 @@ function handleSearchRequest() {
       showUserFeedback(`Please enter at least 3 characters.`);
       break;
     case "valid": 
-      processSearch(trimmedInput);
+      processSearch();
   }
 }
 
 
 /**
  * Validates the length of the search input.
- * @param {string} trimmedInput - The trimmed search input.
  * @returns {("empty"|"too short"|"valid")} The validation result of the input.
  */
-function validateSearchInput(trimmedInput) {
+function validateSearchInput() {
   switch (true) {
     case trimmedInput.length === 0:
       return "empty";
@@ -48,11 +47,10 @@ function validateSearchInput(trimmedInput) {
 
 /**
  * Searches the tasks and renders the matches, or gives feedback if none are found.
- * @param {string} validInput - The valid search input.
  * @returns {void} Nothing; the matching tasks are rendered or a feedback message is shown.
  */
-function processSearch(validInput) {
-  const matchingTasks = findMatchingTasks(validInput);
+function processSearch() {
+  const matchingTasks = findMatchingTasks();
   const matching = matchingTasks.length > 0 ? "found" : "not found";
   switch (matching) {
     case "not found":
@@ -60,7 +58,7 @@ function processSearch(validInput) {
       showUserFeedback(`No tasks found.`);
       break;
     case "found":
-      renderTasks(matchingTasks, `with "${validInput}" `);
+      renderTasks(matchingTasks, `with "${trimmedInput}" `);
       clearUserFeedback();
       allFetchedTasksAreRendered = false;
   }
@@ -85,16 +83,15 @@ function checkForRenderedTasks(searchStatus="") {
 // #endregion
 
 
-// #region MATCHING
+// #region MATCH
 /**
  * Finds all tasks whose title and description contain every search term.
- * @param {string} validInput - The valid search input.
  * @returns {string[]} The array of task IDs of the matching tasks.
  */
-function findMatchingTasks(validInput) {
+function findMatchingTasks() {
   const allTasksIDs = Object.keys(allTasks);
   const matchingTasks = [];
-  const searchTerms = validInput.toLowerCase().split(" ");
+  const searchTerms = trimmedInput.toLowerCase().split(" ");
   for (let i = 0; i < allTasksIDs.length; i++) {
     const taskID = allTasksIDs[i];
     const {title, description} = allTasks[taskID];

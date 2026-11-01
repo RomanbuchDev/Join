@@ -35,8 +35,6 @@
 
 .contact-details-title {
   color: var(--color-black);
-  font-size: 2.6rem;
-  font-weight: 700;
 }
 
 .contact-details-subtitle {
@@ -144,7 +142,7 @@
   opacity: 1;
 }
 
-/* ##### Toast message - No delete of own account */
+/* ##### Toast message - No delete of own account ##### */
 
 .toast-message-own-account-no-delete {
   background-color: rgb(205 80 0 / 100%);
@@ -167,11 +165,6 @@
     display: block;
   }
 
-  .contact-details-container h3 {
-    font-size: 1.25rem;
-    font-weight: 400;
-  }
-
   .contact-details-title-container {
     display: grid;
     grid-template-columns: auto 3px auto;
@@ -187,7 +180,6 @@
   }
 
   .contact-details-title {
-    font-size: 3.8125rem;
     grid-column: 1;
     grid-row: 1;
   }

@@ -3,22 +3,18 @@
  */
 
 // #region START END
-function activateDragStartEnd() {
-  const tasks = document.querySelectorAll(".task-card");
-
-  tasks.forEach((task) => {
-    task.addEventListener("dragstart", handleDragstart);
-    task.addEventListener("dragend", () => {task.classList.remove("dragged-task");});
-  });
-} 
-
-
 function handleDragstart(event) {
-  event.currentTarget.classList.add("dragged-task");
+  const currentDraggedTask = event.currentTarget;
+  currentDraggedTask.classList.add("dragged-task");
   event.dataTransfer.effectAllowed = "move";
   // Custom type to identify a task drag
   event.dataTransfer.setData("task", "");
-  // event.dataTransfer.setDragImage();
+}
+
+
+function handleDragend(event) {
+  const currentDraggedTask = event.currentTarget;
+  currentDraggedTask.classList.remove("dragged-task");
 }
 // #endregion
 
