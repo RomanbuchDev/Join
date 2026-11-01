@@ -37,5 +37,11 @@ section {
   width: 2.5rem;
   position: absolute;
   right: 1rem;
-  top: 2.5rem;
+  top: 3rem;
+}
+
+@media (width >= 80em) {
+  .main-imprint {
+    padding-bottom: 0;
+  }
 }
