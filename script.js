@@ -62,6 +62,50 @@ async function initHeader() {
 
 
 /**
+ * Builds the {uid, name, email} profile for a logged-in Firebase user, fetching the
+ * name from the Realtime Database. Anonymous (guest) users get the name "Guest"
+ * without a DB fetch.
+ * @param {Object} user - The raw Firebase user object (uid, email, isAnonymous, getIdToken()).
+ * @returns {Promise<Object>} The profile {uid, name, email, isGuest?}.
+ */
+async function fetchUserProfile(user) {
+  if (user.isAnonymous) {
+    return { uid: user.uid, name: "Guest", isGuest: true };
+  }
+  const idToken = await user.getIdToken();
+  const response = await fetch(
+    `${window.firebaseUrl}users/${user.uid}.json?auth=${idToken}`,
+  );
+  const profile = await response.json();
+  return { uid: user.uid, name: profile.name, email: user.email };
+}
+
+
+/**
+ * Toggles the legal-page navbar and avatar based on auth state.
+ */
+function initLegalPageAuthUI() {
+  window.onAuthStateChanged(window.auth, async (user) => {
+    const navList = document.querySelector(".main-nav-list");
+    const guestRow = document.querySelector(".main-nav-guest-row");
+    if (user) {
+      const profile = await fetchUserProfile(user);
+      initAvatar(profile);
+      document.querySelector(".user-menu").hidden = false;
+      navList.hidden = false;
+      guestRow.hidden = true;
+    } else {
+      avatarExport("");
+      document.querySelector(".user-menu").hidden = true;
+      navList.hidden = true;
+      guestRow.hidden = false;
+    }
+  });
+}
+
+
+
+/**
  * Escapes characters with a special meaning in HTML, so that text is displayed as plain text
  * and not interpreted as markup. Safe for HTML content and for quoted attribute values.
  * @param {*} text - The value to escape; it is converted to a string first.
