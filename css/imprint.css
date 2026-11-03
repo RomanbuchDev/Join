@@ -23,7 +23,7 @@ h3 {
   font-weight: 700 !important;
 }
 
-a {
+.main-imprint a {
   text-decoration: none;
   color: var(--color-medium);
 }
@@ -40,8 +40,46 @@ section {
   top: 3rem;
 }
 
+.main-nav-guest-list {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav-guest-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.main-nav-list[hidden],
+.main-nav-guest-row[hidden] {
+  display: none;
+}
+
+@media (width < 80em) {
+  .main-nav-legal {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
 @media (width >= 80em) {
   .main-imprint {
     padding-bottom: 0;
+  }
+
+  .main-nav-guest-list {
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 1.2em;
+    flex-direction: column;
+  }
+
+  .main-nav-guest-row {
+    display: contents;
   }
 }

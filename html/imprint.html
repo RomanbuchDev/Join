@@ -10,17 +10,17 @@
     <link rel="stylesheet" href="../css/responsive.css" />
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/assets.css" />
-    <link rel="stylesheet" href="../css/imprint.css" />
     <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../css/imprint.css" />
 
     <script type="module" src="../js/firebase-init.js"></script>
     <script defer src="../script.js"></script>
     <script src="../js/template.js" defer></script>
-    <script src="../js/login-status.js" defer></script>
+
     <script src="../js/imprint.js" defer></script>
     <title>Join - Legal Notice</title>
   </head>
-  <body onload="initHeader()">
+  <body>
     <div id="page">
       <header class="main-header" id="header"></header>
 
@@ -154,25 +154,28 @@
             </a>
           </li>
         </ul>
+        <div class="main-nav-guest-row">
+          <ul class="main-nav-guest-list">
+            <li class="main-nav-item">
+              <a href="../index.html">
+                <img src="../assets/icons/login.svg" alt="" />
+                <span> Log in </span>
+              </a>
+            </li>
+          </ul>
 
-        <ul class="main-nav-guest-list">
-          <li class="main-nav-item">
-            <a href="../index.html">
-              <img src="../assets/icons/login.svg" alt="" />
-              <span> Log in </span>
-            </a>
-          </li>
-        </ul>
+          <ul class="main-nav-legal">
+            <li class="main-nav-item">
+              <a href="../html/privacy-policy.html">Privacy Policy</a>
+            </li>
 
-        <ul class="main-nav-legal">
-          <li>
-            <a href="../html/privacy-policy.html">Privacy Policy</a>
-          </li>
-
-          <li>
-            <a href="../html/imprint.html">Legal Notice</a>
-          </li>
-        </ul>
+            <li class="main-nav-item">
+              <a href="../html/imprint.html" aria-current="page"
+                >Legal Notice</a
+              >
+            </li>
+          </ul>
+        </div>
       </nav>
     </div>
   </body>
