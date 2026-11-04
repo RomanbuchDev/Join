@@ -49,9 +49,17 @@ section {
   padding: 0;
 }
 
+.main-nav-legal a {
+  text-align: center;
+  width: auto;
+  padding: 0 1rem;
+}
+
 .main-nav-guest-row {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  padding: 0 1rem;
 }
 
 .main-nav-list[hidden],
@@ -63,6 +71,9 @@ section {
   .main-nav-legal {
     display: flex;
     flex-direction: row;
+  }
+  .main-nav-legal[hidden] {
+    display: none;
   }
 }
 
@@ -81,5 +92,9 @@ section {
 
   .main-nav-guest-row {
     display: contents;
+  }
+
+  .signup-back-vector {
+    display: none;
   }
 }
