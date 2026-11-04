@@ -19,7 +19,6 @@ let allFetchedTasksAreRendered = false;
  */
 async function initBoard() {
   await initHeader()
-  
   await fetchAllData("tasks");
   await fetchAllData("contacts");
   renderTasks(Object.keys(allTasks));
@@ -73,7 +72,7 @@ function storeData(dataCategory, dataObject) {
 /**
  * Renders all given tasks into their corresponding columns based on their position.
  * @param {string[]} currentTasksIDs - The array of task IDs to render.
- * @param {string} [activeSearch=""] - The active search text, used in the placeholder for empty columns.
+ * @param {string} [activeSearch=""] - The active search text, used in the message for empty columns.
  * @returns {void} Nothing; the columns are cleared and filled with the given tasks.
  */
 function renderTasks(currentTasksIDs, activeSearch="") {
@@ -180,10 +179,10 @@ function clearAllColumns() {
 
 /**
  * Renders a placeholder into every empty column.
- * @param {string} activeSearch - The active search text, used in the placeholder for empty columns.
+ * @param {string} [activeSearch=""] - The active search text, used in the message for empty columns.
  * @returns {void} Nothing; the placeholder is written into each empty column.
  */
-function checkForEmptyColumn(activeSearch) {
+function checkForEmptyColumn(activeSearch="") {
   for (let i = 0; i < columns.length; i++) {
     if (!columns[i].innerText) {
       const emptyColumnID = columns[i].id;

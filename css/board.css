@@ -1,31 +1,5 @@
-/* #region MARK: display 
+/* #region MARK: assets 
 */
-.d-flex {
-  display: flex;
-}
-
-.d-none,
-.d-mobile-L,
-.d-tablet {
-  display: none;
-}
-
-/* #endregion */
-
-/* #region MARK: drag drop 
-*/
-.placeholder {
-  border: 1px dashed var(--color-gray-168);
-  border-radius: 24px;
-}
-
-.dragged-task {
-  opacity: 0.2;
-  transform: rotate(5deg);
-}
-
-/* #endregion */
-
 input:focus-visible,
 button:focus-visible {
   outline: none;
@@ -51,6 +25,7 @@ button:focus-visible {
 .svg-fill:hover,
 .button-reset:focus-visible .svg-fill {
   fill: var(--color-medium);
+  filter: drop-shadow(0 0 2px var(--color-highlight));
 }
 
 .button-reset:active .svg-fill {
@@ -62,13 +37,31 @@ button:focus-visible {
   height: 2.5rem;
 }
 
-.svg-width-height-32px {
+.svg-width-height-32px,
+.svg-width-height-add {
   width: 2rem;
   height: 2rem;
 }
 
+/* #endregion */
+
+/* #region MARK: display 
+*/
+.d-flex {
+  display: flex;
+}
+
+.d-none,
+.d-mobile-L,
+.d-tablet {
+  display: none;
+}
+
+/* #endregion */
+
 .board-main-content {
   padding-top: 3em;
+  padding-inline: 0.5em;
   scrollbar-width: none;
 }
 
@@ -76,6 +69,10 @@ button:focus-visible {
   display: none;
 }
 
+/* #endregion */
+
+/* #region MARK: h1 search
+*/
 .headline-section {
   flex-direction: column;
   gap: 2.5em;
@@ -84,7 +81,7 @@ button:focus-visible {
 .headline-container,
 .h-addtask-container {
   justify-content: space-between;
-  padding-inline: 1em;
+  padding-inline: 0.5em;
 }
 
 .find-addtask-container {
@@ -93,9 +90,8 @@ button:focus-visible {
 
 .search-error-message-container {
   flex-direction: column;
-  padding-inline: 1em;
+  padding-inline: 0.5em;
   gap: 0.5em;
-  flex: 1;
   width: 100%;
 }
 
@@ -128,17 +124,23 @@ button:focus-visible {
   color: var(--color-error);
 }
 
+/* #endregion */
+
+/* #region MARK: columns
+*/
 .board-section {
   flex-direction: column;
-  padding: 1.5em 0;
-  gap: 0.5em;
+  padding-top: 1.5em;
+  padding-bottom: 0.5em;
+  gap: 1em;
 }
 
 .board-column {
   flex-direction: column;
+  gap: 0.5em;
 }
 
-.empty-board-column {
+.empty-column-message {
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -152,13 +154,13 @@ button:focus-visible {
 }
 
 .tasks-list {
-  margin-right: 1em;
-  padding: 1em;
+  margin-right: 0.5em;
+  padding: 0.5em;
   gap: 1em;
   overflow-x: auto;
 }
 
-.tasks-list:has(.empty-board-column) {
+.tasks-list:has(.empty-column-message) {
   margin-right: 0;
 }
 
@@ -166,6 +168,10 @@ button:focus-visible {
   display: none;
 }
 
+/* #endregion */
+
+/* #region MARK: task card
+*/
 .task-card {
   flex-direction: column;
   gap: 1.5em;
@@ -173,8 +179,9 @@ button:focus-visible {
   border-radius: 24px;
   box-shadow: 0 0 10px 3px var(--color-black-10);
   padding: 1em;
+  height: fit-content;
   min-width: 15.75em;
-  max-width: 15.75em;
+  width: 15.75em;
   cursor: pointer;
 }
 
@@ -268,6 +275,29 @@ button:focus-visible {
   background-color: var(--color-label-technical-task);
 }
 
+/* #endregion */
+
+/* #region MARK: drag drop 
+*/
+.dragged-task {
+  opacity: 0.8;
+  transform: rotate(4deg);
+  border: 1px dashed var(--color-highlight);
+  box-shadow: none;
+}
+
+.drag-over-column {
+  background-color: var(--color-gray-231);
+  border-radius: 24px;
+}
+
+.placeholder {
+  border: 1px dashed var(--color-highlight);
+  border-radius: 24px;
+}
+
+/* #endregion */
+
 /* #region MARK: @ mobile L 
 */
 @media (width >= 28em) {
@@ -292,6 +322,11 @@ button:focus-visible {
 /* #region MARK: @ tablet 
 */
 @media (width >= 48em) {
+  .svg-width-height-add {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
   .d-mobile-L {
     display: none;
   }
@@ -313,30 +348,50 @@ button:focus-visible {
     flex-direction: row;
     align-items: flex-start;
     overflow-x: auto;
+    margin-inline-end: 0.5em;
+    gap: 0;
   }
 
   .board-column {
-    flex: 1;
+    min-width: 16.75em;
   }
 
   .tasks-list {
     flex-direction: column;
     margin-right: 0;
-  }
-
-  .empty-board-column {
-    min-width: 15.75em;
-    max-width: 15.75em;
+    height: calc(100dvh - 22em);
   }
 }
 
 /* #endregion */
 
-/* #region MARK: @ laptop 
+/* #region MARK: @ laptop S
 */
 @media (width >= 64em) {
   .board-main-content {
-    padding: 5rem 3rem;
+    padding-inline: 1em;
+  }
+
+  .tasks-list {
+    height: calc(100dvh - 18em);
+  }
+}
+
+/* #endregion */
+
+/* #region MARK: @ laptop M
+*/
+
+/* @media (width >= 90em) {
+} */
+
+/* #endregion */
+
+/* #region MARK: @ laptop L
+*/
+@media (width >= 120em) {
+  .board-main-content {
+    padding: 5em 3em;
   }
 }
 
