@@ -88,17 +88,20 @@ function initLegalPageAuthUI() {
   window.onAuthStateChanged(window.auth, async (user) => {
     const navList = document.querySelector(".main-nav-list");
     const guestRow = document.querySelector(".main-nav-guest-row");
+    const guestRowLegal = document.querySelector(".main-nav-legal");
     if (user) {
       const profile = await fetchUserProfile(user);
       initAvatar(profile);
       document.querySelector(".user-menu").hidden = false;
       navList.hidden = false;
       guestRow.hidden = true;
+      guestRowLegal.hidden = true;
     } else {
       avatarExport("");
       document.querySelector(".user-menu").hidden = true;
       navList.hidden = true;
       guestRow.hidden = false;
+      guestRowLegal.hidden = false;
     }
   });
 }
@@ -210,4 +213,17 @@ function getGreeting() {
   }
 
   return "Good evening";
+}
+
+/**
+ * Signs the logged-in user out via Firebase Auth and then redirects to the login page.
+ */
+async function handleLogoutClick() {
+  await window.signOut(window.auth);
+  window.location.href = "../index.html";
+}
+
+const logoutButton = document.querySelector(".user-menu-logout");
+if (logoutButton) {
+  logoutButton.addEventListener("click", handleLogoutClick);
 }
