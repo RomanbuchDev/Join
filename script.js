@@ -87,20 +87,20 @@ async function fetchUserProfile(user) {
 function initLegalPageAuthUI() {
   window.onAuthStateChanged(window.auth, async (user) => {
     const navList = document.querySelector(".main-nav-list");
-    const guestRow = document.querySelector(".main-nav-guest-row");
+    const guestList = document.querySelector(".main-nav-guest-list");
     const guestRowLegal = document.querySelector(".main-nav-legal");
     if (user) {
       const profile = await fetchUserProfile(user);
       initAvatar(profile);
       document.querySelector(".user-menu").hidden = false;
       navList.hidden = false;
-      guestRow.hidden = true;
+      guestList.hidden = true;
       guestRowLegal.hidden = true;
     } else {
       avatarExport("");
       document.querySelector(".user-menu").hidden = true;
       navList.hidden = true;
-      guestRow.hidden = false;
+      guestList.hidden = false;
       guestRowLegal.hidden = false;
     }
   });
