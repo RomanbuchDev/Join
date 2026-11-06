@@ -21,35 +21,21 @@ function handleDragend() {
 
 columns.forEach((column) => {
   column.addEventListener("dragleave", handleDragleave);
-  column.addEventListener("drop", handleDrop);
   column.addEventListener("dragover", handleDragover);
+  column.addEventListener("drop", handleDrop);
 });
 
 
-// #region LEAVE DROP
+// #region LEAVE
 function handleDragleave(event) {
   const column = event.currentTarget;
   if (column.contains(event.relatedTarget)) return;
 
   column.classList.remove("drag-over-column");
   column.querySelector(".empty-column-message")?.classList.remove("d-none");
+
   const placeholder = column.querySelector(".placeholder");
   placeholder?.remove();
-}
-
-
-function handleDrop(event) {
-  event.preventDefault();
-  const column = event.currentTarget;
-  const placeholder = column.querySelector(".placeholder");
-  column.classList.remove("drag-over-column");
-  if (!placeholder) return;
-  
-  const draggedTask = document.querySelector(".dragged-task");
-  column.insertBefore(draggedTask, placeholder);
-  placeholder.remove();
-  column.querySelector(".empty-column-message")?.remove();
-  checkForEmptyColumn();
 }
 // #endregion
 
@@ -148,5 +134,106 @@ function makePlaceholder(draggedTask) {
   placeholder.style.minHeight = `${draggedTask.offsetHeight}px`;
   placeholder.style.minWidth = `${draggedTask.offsetWidth}px`;
   return placeholder;
+}
+// #endregion
+
+
+// #region DROP
+function handleDrop(event) {
+  event.preventDefault();
+  const column = event.currentTarget;
+  column.classList.remove("drag-over-column");
+
+  const placeholder = column.querySelector(".placeholder");
+  if (!placeholder) return;
+
+  const draggedTask = document.querySelector(".dragged-task");
+  handleSuccessfulDrop(column, draggedTask, placeholder);
+  checkForEmptyColumn();
+  handleMovedTasks(draggedTask);
+}
+
+
+function handleSuccessfulDrop(column, draggedTask, placeholder) {
+  column.querySelector(".empty-column-message")?.remove();
+  column.insertBefore(draggedTask, placeholder);
+  placeholder.remove();
+}
+
+
+function handleMovedTasks(draggedTask) {
+  const updates = {};
+  const destinationStatus = draggedTask.parentElement.id;
+  const originStatus = draggedTask.dataset.taskStatus;
+  
+  applyDestinationStatus(updates, draggedTask, { destinationStatus, originStatus });
+  if (destinationStatus !== originStatus) {
+    applyOriginStatus(updates, draggedTask, originStatus);
+    applyNewStatusToDraggedTask(updates, draggedTask, destinationStatus);
+  }
+  patchTasks(updates);
+}
+
+
+function applyDestinationStatus(updates, draggedTask, { destinationStatus, originStatus }) {
+  const draggedTaskId = draggedTask.dataset.taskId;
+  const sortedTasks = getSortedTaskIds(destinationStatus);
+
+  if (destinationStatus === originStatus) removeDraggedTaskId(sortedTasks, draggedTaskId);
+  const newPreviousTaskId = draggedTask.previousElementSibling?.dataset.taskId ?? null;
+  const newPosition = newPreviousTaskId ? sortedTasks.indexOf(newPreviousTaskId) + 1 : 0;
+  sortedTasks.splice(newPosition, 0, draggedTaskId);
+  applyPositions(updates, sortedTasks);
+}
+
+
+function applyOriginStatus(updates, draggedTask, originStatus) {
+  const draggedTaskId = draggedTask.dataset.taskId;
+  const sortedTasks = getSortedTaskIds(originStatus);
+
+  removeDraggedTaskId(sortedTasks, draggedTaskId);
+  applyPositions(updates, sortedTasks);
+}
+
+
+function getSortedTaskIds(status) {
+  const tasksPerStatus = Object.keys(allTasks).filter((taskId) => allTasks[taskId].status === status);
+  return tasksPerStatus.sort((a, b) => allTasks[a].position - allTasks[b].position);
+}
+
+
+function removeDraggedTaskId(sortedTasks, draggedTaskId) {
+  const draggedTaskIndex = sortedTasks.indexOf(draggedTaskId);
+  sortedTasks.splice(draggedTaskIndex, 1);
+}
+
+
+function applyPositions(updates, sortedIds) {
+  sortedIds.forEach((taskId, index) => {
+    allTasks[taskId].position = index;
+    Object.assign(updates, { [`${taskId}/position`]: index });
+  });
+}
+
+
+function applyNewStatusToDraggedTask(updates, draggedTask, destinationStatus) {
+  const draggedTaskId = draggedTask.dataset.taskId;
+  allTasks[draggedTaskId].status = destinationStatus;
+  draggedTask.dataset.taskStatus = destinationStatus;
+  Object.assign(updates, { [`${draggedTaskId}/status`]: destinationStatus });
+}
+
+
+async function patchTasks(updates) {
+  try {
+    const idToken = await window.auth.currentUser.getIdToken();
+    const tasksUrl = `${window.firebaseUrl}/tasks.json?auth=${idToken}`;
+    const response = await fetch(tasksUrl, { method: "PATCH", body: JSON.stringify(updates) });
+    if (!response.ok) {
+      throw new Error(`Failed to save tasks: ${response.status}`);
+    }
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  }
 }
 // #endregion
