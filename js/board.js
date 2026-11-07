@@ -221,12 +221,9 @@ function getColumnName(columnID) {
  * @returns {void} Nothing; the button SVGs are written into their containers, missing containers are skipped.
  */
 function renderAddTaskButtons() {
-  const headingButtons = ["addTaskButtonH1", "addTaskButtonSearch"]
-  for (const button of headingButtons) {
-    try {
-    document.getElementById(button).innerHTML = templateAddTaskH1SVG();
-    } catch {}
-  }
+  try {
+  document.getElementById("addTaskButtonH1").innerHTML = templateAddTaskH1SVG();
+  } catch {}
 
   const columnButtons = ["addTaskButtonToDo", "addTaskButtonInProgress", "addTaskButtonAwaitFeedback"]
   for (const button of columnButtons) {

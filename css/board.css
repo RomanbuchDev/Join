@@ -52,9 +52,12 @@ button:focus-visible {
 }
 
 .d-none,
-.d-mobile-L,
-.d-tablet {
+.btn-d-tablet {
   display: none;
+}
+
+.btn-d-mobile {
+  padding-top: 0.3em;
 }
 
 /* #endregion */
@@ -74,23 +77,29 @@ button:focus-visible {
 /* #region MARK: h1 search
 */
 .headline-section {
-  flex-direction: column;
+  display: grid;
+  grid-template-areas: 
+    "h1 addtask"
+    "search-error-message search-error-message";
+  grid-template-columns: 1fr auto;
+  padding-inline: 0.5em;
   gap: 2.5em;
+  align-items: start;
 }
 
-.headline-container,
+.h1 {
+  grid-area: h1;
+  line-height: 1;
+}
+
 .h-addtask-container {
   justify-content: space-between;
   padding-inline: 0.5em;
 }
 
-.find-addtask-container {
-  gap: 2em;
-}
-
 .search-error-message-container {
+  grid-area: search-error-message;
   flex-direction: column;
-  padding-inline: 0.5em;
   gap: 0.5em;
   width: 100%;
 }
@@ -120,8 +129,16 @@ button:focus-visible {
   padding-left: 16px;
 }
 
+.error-container {
+  height: 1.5em;
+}
+
 .search-error-message {
   color: var(--color-error);
+}
+
+.addtask-container {
+  grid-area: addtask;
 }
 
 /* #endregion */
@@ -130,7 +147,7 @@ button:focus-visible {
 */
 .board-section {
   flex-direction: column;
-  padding-top: 1.5em;
+  /* padding-top: 1.5em; */
   padding-bottom: 0.5em;
   gap: 1em;
 }
@@ -301,19 +318,16 @@ button:focus-visible {
 /* #region MARK: @ mobile L 
 */
 @media (width >= 28em) {
-  .d-mobile {
-    display: none;
-  }
-
-  .d-mobile-L {
-    display: flex;
-  }
-
   .headline-section {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    grid-template-areas: 
+      "h1 search-error-message addtask";
+    grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 2em;
+  }
+
+  .search-error-message-container {
+    justify-self: flex-end;
+    max-width: 20em;
   }
 }
 
@@ -327,21 +341,17 @@ button:focus-visible {
     height: 1.5rem;
   }
 
-  .d-mobile-L {
+  .btn-d-mobile {
     display: none;
   }
 
-  .d-tablet {
+  .btn-d-tablet {
     display: flex;
+    gap: 0.75em;
   }
 
   h2 {
     font-size: 1.25rem;
-  }
-
-  .find-addtask-container {
-    flex: 1;
-    max-width: 35em;
   }
 
   .board-section {
@@ -382,17 +392,20 @@ button:focus-visible {
 /* #region MARK: @ laptop M
 */
 
-/* @media (width >= 90em) {
-} */
+@media (width >= 90em) {
+  .board-main-content {
+    padding: 5em 3em;
+  }
+}
 
 /* #endregion */
 
 /* #region MARK: @ laptop L
 */
-@media (width >= 120em) {
+/* @media (width >= 120em) {
   .board-main-content {
     padding: 5em 3em;
   }
-}
+} */
 
 /* #endregion */
