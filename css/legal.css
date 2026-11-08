@@ -3,12 +3,12 @@ body {
   background-color: var(--color-bg-main);
 }
 
-.main-imprint {
+.main-legal {
   grid-area: main;
   position: relative;
   min-height: 0;
   overflow-y: auto;
-  padding: 3rem 1rem 7rem 1rem;
+  padding: 3rem 1rem 7rem;
 }
 
 h1 {
@@ -23,9 +23,13 @@ h3 {
   font-weight: 700 !important;
 }
 
-.main-imprint a {
+.main-legal a {
   text-decoration: none;
   color: var(--color-medium);
+}
+
+.main-legal .email-link {
+  color: var(--color-email);
 }
 
 section {
@@ -65,7 +69,7 @@ section {
   color: var(--color-white);
 }
 
-@media (width < 80em) {
+@media (width < 64em) {
   .main-nav-legal {
     display: flex;
     flex-direction: row;
@@ -82,9 +86,9 @@ section {
   }
 }
 
-@media (width >= 80em) {
-  .main-imprint {
-    padding: 3rem 4rem 3rem 4rem;
+@media (width >= 64em) {
+  .main-legal {
+    padding: 3rem 4rem;
   }
 
   .main-header {

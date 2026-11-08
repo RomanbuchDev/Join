@@ -11,20 +11,20 @@
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/assets.css" />
     <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../css/imprint.css" />
+    <link rel="stylesheet" href="../css/legal.css" />
 
     <script type="module" src="../js/firebase-init.js"></script>
     <script defer src="../script.js"></script>
     <script src="../js/template.js" defer></script>
 
-    <script src="../js/imprint.js" defer></script>
+    <script src="../js/legal.js" defer></script>
     <title>Join - Legal Notice</title>
   </head>
   <body>
     <div id="page">
       <header class="main-header" id="header"></header>
 
-      <main class="main-imprint">
+      <main class="main-legal">
         <div class="dpf-spc-between-center">
           <h1>Legal Notice</h1>
           <div>
@@ -48,7 +48,11 @@
         </section>
         <section>
           <h3>Exploring the Board</h3>
-          <p>Email:<a href="mailto:lex8472@web.de"> lex8472@web.de</a></p>
+          <p>
+            Email:<a href="mailto:lex8472@web.de" class="email-link">
+              lex8472@web.de</a
+            >
+          </p>
         </section>
 
         <section>
@@ -113,8 +117,8 @@
             reasonable legal fees) arising out of or relating to your use of
             Join and/or your breach of this Legal Notice. For any questions or
             notices, please contact us at
-            <a href="mailto:lex8472@web.de">lex8472@web.de</a>. Date: October
-            27, 2026
+            <a href="mailto:lex8472@web.de" class="email-link">lex8472@web.de</a
+            >. Date: October 27, 2026
           </p>
         </section>
       </main>
@@ -125,57 +129,7 @@
           src="../assets/icons/join-logo-white.svg"
           alt=""
         />
-        <ul class="main-nav-list" hidden>
-          <li class="main-nav-item">
-            <a href="../html/summary.html">
-              <img src="../assets/icons/summary-icon.svg" alt="" />
-              <span>Summary</span>
-            </a>
-          </li>
-
-          <li class="main-nav-item">
-            <a href="../html/add-task.html">
-              <img src="../assets/icons/addtask-icon.svg" alt="" />
-              <span> Add Task </span>
-            </a>
-          </li>
-
-          <li class="main-nav-item">
-            <a href="../html/board.html">
-              <img src="../assets/icons/board-icon.svg" alt="" />
-              <span> Board </span>
-            </a>
-          </li>
-
-          <li class="main-nav-item">
-            <a href="../html/contacts.html">
-              <img src="../assets/icons/contact-icon.svg" alt="" />
-              <span> Contacts </span>
-            </a>
-          </li>
-        </ul>
-        <div class="main-nav-guest-row">
-          <ul class="main-nav-guest-list" hidden>
-            <li class="main-nav-item">
-              <a href="../index.html">
-                <img src="../assets/icons/login.svg" alt="" />
-                <span> Log in </span>
-              </a>
-            </li>
-          </ul>
-
-          <ul class="main-nav-legal">
-            <li class="main-nav-item">
-              <a href="../html/privacy-policy.html">Privacy Policy</a>
-            </li>
-
-            <li class="main-nav-item">
-              <a href="../html/imprint.html" aria-current="page"
-                >Legal Notice</a
-              >
-            </li>
-          </ul>
-        </div>
+        <div class="main-nav-content"></div>
       </nav>
     </div>
   </body>
