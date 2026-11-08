@@ -64,9 +64,6 @@ function getCurrentUser() {
 }
 
 
-
-
-
 window.getCurrentUser = getCurrentUser;
 
 window.onAuthStateChanged(window.auth, handleAuthStateChange);

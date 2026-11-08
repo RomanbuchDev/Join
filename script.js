@@ -2,6 +2,7 @@ const toastMessage = document.getElementById("toast-message");
 
 let toastMessageTime;
 
+
 /**
  * Renders the header with the avatar initials of the given user.
  * @param {Object} user - The logged-in user ({ uid, name, email, isGuest }).
@@ -82,30 +83,42 @@ async function fetchUserProfile(user) {
 
 
 /**
- * Toggles the legal-page navbar and avatar based on auth state.
+ * Gets the filename of the currently open page, e.g. "imprint.html".
+ * Falls back to "index.html" when the path ends in a slash (no filename).
+ * @returns {string} The current page's filename.
  */
+function getCurrentPage() {
+  return location.pathname.split("/").pop() || "index.html";
+}
+
+
+function showGuestUI() {
+  avatarExport("");
+  document.querySelector(".user-menu").hidden = true;
+
+}
+
+async function showAuthenticatedUI(user) {
+  const profile = await fetchUserProfile(user);
+  initAvatar(profile);
+  document.querySelector(".user-menu").hidden = false;
+}
+
+
 function initLegalPageAuthUI() {
   window.onAuthStateChanged(window.auth, async (user) => {
-    const navList = document.querySelector(".main-nav-list");
-    const guestList = document.querySelector(".main-nav-guest-list");
-    const guestRowLegal = document.querySelector(".main-nav-legal");
+    // const navList = document.querySelector(".main-nav-content");
+
+    const currentPage = getCurrentPage();
     if (user) {
-      const profile = await fetchUserProfile(user);
-      initAvatar(profile);
-      document.querySelector(".user-menu").hidden = false;
-      navList.hidden = false;
-      guestList.hidden = true;
-      guestRowLegal.hidden = true;
+      await showAuthenticatedUI(user);
+      document.querySelector(".main-nav-content").innerHTML = templateNavAuthenticated(currentPage);
     } else {
-      avatarExport("");
-      document.querySelector(".user-menu").hidden = true;
-      navList.hidden = true;
-      guestList.hidden = false;
-      guestRowLegal.hidden = false;
+      showGuestUI();
+      document.querySelector(".main-nav-content").innerHTML = templateNavUnauthenticated(currentPage);
     }
   });
 }
-
 
 
 /**
@@ -153,10 +166,8 @@ function showToastMessage(text, statusClass) {
   if (toastMessageTime) clearTimeout(toastMessageTime);
   toastMessage.className = "toast-message";
   toastMessage.textContent = text;
-
   toastMessage.showPopover();
   toastMessage.classList.add("show", statusClass);
-
   toastMessageTime = setTimeout(() => {
     hideToastMessage(statusClass);
   }, 3000);
@@ -166,9 +177,7 @@ function showToastMessage(text, statusClass) {
 /** Closes the dialog window showing the database connection error. */
 function closeDialogConnectionErrorDatabase() {
   const dialogBoxConnectionErrorDatabase = document.getElementById(
-    "connection-error-database-dialog",
-  );
-
+    "connection-error-database-dialog",);
   if (dialogBoxConnectionErrorDatabase) {
     dialogBoxConnectionErrorDatabase.remove();
   }
@@ -187,14 +196,11 @@ function openDialogConnectionErrorDatabase() {
     "connection-error-database-dialog",
   );
   if (openErrorMessage) return;
-
   const errorMessage = getConnectionErrorDatabaseTemplate();
   document.body.insertAdjacentHTML("beforeend", errorMessage);
-
   const dialogBoxConnectionErrorDatabase = document.getElementById(
     "connection-error-database-dialog",
   );
-
   if (dialogBoxConnectionErrorDatabase) {
     dialogBoxConnectionErrorDatabase.showModal();
   }
@@ -203,17 +209,15 @@ function openDialogConnectionErrorDatabase() {
 
 function getGreeting() {
   const hour = new Date().getHours();
-
   if (hour < 12) {
     return "Good morning";
   }
-
   if (hour < 18) {
     return "Good afternoon";
   }
-
   return "Good evening";
 }
+
 
 /**
  * Signs the logged-in user out via Firebase Auth and then redirects to the login page.
@@ -222,6 +226,7 @@ async function handleLogoutClick() {
   await window.signOut(window.auth);
   window.location.href = "../index.html";
 }
+
 
 const logoutButton = document.querySelector(".user-menu-logout");
 if (logoutButton) {
