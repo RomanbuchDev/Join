@@ -1,0 +1,243 @@
+.subtask-input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-inline: 1em;
+  border: 1px solid var(--color-gray-104);
+  border-radius: 10px;
+  background-color: var(--color-white);
+}
+
+.subtask-input input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  padding-block: 0.65em;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+}
+
+.subtask-input button {
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.subtask-row-actions button {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-dark, #2a3647);
+  font: inherit;
+  cursor: pointer;
+}
+
+.subtask-row-actions button + button {
+  border-inline-start: 1px solid var(--color-gray-209, #d1d1d1);
+}
+
+.subtask-input button:first-of-type {
+  border-inline-end: 1px solid var(--color-gray-209);
+}
+
+.priority-radio[value="urgent"]:checked + label {
+  background-color: var(--color-prio-urgent);
+  color: var(--color-white);
+}
+
+.priority-radio[value="medium"]:checked + label {
+  background-color: var(--color-prio-medium);
+  color: var(--color-white);
+}
+
+.priority-radio[value="low"]:checked + label {
+  background-color: var(--color-prio-low);
+  color: var(--color-white);
+}
+
+.priority-radio:checked + label .priority-icon path {
+  fill: var(--color-white);
+}
+
+.required-marker {
+  color: var(--color-error);
+}
+
+.required-hint--desktop {
+  display: none;
+}
+
+.contact-dropdown {
+  position: relative;
+}
+
+.contact-list {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline: 0;
+  z-index: 2;
+  max-height: 18rem;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  background-color: var(--color-white);
+  border-radius: 0 0 0.625rem 0.625rem;
+  box-shadow: 0 4px 12px var(--color-black-10);
+}
+
+.assigned-contact-option {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.625rem;
+  cursor: pointer;
+}
+
+.assigned-contact-option:hover {
+  background-color: var(--color-bg-main);
+}
+
+.assigned-contact-option:has(input:checked) {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+}
+
+.selected-contact-badge {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: var(--color-white);
+}
+
+.selected-contact-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.selected-contact-badges:empty {
+  display: none;
+}
+
+.subtask-actions:not([hidden]),
+.subtask-row-actions {
+  display: flex;
+  align-items: center;
+}
+
+.subtask-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subtask-list:empty {
+  display: none;
+}
+
+.subtask-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 2rem;
+  padding-inline: 1rem;
+  border-radius: 0.625rem;
+  font-size: 1rem;
+}
+
+.subtask-text {
+  position: relative;
+  padding-inline-start: 1.5rem;
+  overflow-wrap: anywhere;
+}
+
+.subtask-text::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0.625rem;
+  inset-block-start: 0.5em;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: currentcolor;
+}
+
+.subtask-row:not(.subtask-row--editing):is(:hover, :focus-within) {
+  background: #ebebeb;
+}
+
+.subtask-row--editing {
+  border-radius: 0;
+  border-bottom: 1px solid #143d4c;
+  background: #fff;
+}
+
+.subtask-edit-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.subtask-row-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+@media (width >= 64em) {
+  .required-hint {
+    grid-area: hint;
+  }
+
+  .required-hint--mobile {
+    display: none;
+  }
+
+  .required-hint--desktop {
+    display: block;
+    margin-inline-end: auto;
+  }
+
+  .form-column--left {
+    grid-area: left;
+  }
+
+  .form-column--right {
+    grid-area: right;
+  }
+
+  .form-column > .form-field {
+    align-self: stretch;
+  }
+
+  .subtask-row:not(.subtask-row--editing, :hover, :focus-within)
+    .subtask-row-actions {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .subtask-input:focus-within {
+    border-color: var(--color-medium);
+  }
+
+  .form-field--subtasks:has(.subtask-row)
+    .subtask-input:not(:focus-within):has(#subtask:placeholder-shown) {
+    border-color: var(--color-gray-209, #d1d1d1);
+  }
+}
