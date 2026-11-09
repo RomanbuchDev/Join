@@ -1,20 +1,6 @@
-body {
-  font-family: var(--font-family);
-  background-color: var(--color-bg-main);
-}
-
-#page {
-  height: 100dvh;
-  display: grid;
-  grid-template:
-    "header" auto
-    "main" minmax(0, 1fr)
-    /* "nav" auto / 1fr; */
-    "nav" auto;
-  overflow: hidden;
-}
-
-/* headings: global base from Figma text styles, deviations via classes */
+/* #region MARK: h1-h4
+headings: global base from Figma text styles, deviations via classes
+*/
 h1 {
   font-size: 3rem;
   font-weight: 700;
@@ -39,12 +25,35 @@ h4 {
   line-height: 1.2;
 }
 
+/* #endregion */
+
+/* #region MARK: main
+*/
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg-main);
+}
+
+#page {
+  height: 100dvh;
+  display: grid;
+  grid-template:
+    "header" auto
+    "main" minmax(0, 1fr)
+    "nav" auto;
+  overflow: hidden;
+}
+
 .main {
   grid-area: main;
   min-height: 0;
   overflow-y: auto;
 }
 
+/* #endregion */
+
+/* #region MARK: header
+*/
 .main-header {
   grid-area: header;
   width: 100%;
@@ -140,17 +149,15 @@ h4 {
   cursor: pointer;
 }
 
+/* #endregion */
+
+/* #region MARK: nav
+*/
 .main-nav {
   grid-area: nav;
-
-  /* position: fixed; */
-
-  /* bottom: 0; */
   width: 100%;
   height: 5rem;
   background-color: var(--color-dark);
-
-  /* z-index: 1000; */
 }
 
 .main-nav-list {
@@ -203,13 +210,13 @@ h4 {
   display: none;
 }
 
-@media (width >= 64rem) {
+/* #region MARK: @ laptop S
+*/
+@media (width >= 64em) {
   h1 {
     font-size: 3.75rem;
   }
-}
 
-@media (width >= 80em) {
   #page {
     height: 100dvh;
     overflow: hidden;
@@ -219,21 +226,10 @@ h4 {
       "nav main main main main";
   }
 
-  /* .main {
-    grid-area: main;
-    min-height: 0;
-    overflow-y: auto;
-  } */
-
   .main-header {
-    /* grid-area: header; */
     position: static;
     padding: 1em;
     width: auto;
-
-    /* display: flex; */
-
-    /* align-items: center; */
     padding-inline: 4em;
   }
 
@@ -272,9 +268,6 @@ h4 {
   }
 
   .main-nav {
-    /* grid-area: nav; */
-
-    /* position: static; */
     width: auto;
     height: 100dvh;
     display: flex;
@@ -345,6 +338,10 @@ h4 {
   }
 }
 
+/* #endregion */
+
+/* #region MARK: @ hover
+*/
 @media (hover: hover) and (pointer: fine) {
   .user-avatar:hover,
   .user-avatar:active {
@@ -368,3 +365,5 @@ h4 {
     color: var(--color-dark-active);
   }
 }
+
+/* #endregion */

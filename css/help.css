@@ -1,0 +1,123 @@
+/*  ====================================================================================================
+    HELP.CSS - HELP PAGE - MOBILE VERSION (min-width: 320px)
+    ====================================================================================================
+    1. STANDARDS (HTML, body)
+    2. MAIN - OVERVIEW (Explanations, how to use it, contact)
+    3. OTHER (Desktop responsive)
+    ==================================================================================================== */
+
+/*  ==================================================================================================== 
+    1. STANDARDS
+    ==================================================================================================== */
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 1rem;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-height: 100vh;
+  margin: 0;
+}
+
+body h3 {
+  font-weight: 700;
+}
+
+/* Notiz: Nur vorübergehend einfügen bis zum nächsten Update von Main */
+body .user-menu-dropdown {
+  transform: translateX(1em);
+}
+
+/*  ==================================================================================================== 
+    2. MAIN - OVERVIEW
+    ==================================================================================================== */
+
+.main-container {
+  background-color: var(--color-bg-main);
+  overflow-y: auto;
+  padding-inline: 0.875em;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 4.125em;
+  padding-bottom: 1.25em;
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-block: 1.5em;
+}
+
+.project-name {
+  color: var(--color-highlight);
+}
+
+.list-container {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-container li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1em;
+}
+
+.list-container li:last-of-type {
+  margin-bottom: 0;
+}
+
+.list-container .list-number {
+  font-size: 1.6875rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.list-container .list-content {
+  margin-left: 2em;
+  flex-grow: 1;
+}
+
+.additional-information {
+  padding-left: 3.5625em;
+  margin: 0;
+}
+
+/* E-Mail */
+.contact-email {
+  color: var(--color-black-100);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-email:hover {
+  color: var(--color-email);
+  text-decoration: underline;
+}
+
+/*  ==================================================================================================== 
+    3. OTHER
+    ==================================================================================================== */
+
+@media (width >= 64em) {
+  .main-container {
+    grid-area: main;
+    padding-inline: 6em;
+  }
+}

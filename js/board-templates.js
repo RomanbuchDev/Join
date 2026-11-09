@@ -12,8 +12,8 @@
  */
 function templateTaskCard(taskID, categoryColor) {
   return /*html*/ `
-    <li data-task-id="${escapeHtml(taskID)}" class="task-card d-flex" draggable="true"
-      ondragstart="handleDragstart(event)" ondragend="handleDragend(event)">
+    <li data-task-id="${escapeHtml(taskID)}" data-task-status="${allTasks[escapeHtml(taskID)].status}" class="task-card d-flex" draggable="true"
+      ondragstart="handleDragstart(event)" ondragend="handleDragend()">
       <h3 class="task-label ${escapeHtml(categoryColor)}">${allTasks[escapeHtml(taskID)].category}</h3>
       <div class="task-title-description-container d-flex">
         <h4>${allTasks[escapeHtml(taskID)].title}</h4>
@@ -65,15 +65,14 @@ function templateTaskAssignees(assigneeColor, assigneeShortcut) {
 
 
 /**
- * Returns the HTML template of the placeholder for an empty column.
- * @param {string} activeSearch - The active search text, shown before the column name.
+ * Returns the HTML template of the message for an empty column.
  * @param {string} columnName - The display name of the column.
- * @returns {string} The HTML string of the placeholder.
+ * @returns {string} The HTML string of the message.
  */
-function templateEmptyColumn(activeSearch, columnName) {
+function templateEmptyColumn(columnName) {
   return /*html*/ `
-    <li class="empty-board-column d-flex">
-      <p>No tasks ${escapeHtml(activeSearch)}${escapeHtml(columnName)}</p>
+    <li class="empty-column-message d-flex">
+      <p>No tasks ${escapeHtml(columnName)}</p>
     </li>`
 }
 // #endregion
@@ -119,7 +118,7 @@ function templateAddTaskColumnSVG() {
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 32 32"
-      class="svg-fill svg-width-height-32px"
+      class="svg-fill svg-width-height-add"
     >
       <rect width="30" height="30" rx="10" />
       <rect
