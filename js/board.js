@@ -71,13 +71,13 @@ function storeData(dataCategory, dataObject) {
 // #region RENDER TASK
 /**
  * Renders all given tasks into their corresponding columns based on their position.
- * @param {string[]} currentTasksIDs - The array of task IDs to render.
+ * @param {string[]} currentTaskIDs - The array of task IDs to render.
  * @returns {void} Nothing; the columns are cleared and filled with the given tasks.
  */
-function renderTasks(currentTasksIDs) {
+function renderTasks(currentTaskIDs) {
   clearAllColumns();
-  const sortedTasksIDs = currentTasksIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
-  sortedTasksIDs.forEach(renderOneTask);
+  const sortedTaskIDs = currentTaskIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
+  sortedTaskIDs.forEach(renderOneTask);
   checkForEmptyColumn();
 }
 
@@ -147,7 +147,6 @@ function checkDoneSubtasks(subtasks) {
 /**
  * Renders the avatars of all assignees on a task card if they exist.
  * @param {string} taskID - The ID of the task for which to render the assignees.
- * @param {(string[]|undefined)} assignees - The array of contact IDs of the assignees.
  * @returns {void} Nothing; the avatars are added to the task card, unknown contacts are skipped.
  */
 function renderTaskAssignees(taskID) {
@@ -213,7 +212,7 @@ function getColumnName(columnID) {
 // #endregion
 
 
-// #region BTN SEARCH
+// #region BUTTON
 
 /**
  * Renders the Add Task Buttons.

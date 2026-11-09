@@ -56,10 +56,6 @@ button:focus-visible {
   display: none;
 }
 
-.btn-d-mobile {
-  padding-top: 0.3em;
-}
-
 /* #endregion */
 
 .board-main-content {
@@ -78,18 +74,17 @@ button:focus-visible {
 */
 .headline-section {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "h1 addtask"
-    "search-error-message search-error-message";
+    "search search";
   grid-template-columns: 1fr auto;
   padding-inline: 0.5em;
   gap: 2.5em;
-  align-items: start;
+  align-items: center;
 }
 
 .h1 {
   grid-area: h1;
-  line-height: 1;
 }
 
 .h-addtask-container {
@@ -97,18 +92,13 @@ button:focus-visible {
   padding-inline: 0.5em;
 }
 
-.search-error-message-container {
-  grid-area: search-error-message;
-  flex-direction: column;
-  gap: 0.5em;
-  width: 100%;
-}
-
 .find-container {
+  grid-area: search;
   background-color: var(--color-white);
   border: 1px solid var(--color-gray-168);
   border-radius: 10px;
   padding: 0.5em 1em;
+  width: 100%;
 }
 
 .find-container:focus-within {
@@ -147,7 +137,7 @@ button:focus-visible {
 */
 .board-section {
   flex-direction: column;
-  /* padding-top: 1.5em; */
+  padding-top: 1.5em;
   padding-bottom: 0.5em;
   gap: 1em;
 }
@@ -319,13 +309,12 @@ button:focus-visible {
 */
 @media (width >= 28em) {
   .headline-section {
-    grid-template-areas: 
-      "h1 search-error-message addtask";
+    grid-template-areas: "h1 search addtask";
     grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 2em;
   }
 
-  .search-error-message-container {
+  .find-container {
     justify-self: flex-end;
     max-width: 20em;
   }
@@ -402,10 +391,8 @@ button:focus-visible {
 
 /* #region MARK: @ laptop L
 */
+
 /* @media (width >= 120em) {
-  .board-main-content {
-    padding: 5em 3em;
-  }
 } */
 
 /* #endregion */
