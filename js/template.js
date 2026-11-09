@@ -203,3 +203,81 @@ function templateHeader(avatarShortcut) {
         </div>
     `;
 }
+
+
+function templateNavAuthenticated(currentPage) {
+  return ` 
+        <ul class="main-nav-list">
+          <li class="main-nav-item">
+            <a href="../html/summary.html">
+              <img src="../assets/icons/summary-icon.svg" alt="" />
+              <span>Summary</span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/add-task.html">
+              <img src="../assets/icons/addtask-icon.svg" alt="" />
+              <span> Add Task </span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/board.html">
+              <img src="../assets/icons/board-icon.svg" alt="" />
+              <span> Board </span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/contacts.html">
+              <img src="../assets/icons/contact-icon.svg" alt="" />
+              <span> Contacts </span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="main-nav-guest-row">
+          <ul class="main-nav-legal" hidden>
+            <li class="main-nav-legal-item">
+              <a href="../html/privacy-policy.html"${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
+
+            </li>
+
+            <li class="main-nav-legal-item">
+              <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
+                >Legal Notice</a
+              >
+            </li>
+          </ul>
+        </div>
+  `
+}
+
+
+function templateNavUnauthenticated(currentPage) {
+  return `
+        <div class="main-nav-guest-row">
+          <ul class="main-nav-guest-list">
+            <li class="main-nav-item">
+              <a href="../index.html">
+                <img src="../assets/icons/login.svg" alt="" />
+                <span> Log in </span>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="main-nav-legal">
+            <li class="main-nav-legal-item">
+              <a href="../html/privacy-policy.html" ${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
+            </li>
+
+            <li class="main-nav-legal-item">
+              <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
+                >Legal Notice</a
+              >
+            </li>
+          </ul>
+        </div>
+  `
+}
