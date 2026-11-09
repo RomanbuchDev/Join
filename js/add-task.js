@@ -6,33 +6,48 @@ async function init() {
   renderAssignedContacts(contacts);
 }
 
+
 function renderAddTask() {
   const content = document.getElementById("add-task-content");
   content.innerHTML = getAddTaskTemplate();
 }
+
 
 function renderAssignedContacts(contacts) {
   const contactList = document.getElementById("contact_list");
   contactList.replaceChildren();
 
   for (const contact of contacts) {
-    const row = document.createElement("li");
-    row.innerHTML = getAssignedContactTemplate();
-
-    row.querySelector(".assigned-contact-name").textContent = contact.name;
-
-    const badge = row.querySelector(".selected-contact-badge");
-    badge.textContent = contact.shortcut;
-    badge.style.backgroundColor = contact.shortcutColor;
-
-    const checkbox = row.querySelector("input");
-    checkbox.value = contact.id;
-    checkbox.dataset.shortcut = contact.shortcut;
-    checkbox.dataset.shortcutColor = contact.shortcutColor;
-
-    contactList.append(row);
+    contactList.append(createAssignedContactRow(contact));
   }
 }
+
+
+function createAssignedContactRow(contact) {
+  const row = document.createElement("li");
+  row.innerHTML = getAssignedContactTemplate();
+  row.querySelector(".assigned-contact-name").textContent = contact.name;
+
+  setContactBadge(row, contact);
+  setContactCheckbox(row, contact);
+  return row;
+}
+
+
+function setContactBadge(row, contact) {
+  const badge = row.querySelector(".selected-contact-badge");
+  badge.textContent = contact.shortcut;
+  badge.style.backgroundColor = contact.shortcutColor;
+}
+
+
+function setContactCheckbox(row, contact) {
+  const checkbox = row.querySelector("input");
+  checkbox.value = contact.id;
+  checkbox.dataset.shortcut = contact.shortcut;
+  checkbox.dataset.shortcutColor = contact.shortcutColor;
+}
+
 
 function toggleAssignedContacts() {
   const contactList = document.getElementById("contact_list");
@@ -42,26 +57,37 @@ function toggleAssignedContacts() {
   assignedToInput.setAttribute("aria-expanded", String(!contactList.hidden));
 }
 
+
 async function loadAssignedContacts() {
   const idToken = await window.auth.currentUser.getIdToken();
-  const url =
-    "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
-  const response = await fetch(`${url}?auth=${encodeURIComponent(idToken)}`);
+  const response = await fetch(getContactsUrl(idToken));
 
-  if (!response.ok) {
-    throw new Error(
-      `Kontakte konnten nicht geladen werden (${response.status}).`,
-    );
-  }
+  checkContactsResponse(response);
 
   const data = await response.json();
-  const contacts = [];
-
-  for (const [id, contact] of Object.entries(data ?? {})) {
-    contacts.push({ ...contact, id });
-  }
-  return contacts;
+  return Object.entries(data ?? {}).map(([id, contact]) => ({
+    ...contact,
+    id,
+  }));
 }
+
+
+function getContactsUrl(idToken) {
+  const url =
+    "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
+
+  return `${url}?auth=${encodeURIComponent(idToken)}`;
+}
+
+
+function checkContactsResponse(response) {
+  if (response.ok) return;
+
+  throw new Error(
+    `Kontakte konnten nicht geladen werden (${response.status}).`,
+  );
+}
+
 
 function renderSelectedContactBadges() {
   const badges = document.getElementById("selected-contact-badges");
@@ -91,11 +117,13 @@ function updateSubtaskActions() {
   actions.hidden = input.value.trim() === "";
 }
 
+
 function clearSubtaskInput() {
   document.getElementById("subtask").value = "";
   editingSubtask = null;
   updateSubtaskActions();
 }
+
 
 function handleSubtaskKeydown(event) {
   if (event.key === "Enter" && !event.isComosing) {
@@ -103,6 +131,7 @@ function handleSubtaskKeydown(event) {
     saveSubtask();
   }
 }
+
 
 function saveSubtask() {
   const input = document.getElementById("subtask");
@@ -118,24 +147,36 @@ function saveSubtask() {
   input.focus();
 }
 
+
 function renderSubtasks() {
   const list = document.getElementById("subtask-list");
   list.replaceChildren();
 
   for (let i = 0; i < draftSubtasks.length; i++) {
-    const subtask = draftSubtasks[i];
-    const isEditing = editingSubtask?.subtask === subtask;
-    const row = document.createElement("li");
-    row.innerHTML = getSubtaskTemplate(i, isEditing);
-
-    if (isEditing) {
-      row.querySelector(".subtask-edit-input").value = editingSubtask.text;
-    } else {
-      row.querySelector(".subtask-text").textContent = subtask.text;
-    }
-    list.append(row);
+    list.append(createSubtaskRow(draftSubtasks[i], i));
   }
 }
+
+
+function createSubtaskRow(subtask, index) {
+  const isEditing = editingSubtask?.subtask === subtask;
+  const row = document.createElement("li");
+  row.innerHTML = getSubtaskTemplate(index, isEditing);
+
+  updateSubtaskRowContent(row, subtask, isEditing);
+  return row;
+}
+
+
+function updateSubtaskRowContent(row, subtask, isEditing) {
+  if (isEditing) {
+    row.querySelector(".subtask-edit-input").value = editingSubtask.text;
+    return;
+  }
+
+  row.querySelector(".subtask-text").textContent = subtask.text;
+}
+
 
 function editSubtask(index) {
   const subtask = draftSubtasks[index];
@@ -145,6 +186,7 @@ function editSubtask(index) {
   document.querySelector(".subtask-edit-input").focus();
 }
 
+
 function saveSubtaskEdit() {
   const text = editingSubtask.text.trim();
   if (text === "") return;
@@ -153,6 +195,7 @@ function saveSubtaskEdit() {
   editingSubtask = null;
   renderSubtasks();
 }
+
 
 function handleSubtaskEditKeydown(event) {
   if (event.key === "Enter" && !event.isComposing) {
@@ -166,6 +209,7 @@ function handleSubtaskEditKeydown(event) {
   }
 }
 
+
 function deleteSubtask(i) {
   if (editingSubtask === draftSubtasks[i]) {
     clearSubtaskInput();
@@ -174,6 +218,7 @@ function deleteSubtask(i) {
   draftSubtasks.splice(i, 1);
   renderSubtasks();
 }
+
 
 function resetSubtasks() {
   draftSubtasks.length = 0;
