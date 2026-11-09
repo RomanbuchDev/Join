@@ -267,6 +267,7 @@ body {
   .user-menu-item--help {
     display: none;
   }
+
   .main-nav-content {
     display: flex;
     flex-direction: column;

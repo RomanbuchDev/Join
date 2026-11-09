@@ -254,6 +254,7 @@ function templateNavAuthenticated(currentPage) {
   `
 }
 
+
 function templateNavUnauthenticated(currentPage) {
   return `
         <div class="main-nav-guest-row">

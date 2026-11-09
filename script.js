@@ -98,6 +98,7 @@ function showGuestUI() {
 
 }
 
+
 async function showAuthenticatedUI(user) {
   const profile = await fetchUserProfile(user);
   initAvatar(profile);
