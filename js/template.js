@@ -239,12 +239,12 @@ function templateNavAuthenticated(currentPage) {
 
         <div class="main-nav-guest-row">
           <ul class="main-nav-legal" hidden>
-            <li class="main-nav-item">
+            <li class="main-nav-legal-item">
               <a href="../html/privacy-policy.html"${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
 
             </li>
 
-            <li class="main-nav-item">
+            <li class="main-nav-legal-item">
               <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
                 >Legal Notice</a
               >
@@ -267,11 +267,11 @@ function templateNavUnauthenticated(currentPage) {
           </ul>
 
           <ul class="main-nav-legal">
-            <li class="main-nav-item">
+            <li class="main-nav-legal-item">
               <a href="../html/privacy-policy.html" ${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
             </li>
 
-            <li class="main-nav-item">
+            <li class="main-nav-legal-item">
               <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
                 >Legal Notice</a
               >

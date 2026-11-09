@@ -372,7 +372,7 @@ body {
   }
 
   .main-nav-legal a:hover {
-    color: var(--color-dark-active);
+    color: var(--color-medium);
   }
 }
 
