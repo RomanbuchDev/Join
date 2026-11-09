@@ -12,7 +12,7 @@
  */
 function templateTaskCard(taskID, categoryColor) {
   return /*html*/ `
-    <li data-task-id="${escapeHtml(taskID)}" class="task-card d-flex" draggable="true"
+    <li data-task-id="${escapeHtml(taskID)}" data-task-status="${allTasks[escapeHtml(taskID)].status}" class="task-card d-flex" draggable="true"
       ondragstart="handleDragstart(event)" ondragend="handleDragend()">
       <h3 class="task-label ${escapeHtml(categoryColor)}">${allTasks[escapeHtml(taskID)].category}</h3>
       <div class="task-title-description-container d-flex">
@@ -66,14 +66,13 @@ function templateTaskAssignees(assigneeColor, assigneeShortcut) {
 
 /**
  * Returns the HTML template of the message for an empty column.
- * @param {string} activeSearch - The active search text, shown before the column name.
  * @param {string} columnName - The display name of the column.
  * @returns {string} The HTML string of the message.
  */
-function templateEmptyColumn(activeSearch, columnName) {
+function templateEmptyColumn(columnName) {
   return /*html*/ `
     <li class="empty-column-message d-flex">
-      <p>No tasks ${escapeHtml(activeSearch)}${escapeHtml(columnName)}</p>
+      <p>No tasks ${escapeHtml(columnName)}</p>
     </li>`
 }
 // #endregion

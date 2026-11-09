@@ -55,9 +55,48 @@
       "phone": "+49 123 4567890",
       "shortcut": "TW",
       "shortcutColor": "rgba(173 194 61 / 100%)"
+    },
+    "-P3ujf7BG8fyGILYqrzw": {
+      "email": "emeier@gmail.com",
+      "name": "Esther Meier",
+      "phone": "+491726789123452",
+      "shortcut": "EM",
+      "shortcutColor": "rgba(68 124 131 / 100%)"
     }
   },
   "tasks": {
+    "-IDTest12345": {
+      "assignedTo": [
+        "-P0qFvs8zfGoK2KNOszq"
+      ],
+      "category": "User Story",
+      "dueDate": "2026-10-20",
+      "position": 0,
+      "priority": "medium",
+      "status": "done",
+      "title": "0 - Test"
+    },
+    "-IDTest2222": {
+      "category": "User Story",
+      "position": 1,
+      "priority": "medium",
+      "status": "done",
+      "title": "1 - Test"
+    },
+    "-IDTest3333": {
+      "category": "Technical Task",
+      "position": 2,
+      "priority": "medium",
+      "status": "done",
+      "title": "2 - Test"
+    },
+    "-IDTest4444": {
+      "category": "Technical Task",
+      "position": 3,
+      "priority": "medium",
+      "status": "done",
+      "title": "3 - Test"
+    },
     "-P1701uUKDiyQHooM3gX": {
       "assignedTo": [
         "-P0qGMckhAKC6RslX_8C",
@@ -67,7 +106,7 @@
       "category": "User Story",
       "description": "Build the main page that fetches Pokemon from the PokeAPI and displays them as a scrollable list with a live search input.",
       "dueDate": "2026-11-15",
-      "position": 0,
+      "position": 4,
       "priority": "medium",
       "status": "toDo",
       "subtasks": [
@@ -84,13 +123,13 @@
           "text": "Implement search input with filtering"
         }
       ],
-      "title": "Pokemon List View & Search Bar"
+      "title": "4 - Pokemon List View & Search Bar"
     },
     "-P1701zqkHsqGfDUns9V": {
       "category": "User Story",
       "description": "Create a detail overlay that opens on card click and shows stats, abilities, and types for the selected Pokemon.",
       "dueDate": "2026-11-18",
-      "position": 1,
+      "position": 2,
       "priority": "urgent",
       "status": "toDo",
       "subtasks": [
@@ -107,7 +146,7 @@
           "text": "Display base stats as bar chart"
         }
       ],
-      "title": "Pokemon Detail Overlay"
+      "title": "2 - Pokemon Detail Overlay"
     },
     "-P1702-HzqPUuocSfZr6": {
       "assignedTo": [
@@ -129,7 +168,7 @@
           "text": "Apply filter logic to rendered list"
         }
       ],
-      "title": "Type & Stats Filter"
+      "title": "0 - Type & Stats Filter"
     },
     "-P1702-idaIPNzxQd2Zk": {
       "assignedTo": [
@@ -139,7 +178,7 @@
       "category": "User Story",
       "description": "Allow users to mark Pokemon as favorites and view a separate favorites list persisted in local storage.",
       "dueDate": "2026-11-22",
-      "position": 2,
+      "position": 1,
       "priority": "low",
       "status": "toDo",
       "subtasks": [
@@ -160,7 +199,7 @@
           "text": "Sync favorite state on page reload"
         }
       ],
-      "title": "Favorites / Bookmark System"
+      "title": "1 - Favorites / Bookmark System"
     },
     "-P17020BZJNPbmhOEX2X": {
       "assignedTo": [
@@ -169,12 +208,11 @@
         "-P0qFvs8zfGoK2KNOszq"
       ],
       "category": "User Story",
-      "description": "Show a loading spinner during API calls and add a button to load the next batch of Pokemon.",
       "dueDate": "2026-11-25",
       "position": 1,
       "priority": "medium",
       "status": "inProgress",
-      "title": "Loading Spinner & Load-More Pagination"
+      "title": "1 - Loading Spinner & Load-More Pagination"
     },
     "-P17020fFz9aN5T7eqsq": {
       "assignedTo": [
@@ -203,7 +241,7 @@
           "text": "Test on real mobile devices"
         }
       ],
-      "title": "Responsive Mobile Layout"
+      "title": "3 - Responsive Mobile Layout"
     },
     "-P170216DWykCsJB7op4": {
       "assignedTo": [
@@ -211,11 +249,11 @@
         "-P0qG7eK1SbbC3JW2ygi"
       ],
       "category": "Technical Task",
-      "description": "Set up a central fetch service for the PokeAPI and cache already-loaded Pokemon to avoid duplicate requests.",
+      "description": "Central fetch service.",
       "dueDate": "2026-11-10",
-      "position": 0,
+      "position": 4,
       "priority": "urgent",
-      "status": "done",
+      "status": "inProgress",
       "subtasks": [
         {
           "done": true,
@@ -226,7 +264,7 @@
           "text": "Add in-memory cache for requested Pokemon"
         }
       ],
-      "title": "PokeAPI Fetch & Data Caching Setup"
+      "title": "4 - PokeAPI Fetch & Data Caching Setup"
     },
     "-P17021_6tUw9TlXLZm5": {
       "assignedTo": [
@@ -235,10 +273,10 @@
       "category": "Technical Task",
       "description": "Add consistent error handling and a fallback UI message whenever a PokeAPI request fails or times out.",
       "dueDate": "2026-11-12",
-      "position": 0,
+      "position": 3,
       "priority": "medium",
       "status": "inProgress",
-      "title": "Error Handling for API Requests"
+      "title": "3 - Error Handling for API Requests"
     },
     "-P17022-OraSrRUkkIRQ": {
       "assignedTo": [
@@ -265,7 +303,7 @@
           "text": "Split templates into template.js"
         }
       ],
-      "title": "Build Reusable Card & Overlay Templates"
+      "title": "2 - Build Reusable Card & Overlay Templates"
     },
     "-P17022Rfby8_A79SMeM": {
       "assignedTo": [
@@ -274,7 +312,7 @@
       "category": "Technical Task",
       "description": "Wire up the existing CI/CD pipeline so the Pokedex build is linted, tested, and deployed automatically on merge to main.",
       "dueDate": "2026-11-30",
-      "position": 4,
+      "position": 0,
       "priority": "low",
       "status": "toDo",
       "subtasks": [
@@ -291,17 +329,29 @@
           "text": "Confirm branch protection rules"
         }
       ],
-      "title": "Deploy Project via FTP & GitHub Actions"
+      "title": "0 - Deploy Project via FTP & GitHub Actions"
     }
   },
   "users": {
+    "B9ui9GdVNSUf80LQTwHnUgIEUE82": {
+      "email": "elena2@join.de",
+      "name": "Elena 2"
+    },
     "Fg1bbzaCrROVZmRVtd0f1UxI8DI3": {
       "email": "sara.hoffmann@join.de",
       "name": "Sara Hoffmann"
     },
+    "PxumgGgANtdsWobj0y94RFYCRor2": {
+      "email": "elena@join.de",
+      "name": "Elena"
+    },
     "S021oOSWvfXh6kumS3OJldOaLhq2": {
       "email": "alex-sonne@join.de",
       "name": "alex haus"
+    },
+    "V5knApLiTPUZR6z9Bf9811IDBx53": {
+      "email": "alex-1234@join.com",
+      "name": "alex >"
     },
     "hIr3mdZPchUxHUu0IzJuH3dt3Sh2": {
       "email": "alex-test@join.de",
@@ -334,6 +384,10 @@
     "xMM1USwb44X8R62NVQuiMcDMNYS2": {
       "email": "alex-boss@join.de",
       "name": "alex"
+    },
+    "xQYMDQJ5X9WafKHHZa5bP2H3VF22": {
+      "email": "alex-borg@join.com",
+      "name": "alex borg"
     }
   }
 }

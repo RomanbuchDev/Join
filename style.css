@@ -40,7 +40,6 @@ body {
   grid-template:
     "header" auto
     "main" minmax(0, 1fr)
-    /* "nav" auto / 1fr; */
     "nav" auto;
   overflow: hidden;
 }
@@ -108,7 +107,7 @@ body {
   right: 0%;
   border-radius: 20px 0 20px 20px;
   background-color: var(--color-dark);
-  transform: translateX(100%);
+  transform: translateX(1em);
   opacity: 0;
   visibility: hidden;
   transition:
@@ -217,7 +216,6 @@ body {
   h1 {
     font-size: 3.75rem;
   }
-}
 
 @media (width >= 64em) {
   #page {
