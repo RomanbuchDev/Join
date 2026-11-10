@@ -76,9 +76,21 @@ function storeData(dataCategory, dataObject) {
  */
 function renderTasks(currentTaskIDs) {
   clearAllColumns();
+  for (const column of columns) {
+    getAmountOfTasks(currentTaskIDs, column)
+  }
   const sortedTaskIDs = currentTaskIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
   sortedTaskIDs.forEach(renderOneTask);
   checkForEmptyColumn();
+}
+
+
+function getAmountOfTasks(currentTaskIDs, column) {
+  const status = column.id;
+  const amount = currentTaskIDs.filter((taskId) => allTasks[taskId].status === status).length;
+  console.log(amount);
+  document.getElementById(`${status}Amount`).innerHTML = amount;
+  
 }
 
 

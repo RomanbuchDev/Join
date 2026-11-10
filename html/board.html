@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../css/assets.css" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../css/board.css" />
+    <link rel="stylesheet" href="../css/board-task.css" />
 
     <script type="module" src="../js/firebase-init.js"></script>
     <script defer src="../script.js"></script>
@@ -89,7 +90,7 @@
         <section class="board-section d-flex">
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
-              <h2>To do</h2>
+              <h2>To do <span id="toDoAmount"></span></h2>
               <button
                 id="addTaskButtonToDo"
                 class="button-reset"
@@ -101,7 +102,7 @@
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
-              <h2>In progress</h2>
+              <h2>In progress <span id="inProgressAmount"></span></h2>
               <button
                 id="addTaskButtonInProgress"
                 class="button-reset"
@@ -113,7 +114,7 @@
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
-              <h2>Await feedback</h2>
+              <h2>Await feedback <span id="awaitFeedbackAmount"></span></h2>
               <button
                 id="addTaskButtonAwaitFeedback"
                 class="button-reset"
@@ -125,7 +126,7 @@
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
-              <h2>Done</h2>
+              <h2>Done <span id="doneAmount"></span></h2>
             </div>
             <ol id="done" class="tasks-list d-flex"></ol>
           </section>

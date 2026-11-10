@@ -166,16 +166,16 @@ function handleMovedTasks(draggedTask) {
   const destinationStatus = draggedTask.parentElement.id;
   const originStatus = draggedTask.dataset.taskStatus;
   
-  applyDestinationStatus(updates, draggedTask, { destinationStatus, originStatus });
+  adjustDestinationStatus(updates, draggedTask, { destinationStatus, originStatus });
   if (destinationStatus !== originStatus) {
-    applyOriginStatus(updates, draggedTask, originStatus);
-    applyNewStatusToDraggedTask(updates, draggedTask, destinationStatus);
+    adjustOriginStatus(updates, draggedTask, originStatus);
+    adjustNewStatusToDraggedTask(updates, draggedTask, destinationStatus);
   }
   patchTasks(updates);
 }
 
 
-function applyDestinationStatus(updates, draggedTask, { destinationStatus, originStatus }) {
+function adjustDestinationStatus(updates, draggedTask, { destinationStatus, originStatus }) {
   const draggedTaskId = draggedTask.dataset.taskId;
   const sortedTasks = getSortedTaskIds(destinationStatus);
 
@@ -183,16 +183,16 @@ function applyDestinationStatus(updates, draggedTask, { destinationStatus, origi
   const newPreviousTaskId = draggedTask.previousElementSibling?.dataset.taskId ?? null;
   const newPosition = newPreviousTaskId ? sortedTasks.indexOf(newPreviousTaskId) + 1 : 0;
   sortedTasks.splice(newPosition, 0, draggedTaskId);
-  applyPositions(updates, sortedTasks);
+  adjustPositions(updates, sortedTasks);
 }
 
 
-function applyOriginStatus(updates, draggedTask, originStatus) {
+function adjustOriginStatus(updates, draggedTask, originStatus) {
   const draggedTaskId = draggedTask.dataset.taskId;
   const sortedTasks = getSortedTaskIds(originStatus);
 
   removeDraggedTaskId(sortedTasks, draggedTaskId);
-  applyPositions(updates, sortedTasks);
+  adjustPositions(updates, sortedTasks);
 }
 
 
@@ -208,7 +208,7 @@ function removeDraggedTaskId(sortedTasks, draggedTaskId) {
 }
 
 
-function applyPositions(updates, sortedIds) {
+function adjustPositions(updates, sortedIds) {
   sortedIds.forEach((taskId, index) => {
     allTasks[taskId].position = index;
     Object.assign(updates, { [`${taskId}/position`]: index });
@@ -216,7 +216,7 @@ function applyPositions(updates, sortedIds) {
 }
 
 
-function applyNewStatusToDraggedTask(updates, draggedTask, destinationStatus) {
+function adjustNewStatusToDraggedTask(updates, draggedTask, destinationStatus) {
   const draggedTaskId = draggedTask.dataset.taskId;
   allTasks[draggedTaskId].status = destinationStatus;
   draggedTask.dataset.taskStatus = destinationStatus;

@@ -56,6 +56,7 @@ body {
 */
 .main-header {
   grid-area: header;
+  height: 5em;
   width: 100%;
   display: flex;
   align-items: center;
