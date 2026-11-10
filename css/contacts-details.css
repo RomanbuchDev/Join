@@ -158,19 +158,20 @@
     overflow: hidden;
     flex: 1;
     height: 100%;
-    padding-left: 2em;
+    padding-inline: 2em;
   }
 
   #contact-details.hidden {
     display: block;
   }
 
-  .contact-details-title-container {
+  /* Notiz: CSS-Klasse nach unten verschoben bzw. kopiert */
+  /* .contact-details-title-container {
     display: grid;
     grid-template-columns: auto 3px auto;
     align-items: center;
     column-gap: 1.875em;
-  }
+  } */
 
   .contact-details-shortcut {
     font-size: 2.9375rem;
@@ -179,7 +180,8 @@
     height: 120px;
   }
 
-  .contact-details-title {
+  /* Notiz: CSS-Klassen nach unten verschoben bzw. kopiert */
+  /* .contact-details-title {
     grid-column: 1;
     grid-row: 1;
   }
@@ -196,7 +198,7 @@
     width: 0.1875em;
     height: 3.6875em;
     margin: 0;
-  }
+  } */
 
   .contact-details-name {
     font-size: 2.9375rem;
@@ -228,5 +230,33 @@
     transform: translateX(0);
     visibility: visible;
     opacity: 1;
+  }
+}
+
+@media (width >= 80em) {
+    .contact-details-title-container {
+    display: grid;
+    grid-template-columns: auto 3px auto;
+    align-items: center;
+    column-gap: 1.875em;
+  }
+
+    .contact-details-title {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .contact-details-subtitle {
+    font-size: 1.6875rem;
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .contact-details-title-container::after {
+    grid-column: 2;
+    grid-row: 1;
+    width: 0.1875em;
+    height: 3.6875em;
+    margin: 0;
   }
 }

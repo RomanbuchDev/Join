@@ -72,11 +72,13 @@ async function fetchAllContacts() {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
     const response = await fetch(`${window.firebaseUrl}/${CATEGORY}.json?auth=${idToken}`);
-
+    
     const responseAsJSON = await response.json();
     return saveContacts(responseAsJSON);
   } catch (error) {
     openDialogConnectionErrorDatabase();
+  } finally {
+    document.body.classList.remove('is-loading');
   }
 }
 
