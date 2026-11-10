@@ -64,20 +64,6 @@ function getCurrentUser() {
 }
 
 
-/**
- * Signs the logged-in user out via Firebase Auth and then redirects to the login page.
- */
-async function handleLogoutClick() {
-  await window.signOut(window.auth);
-  window.location.href = "../index.html";
-}
-
-
-const logoutButton = document.querySelector(".user-menu-logout");
-if (logoutButton) {
-  logoutButton.addEventListener("click", handleLogoutClick);
-}
-
 window.getCurrentUser = getCurrentUser;
 
 window.onAuthStateChanged(window.auth, handleAuthStateChange);

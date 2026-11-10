@@ -12,11 +12,11 @@
  */
 function templateTaskCard(taskID, categoryColor) {
   return /*html*/ `
-    <li data-task-id="${escapeHtml(taskID)}" data-task-status="${allTasks[escapeHtml(taskID)].status}" class="task-card d-flex" draggable="true"
+    <li data-task-id="${escapeHtml(taskID)}" data-task-status="${escapeHtml(allTasks[taskID].status)}" class="task-card d-flex" draggable="true"
       ondragstart="handleDragstart(event)" ondragend="handleDragend()">
-      <h3 class="task-label ${escapeHtml(categoryColor)}">${allTasks[escapeHtml(taskID)].category}</h3>
+      <h3 class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(allTasks[taskID].category)}</h3>
       <div class="task-title-description-container d-flex">
-        <h4>${allTasks[escapeHtml(taskID)].title}</h4>
+        <h4>${escapeHtml(allTasks[taskID].title)}</h4>
         <p id="description${escapeHtml(taskID)}" class="task-description"></p>
       </div>
       <div id="progressContainer${escapeHtml(taskID)}" class="task-progress d-flex">
@@ -26,8 +26,8 @@ function templateTaskCard(taskID, categoryColor) {
         </ul>
         <div class="priority-icon d-flex">
           <img draggable="false"
-            src="../assets/icons/prio-${allTasks[escapeHtml(taskID)].priority}-symbol.svg"
-            alt="${allTasks[escapeHtml(taskID)].priority} priority task"
+            src="../assets/icons/prio-${escapeHtml(allTasks[taskID].priority)}-symbol.svg"
+            alt="${escapeHtml(allTasks[taskID].priority)} priority task"
           />
         </div>
       </div>

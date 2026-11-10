@@ -52,8 +52,7 @@ button:focus-visible {
 }
 
 .d-none,
-.d-mobile-L,
-.d-tablet {
+.btn-d-tablet {
   display: none;
 }
 
@@ -74,32 +73,32 @@ button:focus-visible {
 /* #region MARK: h1 search
 */
 .headline-section {
-  flex-direction: column;
+  display: grid;
+  grid-template-areas:
+    "h1 addtask"
+    "search search";
+  grid-template-columns: 1fr auto;
+  padding-inline: 0.5em;
   gap: 2.5em;
+  align-items: center;
 }
 
-.headline-container,
+.h1 {
+  grid-area: h1;
+}
+
 .h-addtask-container {
   justify-content: space-between;
   padding-inline: 0.5em;
 }
 
-.find-addtask-container {
-  gap: 2em;
-}
-
-.search-error-message-container {
-  flex-direction: column;
-  padding-inline: 0.5em;
-  gap: 0.5em;
-  width: 100%;
-}
-
 .find-container {
+  grid-area: search;
   background-color: var(--color-white);
   border: 1px solid var(--color-gray-168);
   border-radius: 10px;
   padding: 0.5em 1em;
+  width: 100%;
 }
 
 .find-container:focus-within {
@@ -120,8 +119,16 @@ button:focus-visible {
   padding-left: 16px;
 }
 
+.error-container {
+  height: 1.5em;
+}
+
 .search-error-message {
   color: var(--color-error);
+}
+
+.addtask-container {
+  grid-area: addtask;
 }
 
 /* #endregion */
@@ -301,19 +308,15 @@ button:focus-visible {
 /* #region MARK: @ mobile L 
 */
 @media (width >= 28em) {
-  .d-mobile {
-    display: none;
-  }
-
-  .d-mobile-L {
-    display: flex;
-  }
-
   .headline-section {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    grid-template-areas: "h1 search addtask";
+    grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 2em;
+  }
+
+  .find-container {
+    justify-self: flex-end;
+    max-width: 20em;
   }
 }
 
@@ -327,21 +330,17 @@ button:focus-visible {
     height: 1.5rem;
   }
 
-  .d-mobile-L {
+  .btn-d-mobile {
     display: none;
   }
 
-  .d-tablet {
+  .btn-d-tablet {
     display: flex;
+    gap: 0.75em;
   }
 
   h2 {
     font-size: 1.25rem;
-  }
-
-  .find-addtask-container {
-    flex: 1;
-    max-width: 35em;
   }
 
   .board-section {
@@ -382,17 +381,18 @@ button:focus-visible {
 /* #region MARK: @ laptop M
 */
 
-/* @media (width >= 90em) {
-} */
+@media (width >= 90em) {
+  .board-main-content {
+    padding: 5em 3em;
+  }
+}
 
 /* #endregion */
 
 /* #region MARK: @ laptop L
 */
-@media (width >= 120em) {
-  .board-main-content {
-    padding: 5em 3em;
-  }
-}
+
+/* @media (width >= 120em) {
+} */
 
 /* #endregion */
