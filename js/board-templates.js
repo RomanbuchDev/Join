@@ -41,7 +41,7 @@ function templateTaskCard(taskID, categoryColor) {
         </div>
       </section>
       <div class="task-title-description-container d-flex">
-        <h4>${escapeHtml(allTasks[taskID].title)}</h4> 
+        <h4>${escapeHtml(allTasks[taskID].title)}</h4>
         <p id="description${escapeHtml(taskID)}" class="task-description"></p>
       </div>
       <div id="progressContainer${escapeHtml(taskID)}" class="task-progress d-flex">
@@ -60,6 +60,7 @@ function templateTaskCard(taskID, categoryColor) {
 }
 // #endregion
 
+
 // #region TASK DETAILS
 /**
  * Returns the HTML template of the progress bar of a task card.
@@ -70,8 +71,9 @@ function templateTaskCard(taskID, categoryColor) {
 function templateProgressBar(doneSubtasks, subtasksLength) {
   return /*html*/ `
     <progress value="${doneSubtasks}" max="${subtasksLength}"></progress>
-    <p>${doneSubtasks}/${subtasksLength} Subtasks</p>`;
+    <p>${doneSubtasks}/${subtasksLength} Subtasks</p>`
 }
+
 
 /**
  * Returns the HTML template of one assignee avatar on a task card.
@@ -83,8 +85,9 @@ function templateTaskAssignees(assigneeColor, assigneeShortcut) {
   return /*html*/ `
     <li class="task-avatar d-flex" style="background-color:${escapeHtml(assigneeColor)}">
       ${escapeHtml(assigneeShortcut)}
-    </li>`;
+    </li>`
 }
+
 
 /**
  * Returns the HTML template of the message for an empty column.
@@ -95,62 +98,6 @@ function templateEmptyColumn(columnName) {
   return /*html*/ `
     <li class="empty-column-message d-flex">
       <p>No tasks ${escapeHtml(columnName)}</p>
-    </li>`;
-}
-// #endregion
-
-// #region BUTTONS
-/**
- * Returns the SVG of the Add Task button next to the headline.
- * @returns {string} The SVG markup of the button.
- */
-function templateAddTaskH1SVG() {
-  return /*html*/ `
-    <svg
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 40 40"
-      class="svg-fill svg-width-height-40px"
-    >
-      <rect width="40" height="40" rx="10" />
-      <path
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        d="M20 10V30"
-      />
-      <path
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        d="M30 20L10.0005 20.138"
-      />
-    </svg>`;
-}
-
-/**
- * Returns the SVG of the Add Task button in a column header.
- * @returns {string} The SVG markup of the button.
- */
-function templateAddTaskColumnSVG() {
-  return /*html*/ `
-    <svg
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 32 32"
-      class="svg-fill svg-width-height-add"
-    >
-      <rect width="30" height="30" rx="10" />
-      <rect
-        x="2"
-        y="2"
-        width="26"
-        height="26"
-        rx="8"
-        fill="rgba(246 247 248 / 100%)"
-      />
-      <rect x="14" y="6.5" width="2" height="17" rx="1" />
-      <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
-    </svg>`;
+    </li>`
 }
 // #endregion

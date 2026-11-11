@@ -11,6 +11,7 @@ let allFetchedTasksAreRendered = false;
 let patchQueue = Promise.resolve();
 // #endregion
 
+
 // #region INIT
 /**
  * Initializes the board view.
@@ -27,6 +28,7 @@ async function initBoard() {
 }
 // #endregion
 
+
 // #region FETCH
 /**
  * Fetches all data of a specific category from the Firebase database.
@@ -36,9 +38,7 @@ async function initBoard() {
 async function fetchAllData(dataCategory) {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
-    const response = await fetch(
-      `${window.firebaseUrl}/${dataCategory}.json?auth=${idToken}`,
-    );
+    const response = await fetch(`${window.firebaseUrl}/${dataCategory}.json?auth=${idToken}`);
     if (!response.ok) {
       throw new Error(`Failed to load ${dataCategory}: ${response.status}`);
     }
@@ -48,6 +48,7 @@ async function fetchAllData(dataCategory) {
     openDialogConnectionErrorDatabase();
   }
 }
+
 
 /**
  * Stores fetched data in the objects matching its category.
@@ -77,6 +78,7 @@ function patchTasks(updates) {
   patchQueue = patchQueue.then(() => sendPatch(updates));
 }
 
+
 /**
  * Sends the updates to the Firebase database.
  * Opens the connection error dialog on failure and never throws, so the queue keeps running.
@@ -87,10 +89,7 @@ async function sendPatch(updates) {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
     const tasksUrl = `${window.firebaseUrl}/tasks.json?auth=${idToken}`;
-    const response = await fetch(tasksUrl, {
-      method: "PATCH",
-      body: JSON.stringify(updates),
-    });
+    const response = await fetch(tasksUrl, { method: "PATCH", body: JSON.stringify(updates) });
     if (!response.ok) {
       throw new Error(`Failed to save tasks: ${response.status}`);
     }
@@ -100,6 +99,7 @@ async function sendPatch(updates) {
 }
 // #endregion
 
+
 // #region RENDER TASK
 /**
  * Renders all given tasks into their corresponding columns based on their position.
@@ -108,24 +108,46 @@ async function sendPatch(updates) {
  */
 function renderTasks(currentTaskIDs) {
   clearAllColumns();
-  const sortedTasksIDs = currentTasksIDs.toSorted(
-    (a, b) => allTasks[a].position - allTasks[b].position,
-  );
-  sortedTasksIDs.forEach(renderOneTask);
+  for (const column of columns) {
+    getAmountOfTasks(currentTaskIDs, column.id)
+  }
+  const sortedTaskIDs = currentTaskIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
+  sortedTaskIDs.forEach(renderOneTask);
   checkForEmptyColumn();
 }
 
+
 /**
- * Renders a single task card into its column,
+ * Counts the given tasks per status and renders the amount in the column header.
+ * @param {string[]} currentTaskIDs - The task IDs to count.
+ * @param {string} status - The status (column ID) to count the tasks for.
+ * @returns {void} Nothing; the amount is written into the column header.
+ */
+function getAmountOfTasks(currentTaskIDs, status) {
+  const amount = currentTaskIDs.filter((taskId) => allTasks[taskId].status === status).length;
+  renderAmountOfTasks(status, amount)
+}
+
+
+/**
+ * Writes the amount of tasks into the header of a column.
+ * @param {string} status - The status (column ID) of the column.
+ * @param {number} amount - The amount of tasks to display.
+ * @returns {void} Nothing; the counter element is updated.
+ */
+function renderAmountOfTasks(status, amount) {
+  document.getElementById(`${status}Amount`).innerHTML = amount;
+}
+
+
+/**
+ * Renders a single task card into its column, 
  * including the description, progress bar and assignees if this information exists.
  * @param {string} taskID - The ID of the task to render.
  * @returns {void} Nothing; the task card is added to its column in the DOM.
  */
 function renderOneTask(taskID) {
-  const categoryColor =
-    allTasks[taskID].category == "User Story"
-      ? "category-color-user-story"
-      : "category-color-technical-task";
+  const categoryColor = (allTasks[taskID].category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
   const column = document.getElementById(allTasks[taskID].status);
   column.innerHTML += templateTaskCard(taskID, categoryColor);
   renderDescription(taskID);
@@ -133,6 +155,7 @@ function renderOneTask(taskID) {
   renderTaskAssignees(taskID);
 }
 // #endregion
+
 
 // #region T. DETAILS
 /**
@@ -143,11 +166,12 @@ function renderOneTask(taskID) {
 function renderDescription(taskID) {
   const description = allTasks[taskID].description;
   if (!description || description.trim() === "") {
-    return;
+    return
   }
   const descriptionRef = document.getElementById(`description${taskID}`);
   descriptionRef.textContent = description;
 }
+
 
 /**
  * Renders a progress bar for a task based on its subtasks if they exist.
@@ -156,19 +180,15 @@ function renderDescription(taskID) {
  */
 function renderProgressBar(taskID) {
   const subtasks = allTasks[taskID].subtasks;
-  const progressContainerRef = document.getElementById(
-    `progressContainer${taskID}`,
-  );
+  const progressContainerRef = document.getElementById(`progressContainer${taskID}`);
   if (subtasks && subtasks.length > 0) {
     const doneSubtasks = checkDoneSubtasks(subtasks);
-    progressContainerRef.innerHTML = templateProgressBar(
-      doneSubtasks,
-      subtasks.length,
-    );
+    progressContainerRef.innerHTML = templateProgressBar(doneSubtasks, subtasks.length);
   } else {
     progressContainerRef.classList.add("d-none");
   }
 }
+
 
 /**
  * Counts the completed subtasks.
@@ -177,11 +197,10 @@ function renderProgressBar(taskID) {
  */
 function checkDoneSubtasks(subtasks) {
   let counter = 0;
-  subtasks.forEach((subtask) => {
-    counter += subtask.done ? 1 : 0;
-  });
+  subtasks.forEach((subtask) => {counter += subtask.done ? 1 : 0;})
   return counter;
 }
+
 
 /**
  * Renders the avatars of all assignees on a task card if they exist.
@@ -193,22 +212,16 @@ function renderTaskAssignees(taskID) {
   if (!assignees || assignees.length === 0) {
     return;
   }
-  const assigneesContainerRef = document.getElementById(
-    `assigneesContainer${taskID}`,
-  );
+  const assigneesContainerRef = document.getElementById(`assigneesContainer${taskID}`);
   for (let i = 0; i < assignees.length; i++) {
     const contactID = assignees[i];
-    const contact =
-      allContacts[contactID] ??
-      allTasks[taskID].assignedUserBadges?.[contactID]; //mit elena absprechen
+    const contact = allContacts[contactID];
     if (!contact) continue;
-    assigneesContainerRef.innerHTML += templateTaskAssignees(
-      contact.shortcutColor,
-      contact.shortcut,
-    );
+    assigneesContainerRef.innerHTML += templateTaskAssignees(contact.shortcutColor, contact.shortcut);
   }
 }
 // #endregion
+
 
 // #region COLUMNS
 /**
@@ -216,10 +229,9 @@ function renderTaskAssignees(taskID) {
  * @returns {void} Nothing; the content of every column is removed from the DOM.
  */
 function clearAllColumns() {
-  columns.forEach((column) => {
-    column.innerHTML = "";
-  });
+  columns.forEach((column) => {column.innerHTML = ""})
 }
+
 
 /**
  * Renders a placeholder into every empty column. Also called after tasks were moved.
@@ -230,11 +242,12 @@ function checkForEmptyColumn() {
     if (!columns[i].innerText) {
       const emptyColumnID = columns[i].id;
       const emptyColumnName = getColumnName(emptyColumnID);
-      document.getElementById(emptyColumnID).innerHTML =
-        templateEmptyColumn(emptyColumnName);
+      document.getElementById(emptyColumnID).innerHTML 
+        = templateEmptyColumn(emptyColumnName);
     }
   }
 }
+
 
 /**
  * Returns the display name of a column.
@@ -244,45 +257,14 @@ function checkForEmptyColumn() {
 function getColumnName(columnID) {
   let columnName = "";
   switch (columnID) {
-    case "toDo":
-      columnName = "To do";
+    case "toDo": columnName = "To do";
       break;
-    case "inProgress":
-      columnName = "In progress";
+    case "inProgress": columnName = "In progress";
+      break; 
+    case "awaitFeedback": columnName = "Await feedback";
       break;
-    case "awaitFeedback":
-      columnName = "Await feedback";
-      break;
-    case "done":
-      columnName = "Done";
+    case "done": columnName = "Done";
   }
   return columnName;
 }
 // #endregion
-
-// #region BTN SEARCH
-
-/**
- * Renders the Add Task Buttons.
- * Each button is only rendered if its container exists on the current page.
- * @returns {void} Nothing; the button SVGs are written into their containers, missing containers are skipped.
- */
-function renderAddTaskButtons() {
-  const headingButtons = ["addTaskButtonH1", "addTaskButtonSearch"];
-  for (const button of headingButtons) {
-    try {
-      document.getElementById(button).innerHTML = templateAddTaskH1SVG();
-    } catch {}
-  }
-
-  const columnButtons = [
-    "addTaskButtonToDo",
-    "addTaskButtonInProgress",
-    "addTaskButtonAwaitFeedback",
-  ];
-  for (const button of columnButtons) {
-    try {
-      document.getElementById(button).innerHTML = templateAddTaskColumnSVG();
-    } catch {}
-  }
-}

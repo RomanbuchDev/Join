@@ -232,6 +232,7 @@ function getAddTaskTemplate() {
     `;
 }
 
+
 function getAssignedContactTemplate() {
   return /* html */ `
     <label class="assigned-contact-option">
@@ -245,6 +246,7 @@ function getAssignedContactTemplate() {
     </label>
     `;
 }
+
 
 function getSubtaskTemplate(index, isEditing) {
   return /*html*/ `

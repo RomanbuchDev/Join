@@ -7,10 +7,12 @@ async function init() {
   renderAssignedContacts(contacts);
 }
 
+
 function renderAddTask() {
   const content = document.getElementById("add-task-content");
   content.innerHTML = getAddTaskTemplate();
 }
+
 
 function renderAssignedContacts(contacts) {
   const contactList = document.getElementById("contact_list");
@@ -20,6 +22,7 @@ function renderAssignedContacts(contacts) {
     contactList.append(createAssignedContactRow(contact));
   }
 }
+
 
 function createAssignedContactRow(contact) {
   const row = document.createElement("li");
@@ -31,11 +34,13 @@ function createAssignedContactRow(contact) {
   return row;
 }
 
+
 function setContactBadge(row, contact) {
   const badge = row.querySelector(".selected-contact-badge");
   badge.textContent = contact.shortcut;
   badge.style.backgroundColor = contact.shortcutColor;
 }
+
 
 function setContactCheckbox(row, contact) {
   const checkbox = row.querySelector("input");
@@ -45,6 +50,7 @@ function setContactCheckbox(row, contact) {
   checkbox.dataset.shortcutColor = contact.shortcutColor;
 }
 
+
 function toggleAssignedContacts() {
   const contactList = document.getElementById("contact_list");
   const assignedToInput = document.getElementById("assigned-to");
@@ -52,6 +58,7 @@ function toggleAssignedContacts() {
   contactList.hidden = !contactList.hidden;
   assignedToInput.setAttribute("aria-expanded", String(!contactList.hidden));
 }
+
 
 async function loadAssignedContacts() {
   const idToken = await window.auth.currentUser.getIdToken();
@@ -66,12 +73,14 @@ async function loadAssignedContacts() {
   }));
 }
 
+
 function getDatabaseUrl(path, idToken) {
   const baseUrl =
     "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app";
 
   return `${baseUrl}/${path}.json?auth=${encodeURIComponent(idToken)}`;
 }
+
 
 function checkContactsResponse(response) {
   if (response.ok) return;
@@ -80,6 +89,7 @@ function checkContactsResponse(response) {
     `Kontakte konnten nicht geladen werden (${response.status}).`,
   );
 }
+
 
 function renderSelectedContactBadges() {
   const badges = document.getElementById("selected-contact-badges");
@@ -109,11 +119,13 @@ function updateSubtaskActions() {
   actions.hidden = input.value.trim() === "";
 }
 
+
 function clearSubtaskInput() {
   document.getElementById("subtask").value = "";
   editingSubtask = null;
   updateSubtaskActions();
 }
+
 
 function handleSubtaskKeydown(event) {
   if (event.key === "Enter" && !event.isComosing) {
@@ -121,6 +133,7 @@ function handleSubtaskKeydown(event) {
     saveSubtask();
   }
 }
+
 
 function saveSubtask() {
   const input = document.getElementById("subtask");
@@ -136,6 +149,7 @@ function saveSubtask() {
   input.focus();
 }
 
+
 function renderSubtasks() {
   const list = document.getElementById("subtask-list");
   list.replaceChildren();
@@ -144,6 +158,7 @@ function renderSubtasks() {
     list.append(createSubtaskRow(draftSubtasks[i], i));
   }
 }
+
 
 function createSubtaskRow(subtask, index) {
   const isEditing = editingSubtask?.subtask === subtask;
@@ -154,6 +169,7 @@ function createSubtaskRow(subtask, index) {
   return row;
 }
 
+
 function updateSubtaskRowContent(row, subtask, isEditing) {
   if (isEditing) {
     row.querySelector(".subtask-edit-input").value = editingSubtask.text;
@@ -163,6 +179,7 @@ function updateSubtaskRowContent(row, subtask, isEditing) {
   row.querySelector(".subtask-text").textContent = subtask.text;
 }
 
+
 function editSubtask(index) {
   const subtask = draftSubtasks[index];
   editingSubtask = { subtask, text: subtask.text };
@@ -170,6 +187,7 @@ function editSubtask(index) {
   renderSubtasks();
   document.querySelector(".subtask-edit-input").focus();
 }
+
 
 function saveSubtaskEdit() {
   const text = editingSubtask.text.trim();
@@ -179,6 +197,7 @@ function saveSubtaskEdit() {
   editingSubtask = null;
   renderSubtasks();
 }
+
 
 function handleSubtaskEditKeydown(event) {
   if (event.key === "Enter" && !event.isComposing) {
@@ -192,6 +211,7 @@ function handleSubtaskEditKeydown(event) {
   }
 }
 
+
 function deleteSubtask(i) {
   if (editingSubtask === draftSubtasks[i]) {
     clearSubtaskInput();
@@ -201,24 +221,44 @@ function deleteSubtask(i) {
   renderSubtasks();
 }
 
+
 function resetSubtasks() {
   draftSubtasks.length = 0;
   clearSubtaskInput();
   renderSubtasks();
 }
 
+
 async function addSelfAssignee(contacts) {
   const user = window.auth.currentUser;
-  if (!user || user.isAnonymous) return;
+  if (!isAssignableUser(user)) return;
 
+  await tryAddSelfAssignee(contacts, user);
+}
+
+
+function isAssignableUser(user) {
+  return user && !user.isAnonymous;
+}
+
+
+async function tryAddSelfAssignee(contacts, user) {
   try {
     const profile = await loadUserProfile(user);
-    const name = profile?.name?.trim();
-    if (name) contacts.unshift(createSelfAssignee(user.uid, name));
+    addSelfAssigneeFromProfile(contacts, user, profile);
   } catch (error) {
     console.warn("Eigenes Profil konnte nicht geladen werden", error);
   }
 }
+
+
+function addSelfAssigneeFromProfile(contacts, user, profile) {
+  const name = profile?.name?.trim();
+  if (!name) return;
+
+  contacts.unshift(createSelfAssignee(user.uid, name));
+}
+
 
 async function loadUserProfile(user) {
   const idToken = await user.getIdToken();
@@ -231,6 +271,7 @@ async function loadUserProfile(user) {
 
   return response.json();
 }
+
 
 function createSelfAssignee(uid, name) {
   const initials = name
@@ -247,6 +288,7 @@ function createSelfAssignee(uid, name) {
   };
 }
 
+
 function closeAssignedContactsOnOutsideClick(event) {
   const contactList = document.getElementById("contact_list");
   if (!contactList || contactList.hidden) return;
@@ -254,6 +296,7 @@ function closeAssignedContactsOnOutsideClick(event) {
 
   toggleAssignedContacts();
 }
+
 
 function clearTaskForm() {
   resetSubtasks();
@@ -264,6 +307,7 @@ function clearTaskForm() {
     toggleAssignedContacts();
   }
 }
+
 
 function createTask(event) {
   event.preventDefault();
@@ -276,6 +320,7 @@ function createTask(event) {
   });
 }
 
+
 async function submitTaskForm(form) {
   try {
     const task = buildTask(form);
@@ -286,6 +331,7 @@ async function submitTaskForm(form) {
     alert(error.message);
   }
 }
+
 
 function buildTask(form) {
   const data = new FormData(form);
@@ -299,6 +345,7 @@ function buildTask(form) {
   };
 }
 
+
 function readTaskFields(form, data) {
   return {
     title: data.get("title").trim(),
@@ -308,6 +355,7 @@ function readTaskFields(form, data) {
     category: form.elements.category.selectedOptions[0].textContent.trim(),
   };
 }
+
 
 function getAssignedUserBadges(form) {
   const badges = {};
@@ -321,6 +369,7 @@ function getAssignedUserBadges(form) {
   }
   return badges;
 }
+
 
 async function saveNewTask(task) {
   const user = window.auth.currentUser;
