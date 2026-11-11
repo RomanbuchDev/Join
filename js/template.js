@@ -180,7 +180,7 @@ function templateHeader(avatarShortcut) {
           <button
             type="button"
             class="user-avatar"
-            onclick="toggleUserMenu(this)"
+            onclick="toggleMenu(this, 'user-menu-dropdown')"
             aria-expanded="false"
             aria-controls="user-menu-dropdown"
             aria-label="Open user menu"

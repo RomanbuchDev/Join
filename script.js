@@ -2,6 +2,16 @@ const toastMessage = document.getElementById("toast-message");
 
 let toastMessageTime;
 
+/**
+ * Waits for the logged-in user and renders the header for the current page.
+ * @returns {Promise<Object>} The logged-in user.
+ */
+async function initHeader() {
+  const user = await window.getCurrentUser();
+  initAvatar(user);
+  return user;
+}
+
 
 /**
  * Renders the header with the avatar initials of the given user.
@@ -40,25 +50,15 @@ function avatarExport(avatarShortcut) {
 
 
 /**
- * Opens or closes the user menu dropdown and updates aria-expanded on the avatar button.
- * @param {HTMLButtonElement} button - The avatar button that was clicked.
+ * Opens or closes the menu dropdown and updates aria-expanded on the button.
+ * @param {HTMLButtonElement} button - The button that was clicked.
+ * @param {string} id - The id of the toggled menu.
  */
-function toggleUserMenu(button) {
-  const userMenu = document.querySelector("#user-menu-dropdown");
-  userMenu.classList.toggle("is-open");
-  const isOpen = userMenu.classList.contains("is-open");
+function toggleMenu(button, menuId) {
+  const menu = document.getElementById(menuId);
+  menu.classList.toggle("is-open");
+  const isOpen = menu.classList.contains("is-open");
   button.setAttribute("aria-expanded", isOpen);
-}
-
-
-/**
- * Waits for the logged-in user and renders the header for the current page.
- * @returns {Promise<Object>} The logged-in user.
- */
-async function initHeader() {
-  const user = await window.getCurrentUser();
-  initAvatar(user);
-  return user;
 }
 
 

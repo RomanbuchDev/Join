@@ -3,6 +3,7 @@ async function init() {
   await initHeader();
 
   const contacts = await loadAssignedContacts();
+  await addSelfAssignee(contacts);
   renderAssignedContacts(contacts);
 }
 
@@ -44,6 +45,7 @@ function setContactBadge(row, contact) {
 function setContactCheckbox(row, contact) {
   const checkbox = row.querySelector("input");
   checkbox.value = contact.id;
+  checkbox.dataset.source = contact.source ?? "contacts";
   checkbox.dataset.shortcut = contact.shortcut;
   checkbox.dataset.shortcutColor = contact.shortcutColor;
 }
@@ -60,7 +62,7 @@ function toggleAssignedContacts() {
 
 async function loadAssignedContacts() {
   const idToken = await window.auth.currentUser.getIdToken();
-  const response = await fetch(getContactsUrl(idToken));
+  const response = await fetch(getDatabaseUrl("contacts", idToken));
 
   checkContactsResponse(response);
 
@@ -72,11 +74,11 @@ async function loadAssignedContacts() {
 }
 
 
-function getContactsUrl(idToken) {
-  const url =
-    "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
+function getDatabaseUrl(path, idToken) {
+  const baseUrl =
+    "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app";
 
-  return `${url}?auth=${encodeURIComponent(idToken)}`;
+  return `${baseUrl}/${path}.json?auth=${encodeURIComponent(idToken)}`;
 }
 
 
@@ -224,6 +226,161 @@ function resetSubtasks() {
   draftSubtasks.length = 0;
   clearSubtaskInput();
   renderSubtasks();
+}
+
+
+async function addSelfAssignee(contacts) {
+  const user = window.auth.currentUser;
+  if (!isAssignableUser(user)) return;
+
+  await tryAddSelfAssignee(contacts, user);
+}
+
+
+function isAssignableUser(user) {
+  return user && !user.isAnonymous;
+}
+
+
+async function tryAddSelfAssignee(contacts, user) {
+  try {
+    const profile = await loadUserProfile(user);
+    addSelfAssigneeFromProfile(contacts, user, profile);
+  } catch (error) {
+    console.warn("Eigenes Profil konnte nicht geladen werden", error);
+  }
+}
+
+
+function addSelfAssigneeFromProfile(contacts, user, profile) {
+  const name = profile?.name?.trim();
+  if (!name) return;
+
+  contacts.unshift(createSelfAssignee(user.uid, name));
+}
+
+
+async function loadUserProfile(user) {
+  const idToken = await user.getIdToken();
+  const path = `users/${encodeURIComponent(user.uid)}`;
+  const response = await fetch(getDatabaseUrl(path, idToken));
+
+  if (!response.ok) {
+    throw new Error(`Profil konnte nicht geladen werden (${response.status}).`);
+  }
+
+  return response.json();
+}
+
+
+function createSelfAssignee(uid, name) {
+  const initials = name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word[0]);
+
+  return {
+    id: uid,
+    name: `${name} (You)`,
+    shortcut: initials.join("").toUpperCase(),
+    shortcutColor: "#29abe2",
+    source: "users",
+  };
+}
+
+
+function closeAssignedContactsOnOutsideClick(event) {
+  const contactList = document.getElementById("contact_list");
+  if (!contactList || contactList.hidden) return;
+  if (event.target.closest(".form-field--assigned")) return;
+
+  toggleAssignedContacts();
+}
+
+
+function clearTaskForm() {
+  resetSubtasks();
+  document.getElementById("selected-contact-badges").replaceChildren();
+
+  const contactList = document.getElementById("contact_list");
+  if (!contactList.hidden) {
+    toggleAssignedContacts();
+  }
+}
+
+
+function createTask(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const button = form.querySelector(".form-action--create");
+  if (button.disabled) return;
+  button.disabled = true;
+  return submitTaskForm(form).finally(() => {
+    button.disabled = false;
+  });
+}
+
+
+async function submitTaskForm(form) {
+  try {
+    const task = buildTask(form);
+    if (!task.title) throw new Error("Bitte gib einen Titel ein.");
+    await saveNewTask(task);
+    form.reset();
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+
+function buildTask(form) {
+  const data = new FormData(form);
+  return {
+    ...readTaskFields(form, data),
+    status: "toDo",
+    position: Date.now(),
+    assignedTo: data.getAll("assignedTo"),
+    assignedUserBadges: getAssignedUserBadges(form),
+    subtasks: draftSubtasks.map(({ text }) => ({ text, done: false })),
+  };
+}
+
+
+function readTaskFields(form, data) {
+  return {
+    title: data.get("title").trim(),
+    description: data.get("description").trim(),
+    dueDate: data.get("due-date"),
+    priority: data.get("priority"),
+    category: form.elements.category.selectedOptions[0].textContent.trim(),
+  };
+}
+
+
+function getAssignedUserBadges(form) {
+  const badges = {};
+  const checked = form.querySelectorAll("#contact_list input:checked");
+  for (const checkbox of checked) {
+    if (checkbox.dataset.source !== "users") continue;
+    badges[checkbox.value] = {
+      shortcut: checkbox.dataset.shortcut,
+      shortcutColor: checkbox.dataset.shortcutColor,
+    };
+  }
+  return badges;
+}
+
+
+async function saveNewTask(task) {
+  const user = window.auth.currentUser;
+  if (!user) throw new Error("Bitte melde dich an.");
+  const idToken = await user.getIdToken();
+  const response = await fetch(getDatabaseUrl("tasks", idToken), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  });
+  if (!response.ok) throw new Error(`Firebase-Fehler ${response.status}.`);
 }
 
 init();

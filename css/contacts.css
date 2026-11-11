@@ -26,7 +26,7 @@ body {
   display: flex;
   flex-direction: column;
   line-height: 1.2;
-  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
 }
 
@@ -58,7 +58,7 @@ body .user-menu-dropdown {
 
 #contact-list {
   padding-top: 1.5em;
-  padding-bottom: 10em;
+  padding-bottom: 5em;
 }
 
 .letter-container {
@@ -273,7 +273,7 @@ body .user-menu-dropdown {
     border-radius: 10px;
     box-shadow: none;
     gap: 1em;
-    width: 350px;
+    width: 280px;
     max-width: 350px;
     height: 50px;
     padding: 0.75em 1em;
@@ -305,5 +305,11 @@ body .user-menu-dropdown {
     justify-content: center;
     width: 100%;
     padding-top: 2em;
+  }
+}
+
+@media (width >= 80em) {
+  .contact-menu {
+    width: 350px;
   }
 }
