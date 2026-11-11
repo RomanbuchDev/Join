@@ -3,6 +3,17 @@ const toastMessage = document.getElementById("toast-message");
 let toastMessageTime;
 
 /**
+ * Waits for the logged-in user and renders the header for the current page.
+ * @returns {Promise<Object>} The logged-in user.
+ */
+async function initHeader() {
+  const user = await window.getCurrentUser();
+  initAvatar(user);
+  return user;
+}
+
+
+/**
  * Renders the header with the avatar initials of the given user.
  * @param {Object} user - The logged-in user ({ uid, name, email, isGuest }).
  */
@@ -39,25 +50,75 @@ function avatarExport(avatarShortcut) {
 
 
 /**
- * Opens or closes the user menu dropdown and updates aria-expanded on the avatar button.
- * @param {HTMLButtonElement} button - The avatar button that was clicked.
+ * Opens or closes the menu dropdown and updates aria-expanded on the button.
+ * @param {HTMLButtonElement} button - The button that was clicked.
+ * @param {string} id - The id of the toggled menu.
  */
-function toggleUserMenu(button) {
-  const userMenu = document.querySelector("#user-menu-dropdown");
-  userMenu.classList.toggle("is-open");
-  const isOpen = userMenu.classList.contains("is-open");
+function toggleMenu(button, menuId) {
+  const menu = document.getElementById(menuId);
+  menu.classList.toggle("is-open");
+  const isOpen = menu.classList.contains("is-open");
   button.setAttribute("aria-expanded", isOpen);
 }
 
 
 /**
- * Waits for the logged-in user and renders the header for the current page.
- * @returns {Promise<Object>} The logged-in user.
+ * Builds the {uid, name, email} profile for a logged-in Firebase user, fetching the
+ * name from the Realtime Database. Anonymous (guest) users get the name "Guest"
+ * without a DB fetch.
+ * @param {Object} user - The raw Firebase user object (uid, email, isAnonymous, getIdToken()).
+ * @returns {Promise<Object>} The profile {uid, name, email, isGuest?}.
  */
-async function initHeader() {
-  const user = await window.getCurrentUser();
-  initAvatar(user);
-  return user;
+async function fetchUserProfile(user) {
+  if (user.isAnonymous) {
+    return { uid: user.uid, name: "Guest", isGuest: true };
+  }
+  const idToken = await user.getIdToken();
+  const response = await fetch(
+    `${window.firebaseUrl}users/${user.uid}.json?auth=${idToken}`,
+  );
+  const profile = await response.json();
+  return { uid: user.uid, name: profile.name, email: user.email };
+}
+
+
+/**
+ * Gets the filename of the currently open page, e.g. "imprint.html".
+ * Falls back to "index.html" when the path ends in a slash (no filename).
+ * @returns {string} The current page's filename.
+ */
+function getCurrentPage() {
+  return location.pathname.split("/").pop() || "index.html";
+}
+
+
+function showGuestUI() {
+  avatarExport("");
+  document.querySelector(".user-menu").hidden = true;
+
+}
+
+
+async function showAuthenticatedUI(user) {
+  const profile = await fetchUserProfile(user);
+  initAvatar(profile);
+  document.querySelector(".user-menu").hidden = false;
+}
+
+
+function initLegalPageAuthUI() {
+  window.onAuthStateChanged(window.auth, async (user) => {
+    // const navList = document.querySelector(".main-nav-content");
+
+    const currentPage = getCurrentPage();
+    if (user) {
+      await showAuthenticatedUI(user);
+      document.querySelector(".main-nav-content").innerHTML = templateNavAuthenticated(currentPage);
+    } else {
+      showGuestUI();
+      document.querySelector(".main-nav-content").innerHTML = templateNavUnauthenticated(currentPage);
+    }
+  });
 }
 
 
@@ -106,10 +167,8 @@ function showToastMessage(text, statusClass) {
   if (toastMessageTime) clearTimeout(toastMessageTime);
   toastMessage.className = "toast-message";
   toastMessage.textContent = text;
-
   toastMessage.showPopover();
   toastMessage.classList.add("show", statusClass);
-
   toastMessageTime = setTimeout(() => {
     hideToastMessage(statusClass);
   }, 3000);
@@ -119,9 +178,7 @@ function showToastMessage(text, statusClass) {
 /** Closes the dialog window showing the database connection error. */
 function closeDialogConnectionErrorDatabase() {
   const dialogBoxConnectionErrorDatabase = document.getElementById(
-    "connection-error-database-dialog",
-  );
-
+    "connection-error-database-dialog",);
   if (dialogBoxConnectionErrorDatabase) {
     dialogBoxConnectionErrorDatabase.remove();
   }
@@ -140,14 +197,11 @@ function openDialogConnectionErrorDatabase() {
     "connection-error-database-dialog",
   );
   if (openErrorMessage) return;
-
   const errorMessage = getConnectionErrorDatabaseTemplate();
   document.body.insertAdjacentHTML("beforeend", errorMessage);
-
   const dialogBoxConnectionErrorDatabase = document.getElementById(
     "connection-error-database-dialog",
   );
-
   if (dialogBoxConnectionErrorDatabase) {
     dialogBoxConnectionErrorDatabase.showModal();
   }
@@ -156,14 +210,26 @@ function openDialogConnectionErrorDatabase() {
 
 function getGreeting() {
   const hour = new Date().getHours();
-
   if (hour < 12) {
     return "Good morning";
   }
-
   if (hour < 18) {
     return "Good afternoon";
   }
-
   return "Good evening";
+}
+
+
+/**
+ * Signs the logged-in user out via Firebase Auth and then redirects to the login page.
+ */
+async function handleLogoutClick() {
+  await window.signOut(window.auth);
+  window.location.href = "../index.html";
+}
+
+
+const logoutButton = document.querySelector(".user-menu-logout");
+if (logoutButton) {
+  logoutButton.addEventListener("click", handleLogoutClick);
 }

@@ -1,5 +1,5 @@
 /**
- * JavaScript file for the initiation (fetch and tasks rendering) of the board page.
+ * JavaScript file for the initiation (fetch and tasks rendering) and saving of the board page.
  */
 
 // #region VARIABLES
@@ -7,12 +7,14 @@ const allContacts = {};
 const allTasks = {};
 const columns = document.querySelectorAll(".tasks-list");
 let allFetchedTasksAreRendered = false;
+/** Chain of pending PATCH requests; ensures they are sent one after another. */
+let patchQueue = Promise.resolve();
 // #endregion
 
 // #region INIT
 /**
  * Initializes the board view.
- * Loads all tasks and all contacts first, then renders the tasks into their columns.
+ * Initializes the header, then loads all tasks and all contacts first, then renders the tasks into their columns.
  * Contacts must be loaded before rendering, because the task assignees depend on them.
  * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
  */
@@ -22,7 +24,6 @@ async function initBoard() {
   await fetchAllData("contacts");
   renderTasks(Object.keys(allTasks));
   allFetchedTasksAreRendered = true;
-  renderAddTaskButtons();
 }
 // #endregion
 
@@ -30,7 +31,7 @@ async function initBoard() {
 /**
  * Fetches all data of a specific category from the Firebase database.
  * @param {string} dataCategory - The category of data to fetch ("tasks", "contacts").
- * @returns {Promise<void>} Resolves once the data is fetched and stored; errors are logged and not thrown.
+ * @returns {Promise<void>} Resolves once the data is fetched and stored; on errors the connection error dialog opens and nothing is thrown.
  */
 async function fetchAllData(dataCategory) {
   try {
@@ -66,13 +67,46 @@ function storeData(dataCategory, dataObject) {
 }
 // #endregion
 
+// #region PATCH
+/**
+ * Queues a PATCH request so that updates are sent one after another in the order they were made.
+ * @param {Object<string, string|number>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position").
+ * @returns {void} Nothing; the request is appended to the queue.
+ */
+function patchTasks(updates) {
+  patchQueue = patchQueue.then(() => sendPatch(updates));
+}
+
+/**
+ * Sends the updates to the Firebase database.
+ * Opens the connection error dialog on failure and never throws, so the queue keeps running.
+ * @param {Object<string, string|number>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position").
+ * @returns {Promise<void>} Resolves once the request is finished or failed.
+ */
+async function sendPatch(updates) {
+  try {
+    const idToken = await window.auth.currentUser.getIdToken();
+    const tasksUrl = `${window.firebaseUrl}/tasks.json?auth=${idToken}`;
+    const response = await fetch(tasksUrl, {
+      method: "PATCH",
+      body: JSON.stringify(updates),
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to save tasks: ${response.status}`);
+    }
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  }
+}
+// #endregion
+
 // #region RENDER TASK
 /**
  * Renders all given tasks into their corresponding columns based on their position.
- * @param {string[]} currentTasksIDs - The array of task IDs to render.
+ * @param {string[]} currentTaskIDs - The array of task IDs to render.
  * @returns {void} Nothing; the columns are cleared and filled with the given tasks.
  */
-function renderTasks(currentTasksIDs) {
+function renderTasks(currentTaskIDs) {
   clearAllColumns();
   const sortedTasksIDs = currentTasksIDs.toSorted(
     (a, b) => allTasks[a].position - allTasks[b].position,
@@ -152,7 +186,6 @@ function checkDoneSubtasks(subtasks) {
 /**
  * Renders the avatars of all assignees on a task card if they exist.
  * @param {string} taskID - The ID of the task for which to render the assignees.
- * @param {(string[]|undefined)} assignees - The array of contact IDs of the assignees.
  * @returns {void} Nothing; the avatars are added to the task card, unknown contacts are skipped.
  */
 function renderTaskAssignees(taskID) {
@@ -189,7 +222,7 @@ function clearAllColumns() {
 }
 
 /**
- * Renders a placeholder into every empty column.
+ * Renders a placeholder into every empty column. Also called after tasks were moved.
  * @returns {void} Nothing; the placeholder is written into each empty column.
  */
 function checkForEmptyColumn() {

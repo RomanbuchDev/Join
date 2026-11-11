@@ -3,111 +3,134 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="images/" href="/assets/icons/join-logo.svg" />
+    <link rel="icon" href="../assets/icons/join-logo.svg" />
+    <link rel="stylesheet" href="../css/reset-stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
-    <link rel="stylesheet" href="../css/reset_stylesheet.css" />
-    <link rel="stylesheet" href="../css/summary.css" />
+    <link rel="stylesheet" href="../css/dpf-flex-utils.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/assets.css" />
     <link rel="stylesheet" href="../style.css" />
-    <title>Join</title>
+    <link rel="stylesheet" href="../css/legal.css" />
+
+    <script type="module" src="../js/firebase-init.js"></script>
+    <script defer src="../script.js"></script>
+    <script src="../js/template.js" defer></script>
+
+    <script src="../js/legal.js" defer></script>
+    <title>Join - Legal Notice</title>
   </head>
   <body>
-    <header class="main-header">
-      <a href=""><img src="/assets/icons/join-logo.svg" alt="Join Logo" /></a>
+    <div id="page">
+      <header class="main-header" id="header"></header>
 
-      <button class="user-avatar" type="button"><span>SM</span></button>
-    </header>
-    <main>
-      <section>
-        <header class="summary-header">
-          <h1>Join 360</h1>
-          <p>Key Metrics at a Glance</p>
-        </header>
-
-        <ul class="summery-list">
-          <li class="summary-card summary-card--todo">
-            <img
-              class="summary-card-icon"
-              src="/assets/icons/todo-icon.svg"
-              alt=""
-            />
-            <span class="summary-card-number">1</span>
-            <span class="summary-card-label">To-Do</span>
-          </li>
-          <li class="summary-card summary-card--done">
-            <img
-              class="summary-card-icon"
-              src="/assets/icons/done-icon.svg"
-              alt=""
-            />
-            <span class="summary-card-number">1</span>
-            <span class="summary-card-label">Done</span>
-          </li>
-
-          <li class="summary-card summary-card--urgent">
-            <img
-              class="summary-card-icon"
-              src="/assets/icons/urgent-icon.svg"
-              alt=""
-            />
-            <span class="summary-card-number">1</span>
-            <span class="summary-card-label">Urgent</span>
-
-            <div class="summary-card-deadline">
-              <time class="summary-card-date" datetime="2026-10-16"
-                >October 16, 2022</time
-              >
-              <span class="summary-card-deadline-label">Upcoming Deadline</span>
-            </div>
-          </li>
-
-          <li class="summary-card summary-card--small summary-card--board">
-            <span class="summary-card-number">5</span>
-            <span class="summary-card-label"
-              >Task in <br />
-              Board</span
+      <main class="main-legal">
+        <div class="dpf-spc-between-center">
+          <h1>Legal Notice</h1>
+          <div>
+            <a
+              href="../index.html"
+              id="historyBack"
+              class="signup-back-vector dpf-center"
             >
-          </li>
+              <img src="../assets/icons/login-back-Vector.svg" alt="zurück" />
+            </a>
+          </div>
+        </div>
 
-          <li class="summary-card summary-card--small summary-card--progress">
-            <span class="summary-card-number">2</span>
-            <span class="summary-card-label">Task in Progress</span>
-          </li>
+        <section>
+          <h2>Imprint</h2>
+          <p>
+            Alex Epp<br />
+            Vogelrohrsheide 67<br />
+            48167 M&uuml;nster
+          </p>
+        </section>
+        <section>
+          <h3>Exploring the Board</h3>
+          <p>
+            Email:<a href="mailto:lex8472@web.de" class="email-link">
+              lex8472@web.de</a
+            >
+          </p>
+        </section>
 
-          <li class="summary-card summary-card--small summary-card--feedback">
-            <span class="summary-card-number">2</span>
-            <span class="summary-card-label">Awaiting feedback</span>
-          </li>
-        </ul>
-      </section>
-    </main>
+        <section>
+          <h3>Acceptance of terms</h3>
+          <p>
+            By accessing and using Join (Product), you acknowledge and agree to
+            the following terms and conditions, and any policies, guidelines, or
+            amendments thereto that may be presented to you from time to time.
+            We, the listed students, may update or change the terms and
+            conditions from time to time without notice.
+          </p>
+        </section>
 
-    <nav class="main-nav">
-      <ul class="main-nav-list">
-        <li class="main-nav-item">
-          <a href="/html/summary.html" aria-current="page">
-            <img src="/assets/icons/summary-icon.svg" alt="" />
-            <span>Summary</span>
-          </a>
-        </li>
-        <li class="main-nav-item">
-          <a href="/html/add-task.html">
-            <img src="/assets/icons/addtask-icon.svg" alt="" />
-            <span> Add Task </span>
-          </a>
-        </li>
-        <li class="main-nav-item">
-          <a href="/html/board.html">
-            <img src="/assets/icons/board-icon.svg" alt="" />
-            <span> Board </span>
-          </a>
-        </li>
-        <li class="main-nav-item">
-          <a href="/html/contact.html">
-            <img src="/assets/icons/contact-icon.svg" alt="" />
-            <span> Contacts </span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+        <section>
+          <h3>Scope and ownership of the product</h3>
+          <p>
+            Join has been developed as part of a student group project in a web
+            development bootcamp at the Developer Akademie GmbH. It has an
+            educational purpose and is not intended for extensive personal &amp;
+            business usage. As such, we cannot guarantee consistent
+            availability, reliability, accuracy, or any other aspect of quality
+            regarding this Product. The design of Join is owned by the Developer
+            Akademie GmbH. Unauthorized use, reproduction, modification,
+            distribution, or replication of the design is strictly prohibited.
+          </p>
+        </section>
+
+        <section>
+          <h3>Use of the product</h3>
+          <p>
+            Join is intended to be used for lawful purposes only, in accordance
+            with all applicable laws and regulations. Any use of Join for
+            illegal activities, or to harass, harm, threaten, or intimidate
+            another person, is strictly prohibited. You are solely responsible
+            for your interactions with other users of Join.
+          </p>
+        </section>
+
+        <section>
+          <h3>Disclaimer of warranties and limitation of liability</h3>
+          <p>
+            Join is provided "as is" without warranty of any kind, whether
+            express or implied, including but not limited to the implied
+            warranties of merchantability, fitness for a particular purpose, and
+            non-infringement. In no event will we, the listed students, or the
+            Developer Akademie, be liable for any direct, indirect, incidental,
+            special, consequential or exemplary damages, including but not
+            limited to, damages for loss of profits, goodwill, use, data, or
+            other intangible losses, even if we have been advised of the
+            possibility of such damages, arising out of or in connection with
+            the use or performance of Join.
+          </p>
+        </section>
+
+        <section>
+          <h3>Indemnity</h3>
+          <p>
+            You agree to indemnify, defend and hold harmless us, the listed
+            students, the Developer Akademie, and our affiliates, partners,
+            officers, directors, agents, and employees, from and against any
+            claim, demand, loss, damage, cost, or liability (including
+            reasonable legal fees) arising out of or relating to your use of
+            Join and/or your breach of this Legal Notice. For any questions or
+            notices, please contact us at
+            <a href="mailto:lex8472@web.de" class="email-link">lex8472@web.de</a
+            >. Date: October 27, 2026
+          </p>
+        </section>
+      </main>
+
+      <nav class="main-nav">
+        <img
+          class="nav-join-img"
+          src="../assets/icons/join-logo-white.svg"
+          alt=""
+        />
+        <div class="main-nav-content"></div>
+      </nav>
+    </div>
   </body>
 </html>
