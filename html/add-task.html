@@ -3,17 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="../assets/icons/join-logo.svg"
-    />
-    <link rel="stylesheet" href="../css/reset_stylesheet.css" />
+    <title>Add Task - Join</title>
+    <link rel="icon" type="images/" href="/assets/icons/join-logo.svg" />
+    <link rel="stylesheet" href="../css/reset-stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/add-task.css" />
+    <link rel="stylesheet" href="../css/add-task-subtasks.css" />
     <link rel="stylesheet" href="../style.css" />
-    <title>Join - Add Task</title>
+    <script type="module" src="../js/firebase-init.js"></script>
+    <script defer src="../script.js"></script>
+    <script defer src="../js/template.js"></script>
+    <script defer src="../js/login-status.js"></script>
+    <script defer src="../js/toggle-user-menu.js"></script>
+    <script defer src="../js/add-task-templates.js"></script>
+    <script defer src="../js/add-task.js"></script>
   </head>
+  <body body onclick="closeAssignedContactsOnOutsideClick(event)">
+    <div id="page">
+      <header id="header" class="main-header"></header>
 
-  <body></body>
+      <main id="add-task-content" class="main add-task-main"></main>
+
+      <nav class="main-nav">
+        <img
+          class="nav-join-img"
+          src="../assets/icons/join-logo-white.svg"
+          alt=""
+        />
+        <ul class="main-nav-list">
+          <li class="main-nav-item">
+            <a href="../html/summary.html">
+              <img src="../assets/icons/summary-icon.svg" alt="" />
+              <span>Summary</span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/add-task.html" aria-current="page">
+              <img src="../assets/icons/addtask-icon.svg" alt="" />
+              <span> Add Task </span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/board.html">
+              <img src="../assets/icons/board-icon.svg" alt="" />
+              <span> Board </span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/contacts.html">
+              <img src="../assets/icons/contact-icon.svg" alt="" />
+              <span> Contacts </span>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="main-nav-legal">
+          <li>
+            <a href="../html/privacy-policy.html">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="../html/imprint.html">Legal Notice</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
 </html>

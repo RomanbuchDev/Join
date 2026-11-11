@@ -1,11 +1,19 @@
 <!doctype html>
 <html lang="de">
+  <!-- #region MARK: head 
+  -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Contacts</title>
-    <!-- CSS file -->
-    <!-- <link rel="stylesheet" href="../css/reset_stylesheet.css"> -->
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../assets/icons/join-logo.svg"
+    />
+    <!-- CSS files -->
+    <link rel="stylesheet" href="../css/reset-stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/assets.css" />
@@ -14,31 +22,38 @@
     <link rel="stylesheet" href="../css/contacts-dialog.css" />
     <link rel="stylesheet" href="../style.css" />
     <!-- JavaScript files -->
-    <script src="../js/template.js" defer></script>
-    <script src="../js/contact-utils.js" defer></script>
-    <script src="../js/contacts-dialog.js" defer></script>
-    <script src="../js/contacts.js" defer></script>
+    <script type="module" src="../js/firebase-init.js"></script>
+    <script defer src="../script.js"></script>
+    <script defer src="../js/login-status.js"></script>
+    <script defer src="../js/template.js"></script>
+    <script defer src="../js/toggle-user-menu.js"></script>
+    <script defer src="../js/contact-utils.js"></script>
+    <script defer src="../js/contacts-dialog.js"></script>
+    <script defer src="../js/contacts.js"></script>
   </head>
 
-  <body onload="init()" id="page">
+  <!-- #region MARK: body 
+  -->
+  <body
+    onload="initContacts()"
+    class="main-page loading-animation is-loading"
+    id="page"
+  >
     <!-- Header -->
-    <header class="main-header" aria-label="Page header">
-      <a href="./summary.html">
-        <img src="../assets/icons/join-logo.svg" alt="to the summary page" />
-      </a>
-      <button type="button" class="user-avatar"><span>G</span></button>
-    </header>
+    <header id="header" class="main-header" aria-label="Main page"></header>
 
     <!-- Main -->
-    <main class="main-container" id="main-view">
+    <main class="main-container main" id="main-view">
       <!-- Button for dialog -->
       <div class="main-wrapper">
         <div class="button-wrapper">
           <button
             type="button"
             class="button-basic button-primary contact-menu show"
-            id="contact-menu-button"
+            id="add-contact-menu-button"
             onclick="openDialog()"
+            aria-haspopup="dialog"
+            aria-label="Add contact"
           >
             <span class="contact-menu-text">Add new contact</span>
             <img
@@ -87,6 +102,8 @@
       </div>
     </main>
 
+    <!-- #region MARK: navbar 
+    -->
     <!-- Navigation (at footer in mobile / on left side in Desktop) -->
     <nav class="main-nav">
       <img
@@ -96,186 +113,213 @@
       />
       <ul class="main-nav-list">
         <li class="main-nav-item">
-          <a href="./summary.html">
-            <img
-              src="../assets/icons/summary-icon.svg"
-              alt="to the summary page"
-            />
+          <a href="../html/summary.html">
+            <img src="../assets/icons/summary-icon.svg" alt="" />
             <span>Summary</span>
           </a>
         </li>
 
         <li class="main-nav-item">
-          <a href="./add-task.html">
-            <img
-              src="../assets/icons/addtask-icon.svg"
-              alt="to add a new task"
-            />
+          <a href="../html/add-task.html">
+            <img src="../assets/icons/addtask-icon.svg" alt="" />
             <span> Add Task </span>
           </a>
         </li>
 
         <li class="main-nav-item">
-          <a href="./board.html">
-            <img src="../assets/icons/board-icon.svg" alt="to the board page" />
+          <a href="../html/board.html">
+            <img src="../assets/icons/board-icon.svg" alt="" />
             <span> Board </span>
           </a>
         </li>
 
         <li class="main-nav-item">
-          <a href="./contacts.html" aria-current="page">
-            <img
-              src="../assets/icons/contact-icon.svg"
-              alt="to the contacts page"
-            />
+          <a href="../html/contacts.html" aria-current="page">
+            <img src="../assets/icons/contact-icon.svg" alt="" />
             <span> Contacts </span>
           </a>
         </li>
       </ul>
+
+      <ul class="main-nav-legal">
+        <li>
+          <a href="../html/privacy-policy.html">Privacy Policy</a>
+        </li>
+
+        <li>
+          <a href="../html/imprint.html">Legal Notice</a>
+        </li>
+      </ul>
     </nav>
 
-    <!-- Dialog window to add contact -->
-    <dialog class="add-contact-container" id="contacts-dialog">
+    <!-- #region MARK: dialog add 
+    -->
+    <!-- Dialog window to add or edit contacts -->
+    <dialog class="contact-form-container" id="contacts-dialog">
       <form>
         <!-- Dialog header -->
         <header
-          class="add-contact-header-container"
+          class="contact-form-header-container"
           aria-labelledby="dialog title"
+          aria-label="Contact form"
         >
           <div class="close-button-container">
             <button type="button" class="close-button" onclick="closeDialog()">
               &times;
             </button>
           </div>
-          <div class="add-contact-title-container">
+          <div class="contact-form-title-container">
             <img
               src="../assets/icons/contacts/join-logo-white-letters.svg"
               alt="Join logo"
               class="dialog-join-icon"
             />
-            <span class="add-contact-title" id="dialog-title">Add contact</span>
-            <span class="add-contact-subtitle" id="dialog-subtitle"
+            <span class="contact-form-title" id="dialog-title"
+              >Add contact</span
+            >
+            <span class="contact-form-subtitle" id="dialog-subtitle"
               >Tasks are better with a team!</span
             >
           </div>
-          <div class="add-contact-shortcut" id="dialog-shortcut">
+          <div class="contact-form-shortcut" id="dialog-shortcut">
             <img
               src="../assets/icons/contacts/person_icon.png"
               alt="Contacts icon"
             />
           </div>
         </header>
-
         <!-- Dialog main -->
-        <div class="add-contact-main-container">
-          <div class="add-contact-input" id="input-name-dialog">
-            <input
-              type="text"
-              placeholder="Name"
-              id="input-contact-name-dialog"
-            />
-            <img
-              src="../assets/icons/contacts/person_icon_input.png"
-              alt="Person input icon"
-            />
-          </div>
+        <div class="contact-form-main-wrapper">
+          <div class="contact-form-main-container">
+            <div class="contact-form-input" id="input-name-dialog">
+              <input
+                type="text"
+                placeholder="Name"
+                id="input-contact-name-dialog"
+                maxlength="21"
+                aria-invalid="false"
+                aria-describedby="error-message-name"
+              />
+              <img
+                src="../assets/icons/contacts/person_icon_input.png"
+                alt="Person input icon"
+              />
+            </div>
 
-          <div class="add-contact-input" id="input-email-dialog">
-            <input
-              type="text"
-              placeholder="Email"
-              id="input-contact-email-dialog"
-            />
-            <img
-              src="../assets/icons/contacts/email_icon_input.png"
-              alt="Email input icon"
-            />
-          </div>
+            <div class="contact-form-input" id="input-email-dialog">
+              <input
+                type="text"
+                placeholder="Email"
+                id="input-contact-email-dialog"
+                maxlength="41"
+                aria-invalid="false"
+                aria-describedby="error-message-email"
+              />
+              <img
+                src="../assets/icons/contacts/email_icon_input.png"
+                alt="Email input icon"
+              />
+            </div>
 
-          <div class="add-contact-input" id="input-phone-dialog">
-            <input
-              type="tel"
-              placeholder="Phone"
-              id="input-contact-phone-dialog"
-            />
-            <img
-              src="../assets/icons/contacts/phone_icon_input.png"
-              alt="Phone input icon"
-            />
+            <div class="contact-form-input" id="input-phone-dialog">
+              <input
+                type="tel"
+                placeholder="Phone"
+                id="input-contact-phone-dialog"
+                maxlength="21"
+                aria-invalid="false"
+                aria-describedby="error-message-phone"
+              />
+              <img
+                src="../assets/icons/contacts/phone_icon_input.png"
+                alt="Phone input icon"
+              />
+            </div>
+            <!-- Dialog error messages -->
+            <div class="dialog-error-message-container" id="error-message">
+              <span class="dialog-error-message" id="error-message-name"
+                >Name is a required information field! Please enter a
+                name.</span
+              >
+              <span class="dialog-error-message" id="error-message-email"
+                >Please enter a valid email address.</span
+              >
+              <span class="dialog-error-message" id="error-message-phone"
+                >Only numbers and the + sign are allowed. Please try
+                again.</span
+              >
+            </div>
           </div>
-          <!-- Test for dialog error messages -->
-          <div class="dialog-error-message-container" id="error-message">
-            <span class="dialog-error-message" id="error-message-name"
-              >Name is a required information field! Please enter a name.</span
+          <!-- Dialog footer -->
+          <footer class="contact-form-footer">
+            <!-- Cancel button -->
+            <button
+              type="button"
+              class="button-basic button-secondary delete-contact-data"
+              id="dialog-cancel-button"
+              onclick="closeDialog()"
             >
-            <span class="dialog-error-message" id="error-message-email"
-              >Please enter a valid email address.</span
+              <span>Cancel</span>
+              <span class="close-button">&times;</span>
+            </button>
+            <!-- Create contact button -->
+            <button
+              type="submit"
+              class="button-basic button-primary"
+              id="dialog-create-contact-button"
             >
-            <span class="dialog-error-message" id="error-message-phone"
-              >Only numbes and the + sign are allowed. Please try again.</span
+              <span>Create contact</span>
+              <img
+                src="../assets/icons/contacts/check_icon.png"
+                alt="Check icon"
+              />
+            </button>
+            <!-- Delete button -->
+            <button
+              type="button"
+              class="button-basic button-secondary delete-contact-data hidden"
+              id="dialog-delete-button"
+              onclick="openDialogDeleteQuestion()"
             >
-          </div>
+              Delete
+            </button>
+            <!-- Save button -->
+            <button
+              type="submit"
+              class="button-basic button-primary save-contact-data hidden"
+              id="dialog-save-button"
+            >
+              Save
+              <img
+                src="../assets/icons/contacts/check_icon.png"
+                alt="Save icon"
+              />
+            </button>
+          </footer>
         </div>
-
-        <!-- Dialog footer -->
-        <footer class="add-contact-footer">
-          <!-- Cancel button -->
-          <button
-            type="button"
-            class="button-basic button-secondary delete-contact-data"
-            id="dialog-cancel-button"
-            onclick="closeDialog()"
-          >
-            <span>Cancel</span>
-            <span class="close-button">&times;</span>
-          </button>
-          <!-- Create contact button -->
-          <button
-            type="submit"
-            class="button-basic button-primary"
-            id="dialog-create-contact-button"
-          >
-            <span>Create contact</span>
-            <img
-              src="../assets/icons/contacts/check_icon.png"
-              alt="Check icon"
-            />
-          </button>
-          <!-- Delete button -->
-          <button
-            type="button"
-            class="button-basic button-secondary delete-contact-data hidden"
-            id="dialog-delete-button"
-            onclick="openDialogDeleteQuestion()"
-          >
-            Delete
-          </button>
-          <!-- Save button -->
-          <button
-            type="submit"
-            class="button-basic button-primary save-contact-data hidden"
-            id="dialog-save-button"
-          >
-            Save
-            <img
-              src="../assets/icons/contacts/check_icon.png"
-              alt="Save icon"
-            />
-          </button>
-        </footer>
       </form>
     </dialog>
 
+    <!-- #region MARK: dialog delete 
+    -->
     <!-- Dialog for delete contact question -->
-    <dialog class="delete-question-container" id="delete-question-dialog">
+    <dialog
+      class="delete-question-container"
+      id="delete-question-dialog"
+      role="alertdialog"
+      aria-labelledby="delete-question-title"
+      aria-describedby="delete-question-text"
+    >
       <form method="dialog">
-        <h4>Delete contact</h4>
-        <p>Do you really want to delete this contact?</p>
+        <h4 id="delete-question-title">Delete contact</h4>
+        <p id="delete-question-text">
+          Do you really want to delete this contact?
+        </p>
         <div class="delete-question-button-container">
           <!-- Delete contact - No button -->
           <button
             type="button"
-            class="button-basic button-secondary delete-question-no"
+            class="button-basic button-secondary delete-question-button"
             id="delete-question-no-button"
             onclick="closeContactDeletion()"
           >
@@ -284,7 +328,7 @@
           <!-- Delete contact - Yes button -->
           <button
             type="submit"
-            class="button-basic button-primary delete-question-yes"
+            class="button-basic button-primary delete-question-button"
             id="delete-question-yes-button"
             onclick="deleteContact()"
             autofocus
@@ -295,28 +339,7 @@
       </form>
     </dialog>
 
-    <!-- Dialog toast message - Contact successfully created -->
-    <div
-      class="toast-message toast-contact-created"
-      id="toast-message-contact-created"
-    >
-      Contact successfully created
-    </div>
-
-    <!-- Dialog toast message - Contact successfully edited -->
-    <div
-      class="toast-message toast-contact-edited"
-      id="toast-message-contact-edited"
-    >
-      Contact successfully edited
-    </div>
-
-    <!-- Dialog toast message - Contact successfully deleted -->
-    <div
-      class="toast-message toast-contact-deleted"
-      id="toast-message-contact-deleted"
-    >
-      Contact successfully deleted
-    </div>
+    <!-- Toast messages -->
+    <div class="toast-message" id="toast-message" popover="manual"></div>
   </body>
 </html>

@@ -1,44 +1,50 @@
 let tasks = [];
 
 async function init() {
+  const user = await initHeader();
   await getSummaryData();
   getStatusInformation();
+  renderDates();
+
+  if (user.isGuest === true) {
+    rederGreeting("");
+    return;
+  }
+
+  rederGreeting(user.name);
 }
 
 
 async function getSummaryData() {
-  const response = await fetch("../js/tasks.json");
+  const idToken = await window.auth.currentUser.getIdToken();
+  const response = await fetch(
+    `https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${idToken}`,
+  );
   const data = await response.json();
-
-  tasks = data;
+  tasks = Object.values(data);
 }
 
 
 function getStatusInformation() {
+  const urgentTasks = getStatusUrgent();
+  const summaryList = document.querySelector("#summary_list");
   const statusCounts = getStatusCounts();
-  logStatusCounts(statusCounts);
+  summaryList.innerHTML = "";
+  summaryList.innerHTML = generateSummaryHTM(statusCounts, tasks, urgentTasks);
 }
 
 
 function getStatusCounts() {
-  const statusCounts = { todo: 0, inProgress: 0, awaitFeedback: 0, done: 0 };
+  const statusCounts = { toDo: 0, inProgress: 0, awaitFeedback: 0, done: 0 };
 
   for (const task of tasks) {
-    statusCounts.todo += countStatus(task, "todo");
-    statusCounts.inProgress += countStatus(task, "in-progress");
-    statusCounts.awaitFeedback += countStatus(task, "await-feedback");
+    statusCounts.toDo += countStatus(task, "toDo");
+    statusCounts.inProgress += countStatus(task, "inProgress");
+    statusCounts.awaitFeedback += countStatus(task, "awaitFeedback");
     statusCounts.done += countStatus(task, "done");
   }
 
   return statusCounts;
-}
-
-
-function logStatusCounts(statusCounts) {
-  console.log("Status ToDo: ", statusCounts.todo);
-  console.log("Status In Progress: ", statusCounts.inProgress);
-  console.log("Status Await Feedback: ", statusCounts.awaitFeedback);
-  console.log("Status Done: ", statusCounts.done);
 }
 
 
@@ -48,6 +54,20 @@ function countStatus(task, status) {
     counter++;
   }
   return counter;
+}
+
+
+function getStatusUrgent() {
+  let counterUrgent = 0;
+
+  for (let i = 0; i < tasks.length; i++) {
+    const task = tasks[i];
+    if (task.priority === "urgent") {
+      counterUrgent++;
+    }
+  }
+
+  return counterUrgent;
 }
 
 
@@ -66,6 +86,74 @@ function changeStrokeIcon(element, action) {
 
   circle.setAttribute("fill", action === "start" ? "white" : "#2A3647");
   motif.setAttribute("stroke", action === "start" ? "#2A3647" : "white");
+}
+
+
+function renderDates() {
+  const nextTask = getNextUpcomingTask();
+  const deadlineElement = document.getElementById("upcoming-deadline");
+
+  if (!nextTask) {
+    deadlineElement.textContent = "No upcoming deadline";
+    return;
+  }
+
+  updateDeadlineElement(deadlineElement, nextTask);
+}
+
+
+function getNextUpcomingTask() {
+  const now = new Date().setHours(0, 0, 0, 0);
+  let nextTask;
+
+  for (const task of tasks) {
+    if (isEarlierUpcomingTask(task, nextTask, now)) nextTask = task;
+  }
+
+  return nextTask;
+}
+
+
+function isEarlierUpcomingTask(task, nextTask, now) {
+  const dueDate = getDueDateTime(task);
+
+  if (dueDate < now) return false;
+  if (!nextTask) return true;
+
+  return dueDate < getDueDateTime(nextTask);
+}
+
+
+function getDueDateTime(task) {
+  return new Date(task.dueDate + "T00:00:00").getTime();
+}
+
+
+function updateDeadlineElement(deadlineElement, task) {
+  const deadline = new Date(task.dueDate + "T00:00:00");
+
+  deadlineElement.dateTime = task.dueDate;
+  deadlineElement.textContent = formatDeadline(deadline);
+}
+
+
+function formatDeadline(deadline) {
+  return deadline.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+
+function rederGreeting(userName = "") {
+  const greetingText = document.querySelector(".greeting__text");
+  const greetingName = document.querySelector(".greeting__name");
+  const greeting = getGreeting();
+
+  greetingText.textContent = userName === "" ? greeting + "!" : greeting + ",";
+  greetingName.textContent = userName;
+  greetingName.hidden = userName === "";
 }
 
 init();

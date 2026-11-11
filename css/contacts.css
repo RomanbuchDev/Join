@@ -1,10 +1,9 @@
 /*  ====================================================================================================
     CONTACTS.CSS - CONTACTS PAGE - MOBILE VERSION (min-width: 320px)
     ====================================================================================================
-    1. STANDARDS (only for testing)
+    1. STANDARDS (HTML, body, titles)
     2. MAIN - CONTACT LIST (Contact categories, contacts)
     3. OTHER (Desktop responsive)
-    ...
     ==================================================================================================== */
 
 /*  ==================================================================================================== 
@@ -27,8 +26,18 @@ body {
   display: flex;
   flex-direction: column;
   line-height: 1.2;
-  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
+}
+
+body h2 {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+/* Notiz: Nur vorübergehend einfügen bis zum nächsten Update von Main */
+body .user-menu-dropdown {
+  transform: translateX(1em);
 }
 
 /*  ==================================================================================================== 
@@ -37,21 +46,24 @@ body {
 
 .main-container {
   background-color: var(--color-white);
-  margin-top: 4.7em;
-
-  /* margin-bottom: 8em; */
-  padding-left: 0.875rem;
-  padding-right: 0.875rem;
-  padding-bottom: 8em;
+  min-width: 0;
+  padding-left: 0.875em;
+  padding-right: 0.875em;
 }
 
 .main-container.details-open {
   background-color: transparent;
+  padding-top: 0;
+}
+
+#contact-list {
+  padding-top: 1.5em;
+  padding-bottom: 5em;
 }
 
 .letter-container {
   height: 58px;
-  padding: 1.0625rem 2.25rem;
+  padding: 0.85em 1.8em;
   margin: 0;
 }
 
@@ -59,8 +71,8 @@ body {
   border: none;
   border-top: 1px solid var(--color-gray-209);
   width: 100%;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .contact-card {
@@ -74,9 +86,9 @@ body {
     color 0.1s ease,
     border-radius 0.1s ease;
   cursor: pointer;
-  gap: 2.1875rem;
+  gap: 2.1875em;
   width: 100%;
-  padding: 0.9375rem 1.5rem;
+  padding: 0.9375em 1.5em;
 }
 
 .contact-card.active {
@@ -112,12 +124,21 @@ body {
 .contact-data-container {
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 0.3em;
+  min-width: 0;
 }
 
 .contact-name {
   color: var(--color-black);
   font-size: 1.25rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
+  text-transform: capitalize;
 }
 
 .contact-name:active {
@@ -127,19 +148,24 @@ body {
 .contact-e-mail {
   color: var(--color-email);
   font-size: 1rem;
-  margin-bottom: 1.375em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
 }
 
 .contact-menu {
   object-fit: contain;
-  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+  box-shadow: 0 4px 4px var(--color-black-25);
   position: fixed;
   right: 10px;
   bottom: 96px;
   z-index: 50;
   border: 1px solid var(--color-dark);
   border-radius: 46px;
-  padding: 1.5625rem;
+  padding: 1.3em;
   width: 32px;
   height: 32px;
 }
@@ -154,8 +180,38 @@ body {
   border: 1px solid var(--color-name);
 }
 
+.contact-menu img {
+  object-fit: cover;
+  max-width: none;
+}
+
 .contact-menu-text {
   display: none;
+}
+
+/* ##### Logged-in user ##### */
+
+.shortcut-wrapper {
+  position: relative;
+}
+
+.own-account-badge-on-shortcut {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-email);
+  color: var(--color-white);
+  border-radius: 4px;
+  font-size: 0.5rem;
+  font-weight: bold;
+  white-space: nowrap;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 0.25em 0.5em;
+  margin-top: 0.25em;
+  box-shadow: 0 2px 4px var(--color-black-10);
 }
 
 /*  ==================================================================================================== 
@@ -180,22 +236,14 @@ body {
     margin: 0;
   }
 
-  /* body .fixed-footer {
-    position: static;
-    width: 100%;
-  } */
-
   .main-container {
     grid-area: main;
     display: flex;
     flex-direction: row;
     overflow: hidden;
     min-height: 0;
-    padding-right: 0;
-
-    /* margin-bottom: 0; */
+    padding-inline: 0;
     padding-bottom: 0;
-    margin-top: 4.2em;
   }
 
   .main-container,
@@ -209,11 +257,12 @@ body {
     flex: 0 0 40%;
     overflow-y: auto;
     scrollbar-width: thin;
-    gap: 1em;
-    height: 100%;
     position: relative;
     z-index: 10;
     box-shadow: 4px 0 6px var(--color-black-10);
+    gap: 1em;
+    height: 100%;
+    max-width: 430px;
   }
 
   .contact-menu {
@@ -224,14 +273,13 @@ body {
     border-radius: 10px;
     box-shadow: none;
     gap: 1em;
-    width: 350px;
+    width: 280px;
     max-width: 350px;
     height: 50px;
     padding: 0.75em 1em;
-    margin-right: 1.5em;
   }
 
-  .button-wrapper #contact-menu-button {
+  .button-wrapper #add-contact-menu-button {
     display: flex;
   }
 
@@ -247,13 +295,21 @@ body {
     overflow: visible;
     width: 100%;
     height: auto;
+    padding-top: 0;
+    padding-bottom: 1.5em;
+    padding-inline: 1.5em;
   }
 
   .button-wrapper {
     display: flex;
     justify-content: center;
     width: 100%;
-    padding-top: 1em;
-    padding-left: 1em;
+    padding-top: 2em;
+  }
+}
+
+@media (width >= 80em) {
+  .contact-menu {
+    width: 350px;
   }
 }

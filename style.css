@@ -1,3 +1,34 @@
+/* #region MARK: h1-h4
+headings: global base from Figma text styles, deviations via classes
+*/
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* #endregion */
+
+/* #region MARK: main
+*/
 body {
   font-family: var(--font-family);
   background-color: var(--color-bg-main);
@@ -9,13 +40,8 @@ body {
   grid-template:
     "header" auto
     "main" minmax(0, 1fr)
-    "nav" auto / 1fr;
+    "nav" auto;
   overflow: hidden;
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: 700;
 }
 
 .main {
@@ -24,13 +50,19 @@ h1 {
   overflow-y: auto;
 }
 
+/* #endregion */
+
+/* #region MARK: header
+*/
 .main-header {
   grid-area: header;
+  height: 5em;
   width: 100%;
   display: flex;
   align-items: center;
+  z-index: 100;
   justify-content: space-between;
-  padding: 0.75em 1em;
+  padding: 1.2em 1em;
   background-color: var(--color-white);
   box-shadow: 0 4px 4px var(--color-black-10);
 }
@@ -53,21 +85,80 @@ h1 {
   font-weight: 700;
   width: 2.5rem;
   height: 2.5rem;
-  border: 2px solid var(--color-dark);
+  border: 3px solid var(--color-dark);
   border-radius: 30px;
   background-color: var(--color-white);
   transition: fill 0s ease 125ms;
   cursor: pointer;
 }
 
+.user-menu {
+  position: relative;
+}
+
+.user-menu-dropdown {
+  width: 9.3em;
+  padding: 1em 1em 1em 1.2em;
+  height: 11.3em;
+  gap: 1.4em;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0%;
+  border-radius: 20px 0 20px 20px;
+  background-color: var(--color-dark);
+  transform: translateX(1em);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 250ms ease,
+    opacity 250ms ease,
+    visibility 250ms;
+}
+
+.user-menu-dropdown.is-open {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.user-menu-item > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.user-menu-item {
+  text-decoration: none;
+  color: var(--color-gray-209);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-inline: -0.5em;
+  padding-inline: 0.5em;
+  padding-block: 0.6em;
+  margin-block: -0.6em;
+}
+
+.user-menu-logout {
+  text-decoration: none;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* #endregion */
+
+/* #region MARK: nav
+*/
 .main-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
   grid-area: nav;
+  width: 100%;
   height: 5rem;
   background-color: var(--color-dark);
-  z-index: 1000;
 }
 
 .main-nav-list {
@@ -120,7 +211,10 @@ h1 {
   display: none;
 }
 
-@media (width >= 80em) {
+/* #region MARK: @ laptop S
+*/
+
+@media (width >= 64em) {
   #page {
     height: 100dvh;
     overflow: hidden;
@@ -130,20 +224,14 @@ h1 {
       "nav main main main main";
   }
 
-  .main {
-    grid-area: main;
-    min-height: 0;
-    overflow-y: auto;
+  h1 {
+    font-size: 3.75rem;
   }
 
   .main-header {
-    grid-area: header;
     position: static;
+    padding: 1em;
     width: auto;
-    top: auto;
-    left: auto;
-    display: flex;
-    align-items: center;
     padding-inline: 4em;
   }
 
@@ -161,9 +249,35 @@ h1 {
     margin-inline-end: 1em;
   }
 
+  .user-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 35px;
+  }
+
+  .user-avatar span {
+    font-size: 1.1rem;
+  }
+
+  .user-menu-dropdown {
+    height: 9.3em;
+    top: 100%;
+    margin-block-start: 1em;
+  }
+
+  .user-menu-item--help {
+    display: none;
+  }
+
+  .main-nav-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+
   .main-nav {
-    grid-area: nav;
-    position: static;
     width: auto;
     height: 100dvh;
     display: flex;
@@ -234,6 +348,10 @@ h1 {
   }
 }
 
+/* #endregion */
+
+/* #region MARK: @ hover
+*/
 @media (hover: hover) and (pointer: fine) {
   .user-avatar:hover,
   .user-avatar:active {
@@ -244,12 +362,18 @@ h1 {
     transform: scale(1.1);
   }
 
+  .user-menu-item:hover {
+    background-color: var(--color-medium);
+  }
+
   .main-nav-item:not(:has(a[aria-current="page"])):hover {
     background-color: var(--color-medium);
     transform: translateY(-2px);
   }
 
   .main-nav-legal a:hover {
-    color: var(--color-dark-active);
+    color: var(--color-medium);
   }
 }
+
+/* #endregion */

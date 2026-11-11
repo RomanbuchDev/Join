@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="./css/dpf-flex-utils.css" />
     <link rel="stylesheet" href="./css/responsive.css" />
     <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/assets.css" />
     <link rel="stylesheet" href="./css/login.css" />
     <link rel="stylesheet" href="./style.css" />
 
-    <script src="./script.js" defer></script>
-    <!-- <script src="./js/template.js" defer></script> -->
+    <script type="module" src="./js/firebase-init.js"></script>
+    <script defer src="./script.js"></script>
     <script src="./js/auth-service.js" defer></script>
     <script src="./js/login.js" defer></script>
   </head>
@@ -75,10 +76,18 @@
             <p id="loginError" class="error-text"></p>
           </div>
           <div class="btn-logins-bar dpf-column-spc-between-center">
-            <button type="submit" class="btn btn-primary" id="loginBtn">
+            <button
+              type="submit"
+              class="button-basic button-primary"
+              id="loginBtn"
+            >
               Log in
             </button>
-            <button type="button" class="btn btn-secondary" id="guestLoginBtn">
+            <button
+              type="button"
+              class="button-basic button-secondary"
+              id="guestLoginBtn"
+            >
               Guest Login
             </button>
           </div>
@@ -93,12 +102,10 @@
           </div>
         </section>
         <section class="dpf-center impress-bar">
-          <a href="./html/privacy-policy.html" target="_blank" class="login-a"
+          <a href="./html/privacy-policy.html" class="login-a"
             >Privacy Policy</a
           >
-          <a href="./html/impressum.html" target="_blank" class="login-a"
-            >Legal notice</a
-          >
+          <a href="./html/./imprint.html" class="login-a">Legal notice</a>
         </section>
       </footer>
     </section>

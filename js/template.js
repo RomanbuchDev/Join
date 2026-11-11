@@ -1,7 +1,12 @@
 // Templates - Contacts page
 
+/**
+ * Creates the HTML structure for contacts in the contact list.
+ * @param {Object} contactData - Object with contact data.
+ * @returns {string} The HTML item for the contact.
+ */
 function getContactTemplate(contactData) {
-  return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails(${contactData.id})">
+  return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
             <span class="contact-shortcut">${contactData.shortcut}</span>
             <div class="contact-data-container">
               <span class="contact-name">${contactData.name}</span>
@@ -11,10 +16,34 @@ function getContactTemplate(contactData) {
 }
 
 
+/**
+ * Creates the HTML structure for the own account or guest account in the contact list.
+ * @param {Object} contactData - Object with contact data.
+ * @returns {string} The HTML item for the own account or guest account.
+ */
+function getOwnContactTemplate(contactData) {
+  return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
+            <div class="shortcut-wrapper">
+              <span class="contact-shortcut">${contactData.shortcut}</span>
+              <span class="own-account-badge-on-shortcut">My Account</span>
+            </div>
+            <div class="contact-data-container">
+              <span class="contact-name">${contactData.name}</span>
+              <span class="contact-e-mail">${contactData.email}</span>
+            </div>
+          </button>`;
+}
+
+
+/**
+ * Creates the HTML structure for the contact details view.
+ * @param {Object} contactData - Object with contact data.
+ * @returns {string} The HTML item for the contact details view.
+ */
 function getContactDetailsTemplate(contactData) {
   return `<div class="contact-details-header-container">
         <div class="contact-details-title-container">
-          <span class="contact-details-title">Contacts</span>
+          <h1 class="contact-details-title">Contacts</h1>
           <span class="contact-details-subtitle">Better with a team</span>
         </div>
         <button type="button" class="back-button" onclick="backToContactList()">
@@ -54,12 +83,17 @@ function getContactDetailsTemplate(contactData) {
       </div>
 
       <!-- Contact details option menu button -->
-      <button class="button-basic button-primary contact-menu" id="contact-menu-button" onclick="toggleMobileContactOptions()">
+      <button class="button-basic button-primary contact-menu" id="edit-contact-menu-button" onclick="showMobileContactOptions()" aria-expanded="false" aria-controls="contact-options" aria-label="Open contact details option menu">
         <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
       </button>`;
 }
 
 
+/**
+ * Creates the HTML structure for the letter category in the contact list.
+ * @param {string} letter - The first letter from the last name of the contact.
+ * @returns {string} The HTML item for the letter category.
+ */
 function getLetterCategoryTemplate(letter) {
   return `<section id="letter-category-${letter}">
         <div>
@@ -72,10 +106,178 @@ function getLetterCategoryTemplate(letter) {
 }
 
 
+/**
+ * Creates the HTML structure for the placeholder of the contact details view.
+ * @returns {string} The HTML item for the placeholder.
+ */
 function getContactDetailsPlaceholderTemplate() {
   return `<div class="contact-details-header-container">
         <div class="contact-details-title-container">
-          <span class="contact-details-title">Contacts</span>
+          <h1 class="contact-details-title">Contacts</h1>
           <span class="contact-details-subtitle">Better with a team</span>
         </div>`;
+}
+
+
+/**
+ * Creates the HTML structure for the database connection error dialog.
+ * @returns {string} The HTML item for the dialog.
+ */
+function getConnectionErrorDatabaseTemplate() {
+  return `<dialog
+      class="connection-error-database-container"
+      id="connection-error-database-dialog"
+      role="alertdialog"
+      aria-labelledby="connection-error-database-title"
+      aria-describedby="connection-error-database-text"
+    >
+      <div class="connection-error-database-content">
+        <h4 id="connection-error-database-title">Connection error</h4>
+        <p id="connection-error-database-text">
+          No connection to the database. Please try again or check your internet
+          connection.
+        </p>
+        <div class="connection-error-database-button-container">
+          <!-- Close button -->
+          <button
+            type="button"
+            class="button-basic button-secondary connection-error-database-button"
+            id="connection-error-database-close-button"
+            onclick="closeDialogConnectionErrorDatabase()"
+          >
+            Close
+          </button>
+          <!-- Reload button -->
+          <button
+            type="button"
+            class="button-basic button-primary connection-error-database-button"
+            id="connection-error-database-retry-button"
+            onclick="reloadPage()"
+            autofocus
+          >
+            Reload
+          </button>
+        </div>
+      </div>
+    </dialog>`;
+}
+
+
+function templateHeader(avatarShortcut) {
+  return `
+    <a class="main-header-logo" href="./summary.html"
+          ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
+        /></a>
+        <p class="main-header-title">Kanban Project Management Tool</p>
+        <a
+          href="./help.html"
+          class="main-header-help"
+          aria-label="Link to Help page"
+        >
+          <img src="../assets/icons/help.svg" alt="" />
+        </a>
+        <div class="user-menu">
+          <button
+            type="button"
+            class="user-avatar"
+            onclick="toggleMenu(this, 'user-menu-dropdown')"
+            aria-expanded="false"
+            aria-controls="user-menu-dropdown"
+            aria-label="Open user menu"
+          ><span>${avatarShortcut}</span>
+          </button>
+          <ul id="user-menu-dropdown" class="user-menu-dropdown">
+            <li class="user-menu-item user-menu-item--help">
+              <a href="./help.html">Help</a>
+            </li>
+            <li class="user-menu-item">
+              <a href="./imprint.html">Legal Notice</a>
+            </li>
+            <li class="user-menu-item">
+              <a href="./privacy-policy.html">Privacy Policy</a>
+            </li>
+            <li class="user-menu-item user-menu-item--logout">
+              <button type="button" class="user-menu-logout" onclick="handleLogoutClick()">Log out</button>
+            </li>
+          </ul>
+        </div>
+    `;
+}
+
+
+function templateNavAuthenticated(currentPage) {
+  return ` 
+        <ul class="main-nav-list">
+          <li class="main-nav-item">
+            <a href="../html/summary.html">
+              <img src="../assets/icons/summary-icon.svg" alt="" />
+              <span>Summary</span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/add-task.html">
+              <img src="../assets/icons/addtask-icon.svg" alt="" />
+              <span> Add Task </span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/board.html">
+              <img src="../assets/icons/board-icon.svg" alt="" />
+              <span> Board </span>
+            </a>
+          </li>
+
+          <li class="main-nav-item">
+            <a href="../html/contacts.html">
+              <img src="../assets/icons/contact-icon.svg" alt="" />
+              <span> Contacts </span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="main-nav-guest-row">
+          <ul class="main-nav-legal" hidden>
+            <li class="main-nav-legal-item">
+              <a href="../html/privacy-policy.html"${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
+
+            </li>
+
+            <li class="main-nav-legal-item">
+              <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
+                >Legal Notice</a
+              >
+            </li>
+          </ul>
+        </div>
+  `
+}
+
+
+function templateNavUnauthenticated(currentPage) {
+  return `
+        <div class="main-nav-guest-row">
+          <ul class="main-nav-guest-list">
+            <li class="main-nav-item">
+              <a href="../index.html">
+                <img src="../assets/icons/login.svg" alt="" />
+                <span> Log in </span>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="main-nav-legal">
+            <li class="main-nav-legal-item">
+              <a href="../html/privacy-policy.html" ${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
+            </li>
+
+            <li class="main-nav-legal-item">
+              <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
+                >Legal Notice</a
+              >
+            </li>
+          </ul>
+        </div>
+  `
 }

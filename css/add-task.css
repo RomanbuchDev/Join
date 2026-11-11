@@ -1,0 +1,363 @@
+.add-task-main {
+  display: flex;
+  flex-direction: column;
+}
+
+#task-form {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.add-task-header {
+  position: sticky;
+  top: 0;
+  padding: 2em 1em 0.3em;
+  background-color: var(--color-bg-main);
+}
+
+.form-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "title"
+    "description"
+    "due-date"
+    "priority"
+    "assigned"
+    "category"
+    "subtasks";
+  gap: 1.5rem;
+  min-height: 0;
+  overflow: hidden auto;
+  padding-block-end: 10em;
+  padding-inline: 1em;
+}
+
+.add-task-layout {
+  display: grid;
+  grid-template-rows:
+    auto
+    minmax(0, 1fr)
+    auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.form-actions {
+  position: fixed;
+  bottom: 5rem;
+  inset-inline: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1em;
+  padding: 0.75em 1em;
+  background-color: var(--color-bg-main);
+}
+
+.form-action {
+  font-size: 1rem;
+  padding: 0.75em 1em;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.form-action--clear {
+  background-color: transparent;
+  color: var(--color-dark);
+  border: 1px solid var(--color-dark);
+}
+
+.form-action--create {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  border: 1px solid var(--color-dark);
+  font-weight: 700;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.form-field > label {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.required-label::after {
+  content: "*";
+  color: red;
+}
+
+.form-field--title {
+  grid-area: title;
+  padding-top: 1em;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.65em 1em;
+  border: 1px solid var(--color-gray-104);
+  border-radius: 10px;
+  background-color: var(--color-white);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.form-control--select {
+  appearance: none;
+  background-image: url("../assets/icons/drop-arrow.svg");
+  background-repeat: no-repeat;
+  background-position: right 0.75em center;
+  background-size: 1.2em;
+  padding-inline-end: 2em;
+}
+
+.contact-search {
+  position: relative;
+}
+
+.contact-search input {
+  padding-inline-end: 3em;
+}
+
+.contact-search .dropdown-arrow {
+  position: absolute;
+  inset-inline-end: 0.75em;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.2em;
+  height: auto;
+  pointer-events: none;
+}
+
+.form-control--select:has(.select-placeholder:checked) {
+  color: var(--color-gray-104);
+}
+
+.select-placeholder {
+  color: var(--color-gray-104);
+}
+
+.form-field--description {
+  grid-area: description;
+}
+
+.form-control--description {
+  padding-inline: 1em;
+  padding-block: 0.9em 1.5em;
+  resize: none;
+}
+
+.form-field--due-date {
+  grid-area: due-date;
+}
+
+#due-date {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  color: var(--color-dark);
+}
+
+#due-date::-webkit-datetime-edit {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-gray-104);
+}
+
+.form-field--priority {
+  grid-area: priority;
+  padding-block: 0 0.5em;
+}
+
+.priority-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75em;
+}
+
+.form-column > .form-field + .form-field {
+  margin-block-start: 1rem;
+}
+
+.priority-option {
+  max-width: 300px;
+  gap: 0.25em;
+}
+
+.priority-option label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25em;
+  padding: 0.75em;
+  border: 1px solid var(--color-gray);
+  border-radius: 10px;
+  background-color: var(--color-white);
+  box-shadow: 0 2px 4px var(--color-black-10);
+  cursor: pointer;
+  width: 100%;
+  min-width: 6em;
+}
+
+.priority-option input {
+  position: absolute;
+  opacity: 0;
+}
+
+.priority-option input:checked + label {
+  color: var(--color-white);
+}
+
+.form-field--priority > legend {
+  margin-block-end: 0.5em;
+}
+
+.priority-icon {
+  width: 1em;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.form-field--assigned {
+  grid-area: assigned;
+}
+
+.form-field--category {
+  grid-area: category;
+}
+
+.form-field--subtasks {
+  grid-area: subtasks;
+}
+
+@supports (appearance: base-select) {
+  #category,
+  #category::picker(select) {
+    appearance: base-select;
+  }
+
+  #category::picker(select) {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-209);
+    border-radius: 0.625rem;
+    box-shadow: 0 4px 12px var(--color-black-10);
+  }
+
+  #category option {
+    padding: 0.75rem 1rem;
+  }
+
+  #category {
+    background-image: none;
+    padding-inline-end: 0.75em;
+  }
+
+  #category::picker-icon {
+    content: "";
+    width: 1.2em;
+    height: 1.2em;
+    flex: none;
+    align-self: center;
+    margin-inline-start: auto;
+    background: url("../assets/icons/drop-arrow.svg") center / contain no-repeat;
+  }
+}
+
+.required-hint--desktop {
+  display: none;
+}
+
+@media (width >= 64em) {
+  .add-task-main {
+    padding-inline: 4em;
+    padding-block-start: 5em;
+    padding-bottom: 4em;
+  }
+
+  .add-task-header {
+    padding: 0 0 0.3em;
+  }
+
+  .form-actions {
+    inset-inline-start: 14.5rem;
+    bottom: 0;
+  }
+
+  .form-content {
+    max-width: 64rem;
+    grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+    grid-template-areas: "left . right";
+    column-gap: 2rem;
+    align-items: start;
+  }
+
+  .form-content::before {
+    content: "";
+    grid-column: 2;
+    grid-row: 1 / 5;
+    align-self: stretch;
+    background-color: var(--color-gray-209);
+  }
+
+  .form-field--title {
+    padding-top: 0;
+  }
+
+  .form-field--description {
+    align-self: stretch;
+    position: relative;
+  }
+
+  .form-column {
+    display: contents;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 0;
+    align-self: start;
+  }
+
+  .form-field--description::after {
+    content: "";
+    position: absolute;
+    right: 0.4rem;
+    bottom: 0.4rem;
+    width: 1rem;
+    height: 1rem;
+    background: repeating-linear-gradient(
+      135deg,
+      transparent 0 3px,
+      var(--color-gray-104) 3px 5px
+    );
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    pointer-events: none;
+  }
+
+  .form-control--description::-webkit-resizer {
+    background: transparent;
+  }
+
+  .form-control--description {
+    height: 8rem;
+    min-height: 5rem;
+    resize: vertical;
+    overflow: auto;
+  }
+
+  .required-hint--mobile {
+    display: none;
+  }
+
+  .form-actions > .required-hint--desktop {
+    display: block;
+    margin-inline-end: auto;
+    margin-left: 4rem;
+  }
+}

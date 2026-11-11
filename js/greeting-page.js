@@ -3,21 +3,26 @@ setTimeout(() => {
 }, 3000);
 
 
-function initGreeting() {
-  if (!loginStatus()) {
-    return;
-  }
-  greetingUser();
+/**
+ * Starts the greeting as soon as the logged-in user is known.
+ */
+async function initGreeting() {
+  const user = await window.getCurrentUser();
+  greetingUser(user);
+  initAvatar(user);
 }
 
 
-function greetingUser() {
-  const greetingUserData = JSON.parse(localStorage.getItem("currentUser"));
-  if (greetingUserData.isGuest) {
+/**
+ * Shows the matching greeting (guest or with the user's name).
+ * @param {Object} user - The logged-in user ({ uid, name, email, isGuest }).
+ */
+function greetingUser(user) {
+  if (user.isGuest) {
     document.getElementById("greetingMessage").innerText = "Good morning!";
     document.getElementById("userName").innerText = "";
   } else {
     document.getElementById("greetingMessage").innerText = "Good morning,";
-    document.getElementById("userName").innerText = greetingUserData.name;
+    document.getElementById("userName").innerText = user.name;
   }
 }
