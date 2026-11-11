@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../css/assets.css" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../css/board.css" />
+    <link rel="stylesheet" href="../css/board-task.css" />
 
     <script type="module" src="../js/firebase-init.js"></script>
     <script defer src="../script.js"></script>
@@ -68,11 +69,31 @@
 
           <div class="addtask-container d-flex">
             <button
-              id="addTaskButtonH1"
               class="button-reset btn-d-mobile"
               type="button"
               aria-label="Add new task"
-            ></button>
+            >
+              <svg
+                class="svg-fill svg-width-height-40px"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 40 40"
+              >
+                <rect width="40" height="40" rx="10" />
+                <path
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M20 10V30"
+                />
+                <path
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M30 20L10.0005 20.138"
+                />
+              </svg>
+            </button>
             <button
               class="button-basic button-primary btn-d-tablet"
               type="button"
@@ -89,43 +110,97 @@
         <section class="board-section d-flex">
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
-              <h2>To do</h2>
+              <h2>To do <span id="toDoAmount"></span></h2>
               <button
-                id="addTaskButtonToDo"
                 class="button-reset"
                 type="button"
                 aria-label="Add new task"
-              ></button>
+              >
+                <svg
+                  class="svg-fill svg-width-height-add"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                >
+                  <rect width="30" height="30" rx="10" />
+                  <rect
+                    x="2"
+                    y="2"
+                    width="26"
+                    height="26"
+                    rx="8"
+                    fill="rgba(246 247 248 / 100%)"
+                  />
+                  <rect x="14" y="6.5" width="2" height="17" rx="1" />
+                  <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
+                </svg>
+              </button>
             </div>
             <ol id="toDo" class="tasks-list d-flex"></ol>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
-              <h2>In progress</h2>
+              <h2>In progress <span id="inProgressAmount"></span></h2>
               <button
-                id="addTaskButtonInProgress"
                 class="button-reset"
                 type="button"
                 aria-label="Add new task"
-              ></button>
+              >
+                <svg
+                  class="svg-fill svg-width-height-add"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                >
+                  <rect width="30" height="30" rx="10" />
+                  <rect
+                    x="2"
+                    y="2"
+                    width="26"
+                    height="26"
+                    rx="8"
+                    fill="rgba(246 247 248 / 100%)"
+                  />
+                  <rect x="14" y="6.5" width="2" height="17" rx="1" />
+                  <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
+                </svg>
+              </button>
             </div>
             <ol id="inProgress" class="tasks-list d-flex"></ol>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
-              <h2>Await feedback</h2>
+              <h2>Await feedback <span id="awaitFeedbackAmount"></span></h2>
               <button
-                id="addTaskButtonAwaitFeedback"
                 class="button-reset"
                 type="button"
                 aria-label="Add new task"
-              ></button>
+              >
+                <svg
+                  class="svg-fill svg-width-height-add"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                >
+                  <rect width="30" height="30" rx="10" />
+                  <rect
+                    x="2"
+                    y="2"
+                    width="26"
+                    height="26"
+                    rx="8"
+                    fill="rgba(246 247 248 / 100%)"
+                  />
+                  <rect x="14" y="6.5" width="2" height="17" rx="1" />
+                  <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
+                </svg>
+              </button>
             </div>
             <ol id="awaitFeedback" class="tasks-list d-flex"></ol>
           </section>
           <section class="board-column d-flex">
             <div class="h-addtask-container d-flex">
-              <h2>Done</h2>
+              <h2>Done <span id="doneAmount"></span></h2>
             </div>
             <ol id="done" class="tasks-list d-flex"></ol>
           </section>
