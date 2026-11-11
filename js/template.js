@@ -205,6 +205,12 @@ function templateHeader(avatarShortcut) {
 }
 
 
+/**
+ * Creates the HTML structure for the navbar shown to authenticated users (account or guest),
+ * including the main tabs and the legal links.
+ * @param {string} currentPage - The current page's filename, used for aria-current="page".
+ * @returns {string} The HTML for the navbar content.
+ */
 function templateNavAuthenticated(currentPage) {
   return ` 
         <ul class="main-nav-list">
@@ -255,6 +261,12 @@ function templateNavAuthenticated(currentPage) {
 }
 
 
+/**
+ * Creates the HTML structure for the navbar shown to unauthenticated visitors,
+ * with a login tab and the legal links.
+ * @param {string} currentPage - The current page's filename, used for aria-current="page".
+ * @returns {string} The HTML for the navbar content.
+ */
 function templateNavUnauthenticated(currentPage) {
   return `
         <div class="main-nav-guest-row">
