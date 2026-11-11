@@ -5,7 +5,7 @@ function getAddTaskTemplate() {
           <h1>Add Task</h1>
         </header>
 
-        <form id="task-form">
+        <form id="task-form" onreset="clearTaskForm()" onsubmit="createTask(event)">
           <div class="form-content">
              <div class="form-column form-column--left">
 
@@ -17,6 +17,7 @@ function getAddTaskTemplate() {
                 name="title"
                 type="text"
                 placeholder="Enter a title"
+                required
               />
             </div>
 
@@ -38,6 +39,7 @@ function getAddTaskTemplate() {
                 type="date"
                 name="due-date"
                 id="due-date"
+                required
               />
             </div>
             </div>
@@ -175,6 +177,7 @@ function getAddTaskTemplate() {
                 class="form-control form-control--select"
                 name="category"
                 id="category"
+                required
               >
                 <option class="select-placeholder" value="" disabled selected>
                   Select task category
@@ -207,16 +210,16 @@ function getAddTaskTemplate() {
             </div>
             </div>
 
-            <span class="required-hint required-hint--mobile"">
+            <span class="required-hint required-hint--mobile">
               <span class="required-marker" aria-hidden="true">*</span>
               This field is required
             </span>
           </div>
           <div class="form-actions">
             <span class="required-hint required-hint--desktop">
-  <span class="required-marker" aria-hidden="true">*</span>
-  This field is required
-</span>
+            <span class="required-marker" aria-hidden="true">*</span>
+             This field is required
+            </span>
             <button type="reset" class="form-action form-action--clear">
               Clear
             </button>
@@ -228,7 +231,6 @@ function getAddTaskTemplate() {
         
     `;
 }
-
 
 function getAssignedContactTemplate() {
   return /* html */ `
@@ -243,7 +245,6 @@ function getAssignedContactTemplate() {
     </label>
     `;
 }
-
 
 function getSubtaskTemplate(index, isEditing) {
   return /*html*/ `

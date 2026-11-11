@@ -16,7 +16,7 @@ function templateTaskCard(taskID, categoryColor) {
       ondragstart="handleDragstart(event)" ondragend="handleDragend()">
       <h3 class="task-label ${escapeHtml(categoryColor)}">${allTasks[escapeHtml(taskID)].category}</h3>
       <div class="task-title-description-container d-flex">
-        <h4>${allTasks[escapeHtml(taskID)].title}</h4>
+        <h4>${escapeHtml(allTasks[taskID].title)}</h4> //mit elana sprechen
         <p id="description${escapeHtml(taskID)}" class="task-description"></p>
       </div>
       <div id="progressContainer${escapeHtml(taskID)}" class="task-progress d-flex">
@@ -35,7 +35,6 @@ function templateTaskCard(taskID, categoryColor) {
 }
 // #endregion
 
-
 // #region TASK DETAILS
 /**
  * Returns the HTML template of the progress bar of a task card.
@@ -46,9 +45,8 @@ function templateTaskCard(taskID, categoryColor) {
 function templateProgressBar(doneSubtasks, subtasksLength) {
   return /*html*/ `
     <progress value="${doneSubtasks}" max="${subtasksLength}"></progress>
-    <p>${doneSubtasks}/${subtasksLength} Subtasks</p>`
+    <p>${doneSubtasks}/${subtasksLength} Subtasks</p>`;
 }
-
 
 /**
  * Returns the HTML template of one assignee avatar on a task card.
@@ -60,9 +58,8 @@ function templateTaskAssignees(assigneeColor, assigneeShortcut) {
   return /*html*/ `
     <li class="task-avatar d-flex" style="background-color:${escapeHtml(assigneeColor)}">
       ${escapeHtml(assigneeShortcut)}
-    </li>`
+    </li>`;
 }
-
 
 /**
  * Returns the HTML template of the message for an empty column.
@@ -73,10 +70,9 @@ function templateEmptyColumn(columnName) {
   return /*html*/ `
     <li class="empty-column-message d-flex">
       <p>No tasks ${escapeHtml(columnName)}</p>
-    </li>`
+    </li>`;
 }
 // #endregion
-
 
 // #region BUTTONS
 /**
@@ -106,7 +102,6 @@ function templateAddTaskH1SVG() {
       />
     </svg>`;
 }
-
 
 /**
  * Returns the SVG of the Add Task button in a column header.
