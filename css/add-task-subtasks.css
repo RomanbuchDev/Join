@@ -237,27 +237,16 @@
 
   .required-hint--mobile {
     grid-area: hint;
+    display: none;
   }
 
   .required-hint {
     grid-area: hint;
   }
 
-  .required-hint--mobile {
-    display: none;
-  }
-
   .required-hint--desktop {
     display: block;
     margin-inline-end: auto;
-  }
-
-  .form-column--left {
-    grid-area: left;
-  }
-
-  .form-column--right {
-    grid-area: right;
   }
 
   .form-column > .form-field {
