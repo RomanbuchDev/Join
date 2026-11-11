@@ -43,6 +43,11 @@ button:focus-visible {
   height: 2rem;
 }
 
+.svg-width-height-move {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 /* #endregion */
 
 /* #region MARK: display 
@@ -70,7 +75,7 @@ button:focus-visible {
 
 /* #endregion */
 
-/* #region MARK: h1 search
+/* #region MARK: headline
 */
 .headline-section {
   display: grid;
@@ -260,6 +265,10 @@ h2 > span {
     flex-direction: column;
     margin-right: 0;
     height: calc(100dvh - 22em);
+  }
+
+  .svg-width-height-move {
+    transform: rotate(90deg);
   }
 }
 

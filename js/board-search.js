@@ -6,7 +6,6 @@
 const searchInputFieldRef = document.getElementById("searchInputfield");
 // #endregion
 
-
 // #region SEARCH
 /**
  * Handles a click on the search button.
@@ -21,7 +20,8 @@ function handleSearchButtonClick() {
 
 /**
  * Handles a search request from the search input field.
- * Resets the search if the trimmed input is empty, otherwise renders only the matching tasks.
+ * Resets the search if the trimmed input is empty, otherwise renders only the matching tasks
+ * and marks the board as filtered (allFetchedTasksAreRendered = false).
  * @returns {void} Nothing; the board is updated depending on the input.
  */
 function handleSearchRequest() {

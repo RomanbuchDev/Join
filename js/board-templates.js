@@ -14,7 +14,32 @@ function templateTaskCard(taskID, categoryColor) {
   return /*html*/ `
     <li data-task-id="${escapeHtml(taskID)}" data-task-status="${escapeHtml(allTasks[taskID].status)}" class="task-card d-flex" draggable="true"
       ondragstart="handleDragstart(event)" ondragend="handleDragend()">
-      <h3 class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(allTasks[taskID].category)}</h3>
+      <section class="label-move-container d-flex">
+        <h3 class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(allTasks[taskID].category)}</h3>
+        <div class="move-menu-container">
+          <button class="button-reset" type="button" aria-label="Open move menu"
+            onclick="toggleMenu(this, 'move-menu-dropdown${escapeHtml(taskID)}')" aria-expanded="false" aria-controls="move-menu">
+            <svg 
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 26"
+              class="svg-fill svg-width-height-move"
+            > 
+              <path fill-rule="evenodd" d="M6 0H18A6 6 0 0 1 24 6V20A6 6 0 0 1 18 26H6A6 6 0 0 1 0 20V6A6 6 0 0 1 6 0ZM6 1.5H18A4.5 4.5 0 0 1 22.5 6V20A4.5 4.5 0 0 1 18 24.5H6A4.5 4.5 0 0 1 1.5 20V6A4.5 4.5 0 0 1 6 1.5Z"/>
+              <path d="M15.3333 18.1457L16.8958 16.5832C17.0486 16.4304 17.2396 16.354 17.4688 16.354C17.6979 16.354 17.8958 16.4304 18.0625 16.5832C18.2292 16.7498 18.3125 16.9478 18.3125 17.1769C18.3125 17.4061 18.2292 17.604 18.0625 17.7707L15.0833 20.7498C15 20.8332 14.9097 20.8922 14.8125 20.9269C14.7153 20.9616 14.6111 20.979 14.5 20.979C14.3889 20.979 14.2847 20.9616 14.1875 20.9269C14.0903 20.8922 14 20.8332 13.9167 20.7498L10.9167 17.7498C10.75 17.5832 10.6701 17.3887 10.6771 17.1665C10.684 16.9443 10.7708 16.7498 10.9375 16.5832C11.1042 16.4304 11.2986 16.3505 11.5208 16.3436C11.7431 16.3366 11.9375 16.4165 12.1042 16.5832L13.6667 18.1457V12.9998C13.6667 12.7637 13.7465 12.5658 13.9062 12.4061C14.066 12.2464 14.2639 12.1665 14.5 12.1665C14.7361 12.1665 14.934 12.2464 15.0938 12.4061C15.2535 12.5658 15.3333 12.7637 15.3333 12.9998V18.1457ZM10.3333 7.854V12.9998C10.3333 13.2359 10.2535 13.4339 10.0938 13.5936C9.93403 13.7533 9.73611 13.8332 9.5 13.8332C9.26389 13.8332 9.06597 13.7533 8.90625 13.5936C8.74653 13.4339 8.66667 13.2359 8.66667 12.9998V7.854L7.10417 9.4165C6.95139 9.56928 6.76042 9.64567 6.53125 9.64567C6.30208 9.64567 6.10417 9.56928 5.9375 9.4165C5.77083 9.24984 5.6875 9.05192 5.6875 8.82275C5.6875 8.59359 5.77083 8.39567 5.9375 8.229L8.91667 5.24984C9 5.1665 9.09028 5.10748 9.1875 5.07275C9.28472 5.03803 9.38889 5.02067 9.5 5.02067C9.61111 5.02067 9.71528 5.03803 9.8125 5.07275C9.90972 5.10748 10 5.1665 10.0833 5.24984L13.0833 8.24984C13.25 8.4165 13.3299 8.61095 13.3229 8.83317C13.316 9.05539 13.2292 9.24984 13.0625 9.4165C12.8958 9.56928 12.7014 9.64914 12.4792 9.65609C12.2569 9.66303 12.0625 9.58317 11.8958 9.4165L10.3333 7.854Z"/>
+            </svg>
+          </button>
+          <section id="move-menu-dropdown${escapeHtml(taskID)}" class="move-menu-dropdown d-flex">
+            <h5>Move to ...</h5>
+            <ol class="move-menu d-flex">
+              <li data-destination-status="toDo" onclick="moveTaskViaButton(event)">To do</li>
+              <li data-destination-status="inProgress" onclick="moveTaskViaButton(event)">In progress</li>
+              <li data-destination-status="awaitFeedback" onclick="moveTaskViaButton(event)">Await feedback</li>
+              <li data-destination-status="done" onclick="moveTaskViaButton(event)">Done</li>
+            </ol>
+          </section>
+        </div>
+      </section>
       <div class="task-title-description-container d-flex">
         <h4>${escapeHtml(allTasks[taskID].title)}</h4>
         <p id="description${escapeHtml(taskID)}" class="task-description"></p>
@@ -74,63 +99,5 @@ function templateEmptyColumn(columnName) {
     <li class="empty-column-message d-flex">
       <p>No tasks ${escapeHtml(columnName)}</p>
     </li>`
-}
-// #endregion
-
-
-// #region BUTTONS
-/**
- * Returns the SVG of the Add Task button next to the headline.
- * @returns {string} The SVG markup of the button.
- */
-function templateAddTaskH1SVG() {
-  return /*html*/ `
-    <svg
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 40 40"
-      class="svg-fill svg-width-height-40px"
-    >
-      <rect width="40" height="40" rx="10" />
-      <path
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        d="M20 10V30"
-      />
-      <path
-        stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        d="M30 20L10.0005 20.138"
-      />
-    </svg>`;
-}
-
-
-/**
- * Returns the SVG of the Add Task button in a column header.
- * @returns {string} The SVG markup of the button.
- */
-function templateAddTaskColumnSVG() {
-  return /*html*/ `
-    <svg
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 32 32"
-      class="svg-fill svg-width-height-add"
-    >
-      <rect width="30" height="30" rx="10" />
-      <rect
-        x="2"
-        y="2"
-        width="26"
-        height="26"
-        rx="8"
-        fill="rgba(246 247 248 / 100%)"
-      />
-      <rect x="14" y="6.5" width="2" height="17" rx="1" />
-      <rect x="6.5" y="14.1416" width="17" height="2" rx="1" />
-    </svg>`;
 }
 // #endregion
