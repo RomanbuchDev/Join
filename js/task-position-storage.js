@@ -10,7 +10,6 @@ const allTasks = {};
 let patchQueue = Promise.resolve();
 // #endregion
 
-
 // #region LOAD
 /**
  * Loads all tasks from the database and replaces the content of allTasks.
@@ -20,7 +19,9 @@ let patchQueue = Promise.resolve();
 async function fetchAllTasks() {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
-    const response = await fetch(`${window.firebaseUrl}/tasks.json?auth=${idToken}`);
+    const response = await fetch(
+      `${window.firebaseUrl}/tasks.json?auth=${idToken}`,
+    );
     if (!response.ok) {
       throw new Error(`Failed to load tasks: ${response.status}`);
     }
@@ -31,7 +32,6 @@ async function fetchAllTasks() {
     return false;
   }
 }
-
 
 /**
  * Replaces the content of allTasks, so tasks deleted in the meantime do not stay in it.
@@ -44,7 +44,6 @@ function replaceAllTasks(tasks) {
 }
 // #endregion
 
-
 // #region PATCH
 /**
  * Queues a PATCH request so that updates are sent one after another in the order they were made.
@@ -53,29 +52,37 @@ function replaceAllTasks(tasks) {
  */
 function patchTasks(updates) {
   patchQueue = patchQueue.then(() => sendPatch(updates));
+  return patchQueue;
 }
-
 
 /**
  * Sends the updates to the Firebase database.
  * Opens the connection error dialog on failure and never throws, so the queue keeps running.
  * @param {Object<string, string|number>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position").
- * @returns {Promise<void>} Resolves once the request is finished or failed.
+ *  * @returns {Promise<boolean>} True on success, false on failure. Resolves once the request is finished or failed.
  */
 async function sendPatch(updates) {
   try {
-    const idToken = await window.auth.currentUser.getIdToken();
-    const tasksUrl = `${window.firebaseUrl}/tasks.json?auth=${idToken}`;
-    const response = await fetch(tasksUrl, { method: "PATCH", body: JSON.stringify(updates) });
-    if (!response.ok) {
-      throw new Error(`Failed to save tasks: ${response.status}`);
-    }
+    await requestTaskPatch(updates);
+    return true;
   } catch (error) {
     openDialogConnectionErrorDatabase();
+    return false;
   }
 }
-// #endregion
 
+async function requestTaskPatch(updates) {
+  const idToken = await window.auth.currentUser.getIdToken();
+  const baseUrl = window.firebaseUrl.replace(/\/+$/, "");
+  const tasksUrl = `${baseUrl}/tasks.json?auth=${encodeURIComponent(idToken)}`;
+  const response = await fetch(tasksUrl, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updates),
+  });
+  if (!response.ok) throw new Error(`Firebase-Fehler ${response.status}.`);
+}
+// #endregion
 
 // #region POSITION
 /**
@@ -88,15 +95,20 @@ async function sendPatch(updates) {
  * @param {string|null} taskIDs.previousTaskID - The ID of the task it follows, or null for position 0.
  * @returns {void} Nothing; allTasks and the updates object are changed.
  */
-function insertTaskIntoColumn(updates, status, { insertedTaskID, previousTaskID }) {
+function insertTaskIntoColumn(
+  updates,
+  status,
+  { insertedTaskID, previousTaskID },
+) {
   const sortedTasks = getSortedTaskIds(status);
   removeTaskId(sortedTasks, insertedTaskID);
 
-  const newPosition = previousTaskID ? sortedTasks.indexOf(previousTaskID) + 1 : 0;
+  const newPosition = previousTaskID
+    ? sortedTasks.indexOf(previousTaskID) + 1
+    : 0;
   sortedTasks.splice(newPosition, 0, insertedTaskID);
   adjustPositions(updates, sortedTasks);
 }
-
 
 /**
  * Removes a task from the order of a column and renumbers the positions of the remaining tasks.
@@ -111,17 +123,19 @@ function removeTaskFromColumn(updates, status, removedTaskID) {
   adjustPositions(updates, sortedTasks);
 }
 
-
 /**
  * Returns the IDs of all tasks with the given status, sorted by position.
  * @param {string} status - The status (column ID).
  * @returns {string[]} The sorted task IDs.
  */
 function getSortedTaskIds(status) {
-  const tasksPerStatus = Object.keys(allTasks).filter((taskID) => allTasks[taskID].status === status);
-  return tasksPerStatus.sort((a, b) => allTasks[a].position - allTasks[b].position);
+  const tasksPerStatus = Object.keys(allTasks).filter(
+    (taskID) => allTasks[taskID].status === status,
+  );
+  return tasksPerStatus.sort(
+    (a, b) => allTasks[a].position - allTasks[b].position,
+  );
 }
-
 
 /**
  * Removes a task ID from a list of sorted IDs. Does nothing if the ID is not in the list.
@@ -134,7 +148,6 @@ function removeTaskId(sortedTasks, removedTaskID) {
   if (removedTaskIndex === -1) return;
   sortedTasks.splice(removedTaskIndex, 1);
 }
-
 
 /**
  * Sets the position of every task to its index in the list and adds it to the updates.

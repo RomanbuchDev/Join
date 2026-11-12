@@ -1,7 +1,10 @@
-async function init() {
+async function initAddTask() {
   renderAddTask();
   await initHeader();
+  await initTaskForm();
+}
 
+async function initTaskForm() {
   const contacts = await loadAssignedContacts();
   await addSelfAssignee(contacts);
   renderAssignedContacts(contacts);
@@ -24,8 +27,9 @@ function renderAssignedContacts(contacts) {
 function createAssignedContactRow(contact) {
   const row = document.createElement("li");
   row.innerHTML = getAssignedContactTemplate();
-  row.querySelector(".assigned-contact-name").textContent = contact.name;
-
+  const suffix = contact.source === "users" ? " (You)" : "";
+  row.querySelector(".assigned-contact-name").textContent =
+    contact.name + suffix;
   setContactBadge(row, contact);
   setContactCheckbox(row, contact);
   return row;
@@ -41,6 +45,7 @@ function setContactCheckbox(row, contact) {
   const checkbox = row.querySelector("input");
   checkbox.value = contact.id;
   checkbox.dataset.source = contact.source ?? "contacts";
+  checkbox.dataset.name = contact.name;
   checkbox.dataset.shortcut = contact.shortcut;
   checkbox.dataset.shortcutColor = contact.shortcutColor;
 }
@@ -67,9 +72,7 @@ async function loadAssignedContacts() {
 }
 
 function getDatabaseUrl(path, idToken) {
-  const baseUrl =
-    "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app";
-
+  const baseUrl = window.firebaseUrl.replace(/\/+$/, "");
   return `${baseUrl}/${path}.json?auth=${encodeURIComponent(idToken)}`;
 }
 
@@ -116,7 +119,7 @@ function clearSubtaskInput() {
 }
 
 function handleSubtaskKeydown(event) {
-  if (event.key === "Enter" && !event.isComosing) {
+  if (event.key === "Enter" && !event.isComposing) {
     event.preventDefault();
     saveSubtask();
   }
@@ -130,7 +133,7 @@ function saveSubtask() {
     return;
   }
 
-  draftSubtasks.push({ text });
+  draftSubtasks.push({ text, done: false });
   clearSubtaskInput();
   renderSubtasks();
   input.focus();
@@ -193,7 +196,7 @@ function handleSubtaskEditKeydown(event) {
 }
 
 function deleteSubtask(i) {
-  if (editingSubtask === draftSubtasks[i]) {
+  if (editingSubtask?.subtask === draftSubtasks[i]) {
     clearSubtaskInput();
   }
 
@@ -205,6 +208,23 @@ function resetSubtasks() {
   draftSubtasks.length = 0;
   clearSubtaskInput();
   renderSubtasks();
+}
+
+function setDraftSubtasks(subtasks = []) {
+  const copies = (subtasks ?? []).map((subtask) => ({
+    ...subtask,
+    done: subtask.done ?? false,
+  }));
+  draftSubtasks.splice(0, draftSubtasks.length, ...copies);
+  clearSubtaskInput();
+  renderSubtasks();
+}
+
+function getDraftSubtasks() {
+  return draftSubtasks.map((subtask) => ({
+    ...subtask,
+    done: subtask.done ?? false,
+  }));
 }
 
 async function addSelfAssignee(contacts) {
@@ -247,15 +267,14 @@ async function loadUserProfile(user) {
 }
 
 function createSelfAssignee(uid, name) {
-  const initials = name
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((word) => word[0]);
-
+  const initials = name.split(/\s+/).slice(0, 2);
   return {
     id: uid,
-    name: `${name} (You)`,
-    shortcut: initials.join("").toUpperCase(),
+    name,
+    shortcut: initials
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase(),
     shortcutColor: "#29abe2",
     source: "users",
   };
@@ -307,7 +326,7 @@ function buildTask(form) {
     status: "toDo",
     assignedTo: data.getAll("assignedTo"),
     assignedUserBadges: getAssignedUserBadges(form),
-    subtasks: draftSubtasks.map(({ text }) => ({ text, done: false })),
+    subtasks: getDraftSubtasks(),
   };
 }
 
@@ -327,6 +346,7 @@ function getAssignedUserBadges(form) {
   for (const checkbox of checked) {
     if (checkbox.dataset.source !== "users") continue;
     badges[checkbox.value] = {
+      name: checkbox.dataset.name,
       shortcut: checkbox.dataset.shortcut,
       shortcutColor: checkbox.dataset.shortcutColor,
     };
@@ -355,5 +375,3 @@ function createNewTaskUpdates(taskID, task) {
   updates[taskID] = allTasks[taskID];
   return updates;
 }
-
-init();
