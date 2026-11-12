@@ -8,11 +8,13 @@ function updateSubtaskActions() {
   actions.hidden = input.value.trim() === "";
 }
 
+
 function clearSubtaskInput() {
   document.getElementById("subtask").value = "";
   editingSubtask = null;
   updateSubtaskActions();
 }
+
 
 function handleSubtaskKeydown(event) {
   if (event.key === "Enter" && !event.isComposing) {
@@ -20,6 +22,7 @@ function handleSubtaskKeydown(event) {
     saveSubtask();
   }
 }
+
 
 function saveSubtask() {
   const input = document.getElementById("subtask");
@@ -35,6 +38,7 @@ function saveSubtask() {
   input.focus();
 }
 
+
 function renderSubtasks() {
   const list = document.getElementById("subtask-list");
   list.replaceChildren();
@@ -43,6 +47,7 @@ function renderSubtasks() {
     list.append(createSubtaskRow(draftSubtasks[i], i));
   }
 }
+
 
 function createSubtaskRow(subtask, index) {
   const isEditing = editingSubtask?.subtask === subtask;
@@ -53,6 +58,7 @@ function createSubtaskRow(subtask, index) {
   return row;
 }
 
+
 function updateSubtaskRowContent(row, subtask, isEditing) {
   if (isEditing) {
     row.querySelector(".subtask-edit-input").value = editingSubtask.text;
@@ -62,6 +68,7 @@ function updateSubtaskRowContent(row, subtask, isEditing) {
   row.querySelector(".subtask-text").textContent = subtask.text;
 }
 
+
 function editSubtask(index) {
   const subtask = draftSubtasks[index];
   editingSubtask = { subtask, text: subtask.text };
@@ -69,6 +76,7 @@ function editSubtask(index) {
   renderSubtasks();
   document.querySelector(".subtask-edit-input").focus();
 }
+
 
 function saveSubtaskEdit() {
   const text = editingSubtask.text.trim();
@@ -78,6 +86,7 @@ function saveSubtaskEdit() {
   editingSubtask = null;
   renderSubtasks();
 }
+
 
 function handleSubtaskEditKeydown(event) {
   if (event.key === "Enter" && !event.isComposing) {
@@ -91,6 +100,7 @@ function handleSubtaskEditKeydown(event) {
   }
 }
 
+
 function deleteSubtask(i) {
   if (editingSubtask?.subtask === draftSubtasks[i]) {
     clearSubtaskInput();
@@ -100,11 +110,13 @@ function deleteSubtask(i) {
   renderSubtasks();
 }
 
+
 function resetSubtasks() {
   draftSubtasks.length = 0;
   clearSubtaskInput();
   renderSubtasks();
 }
+
 
 function setDraftSubtasks(subtasks = []) {
   const copies = (subtasks ?? []).map((subtask) => ({
@@ -115,6 +127,7 @@ function setDraftSubtasks(subtasks = []) {
   clearSubtaskInput();
   renderSubtasks();
 }
+
 
 function getDraftSubtasks() {
   return draftSubtasks.map((subtask) => ({

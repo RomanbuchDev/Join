@@ -4,16 +4,19 @@ async function initAddTask() {
   await initTaskForm();
 }
 
+
 async function initTaskForm() {
   const contacts = await loadAssignedContacts();
   await addSelfAssignee(contacts);
   renderAssignedContacts(contacts);
 }
 
+
 function renderAddTask() {
   const content = document.getElementById("add-task-content");
   content.innerHTML = getAddTaskTemplate();
 }
+
 
 function renderAssignedContacts(contacts) {
   const contactList = document.getElementById("contact_list");
@@ -23,6 +26,7 @@ function renderAssignedContacts(contacts) {
     contactList.append(createAssignedContactRow(contact));
   }
 }
+
 
 function createAssignedContactRow(contact) {
   const row = document.createElement("li");
@@ -35,11 +39,13 @@ function createAssignedContactRow(contact) {
   return row;
 }
 
+
 function setContactBadge(row, contact) {
   const badge = row.querySelector(".selected-contact-badge");
   badge.textContent = contact.shortcut;
   badge.style.backgroundColor = contact.shortcutColor;
 }
+
 
 function setContactCheckbox(row, contact) {
   const checkbox = row.querySelector("input");
@@ -50,6 +56,7 @@ function setContactCheckbox(row, contact) {
   checkbox.dataset.shortcutColor = contact.shortcutColor;
 }
 
+
 function toggleAssignedContacts() {
   const contactList = document.getElementById("contact_list");
   const assignedToInput = document.getElementById("assigned-to");
@@ -57,6 +64,7 @@ function toggleAssignedContacts() {
   contactList.hidden = !contactList.hidden;
   assignedToInput.setAttribute("aria-expanded", String(!contactList.hidden));
 }
+
 
 async function loadAssignedContacts() {
   const idToken = await window.auth.currentUser.getIdToken();
@@ -71,10 +79,12 @@ async function loadAssignedContacts() {
   }));
 }
 
+
 function getDatabaseUrl(path, idToken) {
   const baseUrl = window.firebaseUrl.replace(/\/+$/, "");
   return `${baseUrl}/${path}.json?auth=${encodeURIComponent(idToken)}`;
 }
+
 
 function checkContactsResponse(response) {
   if (response.ok) return;
@@ -83,6 +93,7 @@ function checkContactsResponse(response) {
     `Kontakte konnten nicht geladen werden (${response.status}).`,
   );
 }
+
 
 function renderSelectedContactBadges() {
   const badges = document.getElementById("selected-contact-badges");
@@ -102,6 +113,7 @@ function renderSelectedContactBadges() {
   }
 }
 
+
 async function addSelfAssignee(contacts) {
   const user = window.auth.currentUser;
   if (!isAssignableUser(user)) return;
@@ -109,9 +121,11 @@ async function addSelfAssignee(contacts) {
   await tryAddSelfAssignee(contacts, user);
 }
 
+
 function isAssignableUser(user) {
   return user && !user.isAnonymous;
 }
+
 
 async function tryAddSelfAssignee(contacts, user) {
   try {
@@ -122,12 +136,14 @@ async function tryAddSelfAssignee(contacts, user) {
   }
 }
 
+
 function addSelfAssigneeFromProfile(contacts, user, profile) {
   const name = profile?.name?.trim();
   if (!name) return;
 
   contacts.unshift(createSelfAssignee(user.uid, name));
 }
+
 
 async function loadUserProfile(user) {
   const idToken = await user.getIdToken();
@@ -140,6 +156,7 @@ async function loadUserProfile(user) {
 
   return response.json();
 }
+
 
 function createSelfAssignee(uid, name) {
   const initials = name.split(/\s+/).slice(0, 2);
@@ -155,6 +172,7 @@ function createSelfAssignee(uid, name) {
   };
 }
 
+
 function closeAssignedContactsOnOutsideClick(event) {
   const contactList = document.getElementById("contact_list");
   if (!contactList || contactList.hidden) return;
@@ -162,6 +180,7 @@ function closeAssignedContactsOnOutsideClick(event) {
 
   toggleAssignedContacts();
 }
+
 
 function clearTaskForm() {
   resetSubtasks();
@@ -172,6 +191,7 @@ function clearTaskForm() {
     toggleAssignedContacts();
   }
 }
+
 
 function createTask(event) {
   event.preventDefault();
@@ -184,6 +204,7 @@ function createTask(event) {
   });
 }
 
+
 async function submitTaskForm(form) {
   try {
     const task = buildTask(form);
@@ -193,6 +214,7 @@ async function submitTaskForm(form) {
     alert(error.message);
   }
 }
+
 
 function buildTask(form) {
   const data = new FormData(form);
@@ -205,6 +227,7 @@ function buildTask(form) {
   };
 }
 
+
 function readTaskFields(form, data) {
   return {
     title: data.get("title").trim(),
@@ -214,6 +237,7 @@ function readTaskFields(form, data) {
     category: form.elements.category.selectedOptions[0].textContent.trim(),
   };
 }
+
 
 function getAssignedUserBadges(form) {
   const badges = {};
@@ -229,6 +253,7 @@ function getAssignedUserBadges(form) {
   return badges;
 }
 
+
 async function saveNewTask(task) {
   if (!(await fetchAllTasks())) return false;
   const previousTasks = structuredClone(allTasks);
@@ -238,6 +263,7 @@ async function saveNewTask(task) {
   if (!saved) replaceAllTasks(previousTasks);
   return saved;
 }
+
 
 function createNewTaskUpdates(taskID, task) {
   const updates = {};
