@@ -81,7 +81,7 @@ function templateProgressBar(doneSubtasks, subtasksLength) {
  * @param {string} assigneeShortcut - The shortcut of the assignee shown in the avatar.
  * @returns {string} The HTML string of the avatar.
  */
-function templateTaskAssignees(assigneeColor, assigneeShortcut) {
+function templateTaskAssignee(assigneeColor, assigneeShortcut) {
   return /*html*/ `
     <li class="task-avatar d-flex" style="background-color:${escapeHtml(assigneeColor)}">
       ${escapeHtml(assigneeShortcut)}
@@ -100,4 +100,55 @@ function templateEmptyColumn(columnName) {
       <p>No tasks ${escapeHtml(columnName)}</p>
     </li>`
 }
+// #endregion
+
+
+// #region OVERLAY
+// function templateOverlayDetailedTask(taskID) {
+//   return /*html*/ `
+//     <header>
+//       <h3>Category</h3>
+//       <button>x</button>
+//     </header>
+//     <main>
+//       <h1>titel</h1>
+//       <p>description</p>
+//       <div>
+//         <h2>Due date:</h2>
+//         <p></p>
+//       </div>
+//       <div>
+//         <h2>Priority:</h2>
+//         <p></p>
+//       </div>
+//       <div>
+//         <h2>Assigned to:</h2>
+//         <ul></ul>
+//       </div>
+//       <div>
+//         <h2>Subtasks</h2>
+//         <ul></ul>
+//       </div>
+//     </main>
+//     <footer>
+//       <button>Delete</button>
+//       <button>Edit</button>
+//     </footer>`
+// }
+
+
+// function templateOverlayAssignee() {
+//   return /*html*/ `
+//     <li>
+//       <p></p>
+//     </li>`
+// }
+
+
+// function templateOverlaySubtask() {
+//   return /*html*/ `
+//     <li>
+//       <p></p>
+//     </li>`
+// }
 // #endregion
