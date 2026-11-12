@@ -1,14 +1,14 @@
 /**
- * JavaScript file for the initiation (fetch and tasks rendering) and saving of the board page.
+ * JavaScript file for the initiation (fetch and tasks rendering) of the board page.
  */
 
 // #region VARIABLES
+/** All loaded contacts, keyed by contact ID. */
 const allContacts = {};
-const allTasks = {};
+/** All task columns (lists) of the board. */
 const columns = document.querySelectorAll(".tasks-list");
+/** True while all tasks are rendered, false while a search result is shown. */
 let allFetchedTasksAreRendered = false;
-/** Chain of pending PATCH requests; ensures they are sent one after another. */
-let patchQueue = Promise.resolve();
 // #endregion
 
 
@@ -68,48 +68,18 @@ function storeData(dataCategory, dataObject) {
 }
 // #endregion
 
-// #region PATCH
-/**
- * Queues a PATCH request so that updates are sent one after another in the order they were made.
- * @param {Object<string, string|number>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position").
- * @returns {void} Nothing; the request is appended to the queue.
- */
-function patchTasks(updates) {
-  patchQueue = patchQueue.then(() => sendPatch(updates));
-}
-
-
-/**
- * Sends the updates to the Firebase database.
- * Opens the connection error dialog on failure and never throws, so the queue keeps running.
- * @param {Object<string, string|number>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position").
- * @returns {Promise<void>} Resolves once the request is finished or failed.
- */
-async function sendPatch(updates) {
-  try {
-    const idToken = await window.auth.currentUser.getIdToken();
-    const tasksUrl = `${window.firebaseUrl}/tasks.json?auth=${idToken}`;
-    const response = await fetch(tasksUrl, { method: "PATCH", body: JSON.stringify(updates) });
-    if (!response.ok) {
-      throw new Error(`Failed to save tasks: ${response.status}`);
-    }
-  } catch (error) {
-    openDialogConnectionErrorDatabase();
-  }
-}
-// #endregion
-
 
 // #region RENDER TASK
 /**
- * Renders all given tasks into their corresponding columns based on their position.
- * @param {string[]} currentTaskIDs - The array of task IDs to render.
+ * Renders the given tasks into their columns, sorted by position.
+ * Clears all columns first and updates the column counters and the empty-column messages.
+ * @param {string[]} currentTaskIDs - The task IDs to render.
  * @returns {void} Nothing; the columns are cleared and filled with the given tasks.
  */
 function renderTasks(currentTaskIDs) {
   clearAllColumns();
   for (const column of columns) {
-    getAmountOfTasks(currentTaskIDs, column.id)
+    renderAmountForStatus(currentTaskIDs, column.id)
   }
   const sortedTaskIDs = currentTaskIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
   sortedTaskIDs.forEach(renderOneTask);
@@ -123,7 +93,7 @@ function renderTasks(currentTaskIDs) {
  * @param {string} status - The status (column ID) to count the tasks for.
  * @returns {void} Nothing; the amount is written into the column header.
  */
-function getAmountOfTasks(currentTaskIDs, status) {
+function renderAmountForStatus(currentTaskIDs, status) {
   const amount = currentTaskIDs.filter((taskId) => allTasks[taskId].status === status).length;
   renderAmountOfTasks(status, amount)
 }
@@ -141,7 +111,7 @@ function renderAmountOfTasks(status, amount) {
 
 
 /**
- * Renders a single task card into its column, 
+ * Renders a single task card into its column,
  * including the description, progress bar and assignees if this information exists.
  * @param {string} taskID - The ID of the task to render.
  * @returns {void} Nothing; the task card is added to its column in the DOM.
@@ -214,11 +184,23 @@ function renderTaskAssignees(taskID) {
   }
   const assigneesContainerRef = document.getElementById(`assigneesContainer${taskID}`);
   for (let i = 0; i < assignees.length; i++) {
-    const contactID = assignees[i];
-    const contact = allContacts[contactID];
-    if (!contact) continue;
-    assigneesContainerRef.innerHTML += templateTaskAssignees(contact.shortcutColor, contact.shortcut);
+    const assignee = getTaskAssignee(taskID, assignees[i]);
+    if (!assignee) continue;
+
+    assigneesContainerRef.innerHTML += templateTaskAssignee(assignee.shortcutColor, assignee.shortcut);
   }
+}
+
+
+/**
+ * Returns the data of an assignee of a task.
+ * Looks in allContacts first and falls back to the badges stored in the task (e.g. for the logged-in user).
+ * @param {string} taskID - The ID of the task.
+ * @param {string} assigneeID - The ID of the assignee.
+ * @returns {Object|undefined} The contact or badge with shortcut and shortcutColor, or undefined if none exists.
+ */
+function getTaskAssignee(taskID, assigneeID) {
+  return allContacts[assigneeID] ?? allTasks[taskID].assignedUserBadges?.[assigneeID];
 }
 // #endregion
 
