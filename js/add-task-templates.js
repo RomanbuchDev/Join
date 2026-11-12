@@ -9,6 +9,7 @@ function getAddTaskTemplate() {
   `;
 }
 
+
 function getAddTaskHeaderTemplate() {
   return /*html*/ `
     <header class="add-task-header">
@@ -16,6 +17,7 @@ function getAddTaskHeaderTemplate() {
     </header>
   `;
 }
+
 
 function getTaskFieldsTemplate(priority = "medium") {
   return /*html*/ `
@@ -243,6 +245,7 @@ function getTaskFieldsTemplate(priority = "medium") {
   `;
 }
 
+
 function getTaskActionsTemplate() {
   return /*html*/ `
     <div class="form-actions">
@@ -262,6 +265,7 @@ function getTaskActionsTemplate() {
   `;
 }
 
+
 function getAssignedContactTemplate() {
   return /*html*/ `
     <label class="assigned-contact-option">
@@ -275,6 +279,7 @@ function getAssignedContactTemplate() {
     </label>
   `;
 }
+
 
 function getSubtaskTemplate(index, isEditing) {
   return /*html*/ `
