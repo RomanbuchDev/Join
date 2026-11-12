@@ -92,6 +92,9 @@ function getCurrentPage() {
 }
 
 
+/**
+ * Resets the header for an unauthenticated visitor: clears the avatar and hides the user menu.
+ */
 function showGuestUI() {
   avatarExport("");
   document.querySelector(".user-menu").hidden = true;
@@ -99,6 +102,10 @@ function showGuestUI() {
 }
 
 
+/**
+ * Renders the header for an authenticated user: fetches their profile and shows the user menu.
+ * @param {Object} user - The raw Firebase user object (uid, email, isAnonymous, getIdToken()).
+ */
 async function showAuthenticatedUI(user) {
   const profile = await fetchUserProfile(user);
   initAvatar(profile);
@@ -106,17 +113,19 @@ async function showAuthenticatedUI(user) {
 }
 
 
+/**
+ * Registers an auth-state listener on a legal page (imprint/privacy policy) and renders
+ * the header and navbar depending on whether the visitor is authenticated.
+ */
 function initLegalPageAuthUI() {
   window.onAuthStateChanged(window.auth, async (user) => {
-    // const navList = document.querySelector(".main-nav-content");
-
     const currentPage = getCurrentPage();
     if (user) {
+      document.getElementById("navbar-content").innerHTML = templateNavAuthenticated(currentPage);
       await showAuthenticatedUI(user);
-      document.querySelector(".main-nav-content").innerHTML = templateNavAuthenticated(currentPage);
     } else {
+      document.getElementById("navbar-content").innerHTML = templateNavUnauthenticated(currentPage);
       showGuestUI();
-      document.querySelector(".main-nav-content").innerHTML = templateNavUnauthenticated(currentPage);
     }
   });
 }
