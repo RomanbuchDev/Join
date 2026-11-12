@@ -1,8 +1,9 @@
 /**
- * JavaScript file for the drag and drop functionality on the board page.
+ * JavaScript file for the drag and drop and move via button functionality on the board page.
+ * Depends on “columns” from board.js, so it has to be loaded after it.
  */
 
-// #region START END
+// #region START, END
 /**
  * Marks the dragged task card and sets the drag data used to identify a task drag.
  * @param {DragEvent} event - The dragstart event of the task card.
@@ -27,7 +28,8 @@ function handleDragend() {
 }
 // #endregion
 
-// #region LISTENERS
+
+// #region LISTENER
 columns.forEach((column) => {
   column.addEventListener("dragleave", handleDragleave);
   column.addEventListener("dragover", handleDragover);
@@ -241,132 +243,10 @@ function handleSuccessfulDrop(column, draggedTask, placeholder) {
   column.insertBefore(draggedTask, placeholder);
   placeholder.remove();
 }
-
-
-/**
- * Updates positions, status and counters of the moved task locally and saves them to the database.
- * Used for drag and drop and for moving via button.
- * @param {HTMLElement} draggedTask - The task card, already placed in its destination column.
- * @returns {void} Nothing; allTasks and the DOM are updated and the changes are queued for saving.
- */
-function handleMovedTasks(draggedTask) {
-  const updates = {};
-  const destinationStatus = draggedTask.parentElement.id;
-  const originStatus = draggedTask.dataset.taskStatus;
-  
-  adjustDestinationStatus(updates, draggedTask, { destinationStatus, originStatus });
-  if (destinationStatus !== originStatus) {
-    adjustTaskAmount(destinationStatus, originStatus);
-    adjustOriginStatus(updates, draggedTask, originStatus);
-    adjustNewStatusToDraggedTask(updates, draggedTask, destinationStatus);
-  }
-  patchTasks(updates);
-}
-
-
-/**
- * Renumbers the positions in the destination column, including the moved task.
- * @param {Object<string, string|number>} updates - The collected changes; extended by this function.
- * @param {HTMLElement} draggedTask - The moved task card.
- * @param {Object} statuses - The status of the task before and after the move.
- * @param {string} statuses.destinationStatus - The status of the column the task is in now.
- * @param {string} statuses.originStatus - The status the task had before.
- * @returns {void} Nothing; allTasks and the updates object are changed.
- */
-function adjustDestinationStatus(updates, draggedTask, { destinationStatus, originStatus }) {
-  const draggedTaskId = draggedTask.dataset.taskId;
-  const sortedTasks = getSortedTaskIds(destinationStatus);
-
-  if (destinationStatus === originStatus) removeDraggedTaskId(sortedTasks, draggedTaskId);
-  const newPreviousTaskId = draggedTask.previousElementSibling?.dataset.taskId ?? null;
-  const newPosition = newPreviousTaskId ? sortedTasks.indexOf(newPreviousTaskId) + 1 : 0;
-  sortedTasks.splice(newPosition, 0, draggedTaskId);
-  adjustPositions(updates, sortedTasks);
-}
-
-
-/**
- * Renumbers the positions in the origin column without the moved task.
- * @param {Object<string, string|number>} updates - The collected changes; extended by this function.
- * @param {HTMLElement} draggedTask - The moved task card.
- * @param {string} originStatus - The status the task had before the move.
- * @returns {void} Nothing; allTasks and the updates object are changed.
- */
-function adjustOriginStatus(updates, draggedTask, originStatus) {
-  const draggedTaskId = draggedTask.dataset.taskId;
-  const sortedTasks = getSortedTaskIds(originStatus);
-
-  removeDraggedTaskId(sortedTasks, draggedTaskId);
-  adjustPositions(updates, sortedTasks);
-}
-
-
-/**
- * Returns the IDs of all tasks with the given status, sorted by position.
- * @param {string} status - The status (column ID).
- * @returns {string[]} The sorted task IDs.
- */
-function getSortedTaskIds(status) {
-  const tasksPerStatus = Object.keys(allTasks).filter((taskId) => allTasks[taskId].status === status);
-  return tasksPerStatus.sort((a, b) => allTasks[a].position - allTasks[b].position);
-}
-
-
-/**
- * Removes the ID of the dragged task from the list of sorted IDs.
- * @param {string[]} sortedTasks - The sorted task IDs; changed by this function.
- * @param {string} draggedTaskId - The ID to remove.
- * @returns {void} Nothing; the array is changed in place.
- */
-function removeDraggedTaskId(sortedTasks, draggedTaskId) {
-  const draggedTaskIndex = sortedTasks.indexOf(draggedTaskId);
-  sortedTasks.splice(draggedTaskIndex, 1);
-}
-
-
-/**
- * Updates the task counters of the destination and the origin column from the DOM.
- * @param {string} destinationStatus - The status of the destination column.
- * @param {string} originStatus - The status of the origin column.
- * @returns {void} Nothing; both counters are rewritten.
- */
-function adjustTaskAmount(destinationStatus, originStatus) {
-  renderAmountOfTasks(destinationStatus, document.querySelector(`#${destinationStatus}`).children.length);
-  renderAmountOfTasks(originStatus, document.querySelector(`#${originStatus}`).children.length);
-}
-
-
-/**
- * Sets the position of every task to its index in the list and adds it to the updates.
- * @param {Object<string, string|number>} updates - The collected changes; extended by this function.
- * @param {string[]} sortedIds - The task IDs in their new order.
- * @returns {void} Nothing; allTasks and the updates object are changed.
- */
-function adjustPositions(updates, sortedIds) {
-  sortedIds.forEach((taskId, index) => {
-    allTasks[taskId].position = index;
-    Object.assign(updates, { [`${taskId}/position`]: index });
-  });
-}
-
-
-/**
- * Stores the new status of the moved task in allTasks, on the card and in the updates.
- * @param {Object<string, string|number>} updates - The collected changes; extended by this function.
- * @param {HTMLElement} draggedTask - The moved task card.
- * @param {string} destinationStatus - The new status.
- * @returns {void} Nothing; allTasks, the card's data attribute and the updates object are changed.
- */
-function adjustNewStatusToDraggedTask(updates, draggedTask, destinationStatus) {
-  const draggedTaskId = draggedTask.dataset.taskId;
-  allTasks[draggedTaskId].status = destinationStatus;
-  draggedTask.dataset.taskStatus = destinationStatus;
-  Object.assign(updates, { [`${draggedTaskId}/status`]: destinationStatus });
-}
 // #endregion
 
 
-// #region BTN MOVE
+// #region BUTTON
 /**
  * Moves a task to the top of another column via the move menu.
  * Does nothing if the target column does not exist or equals the current one.
@@ -385,5 +265,74 @@ function moveTaskViaButton(event) {
   toggleMenu(moveButton, `move-menu-dropdown${movedTask.dataset.taskId}`);
   handleMovedTasks(movedTask);
   checkForEmptyColumn();
+}
+// #endregion
+
+
+// #region MOVED
+/**
+ * Saves the new order after a task was moved: renumbers the destination column and, if the task
+ * changed its column, also handles the origin column, counters and status. Queues the changes for saving.
+ * Used for drag and drop and for moving via button.
+ * @param {HTMLElement} draggedTask - The task card, already placed in its destination column.
+ * @returns {void} Nothing; allTasks and the DOM are updated and the changes are queued for saving.
+ */
+function handleMovedTasks(draggedTask) {
+  const updates = {};
+  const destinationStatus = draggedTask.parentElement.id;
+  const originStatus = draggedTask.dataset.taskStatus;
+  const draggedTaskID = draggedTask.dataset.taskId;
+  const previousTaskID = draggedTask.previousElementSibling?.dataset.taskId ?? null;
+  
+  insertTaskIntoColumn(updates, destinationStatus, { insertedTaskID:draggedTaskID, previousTaskID });
+  if (destinationStatus !== originStatus) {
+    handleStatusChange(updates, { destinationStatus, originStatus }, draggedTask);
+  }
+  patchTasks(updates);
+}
+
+
+/**
+ * Handles the parts of a move that only apply if the task changed its column:
+ * updates the counters, renumbers the origin column and stores the new status.
+ * The status is changed last, so the task is still found in the origin column.
+ * @param {Object<string, string|number>} updates - The collected changes; extended by this function.
+ * @param {Object} statuses - The status before and after the move.
+ * @param {string} statuses.destinationStatus - The status of the column the task is in now.
+ * @param {string} statuses.originStatus - The status the task had before.
+ * @param {HTMLElement} draggedTask - The moved task card, already in its destination column.
+ * @returns {void} Nothing; the counters, allTasks, the card and the updates object are changed.
+ */
+function handleStatusChange(updates, { destinationStatus, originStatus }, draggedTask) {
+  adjustTaskAmount(destinationStatus, originStatus);
+  removeTaskFromColumn(updates, originStatus, draggedTask.dataset.taskId);
+  adjustNewStatusToDraggedTask(updates, destinationStatus, draggedTask);
+}
+
+
+/**
+ * Updates the task counters of the destination and the origin column from the DOM.
+ * @param {string} destinationStatus - The status of the destination column.
+ * @param {string} originStatus - The status of the origin column.
+ * @returns {void} Nothing; both counters are rewritten.
+ */
+function adjustTaskAmount(destinationStatus, originStatus) {
+  renderAmountOfTasks(destinationStatus, document.querySelector(`#${destinationStatus}`).children.length);
+  renderAmountOfTasks(originStatus, document.querySelector(`#${originStatus}`).children.length);
+}
+
+
+/**
+ * Stores the new status of the moved task in allTasks, on the card and in the updates.
+ * @param {Object<string, string|number>} updates - The collected changes; extended by this function.
+ * @param {string} destinationStatus - The new status.
+ * @param {HTMLElement} draggedTask - The moved task card.
+ * @returns {void} Nothing; allTasks, the card's data attribute and the updates object are changed.
+ */
+function adjustNewStatusToDraggedTask(updates, destinationStatus, draggedTask) {
+  const draggedTaskID = draggedTask.dataset.taskId;
+  allTasks[draggedTaskID].status = destinationStatus;
+  draggedTask.dataset.taskStatus = destinationStatus;
+  Object.assign(updates, { [`${draggedTaskID}/status`]: destinationStatus });
 }
 // #endregion

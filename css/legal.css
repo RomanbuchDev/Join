@@ -11,6 +11,10 @@ body {
   padding: 3rem 1rem 7rem;
 }
 
+.main-legal p {
+  padding-bottom: 1rem;
+}
+
 h1 {
   padding-bottom: 1rem;
 }
@@ -21,6 +25,23 @@ h2 {
 
 h3 {
   font-weight: 700 !important;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+h4 {
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.main-legal ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.generator-results-content {
+  max-width: 80rem;
 }
 
 .main-legal a {
