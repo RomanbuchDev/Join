@@ -1,10 +1,31 @@
 function getAddTaskTemplate() {
   return /*html*/ `
     ${getAddTaskHeaderTemplate()}
+    ${getTaskFormTemplate()}
+  `;
+}
 
-    <form id="task-form" onreset="clearTaskForm()" onsubmit="createTask(event)">
-      ${getTaskFieldsTemplate()}
-      ${getTaskActionsTemplate()}
+
+function getTaskFormTemplate(options = {}) {
+  const settings = Object.assign(
+    {
+      submitHandler: "createTask(event)",
+      resetHandler: "clearTaskForm()",
+      priority: "medium",
+      category: "",
+      actions: getTaskActionsTemplate(),
+    },
+    options,
+  );
+
+  return /*html*/ `
+    <form
+      id="task-form"
+      onsubmit="${settings.submitHandler}"
+      onreset="${settings.resetHandler}"
+    >
+      ${getTaskFieldsTemplate(settings.priority, settings.category)}
+      ${settings.actions}
     </form>
   `;
 }
@@ -19,7 +40,23 @@ function getAddTaskHeaderTemplate() {
 }
 
 
-function getTaskFieldsTemplate(priority = "medium") {
+function getCheckedAttribute(currentPriority, priority) {
+  return currentPriority === priority ? "checked" : "";
+}
+
+
+function getSelectedAttribute(currentCategory, category) {
+  return currentCategory === category ? "selected" : "";
+}
+
+
+function getCategoryPlaceholderAttribute(category) {
+  const categories = ["User Story", "Technical Task"];
+  return categories.includes(category) ? "" : "selected";
+}
+
+
+function getTaskFieldsTemplate(priority = "medium", category = "") {
   return /*html*/ `
     <div class="form-content">
       <div class="form-column form-column--left">
@@ -69,7 +106,7 @@ function getTaskFieldsTemplate(priority = "medium") {
                 id="priority-urgent"
                 name="priority"
                 value="urgent"
-                ${priority === "urgent" ? "checked" : ""}
+                ${getCheckedAttribute(priority, "urgent")}
               />
 
               <label for="priority-urgent">
@@ -101,7 +138,7 @@ function getTaskFieldsTemplate(priority = "medium") {
                 id="priority-medium"
                 name="priority"
                 value="medium"
-                ${priority === "medium" ? "checked" : ""}
+                ${getCheckedAttribute(priority, "medium")}
               />
 
               <label for="priority-medium">
@@ -133,7 +170,7 @@ function getTaskFieldsTemplate(priority = "medium") {
                 id="priority-low"
                 name="priority"
                 value="low"
-                ${priority === "low" ? "checked" : ""}
+                ${getCheckedAttribute(priority, "low")}
               />
 
               <label for="priority-low">
@@ -194,17 +231,32 @@ function getTaskFieldsTemplate(priority = "medium") {
         <div class="form-field form-field--category">
           <label class="required-label" for="category">Category</label>
           <select
-            class="form-control form-control--select"
-            name="category"
-            id="category"
-            required
-          >
-            <option class="select-placeholder" value="" disabled selected>
-              Select task category
-            </option>
-            <option value="technical-task">Technical Task</option>
-            <option value="user-story">User Story</option>
-          </select>
+          class="form-control form-control--select"
+          name="category"
+          id="category"
+          required
+         >
+       <option
+         class="select-placeholder"
+         value=""
+         disabled
+         ${getCategoryPlaceholderAttribute(category)}
+         >
+        Select task category
+       </option>
+       <option
+         value="technical-task"
+         ${getSelectedAttribute(category, "Technical Task")}
+         >
+         Technical Task
+       </option>
+       <option
+         value="user-story"
+         ${getSelectedAttribute(category, "User Story")}
+         >
+         User Story
+       </option>
+     </select>
         </div>
 
         <div class="form-field form-field--subtasks">
@@ -260,6 +312,25 @@ function getTaskActionsTemplate() {
 
       <button type="submit" class="form-action form-action--create">
         Create Task
+      </button>
+    </div>
+  `;
+}
+
+
+function getTaskOverlayActionsTemplate(mode = "add", cancelHandler = "") {
+  return /*html*/ `
+    <div class="form-actions">
+      ${
+        mode === "edit"
+          ? ""
+          : `
+        <button type="button" class="form-action form-action--clear"
+          onclick="${cancelHandler}">Cancel ✕</button>
+      `
+      }
+      <button type="submit" class="form-action form-action--create">
+        ${mode === "edit" ? "Ok ✓" : "Create Task ✓"}
       </button>
     </div>
   `;
