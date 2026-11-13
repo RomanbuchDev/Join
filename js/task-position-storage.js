@@ -27,6 +27,7 @@ async function fetchAllTasks() {
   }
 }
 
+
 async function requestAllTasks() {
   const idToken = await window.auth.currentUser.getIdToken();
   const response = await fetch(
@@ -39,6 +40,7 @@ async function requestAllTasks() {
 
   return response.json();
 }
+
 
 /**
  * Replaces the content of allTasks, so tasks deleted in the meantime do not stay in it.
@@ -62,6 +64,7 @@ function patchTasks(updates) {
   return patchQueue;
 }
 
+
 /**
  * Sends the updates to the Firebase database.
  * Opens the connection error dialog on failure and never throws, so the queue keeps running.
@@ -77,6 +80,7 @@ async function sendPatch(updates) {
     return false;
   }
 }
+
 
 async function requestTaskPatch(updates) {
   const idToken = await window.auth.currentUser.getIdToken();
@@ -117,6 +121,7 @@ function insertTaskIntoColumn(
   adjustPositions(updates, sortedTasks);
 }
 
+
 /**
  * Removes a task from the order of a column and renumbers the positions of the remaining tasks.
  * @param {Object<string, string|number>} updates - The collected changes; extended by this function.
@@ -129,6 +134,7 @@ function removeTaskFromColumn(updates, status, removedTaskID) {
   removeTaskId(sortedTasks, removedTaskID);
   adjustPositions(updates, sortedTasks);
 }
+
 
 /**
  * Returns the IDs of all tasks with the given status, sorted by position.
@@ -144,6 +150,7 @@ function getSortedTaskIds(status) {
   );
 }
 
+
 /**
  * Removes a task ID from a list of sorted IDs. Does nothing if the ID is not in the list.
  * @param {string[]} sortedTasks - The sorted task IDs; changed by this function.
@@ -155,6 +162,7 @@ function removeTaskId(sortedTasks, removedTaskID) {
   if (removedTaskIndex === -1) return;
   sortedTasks.splice(removedTaskIndex, 1);
 }
+
 
 /**
  * Sets the position of every task to its index in the list and adds it to the updates.

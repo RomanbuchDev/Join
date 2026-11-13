@@ -5,21 +5,31 @@ function getAddTaskTemplate() {
   `;
 }
 
+
 function getTaskFormTemplate(options = {}) {
-  const {
-    submitHandler = "createTask(event)",
-    resetHandler = "clearTaskForm()",
-    priority = "medium",
-    category = "",
-    actions = getTaskActionsTemplate(),
-  } = options;
+  const settings = Object.assign(
+    {
+      submitHandler: "createTask(event)",
+      resetHandler: "clearTaskForm()",
+      priority: "medium",
+      category: "",
+      actions: getTaskActionsTemplate(),
+    },
+    options,
+  );
+
   return /*html*/ `
-    <form id="task-form" onsubmit="${submitHandler}" onreset="${resetHandler}">
-      ${getTaskFieldsTemplate(priority, category)}
-      ${actions}
+    <form
+      id="task-form"
+      onsubmit="${settings.submitHandler}"
+      onreset="${settings.resetHandler}"
+    >
+      ${getTaskFieldsTemplate(settings.priority, settings.category)}
+      ${settings.actions}
     </form>
   `;
 }
+
 
 function getAddTaskHeaderTemplate() {
   return /*html*/ `
@@ -28,6 +38,23 @@ function getAddTaskHeaderTemplate() {
     </header>
   `;
 }
+
+
+function getCheckedAttribute(currentPriority, priority) {
+  return currentPriority === priority ? "checked" : "";
+}
+
+
+function getSelectedAttribute(currentCategory, category) {
+  return currentCategory === category ? "selected" : "";
+}
+
+
+function getCategoryPlaceholderAttribute(category) {
+  const categories = ["User Story", "Technical Task"];
+  return categories.includes(category) ? "" : "selected";
+}
+
 
 function getTaskFieldsTemplate(priority = "medium", category = "") {
   return /*html*/ `
@@ -79,7 +106,7 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
                 id="priority-urgent"
                 name="priority"
                 value="urgent"
-                ${priority === "urgent" ? "checked" : ""}
+                ${getCheckedAttribute(priority, "urgent")}
               />
 
               <label for="priority-urgent">
@@ -111,7 +138,7 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
                 id="priority-medium"
                 name="priority"
                 value="medium"
-                ${priority === "medium" ? "checked" : ""}
+                ${getCheckedAttribute(priority, "medium")}
               />
 
               <label for="priority-medium">
@@ -143,7 +170,7 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
                 id="priority-low"
                 name="priority"
                 value="low"
-                ${priority === "low" ? "checked" : ""}
+                ${getCheckedAttribute(priority, "low")}
               />
 
               <label for="priority-low">
@@ -213,19 +240,19 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
          class="select-placeholder"
          value=""
          disabled
-         ${!["User Story", "Technical Task"].includes(category) ? "selected" : ""}
+         ${getCategoryPlaceholderAttribute(category)}
          >
         Select task category
        </option>
        <option
          value="technical-task"
-         ${category === "Technical Task" ? "selected" : ""}
+         ${getSelectedAttribute(category, "Technical Task")}
          >
          Technical Task
        </option>
        <option
          value="user-story"
-         ${category === "User Story" ? "selected" : ""}
+         ${getSelectedAttribute(category, "User Story")}
          >
          User Story
        </option>
@@ -270,6 +297,7 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
   `;
 }
 
+
 function getTaskActionsTemplate() {
   return /*html*/ `
     <div class="form-actions">
@@ -289,6 +317,7 @@ function getTaskActionsTemplate() {
   `;
 }
 
+
 function getTaskOverlayActionsTemplate(mode = "add", cancelHandler = "") {
   return /*html*/ `
     <div class="form-actions">
@@ -307,6 +336,7 @@ function getTaskOverlayActionsTemplate(mode = "add", cancelHandler = "") {
   `;
 }
 
+
 function getAssignedContactTemplate() {
   return /*html*/ `
     <label class="assigned-contact-option">
@@ -320,6 +350,7 @@ function getAssignedContactTemplate() {
     </label>
   `;
 }
+
 
 function getSubtaskTemplate(index, isEditing) {
   return /*html*/ `
