@@ -1,14 +1,25 @@
 function getAddTaskTemplate() {
   return /*html*/ `
     ${getAddTaskHeaderTemplate()}
-
-    <form id="task-form" onreset="clearTaskForm()" onsubmit="createTask(event)">
-      ${getTaskFieldsTemplate()}
-      ${getTaskActionsTemplate()}
-    </form>
+    ${getTaskFormTemplate()}
   `;
 }
 
+function getTaskFormTemplate(options = {}) {
+  const {
+    submitHandler = "createTask(event)",
+    resetHandler = "clearTaskForm()",
+    priority = "medium",
+    category = "",
+    actions = getTaskActionsTemplate(),
+  } = options;
+  return /*html*/ `
+    <form id="task-form" onsubmit="${submitHandler}" onreset="${resetHandler}">
+      ${getTaskFieldsTemplate(priority, category)}
+      ${actions}
+    </form>
+  `;
+}
 
 function getAddTaskHeaderTemplate() {
   return /*html*/ `
@@ -18,8 +29,7 @@ function getAddTaskHeaderTemplate() {
   `;
 }
 
-
-function getTaskFieldsTemplate(priority = "medium") {
+function getTaskFieldsTemplate(priority = "medium", category = "") {
   return /*html*/ `
     <div class="form-content">
       <div class="form-column form-column--left">
@@ -194,17 +204,32 @@ function getTaskFieldsTemplate(priority = "medium") {
         <div class="form-field form-field--category">
           <label class="required-label" for="category">Category</label>
           <select
-            class="form-control form-control--select"
-            name="category"
-            id="category"
-            required
-          >
-            <option class="select-placeholder" value="" disabled selected>
-              Select task category
-            </option>
-            <option value="technical-task">Technical Task</option>
-            <option value="user-story">User Story</option>
-          </select>
+          class="form-control form-control--select"
+          name="category"
+          id="category"
+          required
+         >
+       <option
+         class="select-placeholder"
+         value=""
+         disabled
+         ${!["User Story", "Technical Task"].includes(category) ? "selected" : ""}
+         >
+        Select task category
+       </option>
+       <option
+         value="technical-task"
+         ${category === "Technical Task" ? "selected" : ""}
+         >
+         Technical Task
+       </option>
+       <option
+         value="user-story"
+         ${category === "User Story" ? "selected" : ""}
+         >
+         User Story
+       </option>
+     </select>
         </div>
 
         <div class="form-field form-field--subtasks">
@@ -245,7 +270,6 @@ function getTaskFieldsTemplate(priority = "medium") {
   `;
 }
 
-
 function getTaskActionsTemplate() {
   return /*html*/ `
     <div class="form-actions">
@@ -265,6 +289,23 @@ function getTaskActionsTemplate() {
   `;
 }
 
+function getTaskOverlayActionsTemplate(mode = "add", cancelHandler = "") {
+  return /*html*/ `
+    <div class="form-actions">
+      ${
+        mode === "edit"
+          ? ""
+          : `
+        <button type="button" class="form-action form-action--clear"
+          onclick="${cancelHandler}">Cancel ✕</button>
+      `
+      }
+      <button type="submit" class="form-action form-action--create">
+        ${mode === "edit" ? "Ok ✓" : "Create Task ✓"}
+      </button>
+    </div>
+  `;
+}
 
 function getAssignedContactTemplate() {
   return /*html*/ `
@@ -279,7 +320,6 @@ function getAssignedContactTemplate() {
     </label>
   `;
 }
-
 
 function getSubtaskTemplate(index, isEditing) {
   return /*html*/ `
