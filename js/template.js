@@ -243,21 +243,21 @@ function templateNavAuthenticated(currentPage) {
           </li>
         </ul>
 
-        <div class="main-nav-guest-row">
+        <div class="main-nav-guest-row dpf-row-spc-between">
           <ul class="main-nav-legal" hidden>
-            <li class="main-nav-legal-item">
-              <a href="../html/privacy-policy.html"${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
+            <li class="main-nav-legal-item dpf-center">
+              <a href="../html/privacy-policy.html" class="dpf-flex-column-center"${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
 
             </li>
 
-            <li class="main-nav-legal-item">
-              <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
+            <li class="main-nav-legal-item dpf-center">
+              <a href="../html/imprint.html" class="dpf-flex-column-center" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
                 >Legal Notice</a
               >
             </li>
           </ul>
         </div>
-  `
+  `;
 }
 
 
@@ -269,8 +269,8 @@ function templateNavAuthenticated(currentPage) {
  */
 function templateNavUnauthenticated(currentPage) {
   return `
-        <div class="main-nav-guest-row">
-          <ul class="main-nav-guest-list">
+        <div class="main-nav-guest-row dpf-row-spc-between">
+          <ul class="main-nav-guest-list dpf-center">
             <li class="main-nav-item">
               <a href="../index.html">
                 <img src="../assets/icons/login.svg" alt="" />
@@ -280,16 +280,16 @@ function templateNavUnauthenticated(currentPage) {
           </ul>
 
           <ul class="main-nav-legal">
-            <li class="main-nav-legal-item">
-              <a href="../html/privacy-policy.html" ${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
+            <li class="main-nav-legal-item dpf-center">
+              <a href="../html/privacy-policy.html" class="dpf-flex-column-center" ${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
             </li>
 
-            <li class="main-nav-legal-item">
-              <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
+            <li class="main-nav-legal-item dpf-center">
+              <a href="../html/imprint.html" class="dpf-flex-column-center" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
                 >Legal Notice</a
               >
             </li>
           </ul>
         </div>
-  `
+  `;
 }

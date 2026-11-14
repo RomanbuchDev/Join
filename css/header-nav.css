@@ -1,0 +1,356 @@
+/* #region MARK: header
+*/
+.main-header {
+  grid-area: header;
+  height: 5em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  justify-content: space-between;
+  padding: 1.2em 1em;
+  background-color: var(--color-white);
+  box-shadow: 0 4px 4px var(--color-black-10);
+}
+
+.main-header img {
+  width: 2rem;
+  height: auto;
+}
+
+.main-header-title {
+  display: none;
+}
+
+.main-header-help {
+  display: none;
+}
+
+.user-avatar {
+  color: var(--color-medium);
+  font-weight: 700;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid var(--color-dark);
+  border-radius: 30px;
+  background-color: var(--color-white);
+  transition: fill 0s ease 125ms;
+  cursor: pointer;
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-menu-dropdown {
+  width: 9.3em;
+  padding: 1em 1em 1em 1.2em;
+  height: 11.3em;
+  gap: 1.4em;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0%;
+  border-radius: 20px 0 20px 20px;
+  background-color: var(--color-dark);
+  transform: translateX(1em);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 250ms ease,
+    opacity 250ms ease,
+    visibility 250ms;
+}
+
+.user-menu-dropdown.is-open {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.user-menu-item > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.user-menu-item {
+  text-decoration: none;
+  color: var(--color-gray-209);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-inline: -0.5em;
+  padding-inline: 0.5em;
+  padding-block: 0.6em;
+  margin-block: -0.6em;
+}
+
+.user-menu-logout {
+  text-decoration: none;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* #endregion */
+
+/* #region MARK: nav
+*/
+.main-nav {
+  grid-area: nav;
+  width: 100%;
+  height: 5rem;
+  background-color: var(--color-dark);
+}
+
+.main-nav-list {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease;
+}
+
+.nav-join-img {
+  display: none;
+}
+
+.main-nav-item a,
+.main-nav-legal-item a {
+  width: 5rem;
+  height: 4.75rem;
+  gap: 0.3rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-white);
+  text-decoration: none;
+  transition: background-color 150ms ease;
+}
+
+.main-nav-item a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-nav a[aria-current="page"] {
+  background-color: var(--color-dark-active);
+  border-radius: 1rem;
+}
+
+.main-nav-item span,
+.main-nav-legal-item span {
+  color: var(--color-white);
+}
+
+.main-nav-legal {
+  display: none;
+}
+
+.main-nav-guest-list {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav-guest-row {
+  padding: 0 1rem;
+}
+
+.main-nav-list[hidden],
+.main-nav-guest-list[hidden] {
+  display: none;
+}
+
+.main-nav-legal a[aria-current="page"]:hover {
+  color: var(--color-white);
+}
+
+.main-nav-legal-item {
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease;
+}
+
+/* #endregion */
+
+/* #region MARK: @ laptop S
+*/
+@media (width >= 64em) {
+  .main-header {
+    position: static;
+    padding: 1em;
+    width: auto;
+    padding-inline: 4em;
+  }
+
+  .main-header-logo {
+    display: none;
+  }
+
+  .main-header-title {
+    display: block;
+    margin-inline-end: auto;
+  }
+
+  .main-header-help {
+    display: block;
+    margin-inline-end: 1em;
+  }
+
+  .user-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 35px;
+  }
+
+  .user-avatar span {
+    font-size: 1.1rem;
+  }
+
+  .user-menu-dropdown {
+    height: 9.3em;
+    top: 100%;
+    margin-block-start: 1em;
+  }
+
+  .user-menu-item--help {
+    display: none;
+  }
+
+  .main-nav-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+
+  .main-nav {
+    width: auto;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-nav-list,
+  .main-nav-guest-list {
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 1.2em;
+    flex-direction: column;
+  }
+
+  .main-nav-item,
+  .main-nav-legal-item {
+    width: 100%;
+  }
+
+  .main-nav-item a,
+  .main-nav-legal-item a {
+    font-size: 1rem;
+    line-height: 1.2;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8em 2em;
+    box-sizing: border-box;
+  }
+
+  .main-nav-item span,
+  .main-nav-legal-item span {
+    width: 5rem;
+  }
+
+  .main-nav a[aria-current="page"] {
+    border-radius: 0;
+  }
+
+  .main-nav-item img,
+  .main-nav-legal-item img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nav-join-img {
+    display: block;
+    width: 115px;
+    height: auto;
+    margin-inline: auto;
+    margin-block: 4em 7em;
+  }
+
+  .main-nav-legal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    align-self: center;
+    margin-block: auto 4em;
+    gap: 0;
+  }
+
+  .main-nav-legal a {
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--color-gray-231);
+  }
+
+  .main-nav-guest-row {
+    display: contents;
+  }
+
+  .main-nav-legal a[aria-current="page"]:hover {
+    color: var(--color-gray-231);
+  }
+}
+
+/* #endregion */
+
+/* #region MARK: @ hover
+*/
+@media (hover: hover) and (pointer: fine) {
+  .user-avatar:hover,
+  .user-avatar:active {
+    background-color: var(--color-gray-231);
+  }
+
+  .main-header-help:hover {
+    transform: scale(1.1);
+  }
+
+  .user-menu-item:hover {
+    background-color: var(--color-medium);
+  }
+
+  .main-nav-item:not(:has(a[aria-current="page"])):hover {
+    background-color: var(--color-medium);
+    transform: translateY(-2px);
+  }
+
+  .main-nav-legal a:hover {
+    color: var(--color-medium);
+  }
+}
+
+/* #endregion */
