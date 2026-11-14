@@ -272,8 +272,19 @@
       </nav>
       <!-- #endregion-->
     </div>
-    <dialog>
+    <!-- #region MARK: dialog 
+      -->
+    <dialog
+      id="dialogTask"
+      class="dialog-task d-flex"
+      onclick="handleOverlayBackdropClick(event)"
+      oncancel="handleOverlayCancel(event)"
+    >
+      <div id="overlayTaskEdit" class="overlay-task-edit"></div>
+    </dialog>
+    <dialog id="dialogAddTask">
       <div></div>
     </dialog>
+    <!-- #endregion-->
   </body>
 </html>
