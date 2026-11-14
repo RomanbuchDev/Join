@@ -272,8 +272,20 @@
       </nav>
       <!-- #endregion-->
     </div>
-    <dialog>
+    <!-- #region MARK: dialog 
+      -->
+    <dialog
+      id="dialogTask"
+      class="dialog-task"
+      onmousedown="handleOverlayMousedown(event)"
+      onclick="handleOverlayBackdropClick(event)"
+      oncancel="handleOverlayCancel(event)"
+    >
+      <div id="overlayTaskEdit" class="overlay-task-edit d-flex"></div>
+    </dialog>
+    <dialog id="dialogAddTask">
       <div></div>
     </dialog>
+    <!-- #endregion-->
   </body>
 </html>

@@ -117,28 +117,33 @@ function renderAmountOfTasks(status, amount) {
  * @returns {void} Nothing; the task card is added to its column in the DOM.
  */
 function renderOneTask(taskID) {
-  const categoryColor = (allTasks[taskID].category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
   const column = document.getElementById(allTasks[taskID].status);
-  column.innerHTML += templateTaskCard(taskID, categoryColor);
-  renderDescription(taskID);
+  column.innerHTML += templateTaskCard(taskID, getCategoryColor(taskID));
+  renderDescription(taskID, `description${taskID}`);
   renderProgressBar(taskID);
-  renderTaskAssignees(taskID);
+  const assignees = checkForTaskAssignees(taskID);
+  if (assignees) renderTaskAssignees(taskID, assignees, "board");
 }
 // #endregion
 
 
 // #region T. DETAILS
+function getCategoryColor(taskID) {
+  return (allTasks[taskID].category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
+}
+
+
 /**
  * Renders the description for a task card if it exists.
  * @param {string} taskID - The ID of the task for which to render the description.
  * @returns {void} Nothing; the description is written into the task card, or the card stays unchanged if there is none.
  */
-function renderDescription(taskID) {
+function renderDescription(taskID, containerID) {
   const description = allTasks[taskID].description;
   if (!description || description.trim() === "") {
     return
   }
-  const descriptionRef = document.getElementById(`description${taskID}`);
+  const descriptionRef = document.getElementById(containerID);
   descriptionRef.textContent = description;
 }
 
@@ -177,17 +182,21 @@ function checkDoneSubtasks(subtasks) {
  * @param {string} taskID - The ID of the task for which to render the assignees.
  * @returns {void} Nothing; the avatars are added to the task card, unknown contacts are skipped.
  */
-function renderTaskAssignees(taskID) {
+function checkForTaskAssignees(taskID) {
   const assignees = allTasks[taskID].assignedTo;
   if (!assignees || assignees.length === 0) {
-    return;
+    return false;
   }
-  const assigneesContainerRef = document.getElementById(`assigneesContainer${taskID}`);
+  return assignees;
+}
+
+
+function renderTaskAssignees(taskID, assignees, view) {
   for (let i = 0; i < assignees.length; i++) {
     const assignee = getTaskAssignee(taskID, assignees[i]);
     if (!assignee) continue;
-
-    assigneesContainerRef.innerHTML += templateTaskAssignee(assignee.shortcutColor, assignee.shortcut);
+    if (view === "board") renderTaskAssignee(taskID, assignee);
+    if (view === "overlay") renderOverlayAssignee(taskID, assignee);
   }
 }
 
@@ -202,6 +211,20 @@ function renderTaskAssignees(taskID) {
 function getTaskAssignee(taskID, assigneeID) {
   return allContacts[assigneeID] ?? allTasks[taskID].assignedUserBadges?.[assigneeID];
 }
+
+
+function renderTaskAssignee(taskID, assignee) {
+  const assigneesRef = document.getElementById(`assigneesContainer${taskID}`)
+  assigneesRef.innerHTML += templateTaskAssignee(assignee.shortcutColor, assignee.shortcut);
+}
+
+
+function renderOverlayAssignee(taskID, assignee) {
+  const assigneesRef = document.getElementById(`overlayAssignees${taskID}`)
+  const name = assignee.name || assignee.shortcut;
+  assigneesRef.innerHTML += templateOverlayOneAssignee(assignee.shortcutColor, assignee.shortcut, name);
+}
+
 // #endregion
 
 

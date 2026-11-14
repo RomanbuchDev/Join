@@ -48,6 +48,16 @@ button:focus-visible {
   height: 1.5rem;
 }
 
+.svg-width-height-edit {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.svg-width-height-delete {
+  width: 1rem;
+  height: 1.125rem;
+}
+
 /* #endregion */
 
 /* #region MARK: display 

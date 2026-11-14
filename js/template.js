@@ -1,18 +1,18 @@
-// Templates - Contacts page
-
+// #region CONTACTS
 /**
  * Creates the HTML structure for contacts in the contact list.
  * @param {Object} contactData - Object with contact data.
  * @returns {string} The HTML item for the contact.
  */
 function getContactTemplate(contactData) {
-  return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
-            <span class="contact-shortcut">${contactData.shortcut}</span>
-            <div class="contact-data-container">
-              <span class="contact-name">${contactData.name}</span>
-              <span class="contact-e-mail">${contactData.email}</span>
-            </div>
-          </button>`;
+  return /*html*/ `
+    <button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
+      <span class="contact-shortcut">${contactData.shortcut}</span>
+      <div class="contact-data-container">
+        <span class="contact-name">${contactData.name}</span>
+        <span class="contact-e-mail">${contactData.email}</span>
+      </div>
+    </button>`;
 }
 
 
@@ -22,16 +22,17 @@ function getContactTemplate(contactData) {
  * @returns {string} The HTML item for the own account or guest account.
  */
 function getOwnContactTemplate(contactData) {
-  return `<button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
-            <div class="shortcut-wrapper">
-              <span class="contact-shortcut">${contactData.shortcut}</span>
-              <span class="own-account-badge-on-shortcut">My Account</span>
-            </div>
-            <div class="contact-data-container">
-              <span class="contact-name">${contactData.name}</span>
-              <span class="contact-e-mail">${contactData.email}</span>
-            </div>
-          </button>`;
+  return /*html*/ `
+    <button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
+      <div class="shortcut-wrapper">
+        <span class="contact-shortcut">${contactData.shortcut}</span>
+        <span class="own-account-badge-on-shortcut">My Account</span>
+      </div>
+      <div class="contact-data-container">
+        <span class="contact-name">${contactData.name}</span>
+        <span class="contact-e-mail">${contactData.email}</span>
+      </div>
+    </button>`;
 }
 
 
@@ -41,51 +42,52 @@ function getOwnContactTemplate(contactData) {
  * @returns {string} The HTML item for the contact details view.
  */
 function getContactDetailsTemplate(contactData) {
-  return `<div class="contact-details-header-container">
-        <div class="contact-details-title-container">
-          <h1 class="contact-details-title">Contacts</h1>
-          <span class="contact-details-subtitle">Better with a team</span>
-        </div>
-        <button type="button" class="back-button" onclick="backToContactList()">
-        <img src="../assets/icons/login-back-vector.svg" alt="Back button icon">
-        </button>
+  return /*html*/ `
+    <div class="contact-details-header-container">
+      <div class="contact-details-title-container">
+        <h1 class="contact-details-title">Contacts</h1>
+        <span class="contact-details-subtitle">Better with a team</span>
       </div>
+      <button type="button" class="back-button" onclick="backToContactList()">
+      <img src="../assets/icons/login-back-vector.svg" alt="Back button icon">
+      </button>
+    </div>
 
-      <!-- Contact details main -->
-      <div class="contact-details-name-container">
-        <span class="contact-details-shortcut" id="contact-details-shortcut-${contactData.id}">${contactData.shortcut}</span>
-        <div>
-          <span class="contact-details-name">${contactData.name}</span>
-            <div class="contact-option-menu-container-desktop hidden">
-              <button type="button" class="option-button" onclick="editContactDetails()">
-                <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon" />
-                <span>Edit</span>
-              </button>
-              <button type="button" class="option-button" onclick="openDialogDeleteQuestion()">
-                <img src="../assets/icons/contacts/delete_icon.png" alt="Delete icon" />
-                <span>Delete</span>
-              </button>
-            </div>
-        </div>
-      </div>
-
-      <!-- Contact details information -->
+    <!-- Contact details main -->
+    <div class="contact-details-name-container">
+      <span class="contact-details-shortcut" id="contact-details-shortcut-${contactData.id}">${contactData.shortcut}</span>
       <div>
-        <div class="contact-details-information-container">
-          <h3>Contact information</h3>
-        </div>
-        <div class="contact-details-contact-data">
-          <h4>Email</h4>
-          <span class="contact-e-mail">${contactData.email}</span>
-          <h4>Phone</h4>
-          <span>${contactData.phone}</span>
-        </div>
+        <span class="contact-details-name">${contactData.name}</span>
+          <div class="contact-option-menu-container-desktop hidden">
+            <button type="button" class="option-button" onclick="editContactDetails()">
+              <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon" />
+              <span>Edit</span>
+            </button>
+            <button type="button" class="option-button" onclick="openDialogDeleteQuestion()">
+              <img src="../assets/icons/contacts/delete_icon.png" alt="Delete icon" />
+              <span>Delete</span>
+            </button>
+          </div>
       </div>
+    </div>
 
-      <!-- Contact details option menu button -->
-      <button class="button-basic button-primary contact-menu" id="edit-contact-menu-button" onclick="showMobileContactOptions()" aria-expanded="false" aria-controls="contact-options" aria-label="Open contact details option menu">
-        <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
-      </button>`;
+    <!-- Contact details information -->
+    <div>
+      <div class="contact-details-information-container">
+        <h3>Contact information</h3>
+      </div>
+      <div class="contact-details-contact-data">
+        <h4>Email</h4>
+        <span class="contact-e-mail">${contactData.email}</span>
+        <h4>Phone</h4>
+        <span>${contactData.phone}</span>
+      </div>
+    </div>
+
+    <!-- Contact details option menu button -->
+    <button class="button-basic button-primary contact-menu" id="edit-contact-menu-button" onclick="showMobileContactOptions()" aria-expanded="false" aria-controls="contact-options" aria-label="Open contact details option menu">
+      <img src="../assets/icons/contacts/contact_options_icon.png" alt="Contact options button mobile">
+    </button>`;
 }
 
 
@@ -95,14 +97,15 @@ function getContactDetailsTemplate(contactData) {
  * @returns {string} The HTML item for the letter category.
  */
 function getLetterCategoryTemplate(letter) {
-  return `<section id="letter-category-${letter}">
-        <div>
-          <h2 class="letter-container">${letter}</h2>
-          <hr class="letter-line">
-        </div>
-        <div id="contact-grid-${letter}">
-        </div>
-      </section>`;
+  return /*html*/ `
+    <section id="letter-category-${letter}">
+      <div>
+        <h2 class="letter-container">${letter}</h2>
+        <hr class="letter-line">
+      </div>
+      <div id="contact-grid-${letter}">
+      </div>
+    </section>`;
 }
 
 
@@ -111,20 +114,24 @@ function getLetterCategoryTemplate(letter) {
  * @returns {string} The HTML item for the placeholder.
  */
 function getContactDetailsPlaceholderTemplate() {
-  return `<div class="contact-details-header-container">
-        <div class="contact-details-title-container">
-          <h1 class="contact-details-title">Contacts</h1>
-          <span class="contact-details-subtitle">Better with a team</span>
-        </div>`;
+  return /*html*/ `
+    <div class="contact-details-header-container">
+    <div class="contact-details-title-container">
+      <h1 class="contact-details-title">Contacts</h1>
+      <span class="contact-details-subtitle">Better with a team</span>
+    </div>`;
 }
+// #endregion
 
 
+// #region ERROR
 /**
  * Creates the HTML structure for the database connection error dialog.
  * @returns {string} The HTML item for the dialog.
  */
 function getConnectionErrorDatabaseTemplate() {
-  return `<dialog
+  return /*html*/ `
+    <dialog
       class="connection-error-database-container"
       id="connection-error-database-dialog"
       role="alertdialog"
@@ -161,50 +168,54 @@ function getConnectionErrorDatabaseTemplate() {
       </div>
     </dialog>`;
 }
+// #endregion
 
 
+// #region HEADER
 function templateHeader(avatarShortcut) {
-  return `
-    <a class="main-header-logo" href="./summary.html"
-          ><img src="../assets/icons/join-logo.svg" alt="Join Logo"
-        /></a>
-        <p class="main-header-title">Kanban Project Management Tool</p>
-        <a
-          href="./help.html"
-          class="main-header-help"
-          aria-label="Link to Help page"
-        >
-          <img src="../assets/icons/help.svg" alt="" />
-        </a>
-        <div class="user-menu">
-          <button
-            type="button"
-            class="user-avatar"
-            onclick="toggleMenu(this, 'user-menu-dropdown')"
-            aria-expanded="false"
-            aria-controls="user-menu-dropdown"
-            aria-label="Open user menu"
-          ><span>${avatarShortcut}</span>
-          </button>
-          <ul id="user-menu-dropdown" class="user-menu-dropdown">
-            <li class="user-menu-item user-menu-item--help">
-              <a href="./help.html">Help</a>
-            </li>
-            <li class="user-menu-item">
-              <a href="./imprint.html">Legal Notice</a>
-            </li>
-            <li class="user-menu-item">
-              <a href="./privacy-policy.html">Privacy Policy</a>
-            </li>
-            <li class="user-menu-item user-menu-item--logout">
-              <button type="button" class="user-menu-logout" onclick="handleLogoutClick()">Log out</button>
-            </li>
-          </ul>
-        </div>
-    `;
+  return /*html*/ `
+    <a class="main-header-logo" href="./summary.html">
+      <img src="../assets/icons/join-logo.svg" alt="Join Logo" />
+    </a>
+    <p class="main-header-title">Kanban Project Management Tool</p>
+    <a
+      href="./help.html"
+      class="main-header-help"
+      aria-label="Link to Help page"
+    >
+      <img src="../assets/icons/help.svg" alt="" />
+    </a>
+    <div class="user-menu">
+      <button
+        type="button"
+        class="user-avatar"
+        onclick="toggleMenu(this, 'user-menu-dropdown')"
+        aria-expanded="false"
+        aria-controls="user-menu-dropdown"
+        aria-label="Open user menu"
+      >
+        <span>${avatarShortcut}</span>
+      </button>
+      <ul id="user-menu-dropdown" class="user-menu-dropdown">
+        <li class="user-menu-item user-menu-item--help">
+          <a href="./help.html">Help</a>
+        </li>
+        <li class="user-menu-item">
+          <a href="./imprint.html">Legal Notice</a>
+        </li>
+        <li class="user-menu-item">
+          <a href="./privacy-policy.html">Privacy Policy</a>
+        </li>
+        <li class="user-menu-item user-menu-item--logout">
+          <button type="button" class="user-menu-logout" onclick="handleLogoutClick()">Log out</button>
+        </li>
+      </ul>
+    </div>`;
 }
+// #endregion
 
 
+// #region NAV
 /**
  * Creates the HTML structure for the navbar shown to authenticated users (account or guest),
  * including the main tabs and the legal links.
@@ -212,52 +223,52 @@ function templateHeader(avatarShortcut) {
  * @returns {string} The HTML for the navbar content.
  */
 function templateNavAuthenticated(currentPage) {
-  return ` 
-        <ul class="main-nav-list">
-          <li class="main-nav-item">
-            <a href="../html/summary.html">
-              <img src="../assets/icons/summary-icon.svg" alt="" />
-              <span>Summary</span>
-            </a>
-          </li>
+  return /*html*/ ` 
+    <ul class="main-nav-list">
+      <li class="main-nav-item">
+        <a href="../html/summary.html">
+          <img src="../assets/icons/summary-icon.svg" alt="" />
+          <span>Summary</span>
+        </a>
+      </li>
 
-          <li class="main-nav-item">
-            <a href="../html/add-task.html">
-              <img src="../assets/icons/addtask-icon.svg" alt="" />
-              <span> Add Task </span>
-            </a>
-          </li>
+      <li class="main-nav-item">
+        <a href="../html/add-task.html">
+          <img src="../assets/icons/addtask-icon.svg" alt="" />
+          <span> Add Task </span>
+        </a>
+      </li>
 
-          <li class="main-nav-item">
-            <a href="../html/board.html">
-              <img src="../assets/icons/board-icon.svg" alt="" />
-              <span> Board </span>
-            </a>
-          </li>
+      <li class="main-nav-item">
+        <a href="../html/board.html">
+          <img src="../assets/icons/board-icon.svg" alt="" />
+          <span> Board </span>
+        </a>
+      </li>
 
-          <li class="main-nav-item">
-            <a href="../html/contacts.html">
-              <img src="../assets/icons/contact-icon.svg" alt="" />
-              <span> Contacts </span>
-            </a>
-          </li>
-        </ul>
+      <li class="main-nav-item">
+        <a href="../html/contacts.html">
+          <img src="../assets/icons/contact-icon.svg" alt="" />
+          <span> Contacts </span>
+        </a>
+      </li>
+    </ul>
 
-        <div class="main-nav-guest-row">
-          <ul class="main-nav-legal" hidden>
-            <li class="main-nav-legal-item">
-              <a href="../html/privacy-policy.html"${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
+    <div class="main-nav-guest-row">
+      <ul class="main-nav-legal" hidden>
+        <li class="main-nav-legal-item">
+          <a href="../html/privacy-policy.html"${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>
+            Privacy Policy
+          </a>
+        </li>
 
-            </li>
-
-            <li class="main-nav-legal-item">
-              <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
-                >Legal Notice</a
-              >
-            </li>
-          </ul>
-        </div>
-  `
+        <li class="main-nav-legal-item">
+          <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}>
+            Legal Notice
+          </a>
+        </li>
+      </ul>
+    </div>`
 }
 
 
@@ -268,28 +279,29 @@ function templateNavAuthenticated(currentPage) {
  * @returns {string} The HTML for the navbar content.
  */
 function templateNavUnauthenticated(currentPage) {
-  return `
-        <div class="main-nav-guest-row">
-          <ul class="main-nav-guest-list">
-            <li class="main-nav-item">
-              <a href="../index.html">
-                <img src="../assets/icons/login.svg" alt="" />
-                <span> Log in </span>
-              </a>
-            </li>
-          </ul>
+  return /*html*/ `
+    <div class="main-nav-guest-row">
+      <ul class="main-nav-guest-list">
+        <li class="main-nav-item">
+          <a href="../index.html">
+            <img src="../assets/icons/login.svg" alt="" />
+            <span> Log in </span>
+          </a>
+        </li>
+      </ul>
 
-          <ul class="main-nav-legal">
-            <li class="main-nav-legal-item">
-              <a href="../html/privacy-policy.html" ${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
-            </li>
+      <ul class="main-nav-legal">
+        <li class="main-nav-legal-item">
+          <a href="../html/privacy-policy.html" ${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>
+            Privacy Policy
+          </a>
+        </li>
 
-            <li class="main-nav-legal-item">
-              <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
-                >Legal Notice</a
-              >
-            </li>
-          </ul>
-        </div>
-  `
+        <li class="main-nav-legal-item">
+          <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}>
+            Legal Notice
+          </a>
+        </li>
+      </ul>
+    </div>`
 }
