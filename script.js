@@ -1,6 +1,43 @@
-const toastMessage = document.getElementById("toast-message");
+// #region MARK: auth
 
-let toastMessageTime;
+/**
+ * Builds the {uid, name, email} profile for a logged-in Firebase user, fetching the
+ * name from the Realtime Database. Anonymous (guest) users get the name "Guest"
+ * without a DB fetch.
+ * @param {Object} user - The raw Firebase user object (uid, email, isAnonymous, getIdToken()).
+ * @returns {Promise<Object>} The profile {uid, name, email, isGuest?}.
+ */
+async function fetchUserProfile(user) {
+  if (user.isAnonymous) {
+    return { uid: user.uid, name: "Guest", isGuest: true };
+  }
+  const idToken = await user.getIdToken();
+  const response = await fetch(
+    `${window.firebaseUrl}users/${user.uid}.json?auth=${idToken}`,
+  );
+  const profile = await response.json();
+  return { uid: user.uid, name: profile.name, email: user.email };
+}
+
+
+/**
+ * Signs the logged-in user out via Firebase Auth and then redirects to the login page.
+ */
+async function handleLogoutClick() {
+  await window.signOut(window.auth);
+  window.location.href = "../index.html";
+}
+
+
+const logoutButton = document.querySelector(".user-menu-logout");
+if (logoutButton) {
+  logoutButton.addEventListener("click", handleLogoutClick);
+}
+
+// #endregion
+
+
+// #region MARK: header
 
 /**
  * Waits for the logged-in user and renders the header for the current page.
@@ -63,36 +100,6 @@ function toggleMenu(button, menuId) {
 
 
 /**
- * Builds the {uid, name, email} profile for a logged-in Firebase user, fetching the
- * name from the Realtime Database. Anonymous (guest) users get the name "Guest"
- * without a DB fetch.
- * @param {Object} user - The raw Firebase user object (uid, email, isAnonymous, getIdToken()).
- * @returns {Promise<Object>} The profile {uid, name, email, isGuest?}.
- */
-async function fetchUserProfile(user) {
-  if (user.isAnonymous) {
-    return { uid: user.uid, name: "Guest", isGuest: true };
-  }
-  const idToken = await user.getIdToken();
-  const response = await fetch(
-    `${window.firebaseUrl}users/${user.uid}.json?auth=${idToken}`,
-  );
-  const profile = await response.json();
-  return { uid: user.uid, name: profile.name, email: user.email };
-}
-
-
-/**
- * Gets the filename of the currently open page, e.g. "imprint.html".
- * Falls back to "index.html" when the path ends in a slash (no filename).
- * @returns {string} The current page's filename.
- */
-function getCurrentPage() {
-  return location.pathname.split("/").pop() || "index.html";
-}
-
-
-/**
  * Resets the header for an unauthenticated visitor: clears the avatar and hides the user menu.
  */
 function showGuestUI() {
@@ -112,39 +119,69 @@ async function showAuthenticatedUI(user) {
   document.querySelector(".user-menu").hidden = false;
 }
 
+// #endregion
+
+
+// #region MARK: nav
 
 /**
- * Registers an auth-state listener on a legal page (imprint/privacy policy) and renders
- * the header and navbar depending on whether the visitor is authenticated.
+ * Gets the filename of the currently open page, e.g. "imprint.html".
+ * Falls back to "index.html" when the path ends in a slash (no filename).
+ * @returns {string} The current page's filename.
  */
-function initLegalPageAuthUI() {
+function getCurrentPage() {
+  return location.pathname.split("/").pop() || "index.html";
+}
+
+
+/**
+ * Renders the navbar for an authenticated user (account or guest).
+ * @param {string} currentPage - The current page's filename, for aria-current highlighting.
+ */
+function renderNavbarAuthenticated(currentPage) {
+  document.getElementById("navbar-content").innerHTML = templateNavAuthenticated(currentPage);
+}
+
+
+/**
+ * Renders the navbar for a visitor who is not authenticated.
+ * @param {string} currentPage - The current page's filename, for aria-current highlighting.
+ */
+function renderNavbarGuest(currentPage) {
+  document.getElementById("navbar-content").innerHTML = templateNavUnauthenticated(currentPage);
+}
+
+
+/**
+ * Registers an auth-state listener and renders the header and navbar
+ * depending on whether the visitor is authenticated.
+ */
+function initNavbarAuthUI() {
   window.onAuthStateChanged(window.auth, async (user) => {
     const currentPage = getCurrentPage();
     if (user) {
-      document.getElementById("navbar-content").innerHTML = templateNavAuthenticated(currentPage);
+      renderNavbarAuthenticated(currentPage);
       await showAuthenticatedUI(user);
     } else {
-      document.getElementById("navbar-content").innerHTML = templateNavUnauthenticated(currentPage);
+      renderNavbarGuest(currentPage);
       showGuestUI();
     }
   });
 }
 
 
-/**
- * Escapes characters with a special meaning in HTML, so that text is displayed as plain text
- * and not interpreted as markup. Safe for HTML content and for quoted attribute values.
- * @param {*} text - The value to escape; it is converted to a string first.
- * @returns {string} The escaped text.
- */
-function escapeHtml(text) {
-  return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+if (document.getElementById("navbar-content")) {
+  initNavbarAuthUI();
 }
+
+// #endregion
+
+
+// #region MARK: toast message
+
+const toastMessage = document.getElementById("toast-message");
+
+let toastMessageTime;
 
 
 /**
@@ -183,6 +220,10 @@ function showToastMessage(text, statusClass) {
   }, 3000);
 }
 
+// #endregion
+
+
+// #region MARK: connection error dialog
 
 /** Closes the dialog window showing the database connection error. */
 function closeDialogConnectionErrorDatabase() {
@@ -216,6 +257,26 @@ function openDialogConnectionErrorDatabase() {
   }
 }
 
+// #endregion
+
+
+// #region MARK: utils
+
+/**
+ * Escapes characters with a special meaning in HTML, so that text is displayed as plain text
+ * and not interpreted as markup. Safe for HTML content and for quoted attribute values.
+ * @param {*} text - The value to escape; it is converted to a string first.
+ * @returns {string} The escaped text.
+ */
+function escapeHtml(text) {
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -228,17 +289,4 @@ function getGreeting() {
   return "Good evening";
 }
 
-
-/**
- * Signs the logged-in user out via Firebase Auth and then redirects to the login page.
- */
-async function handleLogoutClick() {
-  await window.signOut(window.auth);
-  window.location.href = "../index.html";
-}
-
-
-const logoutButton = document.querySelector(".user-menu-logout");
-if (logoutButton) {
-  logoutButton.addEventListener("click", handleLogoutClick);
-}
+// #endregion
