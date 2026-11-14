@@ -2,14 +2,14 @@
 */
 
 .dialog-task {
-  margin-block: 0;
-  margin-inline: auto 0;
+  line-height: 1.2;
   border: none;
+  border-radius: 30px;
   padding: 0;
-  width: min(30em, 100%); /* Breite nach Figma */
-  max-width: 100%;
-  height: 100%;
-  max-height: none;
+  width: min(60em, calc(100% - 2 * 1em));
+  max-width: fit-content;
+  height: fit-content;
+  max-height: calc(100dvh - 2 * 6em);
   transform: translateX(100%);
   transition: transform 0.3s ease-out;
 }
@@ -19,21 +19,36 @@
 }
 
 .dialog-task::backdrop {
-  background: rgb(0 0 0 / 30%);
+  background: var(--color-black-40);
 }
 
 .overlay-task-edit {
-  flex-direction: column;
+  display: grid;
+  grid-template-areas:
+    "overlay-header"
+    "overlay-main"
+    "overlay-footer";
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  padding: 2em 1.5em;
   gap: 1.5em;
+  width: 100%;
 }
 
 .overlay-header {
+  grid-area: overlay-header;
   justify-content: space-between;
 }
 
 .overlay-footer {
+  grid-area: overlay-footer;
+  justify-content: flex-end;
+  gap: 0.5em;
+  height: 1.5em;
+}
+
+.button-delete-edit {
   color: var(--color-dark);
-  justify-self: flex-end;
+  align-items: center;
   gap: 0.5em;
 }
 
@@ -42,27 +57,77 @@
 }
 
 .overlay-main {
+  grid-area: overlay-main;
   flex-direction: column;
   gap: 1.5em;
+  overflow-y: scroll;
+}
+
+.overlay-main h1 {
+  font-size: 2.25rem;
 }
 
 .overlay-main h2 {
   color: var(--color-dark);
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 .overlay-detail-row h2 {
-  width: 7em;
+  width: 6em;
+}
+
+.overlay-priority {
+  gap: 0.75em;
+}
+
+.overlay-priority img {
+  width: 1.25em;
 }
 
 .overlay-detail-column {
   flex-direction: column;
+  gap: 1em;
+}
+
+.overlay-assignees {
+  flex-direction: column;
+  padding-left: 1em;
+  gap: 0.5em;
+}
+
+.overlay-assignee {
+  align-items: center;
+  gap: 1em;
 }
 
 .overlay-task-avatar {
   color: var(--color-white);
   border-radius: 50%;
-  justify-content: center;
   align-items: center;
-  width: 2.5em;
-  height: 2.5em;
+  justify-content: center;
+  width: 2.25em;
+  height: 2.25em;
 }
+
+/* #endregion */
+
+/* #region MARK: @ tablet 
+*/
+@media (width >= 48em) {
+  .overlay-task-edit {
+    padding-inline: 2em;
+  }
+
+  .overlay-main h1 {
+    font-size: 3rem;
+  }
+
+  .overlay-task-edit h3,
+  .overlay-main h2,
+  .overlay-main {
+    font-size: 1.25rem;
+  }
+}
+
+/* #endregion */

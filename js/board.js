@@ -139,12 +139,14 @@ function getCategoryColor(taskID) {
  * @returns {void} Nothing; the description is written into the task card, or the card stays unchanged if there is none.
  */
 function renderDescription(taskID, containerID) {
+  
+  const descriptionRef = document.getElementById(containerID);
   const description = allTasks[taskID].description;
   if (!description || description.trim() === "") {
-    return
+    descriptionRef.remove();
+  } else {
+    descriptionRef.textContent = description;
   }
-  const descriptionRef = document.getElementById(containerID);
-  descriptionRef.textContent = description;
 }
 
 
@@ -156,12 +158,17 @@ function renderDescription(taskID, containerID) {
 function renderProgressBar(taskID) {
   const subtasks = allTasks[taskID].subtasks;
   const progressContainerRef = document.getElementById(`progressContainer${taskID}`);
-  if (subtasks && subtasks.length > 0) {
-    const doneSubtasks = checkDoneSubtasks(subtasks);
+  if (hasTaskSubtasks(subtasks)) {
+    const doneSubtasks = getDoneSubtasksCounter(subtasks);
     progressContainerRef.innerHTML = templateProgressBar(doneSubtasks, subtasks.length);
   } else {
     progressContainerRef.classList.add("d-none");
   }
+}
+
+
+function hasTaskSubtasks(subtasks) {
+  return subtasks && subtasks.length > 0;
 }
 
 
@@ -170,7 +177,7 @@ function renderProgressBar(taskID) {
  * @param {Object[]} subtasks - The array of subtasks for a task.
  * @returns {number} The number of subtasks marked as done.
  */
-function checkDoneSubtasks(subtasks) {
+function getDoneSubtasksCounter(subtasks) {
   let counter = 0;
   subtasks.forEach((subtask) => {counter += subtask.done ? 1 : 0;})
   return counter;
@@ -193,10 +200,10 @@ function checkForTaskAssignees(taskID) {
 
 function renderTaskAssignees(taskID, assignees, view) {
   for (let i = 0; i < assignees.length; i++) {
-    const assignee = getTaskAssignee(taskID, assignees[i]);
+    const assignee = getAssignee(taskID, assignees[i]);
     if (!assignee) continue;
-    if (view === "board") renderTaskAssignee(taskID, assignee);
-    if (view === "overlay") renderOverlayAssignee(taskID, assignee);
+    if (view === "board") renderOneTaskAssignee(taskID, assignee);
+    if (view === "overlay") renderOneOverlayAssignee(taskID, assignee);
   }
 }
 
@@ -208,22 +215,16 @@ function renderTaskAssignees(taskID, assignees, view) {
  * @param {string} assigneeID - The ID of the assignee.
  * @returns {Object|undefined} The contact or badge with shortcut and shortcutColor, or undefined if none exists.
  */
-function getTaskAssignee(taskID, assigneeID) {
+function getAssignee(taskID, assigneeID) {
   return allContacts[assigneeID] ?? allTasks[taskID].assignedUserBadges?.[assigneeID];
 }
 
 
-function renderTaskAssignee(taskID, assignee) {
+function renderOneTaskAssignee(taskID, assignee) {
   const assigneesRef = document.getElementById(`assigneesContainer${taskID}`)
   assigneesRef.innerHTML += templateTaskAssignee(assignee.shortcutColor, assignee.shortcut);
 }
 
-
-function renderOverlayAssignee(taskID, assignee) {
-  const assigneesRef = document.getElementById(`overlayAssignees${taskID}`)
-  const name = assignee.name || assignee.shortcut;
-  assigneesRef.innerHTML += templateOverlayOneAssignee(assignee.shortcutColor, assignee.shortcut, name);
-}
 
 // #endregion
 

@@ -57,7 +57,7 @@ function replaceAllTasks(tasks) {
 /**
  * Queues a PATCH request so that updates are sent one after another in the order they were made.
  * @param {Object<string, *>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position", "<taskID>").
- * @returns {void} Nothing; the request is appended to the queue.
+ * @returns {Promise<boolean>} Resolves to true if the PATCH succeeded, false if it failed.
  */
 function patchTasks(updates) {
   patchQueue = patchQueue.then(() => sendPatch(updates));
