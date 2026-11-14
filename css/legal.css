@@ -1,3 +1,5 @@
+/* #region MARK: legal content
+*/
 body {
   font-family: var(--font-family);
   background-color: var(--color-bg-main);
@@ -57,6 +59,10 @@ section {
   padding-top: 1rem;
 }
 
+/* #endregion */
+
+/* #region MARK: back button
+*/
 .signup-back-vector {
   height: 2.5rem;
   width: 2.5rem;
@@ -65,6 +71,53 @@ section {
   top: 3rem;
 }
 
+/* #endregion */
+
+/* #region MARK: @ mobile nav
+*/
+@media (width < 64em) {
+  .main-nav-legal {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .main-nav-legal a {
+    text-align: center;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .main-nav-legal[hidden] {
+    display: none;
+  }
+}
+
+/* #endregion */
+
+/* #region MARK: @ laptop S
+*/
+@media (width >= 64em) {
+  .main-legal {
+    padding: 3rem 4rem;
+  }
+
+  .main-header {
+    height: 5rem;
+  }
+
+  .signup-back-vector {
+    display: none;
+  }
+
+  .main-header-help {
+    display: none;
+  }
+}
+
+/* #endregion */
+
+/* #region MARK: #nach testen löschen
+*/
 .main-nav-guest-list {
   height: 100%;
   display: flex;
@@ -119,32 +172,7 @@ section {
   color: var(--color-white);
 }
 
-@media (width < 64em) {
-  .main-nav-legal {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .main-nav-legal a {
-    text-align: center;
-    width: 100%;
-    padding: 0 1rem;
-  }
-
-  .main-nav-legal[hidden] {
-    display: none;
-  }
-}
-
 @media (width >= 64em) {
-  .main-legal {
-    padding: 3rem 4rem;
-  }
-
-  .main-header {
-    height: 5rem;
-  }
-
   .main-nav-legal {
     width: 100% !important;
     gap: 0;
@@ -189,15 +217,9 @@ section {
     display: contents;
   }
 
-  .signup-back-vector {
-    display: none;
-  }
-
-  .main-header-help {
-    display: none;
-  }
-
   .main-nav-legal a[aria-current="page"]:hover {
     color: var(--color-gray-231);
   }
 }
+
+/* #endregion */

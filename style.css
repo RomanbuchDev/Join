@@ -52,7 +52,30 @@ body {
 
 /* #endregion */
 
-/* #region MARK: header
+/* #region MARK: @ laptop S
+*/
+@media (width >= 64em) {
+  #page {
+    height: 100dvh;
+    overflow: hidden;
+    grid-template-columns: 14.5rem repeat(4, 1fr);
+    grid-template-areas:
+      "nav  header header header header"
+      "nav main main main main";
+  }
+
+  h1 {
+    font-size: 3.75rem;
+  }
+}
+
+/* #endregion */
+
+/* #region MARK: #nach team-go löschen
+Header-/Navbar-Regeln, jetzt in css/header-nav.css. Erst löschen, wenn ALLE
+Seiten header-nav.css eingebunden haben (nicht nur eigene Seiten wie bei
+legal.css) — sonst brechen summary.html/board.html/contacts.html/add-task.html/
+help.html/signup.html, die diese Klassen noch von hier beziehen.
 */
 .main-header {
   grid-area: header;
@@ -150,10 +173,6 @@ body {
   cursor: pointer;
 }
 
-/* #endregion */
-
-/* #region MARK: nav
-*/
 .main-nav {
   grid-area: nav;
   width: 100%;
@@ -211,23 +230,7 @@ body {
   display: none;
 }
 
-/* #region MARK: @ laptop S
-*/
-
 @media (width >= 64em) {
-  #page {
-    height: 100dvh;
-    overflow: hidden;
-    grid-template-columns: 14.5rem repeat(4, 1fr);
-    grid-template-areas:
-      "nav  header header header header"
-      "nav main main main main";
-  }
-
-  h1 {
-    font-size: 3.75rem;
-  }
-
   .main-header {
     position: static;
     padding: 1em;
@@ -348,10 +351,6 @@ body {
   }
 }
 
-/* #endregion */
-
-/* #region MARK: @ hover
-*/
 @media (hover: hover) and (pointer: fine) {
   .user-avatar:hover,
   .user-avatar:active {
