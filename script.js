@@ -28,14 +28,12 @@ async function handleLogoutClick() {
   window.location.href = "../index.html";
 }
 
-
 const logoutButton = document.querySelector(".user-menu-logout");
 if (logoutButton) {
   logoutButton.addEventListener("click", handleLogoutClick);
 }
 
 // #endregion
-
 
 // #region MARK: header
 
@@ -105,7 +103,6 @@ function toggleMenu(button, menuId) {
 function showGuestUI() {
   avatarExport("");
   document.querySelector(".user-menu").hidden = true;
-
 }
 
 
@@ -120,7 +117,6 @@ async function showAuthenticatedUI(user) {
 }
 
 // #endregion
-
 
 // #region MARK: nav
 
@@ -139,7 +135,8 @@ function getCurrentPage() {
  * @param {string} currentPage - The current page's filename, for aria-current highlighting.
  */
 function renderNavbarAuthenticated(currentPage) {
-  document.getElementById("navbar-content").innerHTML = templateNavAuthenticated(currentPage);
+  document.getElementById("navbar-content").innerHTML =
+    templateNavAuthenticated(currentPage);
 }
 
 
@@ -148,7 +145,8 @@ function renderNavbarAuthenticated(currentPage) {
  * @param {string} currentPage - The current page's filename, for aria-current highlighting.
  */
 function renderNavbarGuest(currentPage) {
-  document.getElementById("navbar-content").innerHTML = templateNavUnauthenticated(currentPage);
+  document.getElementById("navbar-content").innerHTML =
+    templateNavUnauthenticated(currentPage);
 }
 
 
@@ -169,20 +167,22 @@ function initNavbarAuthUI() {
   });
 }
 
-
+/**
+ * Bootstraps the navbar auth-state listener, but only on pages that have
+ * adopted the dynamic navbar (i.e. provide a #navbar-content container).
+ * Pages with a static navbar skip this safely.
+ */
 if (document.getElementById("navbar-content")) {
   initNavbarAuthUI();
 }
 
 // #endregion
 
-
 // #region MARK: toast message
 
 const toastMessage = document.getElementById("toast-message");
 
 let toastMessageTime;
-
 
 /**
  * Hides the toast message and removes the CSS status class.
@@ -222,13 +222,13 @@ function showToastMessage(text, statusClass) {
 
 // #endregion
 
-
 // #region MARK: connection error dialog
 
 /** Closes the dialog window showing the database connection error. */
 function closeDialogConnectionErrorDatabase() {
   const dialogBoxConnectionErrorDatabase = document.getElementById(
-    "connection-error-database-dialog",);
+    "connection-error-database-dialog",
+  );
   if (dialogBoxConnectionErrorDatabase) {
     dialogBoxConnectionErrorDatabase.remove();
   }
@@ -258,7 +258,6 @@ function openDialogConnectionErrorDatabase() {
 }
 
 // #endregion
-
 
 // #region MARK: utils
 
