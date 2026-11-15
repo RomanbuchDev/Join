@@ -328,8 +328,7 @@
     grid-column: 2;
     position: static;
     transform: none;
-    justify-self: center;
-    align-self: start;
+    place-self: start center;
     margin-top: 185px;
   }
 
