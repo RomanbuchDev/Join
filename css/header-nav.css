@@ -246,6 +246,7 @@
     height: 100dvh;
     display: flex;
     flex-direction: column;
+    gap: 1em;
   }
 
   .main-nav-list,
@@ -297,7 +298,7 @@
     width: 115px;
     height: auto;
     margin-inline: auto;
-    margin-block: 4em 7em;
+    margin-block: 4em min(7em, 8vh);
   }
 
   .main-nav-legal {
