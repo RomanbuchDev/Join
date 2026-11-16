@@ -5,6 +5,7 @@ function getAddTaskTemplate() {
   `;
 }
 
+
 function getTaskFormTemplate(options = {}) {
   const settings = Object.assign(
     {
@@ -29,6 +30,7 @@ function getTaskFormTemplate(options = {}) {
   `;
 }
 
+
 function getAddTaskHeaderTemplate() {
   return /*html*/ `
     <header class="add-task-header">
@@ -37,18 +39,22 @@ function getAddTaskHeaderTemplate() {
   `;
 }
 
+
 function getCheckedAttribute(currentPriority, priority) {
   return currentPriority === priority ? "checked" : "";
 }
+
 
 function getSelectedAttribute(currentCategory, category) {
   return currentCategory === category ? "selected" : "";
 }
 
+
 function getCategoryPlaceholderAttribute(category) {
   const categories = ["User Story", "Technical Task"];
   return categories.includes(category) ? "" : "selected";
 }
+
 
 function getTaskFieldsTemplate(priority = "medium", category = "") {
   return /*html*/ `
@@ -292,6 +298,7 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
   `;
 }
 
+
 function getTaskActionsTemplate() {
   return /*html*/ `
     <div class="form-actions">
@@ -311,6 +318,7 @@ function getTaskActionsTemplate() {
   `;
 }
 
+
 function getTaskOverlayActionsTemplate(mode = "add", cancelHandler = "") {
   return /*html*/ `
     <div class="form-actions">
@@ -329,6 +337,7 @@ function getTaskOverlayActionsTemplate(mode = "add", cancelHandler = "") {
   `;
 }
 
+
 function getAssignedContactTemplate() {
   return /*html*/ `
     <label class="assigned-contact-option">
@@ -342,6 +351,7 @@ function getAssignedContactTemplate() {
     </label>
   `;
 }
+
 
 function getSubtaskTemplate(index, isEditing) {
   return /*html*/ `
