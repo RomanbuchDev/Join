@@ -135,20 +135,15 @@ function toggleAssignedContacts() {
 
 async function loadAssignedContacts() {
   const idToken = await window.auth.currentUser.getIdToken();
-  const response = await fetch(getDatabaseUrl("contacts", idToken));
-
+  const response = await fetch(
+    `${window.firebaseUrl}contacts.json?auth=${encodeURIComponent(idToken)}`,
+  );
   checkContactsResponse(response);
-
   const data = await response.json();
   return Object.entries(data ?? {}).map(([id, contact]) => ({
     ...contact,
     id,
   }));
-}
-
-function getDatabaseUrl(path, idToken) {
-  const baseUrl = window.firebaseUrl.replace(/\/+$/, "");
-  return `${baseUrl}/${path}.json?auth=${encodeURIComponent(idToken)}`;
 }
 
 function checkContactsResponse(response) {
@@ -207,12 +202,12 @@ function addSelfAssigneeFromProfile(contacts, user, profile) {
 async function loadUserProfile(user) {
   const idToken = await user.getIdToken();
   const path = `users/${encodeURIComponent(user.uid)}`;
-  const response = await fetch(getDatabaseUrl(path, idToken));
-
+  const response = await fetch(
+    `${window.firebaseUrl}${path}.json?auth=${encodeURIComponent(idToken)}`,
+  );
   if (!response.ok) {
     throw new Error(`Profil konnte nicht geladen werden (${response.status}).`);
   }
-
   return response.json();
 }
 
