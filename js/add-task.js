@@ -70,11 +70,47 @@ function renderAddTask() {
 
 function renderAssignedContacts(contacts) {
   const contactList = document.getElementById("contact_list");
+  const sortedContacts = [...contacts].sort(compareAssignedContacts);
   contactList.replaceChildren();
 
-  for (const contact of contacts) {
+  for (const contact of sortedContacts) {
     contactList.append(createAssignedContactRow(contact));
   }
+}
+
+
+function compareAssignedContacts(first, second) {
+  const firstIsSelf = isCurrentUserContact(first);
+  const secondIsSelf = isCurrentUserContact(second);
+
+  if (firstIsSelf !== secondIsSelf) {
+    return firstIsSelf ? -1 : 1;
+  }
+
+  return first.name.localeCompare(second.name, "de", {
+    sensitivity: "base",
+  });
+}
+
+
+function isCurrentUserContact(contact) {
+  const uid = window.auth.currentUser?.uid;
+  return contact.source === "users" && contact.id === uid;
+}
+
+
+function filterAssignedContacts(value) {
+  const search = value.trim().toLocaleLowerCase("de");
+  const list = document.getElementById("contact_list");
+
+  for (const row of list.children) {
+    const name = row.querySelector(".assigned-contact-name").textContent;
+    row.hidden =
+      search.length >= 2 && !name.toLocaleLowerCase("de").startsWith(search);
+  }
+
+  list.hidden = false;
+  document.getElementById("assigned-to").setAttribute("aria-expanded", "true");
 }
 
 
@@ -119,21 +155,15 @@ function toggleAssignedContacts() {
 
 async function loadAssignedContacts() {
   const idToken = await window.auth.currentUser.getIdToken();
-  const response = await fetch(getDatabaseUrl("contacts", idToken));
-
+  const response = await fetch(
+    `${window.firebaseUrl}contacts.json?auth=${encodeURIComponent(idToken)}`,
+  );
   checkContactsResponse(response);
-
   const data = await response.json();
   return Object.entries(data ?? {}).map(([id, contact]) => ({
     ...contact,
     id,
   }));
-}
-
-
-function getDatabaseUrl(path, idToken) {
-  const baseUrl = window.firebaseUrl.replace(/\/+$/, "");
-  return `${baseUrl}/${path}.json?auth=${encodeURIComponent(idToken)}`;
 }
 
 
@@ -199,12 +229,12 @@ function addSelfAssigneeFromProfile(contacts, user, profile) {
 async function loadUserProfile(user) {
   const idToken = await user.getIdToken();
   const path = `users/${encodeURIComponent(user.uid)}`;
-  const response = await fetch(getDatabaseUrl(path, idToken));
-
+  const response = await fetch(
+    `${window.firebaseUrl}${path}.json?auth=${encodeURIComponent(idToken)}`,
+  );
   if (!response.ok) {
     throw new Error(`Profil konnte nicht geladen werden (${response.status}).`);
   }
-
   return response.json();
 }
 
@@ -272,6 +302,7 @@ async function submitTaskForm(form, onSuccess = resetAddTaskAfterSave) {
 
 function resetAddTaskAfterSave(form) {
   form.reset();
+  showToastMessage("Task added to board", "toast-message-new");
 }
 
 
