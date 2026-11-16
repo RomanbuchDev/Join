@@ -26,4 +26,4 @@ window.signInAnonymously = signInAnonymously;
 window.onAuthStateChanged = onAuthStateChanged;
 window.signOut = signOut;
 window.firebaseUrl =
-  "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app/";
+  "https://join-7252c-default-rtdb.europe-west1.firebasedatabase.app";

@@ -254,21 +254,21 @@ function templateNavAuthenticated(currentPage) {
       </li>
     </ul>
 
-    <div class="main-nav-guest-row">
-      <ul class="main-nav-legal" hidden>
-        <li class="main-nav-legal-item">
-          <a href="../html/privacy-policy.html"${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>
-            Privacy Policy
-          </a>
-        </li>
+        <div class="main-nav-guest-row dpf-row-spc-between">
+          <ul class="main-nav-legal" hidden>
+            <li class="main-nav-legal-item dpf-center">
+              <a href="../html/privacy-policy.html" class="dpf-flex-column-center"${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
 
-        <li class="main-nav-legal-item">
-          <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}>
-            Legal Notice
-          </a>
-        </li>
-      </ul>
-    </div>`
+            </li>
+
+            <li class="main-nav-legal-item dpf-center">
+              <a href="../html/imprint.html" class="dpf-flex-column-center" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
+                >Legal Notice</a
+              >
+            </li>
+          </ul>
+        </div>
+  `;
 }
 
 
@@ -279,29 +279,28 @@ function templateNavAuthenticated(currentPage) {
  * @returns {string} The HTML for the navbar content.
  */
 function templateNavUnauthenticated(currentPage) {
-  return /*html*/ `
-    <div class="main-nav-guest-row">
-      <ul class="main-nav-guest-list">
-        <li class="main-nav-item">
-          <a href="../index.html">
-            <img src="../assets/icons/login.svg" alt="" />
-            <span> Log in </span>
-          </a>
-        </li>
-      </ul>
+  return `
+        <div class="main-nav-guest-row dpf-row-spc-between">
+          <ul class="main-nav-guest-list dpf-center">
+            <li class="main-nav-item">
+              <a href="../index.html">
+                <img src="../assets/icons/login.svg" alt="" />
+                <span> Log in </span>
+              </a>
+            </li>
+          </ul>
 
-      <ul class="main-nav-legal">
-        <li class="main-nav-legal-item">
-          <a href="../html/privacy-policy.html" ${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>
-            Privacy Policy
-          </a>
-        </li>
+          <ul class="main-nav-legal">
+            <li class="main-nav-legal-item dpf-center">
+              <a href="../html/privacy-policy.html" class="dpf-flex-column-center" ${currentPage === "privacy-policy.html" ? ' aria-current="page"' : ""}>Privacy Policy</a>
+            </li>
 
-        <li class="main-nav-legal-item">
-          <a href="../html/imprint.html" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}>
-            Legal Notice
-          </a>
-        </li>
-      </ul>
-    </div>`
+            <li class="main-nav-legal-item dpf-center">
+              <a href="../html/imprint.html" class="dpf-flex-column-center" ${currentPage === "imprint.html" ? ' aria-current="page"' : ""}
+                >Legal Notice</a
+              >
+            </li>
+          </ul>
+        </div>
+  `;
 }

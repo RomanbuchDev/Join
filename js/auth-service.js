@@ -13,7 +13,7 @@ async function loginWithEmail(email, password) {
   const user = userCredential.user;
   const idToken = await user.getIdToken();
   const response = await fetch(
-    `${window.firebaseUrl}users/${user.uid}.json?auth=${idToken}`,
+    `${window.firebaseUrl}/users/${user.uid}.json?auth=${idToken}`,
   );
   const profile = await response.json();
   return { uid: user.uid, name: profile.name, email: user.email };
@@ -58,7 +58,7 @@ async function registerWithEmail(name, email, password) {
  * @param {string} idToken - The Firebase ID token for the authenticated request.
  */
 async function saveUserProfile(uid, profile, idToken) {
-  await fetch(`${window.firebaseUrl}users/${uid}.json?auth=${idToken}`, {
+  await fetch(`${window.firebaseUrl}/users/${uid}.json?auth=${idToken}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(profile),
