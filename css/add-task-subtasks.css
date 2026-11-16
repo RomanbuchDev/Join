@@ -268,3 +268,11 @@
     border-color: var(--color-gray-209, #d1d1d1);
   }
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .subtask-row:not(.subtask-row--editing, :hover, :focus-within)
+    .subtask-row-actions {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

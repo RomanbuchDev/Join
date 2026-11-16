@@ -203,6 +203,7 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
           <div class="contact-dropdown">
             <div class="contact-search">
               <input
+              oninput="filterAssignedContacts(this.value)"
                 class="form-control"
                 id="assigned-to"
                 type="text"

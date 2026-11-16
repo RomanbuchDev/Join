@@ -3,7 +3,7 @@
 // #region Variables:
 
 const allContacts = [];
-const CATEGORY = "contacts";
+const CONTACTS = "contacts";
 const TASKS = "tasks";
 
 let myAccount = null;
@@ -71,8 +71,8 @@ async function saveOwnAccountData() {
 async function fetchAllContacts() {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
-    const response = await fetch(`${window.firebaseUrl}/${CATEGORY}.json?auth=${idToken}`);
-    
+    const response = await fetch(`${window.firebaseUrl}${CONTACTS}.json?auth=${idToken}`);
+
     const responseAsJSON = await response.json();
     return saveContacts(responseAsJSON);
   } catch (error) {
@@ -188,7 +188,7 @@ async function databaseRequest(url, method, data = null) {
 async function addContactToDatabase(newContactData) {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
-    const url = `${window.firebaseUrl}/${CATEGORY}.json?auth=${idToken}`;
+    const url = `${window.firebaseUrl}${CONTACTS}.json?auth=${idToken}`;
     showToastMessage("Contact successfully created", "toast-message-new");
     return await databaseRequest(url, "POST", newContactData);
   } catch (error) {
@@ -221,7 +221,7 @@ function getContactDataForDatabase() {
 async function editContactInDatabase(contactId) {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
-    const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
+    const url = `${window.firebaseUrl}${CONTACTS}/${contactId}.json?auth=${idToken}`;
     showToastMessage("Contact successfully edited", "toast-message-edit");
     return await databaseRequest(url, "PUT", getContactDataForDatabase());
   } catch (error) {
@@ -239,7 +239,7 @@ async function editContactInDatabase(contactId) {
 async function deleteContactInDatabase(contactId) {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
-    const url = `${window.firebaseUrl}/${CATEGORY}/${contactId}.json?auth=${idToken}`;
+    const url = `${window.firebaseUrl}${CONTACTS}/${contactId}.json?auth=${idToken}`;
     showToastMessage("Contact successfully deleted", "toast-message-delete");
     await deleteContactsInTask(contactId);
     return await databaseRequest(url, "DELETE");
