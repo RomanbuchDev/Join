@@ -4,13 +4,45 @@
  */
 
 // #region VARIABLES
+
 /** All tasks loaded from the database, keyed by task ID. */
 const allTasks = {};
 /** Chain of pending PATCH requests; ensures they are sent one after another. */
 let patchQueue = Promise.resolve();
+
+// #endregion
+
+// #region HELPERS
+
+/**
+ * Builds the Firebase URL for the tasks, including the auth token of the current user.
+ * @returns {Promise<string>} The URL to the tasks.json with the auth query parameter.
+ */
+async function getAuthTasksUrl() {
+  const idToken = await window.auth.currentUser.getIdToken();
+  const tasksUrl = `${window.firebaseUrl}/tasks.json?auth=${encodeURIComponent(idToken)}`;
+
+  return tasksUrl;
+}
+
+
+/**
+ * Throws an error if the HTTP response was not successful, because fetch itself only throws on network errors.
+ * @param {Response} response - The response of a fetch request.
+ * @param {string} message - The error message; the HTTP status is appended to it.
+ * @returns {void} Nothing; throws if response.ok is false.
+ * @throws {Error} If the response status is not in the range 200-299.
+ */
+function throwIfResponseNotOk(response, message) {
+  if (!response.ok) {
+    throw new Error(`${message}: ${response.status}`);
+  }
+}
+
 // #endregion
 
 // #region LOAD
+
 /**
  * Loads all tasks from the database and replaces the content of allTasks.
  * Opens the connection error dialog on failure and never throws.
@@ -18,27 +50,15 @@ let patchQueue = Promise.resolve();
  */
 async function fetchAllTasks() {
   try {
-    const tasks = await requestAllTasks();
-    replaceAllTasks(tasks);
+    const tasksUrl = await getAuthTasksUrl();
+    const response = await fetch(tasksUrl);
+    throwIfResponseNotOk(response, "Failed to load tasks");
+    replaceAllTasks(await response.json());
     return true;
   } catch (error) {
     openDialogConnectionErrorDatabase();
     return false;
   }
-}
-
-
-async function requestAllTasks() {
-  const idToken = await window.auth.currentUser.getIdToken();
-  const response = await fetch(
-    `${window.firebaseUrl}/tasks.json?auth=${idToken}`,
-  );
-
-  if (!response.ok) {
-    throw new Error(`Failed to load tasks: ${response.status}`);
-  }
-
-  return response.json();
 }
 
 
@@ -51,9 +71,11 @@ function replaceAllTasks(tasks) {
   Object.keys(allTasks).forEach((taskId) => delete allTasks[taskId]);
   Object.assign(allTasks, tasks);
 }
+
 // #endregion
 
 // #region PATCH
+
 /**
  * Queues a PATCH request so that updates are sent one after another in the order they were made.
  * @param {Object<string, *>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position", "<taskID>").
@@ -68,12 +90,14 @@ function patchTasks(updates) {
 /**
  * Sends the updates to the Firebase database.
  * Opens the connection error dialog on failure and never throws, so the queue keeps running.
- * @param {Object<string, string|number>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position").
- *  * @returns {Promise<boolean>} True on success, false on failure. Resolves once the request is finished or failed.
+ * @param {Object<string, *>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position", "<taskID>").
+ * @returns {Promise<boolean>} True on success, false on failure. Resolves once the request is finished or failed.
  */
 async function sendPatch(updates) {
   try {
-    await requestTaskPatch(updates);
+    const tasksUrl = await getAuthTasksUrl();
+    const response = await requestTaskPatch(tasksUrl, updates);
+    throwIfResponseNotOk(response, "Failed to save tasks");
     return true;
   } catch (error) {
     openDialogConnectionErrorDatabase();
@@ -82,20 +106,25 @@ async function sendPatch(updates) {
 }
 
 
-async function requestTaskPatch(updates) {
-  const idToken = await window.auth.currentUser.getIdToken();
-  const baseUrl = window.firebaseUrl.replace(/\/+$/, "");
-  const tasksUrl = `${baseUrl}/tasks.json?auth=${encodeURIComponent(idToken)}`;
-  const response = await fetch(tasksUrl, {
+/**
+ * Sends a PATCH request with the updates to the given tasks URL.
+ * Does not check the response status; the caller has to do that.
+ * @param {string} tasksUrl - The Firebase URL of the tasks, including the auth token.
+ * @param {Object<string, *>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position", "<taskID>").
+ * @returns {Promise<Response>} The response of the PATCH request.
+ */
+async function requestTaskPatch(tasksUrl, updates) {
+  return fetch(tasksUrl, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(updates),
   });
-  if (!response.ok) throw new Error(`Firebase-Fehler ${response.status}.`);
 }
+
 // #endregion
 
 // #region POSITION
+
 /**
  * Inserts a task into a column behind the given task and renumbers the positions of the whole column.
  * If the task is already in the column, it is moved instead.
@@ -176,4 +205,5 @@ function adjustPositions(updates, sortedIDs) {
     Object.assign(updates, { [`${taskID}/position`]: index });
   });
 }
+
 // #endregion

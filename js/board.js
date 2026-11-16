@@ -3,16 +3,18 @@
  */
 
 // #region VARIABLES
+
 /** All loaded contacts, keyed by contact ID. */
 const allContacts = {};
 /** All task columns (lists) of the board. */
 const columns = document.querySelectorAll(".tasks-list");
 /** True while all tasks are rendered, false while a search result is shown. */
 let allFetchedTasksAreRendered = false;
+
 // #endregion
 
-
 // #region INIT
+
 /**
  * Initializes the board view.
  * Initializes the header, then loads all tasks and all contacts first, then renders the tasks into their columns.
@@ -26,10 +28,11 @@ async function initBoard() {
   renderTasks(Object.keys(allTasks));
   allFetchedTasksAreRendered = true;
 }
+
 // #endregion
 
-
 // #region FETCH
+
 /**
  * Fetches all data of a specific category from the Firebase database.
  * @param {string} dataCategory - The category of data to fetch ("tasks", "contacts").
@@ -66,10 +69,11 @@ function storeData(dataCategory, dataObject) {
       break;
   }
 }
+
 // #endregion
 
-
 // #region RENDER TASK
+
 /**
  * Renders the given tasks into their columns, sorted by position.
  * Clears all columns first and updates the column counters and the empty-column messages.
@@ -124,10 +128,11 @@ function renderOneTask(taskID) {
   const assignees = checkForTaskAssignees(taskID);
   if (assignees) renderTaskAssignees(taskID, assignees, "board");
 }
+
 // #endregion
 
-
 // #region T. DETAILS
+
 function getCategoryColor(taskID) {
   return (allTasks[taskID].category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
 }
@@ -225,11 +230,10 @@ function renderOneTaskAssignee(taskID, assignee) {
   assigneesRef.innerHTML += templateTaskAssignee(assignee.shortcutColor, assignee.shortcut);
 }
 
-
 // #endregion
 
-
 // #region COLUMNS
+
 /**
  * Empties all task columns.
  * @returns {void} Nothing; the content of every column is removed from the DOM.
@@ -273,4 +277,5 @@ function getColumnName(columnID) {
   }
   return columnName;
 }
+
 // #endregion
