@@ -1,4 +1,4 @@
-// #region MARK: auth
+// #region AUTH
 
 /**
  * Builds the {uid, name, email} profile for a logged-in Firebase user, fetching the
@@ -13,7 +13,7 @@ async function fetchUserProfile(user) {
   }
   const idToken = await user.getIdToken();
   const response = await fetch(
-    `${window.firebaseUrl}users/${user.uid}.json?auth=${idToken}`,
+    `${window.firebaseUrl}/users/${user.uid}.json?auth=${idToken}`,
   );
   const profile = await response.json();
   return { uid: user.uid, name: profile.name, email: user.email };
@@ -35,7 +35,7 @@ if (logoutButton) {
 
 // #endregion
 
-// #region MARK: header
+// #region HEADER
 
 /**
  * Waits for the logged-in user and renders the header for the current page.
@@ -118,7 +118,7 @@ async function showAuthenticatedUI(user) {
 
 // #endregion
 
-// #region MARK: nav
+// #region NAV
 
 /**
  * Gets the filename of the currently open page, e.g. "imprint.html".
@@ -178,7 +178,7 @@ if (document.getElementById("navbar-content")) {
 
 // #endregion
 
-// #region MARK: toast message
+// #region TOAST MESSAGE
 
 const toastMessage = document.getElementById("toast-message");
 
@@ -222,7 +222,7 @@ function showToastMessage(text, statusClass) {
 
 // #endregion
 
-// #region MARK: connection error dialog
+// #region CONNECTION ERROR DIALOG
 
 /** Closes the dialog window showing the database connection error. */
 function closeDialogConnectionErrorDatabase() {
@@ -259,7 +259,7 @@ function openDialogConnectionErrorDatabase() {
 
 // #endregion
 
-// #region MARK: utils
+// #region UTILS
 
 /**
  * Escapes characters with a special meaning in HTML, so that text is displayed as plain text
@@ -277,6 +277,10 @@ function escapeHtml(text) {
 }
 
 
+/**
+ * Builds a greeting matching the current time of day.
+ * @returns {string} "Good morning", "Good afternoon" or "Good evening".
+ */
 function getGreeting() {
   const hour = new Date().getHours();
   if (hour < 12) {
