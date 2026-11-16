@@ -3,6 +3,7 @@
  */
 
 // #region TASK CARD
+
 /**
  * Returns the HTML template of a task card.
  * Description, progress bar and assignees are filled in afterwards.
@@ -60,10 +61,11 @@ function templateTaskCard(taskID, categoryColor) {
       </div>
     </li>`;
 }
+
 // #endregion
 
-
 // #region TASK DETAILS
+
 /**
  * Returns the HTML template of the progress bar of a task card.
  * @param {number} doneSubtasks - The number of completed subtasks.
@@ -102,10 +104,11 @@ function templateEmptyColumn(columnName) {
       <p>No tasks ${escapeHtml(columnName)}</p>
     </li>`
 }
+
 // #endregion
 
-
 // #region OVERLAY
+
 function templateOverlayDetailedTask(taskID, categoryColor) {
   const task = allTasks[taskID];
   return /*html*/ `
@@ -218,4 +221,5 @@ function templateOverlayOneSubtask(taskID, indexSubtask) {
       </label>
     </li>`
 }
+
 // #endregion
