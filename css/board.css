@@ -6,6 +6,7 @@ button:focus-visible {
 }
 
 .button-reset {
+  font-family: var(--font-family);
   line-height: 0;
   background: none;
   border: none;
@@ -18,11 +19,11 @@ button:focus-visible {
   transition: fill 0s ease 125ms;
 }
 
-.svg-fill:active {
+button:active .svg-fill {
   fill: var(--color-dark-active);
 }
 
-.svg-fill:hover,
+button:hover .svg-fill,
 .button-reset:focus-visible .svg-fill {
   fill: var(--color-medium);
   filter: drop-shadow(0 0 2px var(--color-highlight));
@@ -46,6 +47,16 @@ button:focus-visible {
 .svg-width-height-move {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.svg-width-height-18px {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.svg-width-height-delete {
+  width: 1rem;
+  height: 1.125rem;
 }
 
 /* #endregion */

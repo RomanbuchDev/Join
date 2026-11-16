@@ -1,6 +1,133 @@
 /* #region MARK: ?? 
 */
 
-dialog {
+.dialog-task {
+  line-height: 1.2;
+  border: none;
+  border-radius: 30px;
   padding: 0;
+  width: min(60em, calc(100% - 2 * 1em));
+  max-width: fit-content;
+  height: fit-content;
+  max-height: calc(100dvh - 2 * 6em);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-out;
 }
+
+.dialog-task-open {
+  transform: translateX(0);
+}
+
+.dialog-task::backdrop {
+  background: var(--color-black-40);
+}
+
+.overlay-task-edit {
+  display: grid;
+  grid-template-areas:
+    "overlay-header"
+    "overlay-main"
+    "overlay-footer";
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  padding: 2em 1.5em;
+  gap: 1.5em;
+  width: 100%;
+}
+
+.overlay-header {
+  grid-area: overlay-header;
+  justify-content: space-between;
+}
+
+.overlay-footer {
+  grid-area: overlay-footer;
+  justify-content: flex-end;
+  gap: 0.5em;
+  height: 1.5em;
+}
+
+.button-delete-edit {
+  color: var(--color-dark);
+  align-items: center;
+  gap: 0.5em;
+}
+
+.divider-line {
+  border: 1px solid var(--color-gray-209);
+}
+
+.overlay-main {
+  grid-area: overlay-main;
+  flex-direction: column;
+  gap: 1.5em;
+  overflow-y: scroll;
+}
+
+.overlay-main h1 {
+  font-size: 2.25rem;
+}
+
+.overlay-main h2 {
+  color: var(--color-dark);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.overlay-detail-row h2 {
+  width: 6em;
+}
+
+.overlay-priority {
+  gap: 0.75em;
+}
+
+.overlay-priority img {
+  width: 1.25em;
+}
+
+.overlay-detail-column {
+  flex-direction: column;
+  gap: 1em;
+}
+
+.overlay-assignees {
+  flex-direction: column;
+  padding-left: 1em;
+  gap: 0.5em;
+}
+
+.overlay-assignee {
+  align-items: center;
+  gap: 1em;
+}
+
+.overlay-task-avatar {
+  color: var(--color-white);
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  width: 2.25em;
+  height: 2.25em;
+}
+
+/* #endregion */
+
+/* #region MARK: @ tablet 
+*/
+@media (width >= 48em) {
+  .overlay-task-edit {
+    padding-inline: 2em;
+  }
+
+  .overlay-main h1 {
+    font-size: 3rem;
+  }
+
+  .overlay-task-edit h3,
+  .overlay-main h2,
+  .overlay-main {
+    font-size: 1.25rem;
+  }
+}
+
+/* #endregion */
