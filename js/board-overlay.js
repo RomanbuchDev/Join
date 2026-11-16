@@ -52,11 +52,15 @@ function finishClosingOverlay(event) {
 
 function renderTaskOverlay(taskID) {
   const overlayRef = document.getElementById("overlayTaskEdit");
-  overlayRef.innerHTML = templateOverlayDetailedTask(taskID, getCategoryColor(taskID));
+  overlayRef.innerHTML = templateOverlayTask(taskID, getCategoryColor(taskID));
+  const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
+  const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
+  overlayMainRef.innerHTML = templateOverlayMainDetails(taskID);
+  overlayFooterRef.innerHTML = templateOverlayFooterDetails(taskID);
   renderDescription(taskID, `overlayDescription${taskID}`);
   renderPriority(taskID);
   renderOverlayAssignees(taskID);
-  renderSubtasks(taskID);
+  renderOverlaySubtasks(taskID);
 }
 
 
@@ -95,7 +99,7 @@ function renderOneOverlayAssignee(taskID, assignee) {
 }
 
 
-function renderSubtasks(taskID) {
+function renderOverlaySubtasks(taskID) {
   const subtasks = allTasks[taskID].subtasks;
   if (!hasTaskSubtasks(subtasks)) return;
 
@@ -133,6 +137,19 @@ async function toggleSubtask(event, taskID, indexSubtask) {
 function adjustSubtaskChange(taskID, subtask, newValue) { 
   subtask.done = newValue;
   renderProgressBar(taskID);
+}
+
+
+function editTask(event, taskID) {
+  const buttonRef = event.currentTarget;
+  buttonRef.disabled = true;
+
+  const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
+  const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
+  overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
+  overlayFooterRef.innerHTML = templateOverlayFooterEdit(taskID);
+  
+  buttonRef.disabled = false;
 }
 
 // #endregion
