@@ -6,11 +6,11 @@
  */
 function getContactTemplate(contactData) {
   return /*html*/ `
-    <button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
-      <span class="contact-shortcut">${contactData.shortcut}</span>
+    <button type="button" class="contact-card" id="contact-${escapeHtml(contactData.id)}" onclick="showContactDetails('${escapeHtml(contactData.id)}')">
+      <span class="contact-shortcut">${escapeHtml(contactData.shortcut)}</span>
       <div class="contact-data-container">
-        <span class="contact-name">${contactData.name}</span>
-        <span class="contact-e-mail">${contactData.email}</span>
+        <span class="contact-name">${escapeHtml(contactData.name)}</span>
+        <span class="contact-e-mail">${escapeHtml(contactData.email)}</span>
       </div>
     </button>`;
 }
@@ -23,14 +23,14 @@ function getContactTemplate(contactData) {
  */
 function getOwnContactTemplate(contactData) {
   return /*html*/ `
-    <button type="button" class="contact-card" id="contact-${contactData.id}" onclick="showContactDetails('${contactData.id}')">
+    <button type="button" class="contact-card" id="contact-${escapeHtml(contactData.id)}" onclick="showContactDetails('${escapeHtml(contactData.id)}')">
       <div class="shortcut-wrapper">
-        <span class="contact-shortcut">${contactData.shortcut}</span>
+        <span class="contact-shortcut">${escapeHtml(contactData.shortcut)}</span>
         <span class="own-account-badge-on-shortcut">My Account</span>
       </div>
       <div class="contact-data-container">
-        <span class="contact-name">${contactData.name}</span>
-        <span class="contact-e-mail">${contactData.email}</span>
+        <span class="contact-name">${escapeHtml(contactData.name)}</span>
+        <span class="contact-e-mail">${escapeHtml(contactData.email)}</span>
       </div>
     </button>`;
 }
@@ -55,9 +55,9 @@ function getContactDetailsTemplate(contactData) {
 
     <!-- Contact details main -->
     <div class="contact-details-name-container">
-      <span class="contact-details-shortcut" id="contact-details-shortcut-${contactData.id}">${contactData.shortcut}</span>
+      <span class="contact-details-shortcut" id="contact-details-shortcut-${escapeHtml(contactData.id)}">${escapeHtml(contactData.shortcut)}</span>
       <div>
-        <span class="contact-details-name">${contactData.name}</span>
+        <span class="contact-details-name">${escapeHtml(contactData.name)}</span>
           <div class="contact-option-menu-container-desktop hidden">
             <button type="button" class="option-button" onclick="editContactDetails()">
               <img src="../assets/icons/contacts/edit_icon.png" alt="Edit icon" />
@@ -78,9 +78,9 @@ function getContactDetailsTemplate(contactData) {
       </div>
       <div class="contact-details-contact-data">
         <h4>Email</h4>
-        <span class="contact-e-mail">${contactData.email}</span>
+        <span class="contact-e-mail">${escapeHtml(contactData.email)}</span>
         <h4>Phone</h4>
-        <span>${contactData.phone}</span>
+        <span>${escapeHtml(contactData.phone)}</span>
       </div>
     </div>
 
@@ -98,12 +98,12 @@ function getContactDetailsTemplate(contactData) {
  */
 function getLetterCategoryTemplate(letter) {
   return /*html*/ `
-    <section id="letter-category-${letter}">
+    <section id="letter-category-${escapeHtml(letter)}">
       <div>
-        <h2 class="letter-container">${letter}</h2>
+        <h2 class="letter-container">${escapeHtml(letter)}</h2>
         <hr class="letter-line">
       </div>
-      <div id="contact-grid-${letter}">
+      <div id="contact-grid-${escapeHtml(letter)}">
       </div>
     </section>`;
 }
