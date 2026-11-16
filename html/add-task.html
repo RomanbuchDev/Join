@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/add-task.css" />
     <link rel="stylesheet" href="../css/add-task-subtasks.css" />
+    <link rel="stylesheet" href="../css/assets.css" />
     <link rel="stylesheet" href="../style.css" />
     <script type="module" src="../js/firebase-init.js"></script>
     <script defer src="../script.js"></script>
@@ -22,6 +23,7 @@
     <script defer src="../js/add-task.js"></script>
   </head>
   <body
+    class="add-task-page"
     onload="initAddTask()"
     onclick="closeAssignedContactsOnOutsideClick(event)"
   >
@@ -77,5 +79,11 @@
         </ul>
       </nav>
     </div>
+    <div
+      id="toast-message"
+      class="toast-message"
+      popover="manual"
+      role="status"
+    ></div>
   </body>
 </html>
