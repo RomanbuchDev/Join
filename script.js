@@ -41,11 +41,11 @@ if (logoutButton) {
  * Waits for the logged-in user and renders the header for the current page.
  * @returns {Promise<Object>} The logged-in user.
  */
-async function initHeader() {
-  const user = await window.getCurrentUser();
-  initAvatar(user);
-  return user;
-}
+// async function initHeader() {
+//   const user = await window.getCurrentUser();
+//   initAvatar(user);
+//   return user;
+// }
 
 
 /**
@@ -116,6 +116,30 @@ async function showAuthenticatedUI(user) {
   document.querySelector(".user-menu").hidden = false;
 }
 
+
+/**
+ * Registers an auth-state listener that renders the header, independent of
+ * the navbar.
+ */
+function initHeaderAuthUI() {
+  window.onAuthStateChanged(window.auth, async (user) => {
+    if (user) {
+      await showAuthenticatedUI(user);
+    } else {
+      showGuestUI();
+    }
+  });
+}
+
+/**
+ * Bootstraps the header auth-state listener on every page that has a
+ * #header element.
+ */
+if (document.getElementById("header")) {
+  initHeaderAuthUI();
+}
+
+
 // #endregion
 
 // #region NAV
@@ -159,10 +183,10 @@ function initNavbarAuthUI() {
     const currentPage = getCurrentPage();
     if (user) {
       renderNavbarAuthenticated(currentPage);
-      await showAuthenticatedUI(user);
+      // await showAuthenticatedUI(user);
     } else {
       renderNavbarGuest(currentPage);
-      showGuestUI();
+      // showGuestUI();
     }
   });
 }

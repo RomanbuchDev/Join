@@ -1,7 +1,8 @@
 let tasks = [];
 
 async function init() {
-  const user = await initHeader();
+  // const user = await initHeader(); // Header läuft jetzt zentral über initHeaderAuthUI() in script.js
+  const user = await window.getCurrentUser(); // user wird hier nur noch für die Begrüßung gebraucht
   await getSummaryData();
   getStatusInformation();
   renderDates();

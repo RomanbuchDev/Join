@@ -22,7 +22,8 @@ let allFetchedTasksAreRendered = false;
  * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
  */
 async function initBoard() {
-  await initHeader();
+  // await initHeader(); // Header läuft jetzt zentral über initHeaderAuthUI() in script.js
+  await window.getCurrentUser(); // Auth-Ready-Wartepunkt, Header läuft über initHeaderAuthUI()
   await fetchAllData("tasks");
   await fetchAllData("contacts");
   renderTasks(Object.keys(allTasks));
@@ -144,7 +145,7 @@ function getCategoryColor(taskID) {
  * @returns {void} Nothing; the description is written into the task card, or the card stays unchanged if there is none.
  */
 function renderDescription(taskID, containerID) {
-  
+
   const descriptionRef = document.getElementById(containerID);
   const description = allTasks[taskID].description;
   if (!description || description.trim() === "") {
@@ -184,7 +185,7 @@ function hasTaskSubtasks(subtasks) {
  */
 function getDoneSubtasksCounter(subtasks) {
   let counter = 0;
-  subtasks.forEach((subtask) => {counter += subtask.done ? 1 : 0;})
+  subtasks.forEach((subtask) => { counter += subtask.done ? 1 : 0; })
   return counter;
 }
 
@@ -239,7 +240,7 @@ function renderOneTaskAssignee(taskID, assignee) {
  * @returns {void} Nothing; the content of every column is removed from the DOM.
  */
 function clearAllColumns() {
-  columns.forEach((column) => {column.innerHTML = ""})
+  columns.forEach((column) => { column.innerHTML = "" })
 }
 
 
@@ -252,7 +253,7 @@ function checkForEmptyColumn() {
     if (!columns[i].innerText) {
       const emptyColumnID = columns[i].id;
       const emptyColumnName = getColumnName(emptyColumnID);
-      document.getElementById(emptyColumnID).innerHTML 
+      document.getElementById(emptyColumnID).innerHTML
         = templateEmptyColumn(emptyColumnName);
     }
   }
@@ -270,7 +271,7 @@ function getColumnName(columnID) {
     case "toDo": columnName = "To do";
       break;
     case "inProgress": columnName = "In progress";
-      break; 
+      break;
     case "awaitFeedback": columnName = "Await feedback";
       break;
     case "done": columnName = "Done";
