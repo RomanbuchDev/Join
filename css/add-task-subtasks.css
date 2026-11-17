@@ -60,7 +60,7 @@
   color: var(--color-white);
 }
 
-.priority-radio:checked + label .priority-icon path {
+.priority-radio:checked + label .priority-option-icon path {
   fill: var(--color-white);
 }
 

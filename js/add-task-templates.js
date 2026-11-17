@@ -13,6 +13,7 @@ function getTaskFormTemplate(options = {}) {
       resetHandler: "clearTaskForm()",
       priority: "medium",
       category: "",
+      showCategory: true,
       actions: getTaskActionsTemplate(),
     },
     options,
@@ -24,7 +25,11 @@ function getTaskFormTemplate(options = {}) {
       onsubmit="${settings.submitHandler}"
       onreset="${settings.resetHandler}"
     >
-      ${getTaskFieldsTemplate(settings.priority, settings.category)}
+      ${getTaskFieldsTemplate(
+        settings.priority,
+        settings.category,
+        settings.showCategory,
+      )}
       ${settings.actions}
     </form>
   `;
@@ -56,7 +61,11 @@ function getCategoryPlaceholderAttribute(category) {
 }
 
 
-function getTaskFieldsTemplate(priority = "medium", category = "") {
+function getTaskFieldsTemplate(
+  priority = "medium",
+  category = "",
+  showCategory = true,
+) {
   return /*html*/ `
     <div class="form-content">
       <div class="form-column form-column--left">
@@ -113,7 +122,7 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
                 Urgent
 
                 <svg
-                  class="priority-icon"
+                  class="priority-option-icon"
                   width="20"
                   height="15"
                   viewBox="0 0 20 15"
@@ -145,7 +154,7 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
                 Medium
 
                 <svg
-                  class="priority-icon"
+                  class="priority-option-icon"
                   width="20"
                   height="8"
                   viewBox="0 0 20 8"
@@ -177,7 +186,7 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
                 Low
 
                 <svg
-                  class="priority-icon"
+                class="priority-option-icon" 
                   width="20"
                   height="15"
                   viewBox="0 0 20 15"
@@ -229,36 +238,9 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
           ></div>
         </div>
 
-        <div class="form-field form-field--category">
-          <label class="required-label" for="category">Category</label>
-          <select
-          class="form-control form-control--select"
-          name="category"
-          id="category"
-          required
-         >
-       <option
-         class="select-placeholder"
-         value=""
-         disabled
-         ${getCategoryPlaceholderAttribute(category)}
-         >
-        Select task category
-       </option>
-       <option
-         value="technical-task"
-         ${getSelectedAttribute(category, "Technical Task")}
-         >
-         Technical Task
-       </option>
-       <option
-         value="user-story"
-         ${getSelectedAttribute(category, "User Story")}
-         >
-         User Story
-       </option>
-     </select>
-        </div>
+       ${showCategory ? getTaskCategoryTemplate(category) : ""}
+
+       
 
         <div class="form-field form-field--subtasks">
           <label for="subtask">Subtasks</label>
@@ -294,6 +276,42 @@ function getTaskFieldsTemplate(priority = "medium", category = "") {
         <span class="required-marker" aria-hidden="true">*</span>
         This field is required
       </span>
+    </div>
+  `;
+}
+
+
+function getTaskCategoryTemplate(category = "") {
+  return /*html*/ `
+    <div class="form-field form-field--category">
+      <label class="required-label" for="category">Category</label>
+      <select
+        class="form-control form-control--select"
+        name="category"
+        id="category"
+        required
+      >
+        <option
+          class="select-placeholder"
+          value=""
+          disabled
+          ${getCategoryPlaceholderAttribute(category)}
+        >
+          Select task category
+        </option>
+        <option
+          value="technical-task"
+          ${getSelectedAttribute(category, "Technical Task")}
+        >
+          Technical Task
+        </option>
+        <option
+          value="user-story"
+          ${getSelectedAttribute(category, "User Story")}
+        >
+          User Story
+        </option>
+      </select>
     </div>
   `;
 }

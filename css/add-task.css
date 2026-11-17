@@ -219,7 +219,7 @@
   margin-block-end: 0.5em;
 }
 
-.priority-icon {
+.priority-option-icon {
   width: 1em;
   height: auto;
   flex-shrink: 0;
@@ -294,6 +294,28 @@
   height: 2rem;
   background: url("../assets/icons/board-icon.svg") center / contain no-repeat;
   filter: brightness(0) invert(1);
+}
+
+.form-control--date {
+  padding-right: 3rem;
+  background-image: url("../assets/icons/event.svg");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.12rem 1.25rem;
+  position: relative;
+}
+
+.form-control--date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.125rem;
+  height: 1.25rem;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
 @media (width >= 64em) {

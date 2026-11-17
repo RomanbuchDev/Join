@@ -156,7 +156,7 @@ function toggleAssignedContacts() {
 async function loadAssignedContacts() {
   const idToken = await window.auth.currentUser.getIdToken();
   const response = await fetch(
-    `${window.firebaseUrl}contacts.json?auth=${encodeURIComponent(idToken)}`,
+    `${window.firebaseUrl}/contacts.json?auth=${encodeURIComponent(idToken)}`,
   );
   checkContactsResponse(response);
   const data = await response.json();
@@ -230,7 +230,7 @@ async function loadUserProfile(user) {
   const idToken = await user.getIdToken();
   const path = `users/${encodeURIComponent(user.uid)}`;
   const response = await fetch(
-    `${window.firebaseUrl}${path}.json?auth=${encodeURIComponent(idToken)}`,
+    `${window.firebaseUrl}/${path}.json?auth=${encodeURIComponent(idToken)}`,
   );
   if (!response.ok) {
     throw new Error(`Profil konnte nicht geladen werden (${response.status}).`);
@@ -324,7 +324,17 @@ function readTaskFields(form, data) {
     description: data.get("description").trim(),
     dueDate: data.get("due-date"),
     priority: data.get("priority"),
-    category: form.elements.category.selectedOptions[0].textContent.trim(),
+    ...readAddTaskCategory(form),
+  };
+}
+
+
+function readAddTaskCategory(form) {
+  const category = form.elements.namedItem("category");
+  if (!category) return {};
+
+  return {
+    category: category.selectedOptions[0].textContent.trim(),
   };
 }
 
