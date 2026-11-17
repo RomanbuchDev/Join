@@ -2,7 +2,9 @@ async function initAddTask() {
   renderAddTask();
   const status = new URLSearchParams(window.location.search).get("status");
   setAddTaskFormStatus(status);
-  await initHeader();
+  // await initHeader(); // Header läuft jetzt zentral über initHeaderAuthUI() in script.js
+  await window.getCurrentUser(); // Auth-Ready-Wartepunkt, Header läuft über initHeaderAuthUI()
+
   await initTaskForm();
 }
 
@@ -155,8 +157,9 @@ function toggleAssignedContacts() {
 
 async function loadAssignedContacts() {
   const idToken = await window.auth.currentUser.getIdToken();
+  // "/" ergänzt: window.firebaseUrl endet seit dem URL-Fix vom 16.11. ohne trailing slash
   const response = await fetch(
-    `${window.firebaseUrl}contacts.json?auth=${encodeURIComponent(idToken)}`,
+    `${window.firebaseUrl}/contacts.json?auth=${encodeURIComponent(idToken)}`,
   );
   checkContactsResponse(response);
   const data = await response.json();
