@@ -32,7 +32,7 @@ function handleAuthStateChange(user) {
 async function loadCurrentUserProfile(user) {
   const idToken = await user.getIdToken();
   const response = await fetch(
-    `${window.firebaseUrl}users/${user.uid}.json?auth=${idToken}`,
+    `${window.firebaseUrl}/users/${user.uid}.json?auth=${idToken}`,
   );
   const profile = await response.json();
   window.currentUser = {

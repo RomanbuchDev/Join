@@ -3,10 +3,13 @@
  */
 
 // #region VARIABLES
+
 const searchInputFieldRef = document.getElementById("searchInputfield");
+
 // #endregion
 
 // #region SEARCH
+
 /**
  * Handles a click on the search button.
  * Runs the search for the current input and puts the focus back on the search input field.
@@ -47,10 +50,11 @@ function resetSearch() {
   }
   searchInputFieldRef.value = "";
 }
+
 // #endregion
 
-
 // #region MATCH
+
 /**
  * Finds all tasks whose title and description contain every search term.
  * @param {string} trimmedInput - The trimmed, non-empty search input.
@@ -87,4 +91,5 @@ function includesAllSearchTerms(sourceString, searchTerms) {
   }
   return true;
 }
+
 // #endregion

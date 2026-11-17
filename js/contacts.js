@@ -21,8 +21,7 @@ let lastScrollPosition = 0;
  * @async
  */
 async function initContacts() {
-  await initHeader()
-  await initLegalPageAuthUI();
+  await initHeader();
   await fetchAllContacts();
   renderContactList();
   activateContactFormSubmissionType();

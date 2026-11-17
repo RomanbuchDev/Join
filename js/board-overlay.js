@@ -3,6 +3,7 @@
  */
 
 // #region SHOW
+
 function handleTaskCardClick(event, taskID) {
   if (event.target.closest(".move-menu-container")) return;
     openTaskOverlay(taskID);
@@ -16,10 +17,11 @@ function openTaskOverlay(taskID) {
   dialogRef.getBoundingClientRect();
   dialogRef.classList.add("dialog-task-open");
 }
+
 // #endregion
 
-
 // #region CLOSE
+
 function handleOverlayBackdropClick(event) {
   if (event.target === event.currentTarget) closeTaskOverlay();
 }
@@ -43,17 +45,22 @@ function finishClosingOverlay(event) {
   event.currentTarget.close();
   event.currentTarget.removeEventListener("transitionend", finishClosingOverlay);
 }
+
 // #endregion
 
-
 // #region RENDER
+
 function renderTaskOverlay(taskID) {
   const overlayRef = document.getElementById("overlayTaskEdit");
-  overlayRef.innerHTML = templateOverlayDetailedTask(taskID, getCategoryColor(taskID));
+  overlayRef.innerHTML = templateOverlayTask(taskID, getCategoryColor(taskID));
+  const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
+  const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
+  overlayMainRef.innerHTML = templateOverlayMainDetails(taskID);
+  overlayFooterRef.innerHTML = templateOverlayFooterDetails(taskID);
   renderDescription(taskID, `overlayDescription${taskID}`);
   renderPriority(taskID);
   renderOverlayAssignees(taskID);
-  renderSubtasks(taskID);
+  renderOverlaySubtasks(taskID);
 }
 
 
@@ -92,7 +99,7 @@ function renderOneOverlayAssignee(taskID, assignee) {
 }
 
 
-function renderSubtasks(taskID) {
+function renderOverlaySubtasks(taskID) {
   const subtasks = allTasks[taskID].subtasks;
   if (!hasTaskSubtasks(subtasks)) return;
 
@@ -106,10 +113,11 @@ function renderSubtasks(taskID) {
   } 
   subtasksListRef.innerHTML = subtasksHTML;
 }
+
 // #endregion
 
-
 // #region EDIT
+
 async function toggleSubtask(event, taskID, indexSubtask) {
   const checkboxRef = event.currentTarget;
   const newValue = checkboxRef.checked;
@@ -130,10 +138,24 @@ function adjustSubtaskChange(taskID, subtask, newValue) {
   subtask.done = newValue;
   renderProgressBar(taskID);
 }
+
+
+function editTask(event, taskID) {
+  const buttonRef = event.currentTarget;
+  buttonRef.disabled = true;
+
+  const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
+  const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
+  overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
+  overlayFooterRef.innerHTML = templateOverlayFooterEdit(taskID);
+  
+  buttonRef.disabled = false;
+}
+
 // #endregion
 
-
 // #region DELETE
+
 async function deleteTask(event, taskID) {
   const buttonRef = event.currentTarget;
   buttonRef.disabled = true;
@@ -176,4 +198,5 @@ function updateBoardAfterDelete(taskID) {
   if (columnRef) renderAmountOfTasks(columnRef.id, columnRef.children.length);
   checkForEmptyColumn()
 }
+
 // #endregion

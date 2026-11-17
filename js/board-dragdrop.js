@@ -4,6 +4,7 @@
  */
 
 // #region START, END
+
 /**
  * Marks the dragged task card and sets the drag data used to identify a task drag.
  * @param {DragEvent} event - The dragstart event of the task card.
@@ -26,19 +27,21 @@ function handleDragend() {
   const currentDraggedTask = document.querySelector(".dragged-task");
   currentDraggedTask?.classList.remove("dragged-task");
 }
+
 // #endregion
 
-
 // #region LISTENER
+
 columns.forEach((column) => {
   column.addEventListener("dragleave", handleDragleave);
   column.addEventListener("dragover", handleDragover);
   column.addEventListener("drop", handleDrop);
 });
+
 // #endregion
 
-
 // #region LEAVE
+
 /**
  * Cleans up when the pointer leaves a column: removes the highlight and the placeholder, and shows the empty-column message again.
  * @param {DragEvent} event - The dragleave event of the column.
@@ -54,10 +57,11 @@ function handleDragleave(event) {
   const placeholder = column.querySelector(".placeholder");
   placeholder?.remove();
 }
+
 // #endregion
 
-
 // #region OVER
+
 /**
  * Handles a task being dragged over a column.
  * Ignores drags that are not a task drag, otherwise highlights the column and moves the placeholder.
@@ -206,10 +210,11 @@ function makePlaceholder(draggedTask) {
   placeholder.style.minWidth = `${draggedTask.offsetWidth}px`;
   return placeholder;
 }
+
 // #endregion
 
-
 // #region DROP
+
 /**
  * Handles the drop of a task on a column.
  * Does nothing if there is no placeholder or no dragged task.
@@ -243,10 +248,11 @@ function handleSuccessfulDrop(column, draggedTask, placeholder) {
   column.insertBefore(draggedTask, placeholder);
   placeholder.remove();
 }
+
 // #endregion
 
-
 // #region BUTTON
+
 /**
  * Moves a task to the top of another column via the move menu.
  * Does nothing if the target column does not exist or equals the current one.
@@ -266,10 +272,11 @@ function moveTaskViaButton(event) {
   handleMovedTasks(movedTask);
   checkForEmptyColumn();
 }
+
 // #endregion
 
-
 // #region MOVED
+
 /**
  * Saves the new order after a task was moved: renumbers the destination column and, if the task
  * changed its column, also handles the origin column, counters and status. Queues the changes for saving.
@@ -335,4 +342,5 @@ function adjustNewStatusToDraggedTask(updates, destinationStatus, draggedTask) {
   draggedTask.dataset.taskStatus = destinationStatus;
   Object.assign(updates, { [`${draggedTaskID}/status`]: destinationStatus });
 }
+
 // #endregion
