@@ -179,7 +179,7 @@ main {
   display: none;
 }
 
-@media (width >= 80em) {
+@media (width >= 64em) {
   main {
     display: grid;
     grid-template-columns: 560px 1fr;
