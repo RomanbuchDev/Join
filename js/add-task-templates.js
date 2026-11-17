@@ -25,11 +25,7 @@ function getTaskFormTemplate(options = {}) {
       onsubmit="${settings.submitHandler}"
       onreset="${settings.resetHandler}"
     >
-      ${getTaskFieldsTemplate(
-        settings.priority,
-        settings.category,
-        settings.showCategory,
-      )}
+      ${getTaskFieldsTemplate(settings.priority, settings.category, settings.showCategory)}
       ${settings.actions}
     </form>
   `;
@@ -247,11 +243,7 @@ function getTaskFieldsTemplate(
 
           <div class="subtask-input">
             <input
-              id="subtask"
-              type="text"
-              placeholder="Add new subtask"
-              oninput="updateSubtaskActions()"
-              onkeydown="handleSubtaskKeydown(event)"
+              id="subtask" type="text" placeholder="Add new subtask" oninput="updateSubtaskActions()" onkeydown="handleSubtaskKeydown(event)"
             />
 
             <div id="subtask-actions" class="subtask-actions" hidden>
@@ -261,9 +253,7 @@ function getTaskFieldsTemplate(
                 onclick="clearSubtaskInput()"
               >✕</button>
               <button
-                type="button"
-                aria-label="Confirm subtask"
-                onclick="saveSubtask()"
+                type="button" aria-label="Confirm subtask" onclick="saveSubtask()"
               >✓</button>
             </div>
           </div>
@@ -286,9 +276,7 @@ function getTaskCategoryTemplate(category = "") {
     <div class="form-field form-field--category">
       <label class="required-label" for="category">Category</label>
       <select
-        class="form-control form-control--select"
-        name="category"
-        id="category"
+        class="form-control form-control--select" name="category" id="category"
         required
       >
         <option
@@ -362,9 +350,7 @@ function getAssignedContactTemplate() {
       <span class="selected-contact-badge" aria-hidden="true"></span>
       <span class="assigned-contact-name"></span>
       <input
-        type="checkbox"
-        name="assignedTo"
-        onclick="renderSelectedContactBadges()"
+        type="checkbox" name="assignedTo" onclick="renderSelectedContactBadges()"
       />
     </label>
   `;
