@@ -60,16 +60,12 @@
   color: var(--color-white);
 }
 
-.priority-radio:checked + label .priority-icon path {
+.priority-radio:checked + label .priority-option-icon path {
   fill: var(--color-white);
 }
 
 .required-marker {
   color: var(--color-error);
-}
-
-.required-hint--desktop {
-  display: none;
 }
 
 .contact-dropdown {
@@ -244,11 +240,6 @@
     grid-area: hint;
   }
 
-  .required-hint--desktop {
-    display: block;
-    margin-inline-end: auto;
-  }
-
   .form-column > .form-field {
     align-self: stretch;
   }
@@ -267,6 +258,54 @@
     .subtask-input:not(:focus-within):has(#subtask:placeholder-shown) {
     border-color: var(--color-gray-209, #d1d1d1);
   }
+}
+
+.required-hint--desktop {
+  display: none;
+}
+
+.add-task-page #toast-message {
+  font-family: var(--font-family);
+  font-size: 1.25rem;
+  font-weight: 400;
+  padding: 1.25rem 1.5rem;
+}
+
+.add-task-page #toast-message:popover-open {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.add-task-page #toast-message::after {
+  content: "";
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background: url("../assets/icons/board-icon.svg") center / contain no-repeat;
+  filter: brightness(0) invert(1);
+}
+
+.form-control--date {
+  padding-right: 3rem;
+  background-image: url("../assets/icons/event.svg");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.12rem 1.25rem;
+  position: relative;
+}
+
+.form-control--date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.125rem;
+  height: 1.25rem;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
 @media (hover: hover) and (pointer: fine) {

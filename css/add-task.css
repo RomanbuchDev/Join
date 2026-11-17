@@ -219,7 +219,7 @@
   margin-block-end: 0.5em;
 }
 
-.priority-icon {
+.priority-option-icon {
   width: 1em;
   height: auto;
   flex-shrink: 0;
@@ -268,32 +268,6 @@
     margin-inline-start: auto;
     background: url("../assets/icons/drop-arrow.svg") center / contain no-repeat;
   }
-}
-
-.required-hint--desktop {
-  display: none;
-}
-
-.add-task-page #toast-message {
-  font-family: var(--font-family);
-  font-size: 1.25rem;
-  font-weight: 400;
-  padding: 1.25rem 1.5rem;
-}
-
-.add-task-page #toast-message:popover-open {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.add-task-page #toast-message::after {
-  content: "";
-  flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
-  background: url("../assets/icons/board-icon.svg") center / contain no-repeat;
-  filter: brightness(0) invert(1);
 }
 
 @media (width >= 64em) {
