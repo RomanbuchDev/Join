@@ -9,7 +9,6 @@ setTimeout(() => {
 async function initGreeting() {
   const user = await window.getCurrentUser();
   greetingUser(user);
-  initAvatar(user);
 }
 
 
