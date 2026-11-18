@@ -32,6 +32,8 @@ h4 {
 body {
   font-family: var(--font-family);
   background-color: var(--color-bg-main);
+  scrollbar-color: var(--color-dark) var(--color-bg-main);
+  scrollbar-gutter: stable;
 }
 
 #page {
@@ -41,7 +43,6 @@ body {
     "header" auto
     "main" minmax(0, 1fr)
     "nav" auto;
-  overflow: hidden;
 }
 
 .main {
@@ -57,7 +58,6 @@ body {
 @media (width >= 64em) {
   #page {
     height: 100dvh;
-    overflow: hidden;
     grid-template-columns: 14.5rem repeat(4, 1fr);
     grid-template-areas:
       "nav  header header header header"

@@ -4,6 +4,7 @@
 
 // #region VARIABLES
 
+/** The search input field of the board page. */
 const searchInputFieldRef = document.getElementById("searchInputfield");
 
 // #endregion

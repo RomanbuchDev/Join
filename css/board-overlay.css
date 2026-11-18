@@ -1,25 +1,39 @@
 /* #region MARK: ?? 
 */
 
-.dialog-task {
+.dialog-board {
   line-height: 1.2;
   border: none;
   border-radius: 30px;
   padding: 0;
-  width: min(60em, calc(100% - 2 * 1em));
-  max-width: fit-content;
+  width: fit-content;
+  max-width: min(50em, max(95%, calc(100% - 2 * 1em)));
   height: fit-content;
-  max-height: calc(100dvh - 2 * 6em);
+  max-height: 98dvh;
   transform: translateX(100%);
   transition: transform 0.3s ease-out;
 }
 
-.dialog-task-open {
+.dialog-board:not([open]) {
+  display: none;
+}
+
+.dialog-board-open {
   transform: translateX(0);
 }
 
-.dialog-task::backdrop {
+.dialog-board::backdrop {
   background: var(--color-black-40);
+}
+
+.overlay-board {
+  padding: 1em 0;
+  gap: 1.25em;
+  width: 100%;
+}
+
+.overlay-board:focus {
+  outline: none;
 }
 
 .overlay-task-edit {
@@ -29,19 +43,18 @@
     "overlay-main"
     "overlay-footer";
   grid-template-rows: auto minmax(0, 1fr) auto;
-  padding: 2em 1.5em;
-  gap: 1.5em;
-  width: 100%;
 }
 
 .overlay-header {
   grid-area: overlay-header;
   justify-content: space-between;
+  padding-inline: 1em;
 }
 
 .overlay-footer {
   grid-area: overlay-footer;
   justify-content: flex-end;
+  padding-inline: 1em;
   gap: 0.5em;
   height: 1.5em;
 }
@@ -59,21 +72,23 @@
 .overlay-main {
   grid-area: overlay-main;
   flex-direction: column;
-  gap: 1.5em;
-  overflow-y: scroll;
-}
-
-.overlay-main h1 {
-  font-size: 2.25rem;
+  padding-inline: 1em;
+  gap: 1em;
+  overflow-y: auto;
+  scrollbar-color: var(--color-dark) var(--color-white);
 }
 
 .overlay-main h2 {
+  font-size: 2.25rem;
+}
+
+.overlay-main h4 {
   color: var(--color-dark);
   font-size: 1rem;
   font-weight: 400;
 }
 
-.overlay-detail-row h2 {
+.overlay-detail-row h4 {
   width: 6em;
 }
 
@@ -112,19 +127,56 @@
 
 /* #endregion */
 
+/* #region MARK: @ mobile M 
+*/
+@media (width >= 24em) {
+  .dialog-board {
+    max-height: 90dvh;
+  }
+
+  .overlay-board {
+    padding: 1.5em 0.5em;
+  }
+
+  .overlay-main {
+    gap: 1.25em;
+  }
+}
+
+/* #endregion */
+
+/* #region MARK: @ mobile L 
+*/
+@media (width >= 28em) {
+  .dialog-board {
+    max-height: calc(100dvh - 2 * 6em);
+  }
+
+  .overlay-board {
+    padding: 2em 0.5em;
+    gap: 1.5em;
+  }
+
+  .overlay-main {
+    gap: 1.5em;
+  }
+}
+
+/* #endregion */
+
 /* #region MARK: @ tablet 
 */
 @media (width >= 48em) {
-  .overlay-task-edit {
-    padding-inline: 2em;
+  .overlay-board {
+    padding: 3em 1.5em;
   }
 
-  .overlay-main h1 {
+  .overlay-main h2 {
     font-size: 3rem;
   }
 
   .overlay-task-edit h3,
-  .overlay-main h2,
+  .overlay-main h4,
   .overlay-main {
     font-size: 1.25rem;
   }

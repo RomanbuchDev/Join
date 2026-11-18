@@ -8,8 +8,8 @@
   box-shadow: 0 0 10px 3px var(--color-black-10);
   padding: 1em;
   height: fit-content;
-  min-width: 15.75em;
-  width: 15.75em;
+  min-width: 15em;
+  width: 15em;
   cursor: pointer;
 }
 
@@ -179,6 +179,17 @@
 
 .task-avatar + .task-avatar {
   margin-left: -0.5em;
+}
+
+/* #endregion */
+
+/* #region MARK: @ laptop S
+*/
+@media (width >= 64em) {
+  .task-card {
+    width: 100%;
+    contain: inline-size;
+  }
 }
 
 /* #endregion */
