@@ -32,6 +32,10 @@
   width: 100%;
 }
 
+.overlay-board:focus {
+  outline: none;
+}
+
 .overlay-task-edit {
   display: grid;
   grid-template-areas:
@@ -39,10 +43,6 @@
     "overlay-main"
     "overlay-footer";
   grid-template-rows: auto minmax(0, 1fr) auto;
-}
-
-.overlay-task-edit:focus {
-  outline: none;
 }
 
 .overlay-header {
@@ -76,7 +76,6 @@
   gap: 1em;
   overflow-y: auto;
   scrollbar-color: var(--color-dark) var(--color-white);
-  scrollbar-gutter: stable;
 }
 
 .overlay-main h2 {

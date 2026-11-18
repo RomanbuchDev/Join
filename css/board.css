@@ -1,11 +1,5 @@
 /* #region MARK: assets 
 */
-.main,
-.board-section,
-.tasks-list {
-  scrollbar-color: var(--color-dark) var(--color-bg-main);
-  scrollbar-gutter: stable;
-}
 
 input:focus-visible,
 button:focus-visible {
@@ -316,12 +310,7 @@ h2 > span {
 
 @media (width >= 90em) {
   .board-main-content {
-    padding-top: 5em;
     padding-inline: 3em;
-  }
-
-  .tasks-list {
-    height: calc(100dvh - 20em);
   }
 }
 

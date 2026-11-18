@@ -8,8 +8,8 @@
   box-shadow: 0 0 10px 3px var(--color-black-10);
   padding: 1em;
   height: fit-content;
-  min-width: 15.75em;
-  width: 15.75em;
+  min-width: 15em;
+  width: 15em;
   cursor: pointer;
 }
 
