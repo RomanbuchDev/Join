@@ -228,11 +228,16 @@
       -->
     <dialog
       id="dialogTask"
-      class="dialog-task d-flex"
+      class="dialog-board d-flex"
       onclick="handleOverlayBackdropClick(event)"
       oncancel="handleOverlayCancel(event)"
     >
-      <div id="overlayTaskEdit" class="overlay-task-edit"></div>
+      <div
+        id="overlayTaskEdit"
+        class="overlay-board overlay-task-edit"
+        autofocus
+        tabindex="-1"
+      ></div>
     </dialog>
     <dialog id="dialogAddTask">
       <div></div>

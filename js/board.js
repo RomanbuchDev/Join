@@ -17,15 +17,16 @@ let allFetchedTasksAreRendered = false;
 
 /**
  * Initializes the board view.
- * Initializes the header, then loads all tasks and all contacts first, then renders the tasks into their columns.
+ * Loads all tasks and all contacts first, then renders the tasks into their columns.
  * Contacts must be loaded before rendering, because the task assignees depend on them.
  * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
  */
 async function initBoard() {
-  // await initHeader(); // Header läuft jetzt zentral über initHeaderAuthUI() in script.js
-  await window.getCurrentUser(); // Auth-Ready-Wartepunkt, Header läuft über initHeaderAuthUI()
-  await fetchAllData("tasks");
-  await fetchAllData("contacts");
+  await window.getCurrentUser();
+  await fetchAllTasks();
+  await fetchAllContacts();
+  // await fetchAllData("tasks");
+  // await fetchAllData("contacts");
   renderTasks(Object.keys(allTasks));
   allFetchedTasksAreRendered = true;
 }
@@ -39,15 +40,19 @@ async function initBoard() {
  * @param {string} dataCategory - The category of data to fetch ("tasks", "contacts").
  * @returns {Promise<void>} Resolves once the data is fetched and stored; on errors the connection error dialog opens and nothing is thrown.
  */
-async function fetchAllData(dataCategory) {
+// async function fetchAllData(dataCategory) {
+async function fetchAllContacts() {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
-    const response = await fetch(`${window.firebaseUrl}/${dataCategory}.json?auth=${idToken}`);
-    if (!response.ok) {
-      throw new Error(`Failed to load ${dataCategory}: ${response.status}`);
-    }
-    const responseToJson = await response.json();
-    storeData(dataCategory, responseToJson);
+    // const response = await fetch(`${window.firebaseUrl}/${dataCategory}.json?auth=${idToken}`);
+    const response = await fetch(`${window.firebaseUrl}/contacts.json?auth=${idToken}`);
+    throwIfResponseNotOk(response, "Failed to load contacts");
+    // if (!response.ok) {
+    //   throw new Error(`Failed to load ${dataCategory}: ${response.status}`);
+    // }
+    // const responseToJson = await response.json();
+    // storeData(dataCategory, responseToJson);
+    Object.assign(allContacts, await response.json());
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }
@@ -60,16 +65,16 @@ async function fetchAllData(dataCategory) {
  * @param {Object<string, Object>} dataObject - The fetched data, keyed by ID.
  * @returns {void} Nothing; the data is merged into allTasks or allContacts.
  */
-function storeData(dataCategory, dataObject) {
-  switch (dataCategory) {
-    case "tasks":
-      Object.assign(allTasks, dataObject);
-      break;
-    case "contacts":
-      Object.assign(allContacts, dataObject);
-      break;
-  }
-}
+// function storeData(dataCategory, dataObject) {
+//   switch (dataCategory) {
+//     case "tasks":
+//       Object.assign(allTasks, dataObject);
+//       break;
+//     case "contacts":
+//       Object.assign(allContacts, dataObject);
+//       break;
+//   }
+// }
 
 // #endregion
 
@@ -84,7 +89,7 @@ function storeData(dataCategory, dataObject) {
 function renderTasks(currentTaskIDs) {
   clearAllColumns();
   for (const column of columns) {
-    renderAmountForStatus(currentTaskIDs, column.id)
+    renderAmountForStatus(currentTaskIDs, column.id);
   }
   const sortedTaskIDs = currentTaskIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
   sortedTaskIDs.forEach(renderOneTask);
@@ -100,7 +105,7 @@ function renderTasks(currentTaskIDs) {
  */
 function renderAmountForStatus(currentTaskIDs, status) {
   const amount = currentTaskIDs.filter((taskId) => allTasks[taskId].status === status).length;
-  renderAmountOfTasks(status, amount)
+  renderAmountOfTasks(status, amount);
 }
 
 
@@ -126,8 +131,8 @@ function renderOneTask(taskID) {
   column.innerHTML += templateTaskCard(taskID, getCategoryColor(taskID));
   renderDescription(taskID, `description${taskID}`);
   renderProgressBar(taskID);
-  const assignees = checkForTaskAssignees(taskID);
-  if (assignees) renderTaskAssignees(taskID, assignees, "board");
+  const assignees = allTasks[taskID].assignedTo;
+  if (hasTaskAssignees(assignees)) renderTaskAssignees(taskID, assignees, "board");
 }
 
 // #endregion
@@ -135,7 +140,7 @@ function renderOneTask(taskID) {
 // #region T. DETAILS
 
 function getCategoryColor(taskID) {
-  return (allTasks[taskID].category == "User Story") ? "category-color-user-story" : "category-color-technical-task";
+  return (allTasks[taskID].category === "User Story") ? "category-color-user-story" : "category-color-technical-task";
 }
 
 
@@ -145,7 +150,6 @@ function getCategoryColor(taskID) {
  * @returns {void} Nothing; the description is written into the task card, or the card stays unchanged if there is none.
  */
 function renderDescription(taskID, containerID) {
-
   const descriptionRef = document.getElementById(containerID);
   const description = allTasks[taskID].description;
   if (!description || description.trim() === "") {
@@ -162,8 +166,8 @@ function renderDescription(taskID, containerID) {
  * @returns {void} Nothing; the progress bar is written into the task card, or its container is hidden if there are no subtasks.
  */
 function renderProgressBar(taskID) {
-  const subtasks = allTasks[taskID].subtasks;
   const progressContainerRef = document.getElementById(`progressContainer${taskID}`);
+  const subtasks = allTasks[taskID].subtasks;
   if (hasTaskSubtasks(subtasks)) {
     const doneSubtasks = getDoneSubtasksCounter(subtasks);
     progressContainerRef.innerHTML = templateProgressBar(doneSubtasks, subtasks.length);
@@ -185,22 +189,13 @@ function hasTaskSubtasks(subtasks) {
  */
 function getDoneSubtasksCounter(subtasks) {
   let counter = 0;
-  subtasks.forEach((subtask) => { counter += subtask.done ? 1 : 0; })
+  subtasks.forEach((subtask) => { counter += subtask.done ? 1 : 0; });
   return counter;
 }
 
 
-/**
- * Renders the avatars of all assignees on a task card if they exist.
- * @param {string} taskID - The ID of the task for which to render the assignees.
- * @returns {void} Nothing; the avatars are added to the task card, unknown contacts are skipped.
- */
-function checkForTaskAssignees(taskID) {
-  const assignees = allTasks[taskID].assignedTo;
-  if (!assignees || assignees.length === 0) {
-    return false;
-  }
-  return assignees;
+function hasTaskAssignees(assignees) {
+  return assignees && assignees.length > 0;
 }
 
 
@@ -208,6 +203,7 @@ function renderTaskAssignees(taskID, assignees, view) {
   for (let i = 0; i < assignees.length; i++) {
     const assignee = getAssignee(taskID, assignees[i]);
     if (!assignee) continue;
+
     if (view === "board") renderOneTaskAssignee(taskID, assignee);
     if (view === "overlay") renderOneOverlayAssignee(taskID, assignee);
   }
@@ -227,7 +223,7 @@ function getAssignee(taskID, assigneeID) {
 
 
 function renderOneTaskAssignee(taskID, assignee) {
-  const assigneesRef = document.getElementById(`assigneesContainer${taskID}`)
+  const assigneesRef = document.getElementById(`assigneesContainer${taskID}`);
   assigneesRef.innerHTML += templateTaskAssignee(assignee.shortcutColor, assignee.shortcut);
 }
 
@@ -240,7 +236,7 @@ function renderOneTaskAssignee(taskID, assignee) {
  * @returns {void} Nothing; the content of every column is removed from the DOM.
  */
 function clearAllColumns() {
-  columns.forEach((column) => { column.innerHTML = "" })
+  columns.forEach((column) => { column.innerHTML = "" });
 }
 
 

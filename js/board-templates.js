@@ -127,7 +127,7 @@ function templateOverlayTask(taskID, categoryColor) {
         </svg>
       </button>
     </header>
-    <main id="overlayMain${escapeHtml(taskID)}" class="overlay-main d-flex"></main>
+    <section id="overlayMain${escapeHtml(taskID)}" class="overlay-main d-flex"></section>
     <footer id="overlayFooter${escapeHtml(taskID)}" class="overlay-footer d-flex"></footer>
   `
 }
@@ -136,14 +136,14 @@ function templateOverlayTask(taskID, categoryColor) {
 function templateOverlayMainDetails(taskID) {
   const task = allTasks[taskID];
   return /*html*/ `
-    <h1>${escapeHtml(task.title)}</h1>
+    <h2>${escapeHtml(task.title)}</h2>
     <p id="overlayDescription${escapeHtml(taskID)}"></p>
     <div class="overlay-detail-row d-flex">
-      <h2>Due date:</h2>
+      <h4>Due date:</h4>
       <p>${escapeHtml(getTaskDate(taskID))}</p>
     </div>
     <div class="overlay-detail-row d-flex">
-      <h2>Priority:</h2>
+      <h4>Priority:</h4>
       <p id="overlayPriority${escapeHtml(taskID)}" class="overlay-priority d-flex"></p>
     </div>
     <div id="overlayAssigneesContainer${escapeHtml(taskID)}" class="overlay-detail-column d-flex"></div>
@@ -168,7 +168,7 @@ function templateOverlayFooterDetails(taskID) {
     </button>
     <div class="divider-line"></div>
     <button type="button" class="button-delete-edit button-reset d-flex"
-      onclick="editTask(event, '${escapeHtml(taskID)}')">
+      onclick="editTask('${escapeHtml(taskID)}')">
       <svg
         class="svg-fill svg-width-height-18px"
         aria-hidden="true"
@@ -183,7 +183,7 @@ function templateOverlayFooterDetails(taskID) {
 }
 
 
-function templateOverlayPriority(priorityString,  priority) {
+function templateOverlayPriority(priorityString, priority) {
   return /*html*/ `
     <span>${escapeHtml(priorityString)}</span>
     <img draggable="false"
@@ -195,7 +195,7 @@ function templateOverlayPriority(priorityString,  priority) {
 
 function templateOverlayAssignees(taskID) {
   return /*html*/ `
-    <h2>Assigned to:</h2>
+    <h4>Assigned to:</h4>
     <ul id="overlayAssignees${escapeHtml(taskID)}" class="overlay-assignees d-flex">
     </ul>`
 }
@@ -214,7 +214,7 @@ function templateOverlayOneAssignee(assigneeColor, assigneeShortcut, assigneeNam
 
 function templateOverlaySubtasks(taskID) {
   return /*html*/ `
-    <h2>Subtasks:</h2>
+    <h4>Subtasks:</h4>
     <ul id="overlaySubtasks${escapeHtml(taskID)}">
     </ul>`
 }
@@ -248,7 +248,7 @@ function templateOverlayMainEdit(taskID) {
 function templateOverlayFooterEdit() {
   return /*html*/ `
     <button
-      class="button-basic button-primary btn-d-tablet"
+      class="button-basic button-primary"
       type="button"
     >
       <span>Ok</span>

@@ -182,3 +182,14 @@
 }
 
 /* #endregion */
+
+/* #region MARK: @ laptop S
+*/
+@media (width >= 64em) {
+  .task-card {
+    width: 100%;
+    contain: inline-size;
+  }
+}
+
+/* #endregion */

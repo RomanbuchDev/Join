@@ -50,4 +50,7 @@
   /* uses color-label: board-task category tag */
   --color-label-user-story: rgba(0 56 255 / 100%);
   --color-label-technical-task: rgba(31 215 193 / 100%);
+
+  /* uses: board styling */
+  --board-column-max-width: 25em;
 }

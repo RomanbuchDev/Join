@@ -6,7 +6,8 @@
 
 function handleTaskCardClick(event, taskID) {
   if (event.target.closest(".move-menu-container")) return;
-    openTaskOverlay(taskID);
+
+  openTaskOverlay(taskID);
 }
 
 
@@ -15,7 +16,7 @@ function openTaskOverlay(taskID) {
   renderTaskOverlay(taskID);
   dialogRef.showModal();
   dialogRef.getBoundingClientRect();
-  dialogRef.classList.add("dialog-task-open");
+  dialogRef.classList.add("dialog-board-open");
 }
 
 // #endregion
@@ -35,15 +36,17 @@ function handleOverlayCancel(event) {
 
 function closeTaskOverlay() {
   const dialogRef = document.getElementById("dialogTask");
-  dialogRef.classList.remove("dialog-task-open");
-  dialogRef.addEventListener("transitionend", finishClosingOverlay)
+  dialogRef.classList.remove("dialog-board-open");
+  dialogRef.addEventListener("transitionend", finishClosingOverlay);
 }
 
 
 function finishClosingOverlay(event) {
-  if (event.target !== event.currentTarget) closeTaskOverlay();
-  event.currentTarget.close();
-  event.currentTarget.removeEventListener("transitionend", finishClosingOverlay);
+  const openedDialog = event.currentTarget;
+  if (event.target !== openedDialog) return;
+
+  openedDialog.close();
+  openedDialog.removeEventListener("transitionend", finishClosingOverlay);
 }
 
 // #endregion
@@ -73,45 +76,52 @@ function getTaskDate(taskID) {
 
 function renderPriority(taskID) {
   const priorityRef = document.getElementById(`overlayPriority${taskID}`);
-  let priority = allTasks[taskID].priority;
-  if (!priority) {
-    priority = "medium";
-  }
+  const priority = allTasks[taskID].priority || "medium";
   const priorityString = priority.charAt(0).toUpperCase() + priority.slice(1).toLowerCase();
   priorityRef.innerHTML = templateOverlayPriority(priorityString, priority);
 }
 
 
 function renderOverlayAssignees(taskID) {
-  const assignees = checkForTaskAssignees(taskID);
-  if (assignees) {
-    const assigneesRef = document.getElementById(`overlayAssigneesContainer${taskID}`);
-    assigneesRef.innerHTML = templateOverlayAssignees(taskID);
-    renderTaskAssignees(taskID, assignees, "overlay");
+  const assigneesRef = document.getElementById(`overlayAssigneesContainer${taskID}`);
+  const assignees = allTasks[taskID].assignedTo;
+  if (!hasTaskAssignees(assignees)) {
+    assigneesRef.classList.add("d-none");
+    return;
   }
+
+  assigneesRef.innerHTML = templateOverlayAssignees(taskID);
+  renderTaskAssignees(taskID, assignees, "overlay");
 }
 
 
 function renderOneOverlayAssignee(taskID, assignee) {
-  const assigneesRef = document.getElementById(`overlayAssignees${taskID}`)
+  const assigneesRef = document.getElementById(`overlayAssignees${taskID}`);
   const name = assignee.name || assignee.shortcut;
   assigneesRef.innerHTML += templateOverlayOneAssignee(assignee.shortcutColor, assignee.shortcut, name);
 }
 
 
 function renderOverlaySubtasks(taskID) {
-  const subtasks = allTasks[taskID].subtasks;
-  if (!hasTaskSubtasks(subtasks)) return;
-
   const subtasksContainerRef = document.getElementById(`overlaySubtasksContainer${taskID}`);
-  subtasksContainerRef.innerHTML = templateOverlaySubtasks(taskID);
+  const subtasks = allTasks[taskID].subtasks;
+  if (!hasTaskSubtasks(subtasks)) {
+    subtasksContainerRef.classList.add("d-none");
+    return;
+  }
 
+  subtasksContainerRef.innerHTML = templateOverlaySubtasks(taskID);
   const subtasksListRef = document.getElementById(`overlaySubtasks${taskID}`);
+  subtasksListRef.innerHTML = getSubtasksHtml(taskID, subtasks);
+}
+
+
+function getSubtasksHtml(taskID, subtasks) {
   let subtasksHTML = "";
   for (let indexSubtask = 0; indexSubtask < subtasks.length; indexSubtask++) {
     subtasksHTML += templateOverlayOneSubtask(taskID, indexSubtask);
-  } 
-  subtasksListRef.innerHTML = subtasksHTML;
+  }
+  return subtasksHTML;
 }
 
 // #endregion
@@ -127,29 +137,24 @@ async function toggleSubtask(event, taskID, indexSubtask) {
     const saved = await patchTasks({[`${taskID}/subtasks/${indexSubtask}/done`]: newValue});
     if (saved) {
       adjustSubtaskChange(taskID, subtask, newValue);
-    } 
+    }
   } finally {
     checkboxRef.disabled = false;
   }
 }
 
 
-function adjustSubtaskChange(taskID, subtask, newValue) { 
+function adjustSubtaskChange(taskID, subtask, newValue) {
   subtask.done = newValue;
   renderProgressBar(taskID);
 }
 
 
-function editTask(event, taskID) {
-  const buttonRef = event.currentTarget;
-  buttonRef.disabled = true;
-
+function editTask(taskID) {
   const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
   const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
   overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
   overlayFooterRef.innerHTML = templateOverlayFooterEdit(taskID);
-  
-  buttonRef.disabled = false;
 }
 
 // #endregion
@@ -169,16 +174,11 @@ async function deleteTask(event, taskID) {
 
 async function runDeletion(taskID) {
   await patchQueue;
-  if (!(await refreshTasks())) return;
+  if (!(await fetchAllTasks())) return;
 
   const deleted = !allTasks[taskID] || await patchTasks(buildDeleteUpdates(taskID));
   if (deleted) updateBoardAfterDelete(taskID);
 }
-
-
-function refreshTasks() {
-  return fetchAllTasks();
-} 
 
 
 function buildDeleteUpdates(taskID) {
@@ -196,7 +196,7 @@ function updateBoardAfterDelete(taskID) {
   cardRef?.remove();
   closeTaskOverlay();
   if (columnRef) renderAmountOfTasks(columnRef.id, columnRef.children.length);
-  checkForEmptyColumn()
+  checkForEmptyColumn();
 }
 
 // #endregion
