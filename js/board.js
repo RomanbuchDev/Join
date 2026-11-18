@@ -25,56 +25,26 @@ async function initBoard() {
   await window.getCurrentUser();
   await fetchAllTasks();
   await fetchAllContacts();
-  // await fetchAllData("tasks");
-  // await fetchAllData("contacts");
   renderTasks(Object.keys(allTasks));
   allFetchedTasksAreRendered = true;
 }
 
-// #endregion
-
-// #region FETCH
 
 /**
- * Fetches all data of a specific category from the Firebase database.
- * @param {string} dataCategory - The category of data to fetch ("tasks", "contacts").
- * @returns {Promise<void>} Resolves once the data is fetched and stored; on errors the connection error dialog opens and nothing is thrown.
+ * Fetches all contacts from the Firebase database and merges them into allContacts.
+ * Opens the connection error dialog on failure and never throws.
+ * @returns {Promise<void>} Resolves once the contacts are stored or the error dialog is opened.
  */
-// async function fetchAllData(dataCategory) {
 async function fetchAllContacts() {
   try {
     const idToken = await window.auth.currentUser.getIdToken();
-    // const response = await fetch(`${window.firebaseUrl}/${dataCategory}.json?auth=${idToken}`);
     const response = await fetch(`${window.firebaseUrl}/contacts.json?auth=${idToken}`);
     throwIfResponseNotOk(response, "Failed to load contacts");
-    // if (!response.ok) {
-    //   throw new Error(`Failed to load ${dataCategory}: ${response.status}`);
-    // }
-    // const responseToJson = await response.json();
-    // storeData(dataCategory, responseToJson);
     Object.assign(allContacts, await response.json());
   } catch (error) {
     openDialogConnectionErrorDatabase();
   }
 }
-
-
-/**
- * Stores fetched data in the objects matching its category.
- * @param {string} dataCategory - The data category ("tasks" or "contacts").
- * @param {Object<string, Object>} dataObject - The fetched data, keyed by ID.
- * @returns {void} Nothing; the data is merged into allTasks or allContacts.
- */
-// function storeData(dataCategory, dataObject) {
-//   switch (dataCategory) {
-//     case "tasks":
-//       Object.assign(allTasks, dataObject);
-//       break;
-//     case "contacts":
-//       Object.assign(allContacts, dataObject);
-//       break;
-//   }
-// }
 
 // #endregion
 
@@ -139,15 +109,22 @@ function renderOneTask(taskID) {
 
 // #region T. DETAILS
 
+/**
+ * Returns the CSS class for the color of the category label of a task.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The class for "User Story" tasks, otherwise the class for technical tasks.
+ */
 function getCategoryColor(taskID) {
   return (allTasks[taskID].category === "User Story") ? "category-color-user-story" : "category-color-technical-task";
 }
 
 
 /**
- * Renders the description for a task card if it exists.
+ * Renders the description of a task into the given element, or removes the element if there is no description.
+ * Used for the task card and for the overlay.
  * @param {string} taskID - The ID of the task for which to render the description.
- * @returns {void} Nothing; the description is written into the task card, or the card stays unchanged if there is none.
+ * @param {string} containerID - The ID of the element that shows the description.
+ * @returns {void} Nothing; the description is written into the element or the element is removed.
  */
 function renderDescription(taskID, containerID) {
   const descriptionRef = document.getElementById(containerID);
@@ -177,6 +154,11 @@ function renderProgressBar(taskID) {
 }
 
 
+/**
+ * Checks whether a task has at least one subtask.
+ * @param {Object[]|undefined} subtasks - The subtasks of a task; missing if the task has none.
+ * @returns {boolean|undefined} True if there is at least one subtask; falsy (undefined) if the subtasks are missing.
+ */
 function hasTaskSubtasks(subtasks) {
   return subtasks && subtasks.length > 0;
 }
@@ -194,11 +176,24 @@ function getDoneSubtasksCounter(subtasks) {
 }
 
 
+/**
+ * Checks whether a task has at least one assignee.
+ * @param {string[]|undefined} assignees - The assignee IDs of a task; missing if the task has none.
+ * @returns {boolean|undefined} True if there is at least one assignee; falsy (undefined) if the assignees are missing.
+ */
 function hasTaskAssignees(assignees) {
   return assignees && assignees.length > 0;
 }
 
 
+/**
+ * Renders all assignees of a task in the task card or in the overlay.
+ * Assignees without data (neither a contact nor a badge in the task) are skipped.
+ * @param {string} taskID - The ID of the task.
+ * @param {string[]} assignees - The IDs of the assignees.
+ * @param {"board"|"overlay"} view - Where to render: "board" for the task card, "overlay" for the overlay.
+ * @returns {void} Nothing; the assignees are written into the DOM.
+ */
 function renderTaskAssignees(taskID, assignees, view) {
   for (let i = 0; i < assignees.length; i++) {
     const assignee = getAssignee(taskID, assignees[i]);
@@ -222,6 +217,12 @@ function getAssignee(taskID, assigneeID) {
 }
 
 
+/**
+ * Appends one assignee avatar to the assignees of a task card.
+ * @param {string} taskID - The ID of the task.
+ * @param {{shortcut: string, shortcutColor: string}} assignee - The assignee to show.
+ * @returns {void} Nothing; the avatar is added to the task card.
+ */
 function renderOneTaskAssignee(taskID, assignee) {
   const assigneesRef = document.getElementById(`assigneesContainer${taskID}`);
   assigneesRef.innerHTML += templateTaskAssignee(assignee.shortcutColor, assignee.shortcut);

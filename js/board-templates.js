@@ -109,6 +109,13 @@ function templateEmptyColumn(columnName) {
 
 // #region OVERLAY TASK
 
+/**
+ * Returns the HTML template of the overlay frame: header with category label and close button,
+ * and empty containers for the main part and the footer.
+ * @param {string} taskID - The ID of the task.
+ * @param {string} categoryColor - The CSS class for the color of the category label.
+ * @returns {string} The HTML string of the overlay frame.
+ */
 function templateOverlayTask(taskID, categoryColor) {
   const task = allTasks[taskID];
   return /*html*/ `
@@ -133,6 +140,12 @@ function templateOverlayTask(taskID, categoryColor) {
 }
 
 
+/**
+ * Returns the HTML template of the main part of the detail view: title, due date and containers
+ * for description, priority, assignees and subtasks, which are filled in afterwards.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the main part.
+ */
 function templateOverlayMainDetails(taskID) {
   const task = allTasks[taskID];
   return /*html*/ `
@@ -152,6 +165,11 @@ function templateOverlayMainDetails(taskID) {
 }
 
 
+/**
+ * Returns the HTML template of the footer of the detail view with the delete and the edit button.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the footer.
+ */
 function templateOverlayFooterDetails(taskID) {
   return /*html*/ `
     <button type="button" class="button-delete-edit button-reset d-flex"
@@ -183,6 +201,12 @@ function templateOverlayFooterDetails(taskID) {
 }
 
 
+/**
+ * Returns the HTML template of the priority with text and icon.
+ * @param {string} priorityString - The priority as text to display, e.g. "Medium".
+ * @param {string} priority - The priority as stored in the task, used for the icon file.
+ * @returns {string} The HTML string of the priority.
+ */
 function templateOverlayPriority(priorityString, priority) {
   return /*html*/ `
     <span>${escapeHtml(priorityString)}</span>
@@ -193,6 +217,11 @@ function templateOverlayPriority(priorityString, priority) {
 }
 
 
+/**
+ * Returns the HTML template of the assignee section with its heading and an empty list.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the assignee section.
+ */
 function templateOverlayAssignees(taskID) {
   return /*html*/ `
     <h4>Assigned to:</h4>
@@ -201,6 +230,13 @@ function templateOverlayAssignees(taskID) {
 }
 
 
+/**
+ * Returns the HTML template of one assignee in the overlay with avatar and name.
+ * @param {string} assigneeColor - The background color of the avatar.
+ * @param {string} assigneeShortcut - The shortcut shown in the avatar.
+ * @param {string} assigneeName - The name of the assignee.
+ * @returns {string} The HTML string of the assignee.
+ */
 function templateOverlayOneAssignee(assigneeColor, assigneeShortcut, assigneeName) {
   return /*html*/ `
     <li class="overlay-assignee d-flex">
@@ -212,6 +248,11 @@ function templateOverlayOneAssignee(assigneeColor, assigneeShortcut, assigneeNam
 }
 
 
+/**
+ * Returns the HTML template of the subtask section with its heading and an empty list.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the subtask section.
+ */
 function templateOverlaySubtasks(taskID) {
   return /*html*/ `
     <h4>Subtasks:</h4>
@@ -220,6 +261,12 @@ function templateOverlaySubtasks(taskID) {
 }
 
 
+/**
+ * Returns the HTML template of one subtask with a checkbox that is checked if the subtask is done.
+ * @param {string} taskID - The ID of the task.
+ * @param {number} indexSubtask - The index of the subtask in the task.
+ * @returns {string} The HTML string of the subtask.
+ */
 function templateOverlayOneSubtask(taskID, indexSubtask) {
   const subtask = allTasks[taskID].subtasks[indexSubtask];
   const checked = subtask.done ? "checked" : "";
@@ -238,6 +285,12 @@ function templateOverlayOneSubtask(taskID, indexSubtask) {
 
 // #region OVERLAY EDIT
 
+/**
+ * Returns the HTML template of the main part of the edit view.
+ * Currently only a placeholder that shows the task ID.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the main part.
+ */
 function templateOverlayMainEdit(taskID) {
   return /*html*/ `
     <p>${escapeHtml(taskID)}</p>
@@ -245,6 +298,11 @@ function templateOverlayMainEdit(taskID) {
 }
 
 
+/**
+ * Returns the HTML template of the footer of the edit view with the "Ok" button.
+ * The button has no function yet.
+ * @returns {string} The HTML string of the footer.
+ */
 function templateOverlayFooterEdit() {
   return /*html*/ `
     <button
