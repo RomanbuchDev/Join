@@ -28,24 +28,9 @@ async function handleLogoutClick() {
   window.location.href = "../index.html";
 }
 
-const logoutButton = document.querySelector(".user-menu-logout");
-if (logoutButton) {
-  logoutButton.addEventListener("click", handleLogoutClick);
-}
-
 // #endregion
 
 // #region HEADER
-
-/**
- * Waits for the logged-in user and renders the header for the current page.
- * @returns {Promise<Object>} The logged-in user.
- */
-// async function initHeader() {
-//   const user = await window.getCurrentUser();
-//   initAvatar(user);
-//   return user;
-// }
 
 
 /**
@@ -175,7 +160,7 @@ function renderNavbarGuest(currentPage) {
 
 
 /**
- * Registers an auth-state listener and renders the header and navbar
+ * Registers an auth-state listener and renders the navbar
  * depending on whether the visitor is authenticated.
  */
 function initNavbarAuthUI() {
@@ -183,10 +168,8 @@ function initNavbarAuthUI() {
     const currentPage = getCurrentPage();
     if (user) {
       renderNavbarAuthenticated(currentPage);
-      // await showAuthenticatedUI(user);
     } else {
       renderNavbarGuest(currentPage);
-      // showGuestUI();
     }
   });
 }
