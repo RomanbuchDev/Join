@@ -34,7 +34,7 @@
   border: 3px solid var(--color-dark);
   border-radius: 30px;
   background-color: var(--color-white);
-  transition: fill 0s ease 125ms;
+  transition: background-color 125ms ease;
   cursor: pointer;
 }
 
@@ -58,9 +58,9 @@
   opacity: 0;
   visibility: hidden;
   transition:
-    transform 250ms ease,
-    opacity 250ms ease,
-    visibility 250ms;
+    transform 125ms ease,
+    opacity 125ms ease,
+    visibility 125ms;
 }
 
 .user-menu-dropdown.is-open {
@@ -119,9 +119,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition:
-    transform 150ms ease,
-    background-color 150ms ease;
+  transition: background-color 125ms ease;
 }
 
 .nav-join-img {
@@ -138,7 +136,7 @@
   line-height: 1.2;
   color: var(--color-white);
   text-decoration: none;
-  transition: background-color 150ms ease;
+  transition: background-color 125ms ease;
 }
 
 .main-nav-item a {
@@ -182,9 +180,7 @@
 }
 
 .main-nav-legal-item {
-  transition:
-    transform 150ms ease,
-    background-color 150ms ease;
+  transition: background-color 125ms ease;
 }
 
 /* #endregion */
@@ -346,7 +342,6 @@
 
   .main-nav-item:not(:has(a[aria-current="page"])):hover {
     background-color: var(--color-medium);
-    transform: translateY(-2px);
   }
 
   .main-nav-legal a:hover {
