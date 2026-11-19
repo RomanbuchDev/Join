@@ -123,7 +123,7 @@ function templateOverlayTask(taskID, categoryColor) {
       <h3 class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(task.category)}</h3>
       <button type="button" aria-label="Close overlay"
         class="button-reset"
-        onclick="closeTaskOverlay()">
+        onclick="checkForDialogMode()">
         <svg
           class="svg-fill svg-width-height-18px"
           aria-hidden="true"
@@ -293,7 +293,13 @@ function templateOverlayOneSubtask(taskID, indexSubtask) {
  */
 function templateOverlayMainEdit(taskID) {
   return /*html*/ `
-    <p>${escapeHtml(taskID)}</p>
+    ${getTaskFormTemplate({
+      submitHandler: `updateTask(event, '${escapeHtml(taskID)}')`,
+      resetHandler: "",
+      priority: allTasks[taskID].priority || "medium",
+      showCategory: false,
+      actions: "",
+    })}
     `
 }
 
@@ -306,8 +312,10 @@ function templateOverlayMainEdit(taskID) {
 function templateOverlayFooterEdit() {
   return /*html*/ `
     <button
+      id="submitEdit"
       class="button-basic button-primary"
-      type="button"
+      type="submit"
+      form="task-form"
     >
       <span>Ok</span>
       <img src="../assets/icons/check.svg" alt="check icon" />

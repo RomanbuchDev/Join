@@ -26,7 +26,9 @@ function handleTaskCardClick(event, taskID) {
  */
 function openTaskOverlay(taskID) {
   const dialogRef = document.getElementById("dialogTask");
-  renderTaskOverlay(taskID);
+  dialogRef.dataset.dialogMode = "detailedTask";
+  dialogRef.dataset.dialogTaskId = taskID;
+  renderTaskDialog(taskID);
   dialogRef.showModal();
   dialogRef.getBoundingClientRect();
   dialogRef.classList.add("dialog-board-open");
@@ -42,7 +44,22 @@ function openTaskOverlay(taskID) {
  * @returns {void} Nothing; the closing is started if the backdrop was clicked.
  */
 function handleOverlayBackdropClick(event) {
-  if (event.target === event.currentTarget) closeTaskOverlay();
+  if (event.target !== event.currentTarget) return;
+
+  checkForDialogMode();
+}
+
+
+function checkForDialogMode() {
+  const dialogRef = document.getElementById("dialogTask");
+  const taskID = dialogRef.dataset.dialogTaskId;
+  if (dialogRef.dataset.dialogMode === "editTask") {
+    resetSubtasks();
+    renderTaskDetailContent(taskID);
+    dialogRef.dataset.dialogMode = "detailedTask";
+  } else {
+    closeTaskOverlay();
+  }
 }
 
 
@@ -53,7 +70,8 @@ function handleOverlayBackdropClick(event) {
  */
 function handleOverlayCancel(event) {
   event.preventDefault();
-  closeTaskOverlay();
+  checkForDialogMode();
+  // closeTaskOverlay();
 }
 
 
@@ -93,13 +111,23 @@ function finishClosingOverlay(event) {
  * @param {string} taskID - The ID of the task to show.
  * @returns {void} Nothing; header, main part and footer of the overlay are written into the DOM.
  */
-function renderTaskOverlay(taskID) {
+function renderTaskDialog(taskID) {
+  renderTaskOverlayHeader(taskID);
+  renderTaskDetailContent(taskID);
+}
+
+
+function renderTaskOverlayHeader(taskID) {
   const overlayRef = document.getElementById("overlayTaskEdit");
   overlayRef.innerHTML = templateOverlayTask(taskID, getCategoryColor(taskID));
-  const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
-  const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
-  overlayMainRef.innerHTML = templateOverlayMainDetails(taskID);
-  overlayFooterRef.innerHTML = templateOverlayFooterDetails(taskID);
+}
+
+
+function renderTaskDetailContent(taskID) {
+  const mainRef = document.getElementById(`overlayMain${taskID}`);
+  const footerRef = document.getElementById(`overlayFooter${taskID}`);
+  mainRef.innerHTML = templateOverlayMainDetails(taskID);
+  footerRef.innerHTML = templateOverlayFooterDetails(taskID);
   renderDescription(taskID, `overlayDescription${taskID}`);
   renderPriority(taskID);
   renderOverlayAssignees(taskID);
@@ -114,8 +142,14 @@ function renderTaskOverlay(taskID) {
  */
 function getTaskDate(taskID) {
   const date = allTasks[taskID].dueDate;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date ?? "")) return "No due date";
+  if (!isDateValid(date)) return "No due date";
   return date.split("-").reverse().join(".");
+}
+
+
+function isDateValid(date) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(date ?? "");
+  
 }
 
 
@@ -244,11 +278,47 @@ function adjustSubtaskChange(taskID, subtask, newValue) {
  * @param {string} taskID - The ID of the task to edit.
  * @returns {void} Nothing; main part and footer of the overlay are replaced by the edit view.
  */
-function editTask(taskID) {
+async function editTask(taskID) {
+  const dialogRef = document.getElementById("dialogTask");
+  dialogRef.dataset.dialogMode = "editTask";
   const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
   const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
   overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
   overlayFooterRef.innerHTML = templateOverlayFooterEdit(taskID);
+  
+  const submitButtonRef = document.getElementById("submitEdit");
+  submitButtonRef.disabled = true;
+  const isFilled = await fillInTaskData (taskID, dialogRef);
+  if (isFilled) submitButtonRef.disabled = false;
+}
+
+
+async function fillInTaskData (taskID, dialogRef) {
+  const task = allTasks[taskID];
+  document.getElementById("title").value = task.title;
+  document.getElementById("description").value = task.description ?? "";
+  if (isDateValid(task.dueDate)) document.getElementById("due-date").value = task.dueDate;
+  try {
+    await initTaskForm(task.assignedTo, task.assignedUserBadges);
+    setDraftSubtasks(task.subtasks);
+    return true;
+  } catch (error) {
+    return handleFillError(error, dialogRef);
+  } 
+}
+
+
+function handleFillError(error, dialogRef) {
+  if (dialogRef.dataset.dialogMode !== "editTask") return false;
+
+  console.error(error);
+  openDialogConnectionErrorDatabase();
+  return false;
+}
+
+
+function updateTask(event, taskID) {
+  event.preventDefault();
 }
 
 // #endregion
