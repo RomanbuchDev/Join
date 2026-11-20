@@ -15,6 +15,9 @@ async function fetchUserProfile(user) {
   const response = await fetch(
     `${window.firebaseUrl}/users/${user.uid}.json?auth=${idToken}`,
   );
+  if (!response.ok) {
+    throw new Error("Failed to load user profile");
+  }
   const profile = await response.json();
   return { uid: user.uid, name: profile.name, email: user.email };
 }

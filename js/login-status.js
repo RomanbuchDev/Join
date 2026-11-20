@@ -24,6 +24,24 @@ function handleAuthStateChange(user) {
 
 
 /**
+ * Fetches the user's profile data from the Realtime Database.
+ * @param {string} uid - The user's Firebase Auth uid.
+ * @param {string} idToken - The Firebase ID token for the authenticated request.
+ * @returns {Promise<Object>} The profile data ({ name, email }).
+ */
+async function fetchProfile(uid, idToken) {
+  const response = await fetch(
+    `${window.firebaseUrl}/users/${uid}.json?auth=${idToken}`,
+  );
+  if (!response.ok) {
+    throw new Error("Failed to load user profile");
+  }
+  const profile = await response.json();
+  return profile;
+}
+
+
+/**
  * Loads the logged-in user's profile data (name) from the Realtime Database, makes it globally
  * available via window.currentUser, and then fires the authReady event so other pages
  * (e.g. greeting-page.js) can react to it.
@@ -31,10 +49,7 @@ function handleAuthStateChange(user) {
  */
 async function loadCurrentUserProfile(user) {
   const idToken = await user.getIdToken();
-  const response = await fetch(
-    `${window.firebaseUrl}/users/${user.uid}.json?auth=${idToken}`,
-  );
-  const profile = await response.json();
+  const profile = await fetchProfile(user.uid, idToken);
   window.currentUser = {
     uid: user.uid,
     name: profile.name,

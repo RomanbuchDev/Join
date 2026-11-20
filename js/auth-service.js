@@ -1,4 +1,22 @@
 /**
+ * Fetches the user's profile data from the Realtime Database.
+ * @param {string} uid - The user's Firebase Auth uid.
+ * @param {string} idToken - The Firebase ID token for the authenticated request.
+ * @returns {Promise<Object>} The profile data ({ name, email }).
+ */
+async function fetchProfile(uid, idToken) {
+  const response = await fetch(
+    `${window.firebaseUrl}/users/${uid}.json?auth=${idToken}`,
+  );
+  if (!response.ok) {
+    throw new Error("Failed to load user profile");
+  }
+  const profile = await response.json();
+  return profile;
+}
+
+
+/**
  * Checks email and password against Firebase Auth and then loads the profile from the database.
  * @param {string} email - The entered email address.
  * @param {string} password - The entered password.
@@ -12,10 +30,7 @@ async function loginWithEmail(email, password) {
   );
   const user = userCredential.user;
   const idToken = await user.getIdToken();
-  const response = await fetch(
-    `${window.firebaseUrl}/users/${user.uid}.json?auth=${idToken}`,
-  );
-  const profile = await response.json();
+  const profile = await fetchProfile(user.uid, idToken);
   return { uid: user.uid, name: profile.name, email: user.email };
 }
 
@@ -58,9 +73,12 @@ async function registerWithEmail(name, email, password) {
  * @param {string} idToken - The Firebase ID token for the authenticated request.
  */
 async function saveUserProfile(uid, profile, idToken) {
-  await fetch(`${window.firebaseUrl}/users/${uid}.json?auth=${idToken}`, {
+  const response = await fetch(`${window.firebaseUrl}/users/${uid}.json?auth=${idToken}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(profile),
   });
+  if (!response.ok) {
+    throw new Error("Failed to save user profile");
+  }
 }
