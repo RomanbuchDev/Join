@@ -1,4 +1,4 @@
-/* #region MARK: ?? 
+/* #region MARK: dialog 
 */
 
 .dialog-board {
@@ -26,12 +26,17 @@
   background: var(--color-black-40);
 }
 
+/* #endregion */
+
+/* #region MARK: overlay 
+*/
 .overlay-board {
   padding: 1em 0;
   gap: 1.25em;
   width: 100%;
 }
 
+/* .dialog-board:focus, */
 .overlay-board:focus {
   outline: none;
 }
@@ -51,12 +56,17 @@
   padding-inline: 1em;
 }
 
+/* #endregion */
+
+/* #region MARK: footer 
+*/
 .overlay-footer {
   grid-area: overlay-footer;
   justify-content: flex-end;
   padding-inline: 1em;
   gap: 0.5em;
-  height: 1.5em;
+  min-height: 1.5em;
+  height: fit-content;
 }
 
 .button-delete-edit {
@@ -69,6 +79,10 @@
   border: 1px solid var(--color-gray-209);
 }
 
+/* #endregion */
+
+/* #region MARK: main 
+*/
 .overlay-main {
   grid-area: overlay-main;
   flex-direction: column;
@@ -88,6 +102,10 @@
   font-weight: 400;
 }
 
+/* #endregion */
+
+/* #region MARK: priority 
+*/
 .overlay-detail-row h4 {
   width: 6em;
 }
@@ -100,6 +118,10 @@
   width: 1.25em;
 }
 
+/* #endregion */
+
+/* #region MARK: assignees 
+*/
 .overlay-detail-column {
   flex-direction: column;
   gap: 1em;
@@ -123,6 +145,19 @@
   justify-content: center;
   width: 2.25em;
   height: 2.25em;
+}
+
+/* #endregion */
+
+/* #region MARK: add task 
+*/
+.form-content {
+  padding: 0;
+}
+
+.priority-option label {
+  font-size: 1rem;
+  min-width: 5.5em;
 }
 
 /* #endregion */

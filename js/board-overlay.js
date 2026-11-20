@@ -44,8 +44,23 @@ function openTaskOverlay(taskID) {
  * @returns {void} Nothing; the closing is started if the backdrop was clicked.
  */
 function handleOverlayBackdropClick(event) {
+  closeAssignedContactsOnOutsideClick(event);
   if (event.target !== event.currentTarget) return;
 
+  const dialogRef = document.getElementById("dialogTask");
+  if (dialogRef.dataset.dialogMode === "detailedTask") {
+    closeTaskOverlay();
+  }
+}
+
+
+/**
+ * Replaces the native closing by the Escape key with the animated closing.
+ * @param {Event} event - The cancel event of the dialog.
+ * @returns {void} Nothing; the default behavior is prevented and the closing is started.
+ */
+function handleOverlayCancel(event) {
+  event.preventDefault();
   checkForDialogMode();
 }
 
@@ -60,18 +75,6 @@ function checkForDialogMode() {
   } else {
     closeTaskOverlay();
   }
-}
-
-
-/**
- * Replaces the native closing by the Escape key with the animated closing.
- * @param {Event} event - The cancel event of the dialog.
- * @returns {void} Nothing; the default behavior is prevented and the closing is started.
- */
-function handleOverlayCancel(event) {
-  event.preventDefault();
-  checkForDialogMode();
-  // closeTaskOverlay();
 }
 
 
@@ -300,6 +303,7 @@ async function fillInTaskData (taskID, dialogRef) {
   if (isDateValid(task.dueDate)) document.getElementById("due-date").value = task.dueDate;
   try {
     await initTaskForm(task.assignedTo, task.assignedUserBadges);
+    if (dialogRef.dataset.dialogMode !== "editTask") return false;
     setDraftSubtasks(task.subtasks);
     return true;
   } catch (error) {
