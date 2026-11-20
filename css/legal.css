@@ -43,7 +43,7 @@ h4 {
 }
 
 .generator-results-content {
-  max-width: 80rem;
+  max-width: 90rem;
 }
 
 .main-legal a {
@@ -98,7 +98,7 @@ section {
 */
 @media (width >= 64em) {
   .main-legal {
-    padding: 3rem 4rem;
+    padding: 3rem 4rem 7rem;
   }
 
   .main-header {
@@ -106,10 +106,6 @@ section {
   }
 
   .signup-back-vector {
-    display: none;
-  }
-
-  .main-header-help {
     display: none;
   }
 }
