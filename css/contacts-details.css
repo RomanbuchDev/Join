@@ -48,6 +48,10 @@
   gap: 1.25em;
 }
 
+.contact-details-name-container div {
+  min-width: 0;
+}
+
 .contact-details-shortcut {
   display: flex;
   justify-content: center;
@@ -68,6 +72,7 @@
   font-size: 2.25rem;
   font-weight: 700;
   text-transform: capitalize;
+  overflow-wrap: break-word;
 }
 
 .contact-details-information-container {
@@ -84,6 +89,8 @@
 }
 
 .contact-details-contact-data .contact-e-mail {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   margin-bottom: 1.375em;
 }
 
@@ -98,9 +105,9 @@
   visibility: hidden;
   opacity: 0;
   transition:
-    transform 0.3s ease-out,
-    opacity 0.3s ease-out,
-    visibility 0.3s ease-out;
+    transform 0.125s ease-out,
+    opacity 0.125s ease-out,
+    visibility 0.125s ease-out;
   width: 100vw;
   height: 100vh;
 }
@@ -126,9 +133,9 @@
   visibility: hidden;
   opacity: 0;
   transition:
-    transform 0.3s ease-out,
-    opacity 0.3s ease-out,
-    visibility 0.3s ease-out;
+    transform 0.125s ease-out,
+    opacity 0.125s ease-out,
+    visibility 0.125s ease-out;
   contain: paint layout;
   gap: 0.5em;
   width: 116px;
