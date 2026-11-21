@@ -177,7 +177,13 @@ function closeDialog() {
   dialogShortcut.classList.remove("contact-details-shortcut");
   contactEmailInput.classList.remove("readonly");
   closeMobileContactOptions();
-  dialogBox.close();
+
+  dialogBox.style.transform = window.innerWidth >= 1024 ? "translateX(100vw)" : "translateY(100vh)";
+
+  setTimeout(() => {
+    dialogBox.close();
+    dialogBox.style.transform = "";
+  }, 300);
 }
 
 

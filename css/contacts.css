@@ -35,20 +35,16 @@ body h2 {
   font-weight: 400;
 }
 
-/* Notiz: Nur vorübergehend einfügen bis zum nächsten Update von Main */
-body .user-menu-dropdown {
-  transform: translateX(1em);
-}
-
 /*  ==================================================================================================== 
     2. MAIN - CONTACT LIST
     ==================================================================================================== */
 
 .main-container {
   background-color: var(--color-white);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-dark) var(--color-white);
   min-width: 0;
-  padding-left: 0.875em;
-  padding-right: 0.875em;
+  padding: 0 0.875em 0.875em;
 }
 
 .main-container.details-open {
@@ -82,9 +78,9 @@ body .user-menu-dropdown {
   font: inherit;
   text-align: left;
   transition:
-    background-color 0.1s ease,
-    color 0.1s ease,
-    border-radius 0.1s ease;
+    background-color 0.125s ease,
+    color 0.125s ease,
+    border-radius 0.125s ease;
   cursor: pointer;
   gap: 2.1875em;
   width: 100%;
@@ -229,13 +225,6 @@ body .user-menu-dropdown {
 }
 
 @media (width >= 64em) {
-  #page {
-    height: 100vh;
-    max-height: 100vh;
-    overflow: hidden;
-    margin: 0;
-  }
-
   .main-container {
     grid-area: main;
     display: flex;
@@ -257,6 +246,7 @@ body .user-menu-dropdown {
     flex: 0 0 40%;
     overflow-y: auto;
     scrollbar-width: thin;
+    scrollbar-color: var(--color-dark) var(--color-white);
     position: relative;
     z-index: 10;
     box-shadow: 4px 0 6px var(--color-black-10);
