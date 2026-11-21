@@ -111,6 +111,22 @@ async function handleLoginSubmit(event) {
 
 
 /**
+ * Reacts to a failed login attempt depending on the error code, and re-enables the login button.
+ * @param {Object} error - The error thrown by loginWithEmail().
+ */
+function handleLoginFailure(error) {
+  if (error.code === "auth/network-request-failed") {
+    openDialogConnectionErrorDatabase();
+  } else if (error.code === "auth/too-many-requests") {
+    document.getElementById("loginError").innerText = "Too many attempts, please try again later.";
+  } else {
+    handleLoginError();
+  }
+  document.getElementById("loginBtn").disabled = false;
+}
+
+
+/**
  * Attempts to log in with the entered data.
  * @param {Object} loginUserData - The entered form data (email, password).
  */
@@ -119,8 +135,7 @@ async function attemptLogin(loginUserData) {
     await loginWithEmail(loginUserData.email, loginUserData.password);
     handleLoginSuccess();
   } catch (error) {
-    handleLoginError();
-    document.getElementById("loginBtn").disabled = false;
+    handleLoginFailure(error);
   }
 }
 

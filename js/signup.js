@@ -171,6 +171,20 @@ function visibilityIconSwish(icon, inputPasswordCheck, iconId) {
 
 
 /**
+ * Reacts to a failed registration depending on the error code, and re-enables the signup button.
+ * @param {Object} error - The error thrown by registerWithEmail().
+ */
+function handleSignupFailure(error) {
+  if (error.code === "auth/network-request-failed") {
+    openDialogConnectionErrorDatabase();
+  } else {
+    handleSignupError(error);
+  }
+  document.getElementById("signup").disabled = false;
+}
+
+
+/**
  * Processes the form submission: reads the values, validates them, starts the registration on success.
  * @param {SubmitEvent} event - The form's submit event.
  */
@@ -198,8 +212,7 @@ async function attemptSignup(signupUserData) {
     );
     handleSignupSuccess();
   } catch (error) {
-    handleSignupError(error);
-    document.getElementById("signup").disabled = false;
+    handleSignupFailure(error);
   }
 }
 
