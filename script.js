@@ -27,8 +27,12 @@ async function fetchUserProfile(user) {
  * Signs the logged-in user out via Firebase Auth and then redirects to the login page.
  */
 async function handleLogoutClick() {
-  await window.signOut(window.auth);
-  window.location.href = "../index.html";
+  try {
+    await window.signOut(window.auth);
+    window.location.href = "../index.html";
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  }
 }
 
 // #endregion
@@ -99,9 +103,14 @@ function showGuestUI() {
  * @param {Object} user - The raw Firebase user object (uid, email, isAnonymous, getIdToken()).
  */
 async function showAuthenticatedUI(user) {
-  const profile = await fetchUserProfile(user);
-  initAvatar(profile);
-  document.querySelector(".user-menu").hidden = false;
+  try {
+    const profile = await fetchUserProfile(user);
+    initAvatar(profile);
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  } finally {
+    document.querySelector(".user-menu").hidden = false;
+  }
 }
 
 

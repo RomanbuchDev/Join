@@ -8,7 +8,11 @@ setTimeout(() => {
  */
 async function initGreeting() {
   const user = await window.getCurrentUser();
-  greetingUser(user);
+  try {
+    greetingUser(user);
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  }
 }
 
 

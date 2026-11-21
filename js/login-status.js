@@ -48,14 +48,15 @@ async function fetchProfile(uid, idToken) {
  * @param {Object} user - The Firebase user object (uid, email).
  */
 async function loadCurrentUserProfile(user) {
-  const idToken = await user.getIdToken();
-  const profile = await fetchProfile(user.uid, idToken);
-  window.currentUser = {
-    uid: user.uid,
-    name: profile.name,
-    email: user.email,
-  };
-  window.dispatchEvent(new Event("authReady"));
+  try {
+    const idToken = await user.getIdToken();
+    const profile = await fetchProfile(user.uid, idToken);
+    window.currentUser = { uid: user.uid, name: profile.name, email: user.email, };
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  } finally {
+    window.dispatchEvent(new Event("authReady"));
+  }
 }
 
 

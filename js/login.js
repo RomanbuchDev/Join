@@ -131,10 +131,16 @@ async function attemptLogin(loginUserData) {
  */
 function guestLoginEventListener(formGuest) {
   formGuest.addEventListener("click", async function (event) {
-    event.preventDefault();
-    document.getElementById("guestLoginBtn").disabled = true;
-    await loginAsGuest();
-    handleLoginSuccess();
+    try {
+      event.preventDefault();
+      document.getElementById("guestLoginBtn").disabled = true;
+      await loginAsGuest();
+      handleLoginSuccess();
+    } catch (error) {
+      openDialogConnectionErrorDatabase();
+    } finally {
+      document.getElementById("guestLoginBtn").disabled = false;
+    }
   });
 }
 
