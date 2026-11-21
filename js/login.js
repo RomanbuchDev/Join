@@ -11,9 +11,6 @@ window.addEventListener("pageshow", (event) => {
   }
 });
 
-document.querySelector(".splash-logo").addEventListener("animationend", () => {
-  document.getElementById("splashScreen").style.display = "none";
-});
 
 /**
  * Registers all event listeners for the login page.
