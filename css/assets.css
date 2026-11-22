@@ -79,6 +79,7 @@
   top: unset;
   bottom: 300px;
   left: 50%;
+  right: auto;
   white-space: nowrap;
   transform: translate(-50%, 300px);
   transition: transform 0.3s ease-out;
