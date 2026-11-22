@@ -28,10 +28,13 @@ async function fetchUserProfile(user) {
  */
 async function handleLogoutClick() {
   try {
+    document.body.classList.add("is-loading");
     await window.signOut(window.auth);
     window.location.href = "../index.html";
   } catch (error) {
     openDialogConnectionErrorDatabase();
+  } finally {
+    document.body.classList.remove("is-loading");
   }
 }
 

@@ -12,7 +12,10 @@ async function initGreeting() {
     greetingUser(user);
   } catch (error) {
     openDialogConnectionErrorDatabase();
+  } finally {
+    document.body.classList.remove("is-loading");
   }
+
 }
 
 

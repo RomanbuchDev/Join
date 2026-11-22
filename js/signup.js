@@ -181,6 +181,7 @@ function handleSignupFailure(error) {
     handleSignupError(error);
   }
   document.getElementById("signup").disabled = false;
+  document.body.classList.remove("is-loading");
 }
 
 
@@ -195,6 +196,7 @@ async function handleSignupSubmit(event) {
     return;
   }
   document.getElementById("signup").disabled = true;
+  document.body.classList.add("is-loading");
   await attemptSignup(signupUserData);
 }
 
