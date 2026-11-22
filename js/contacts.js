@@ -27,6 +27,7 @@ async function initContacts() {
   renderContactDetailsDesktopPlaceholder();
   closeDialogBackgroundClick();
   closeMobileContactOptionsEscapeKey();
+  initCorrectDialogClose();
 }
 
 

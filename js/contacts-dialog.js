@@ -195,6 +195,19 @@ function closeDialogBackgroundClick() {
 }
 
 
+/** Starts the cancel event listener to handle the correct closing of the dialog with the escape key. */
+function initCorrectDialogClose() {
+  dialogBox.addEventListener("cancel", handleDialogEscapeButton);
+}
+
+
+/** Closes the dialog with animation when pressing the escape key. */
+function handleDialogEscapeButton(event) {
+  event.preventDefault();
+  closeDialog();
+}
+
+
 /** Opens the dialog for delete a contact. */
 function openDialogDeleteQuestion() {
   const currentContact = allContacts.find((contact) => contact.id === currentContactData.id);
