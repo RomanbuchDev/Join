@@ -208,6 +208,7 @@ form {
   inset: 0;
   background-color: var(--color-dark);
   z-index: 999;
+  animation: splash-fade-out 2s ease-in-out forwards;
 }
 
 .splash-logo {
@@ -225,6 +226,13 @@ form {
     left: 2.38rem;
     width: 4rem;
     transform: translate(0, 0);
+  }
+}
+
+@keyframes splash-fade-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
   }
 }
 
@@ -343,21 +351,5 @@ form {
   .header-login img {
     height: 7.75rem;
     width: 6.25rem;
-  }
-
-  .splash-screen {
-    animation: splash-fade-out 2s ease-in-out forwards;
-  }
-
-  @keyframes splash-fade-out {
-    to {
-      opacity: 0;
-    }
-  }
-
-  @keyframes logo-to-header {
-    to {
-      opacity: 0;
-    }
   }
 }

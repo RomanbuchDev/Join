@@ -15,6 +15,9 @@ async function fetchUserProfile(user) {
   const response = await fetch(
     `${window.firebaseUrl}/users/${user.uid}.json?auth=${idToken}`,
   );
+  if (!response.ok) {
+    throw new Error("Failed to load user profile");
+  }
   const profile = await response.json();
   return { uid: user.uid, name: profile.name, email: user.email };
 }
@@ -24,8 +27,15 @@ async function fetchUserProfile(user) {
  * Signs the logged-in user out via Firebase Auth and then redirects to the login page.
  */
 async function handleLogoutClick() {
-  await window.signOut(window.auth);
-  window.location.href = "../index.html";
+  try {
+    document.body.classList.add("is-loading");
+    await window.signOut(window.auth);
+    window.location.href = "../index.html";
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  } finally {
+    document.body.classList.remove("is-loading");
+  }
 }
 
 // #endregion
@@ -96,9 +106,14 @@ function showGuestUI() {
  * @param {Object} user - The raw Firebase user object (uid, email, isAnonymous, getIdToken()).
  */
 async function showAuthenticatedUI(user) {
-  const profile = await fetchUserProfile(user);
-  initAvatar(profile);
-  document.querySelector(".user-menu").hidden = false;
+  try {
+    const profile = await fetchUserProfile(user);
+    initAvatar(profile);
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  } finally {
+    document.querySelector(".user-menu").hidden = false;
+  }
 }
 
 
