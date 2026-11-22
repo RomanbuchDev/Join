@@ -250,7 +250,7 @@ async function deleteContactInDatabase(contactId) {
 }
 
 
-// Test - Kontakte in den Tasks auf der Board-Seite entfernen
+// Kontakte in den Tasks auf der Board-Seite entfernen
 
 /**
  * Updates the contacts in the task and in the database.

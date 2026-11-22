@@ -21,14 +21,13 @@ let lastScrollPosition = 0;
  * @async
  */
 async function initContacts() {
-  // await initHeader(); // Header läuft jetzt zentral über initHeaderAuthUI() in script.js
-
   await fetchAllContacts();
   renderContactList();
   activateContactFormSubmissionType();
   renderContactDetailsDesktopPlaceholder();
   closeDialogBackgroundClick();
   closeMobileContactOptionsEscapeKey();
+  initCorrectDialogClose();
 }
 
 

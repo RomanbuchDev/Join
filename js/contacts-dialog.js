@@ -177,7 +177,13 @@ function closeDialog() {
   dialogShortcut.classList.remove("contact-details-shortcut");
   contactEmailInput.classList.remove("readonly");
   closeMobileContactOptions();
-  dialogBox.close();
+
+  dialogBox.style.transform = window.innerWidth >= 1024 ? "translateX(100vw)" : "translateY(100vh)";
+
+  setTimeout(() => {
+    dialogBox.close();
+    dialogBox.style.transform = "";
+  }, 300);
 }
 
 
@@ -186,6 +192,19 @@ function closeDialogBackgroundClick() {
   dialogBox.addEventListener("click", (event) => {
     if (event.target === dialogBox) closeDialog();
   });
+}
+
+
+/** Starts the cancel event listener to handle the correct closing of the dialog with the escape key. */
+function initCorrectDialogClose() {
+  dialogBox.addEventListener("cancel", handleDialogEscapeButton);
+}
+
+
+/** Closes the dialog with animation when pressing the escape key. */
+function handleDialogEscapeButton(event) {
+  event.preventDefault();
+  closeDialog();
 }
 
 
