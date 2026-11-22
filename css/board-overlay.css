@@ -155,6 +155,10 @@
   padding: 0;
 }
 
+.form-column--right {
+  padding-top: 1em;
+}
+
 .priority-option label {
   font-size: 1rem;
   min-width: 5.5em;
