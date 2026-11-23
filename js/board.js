@@ -99,6 +99,11 @@ function renderAmountOfTasks(status, amount) {
 function renderOneTask(taskID) {
   const column = document.getElementById(allTasks[taskID].status);
   column.innerHTML += templateTaskCard(taskID, getCategoryColor(taskID));
+  renderTaskDetails(taskID);
+}
+
+
+function renderTaskDetails(taskID) {
   renderDescription(taskID, `description${taskID}`);
   renderProgressBar(taskID);
   const assignees = allTasks[taskID].assignedTo;

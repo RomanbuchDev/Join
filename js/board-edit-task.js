@@ -10,10 +10,10 @@ async function editTask(taskID) {
   const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
   overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
   overlayFooterRef.innerHTML = templateOverlayFooterEdit(taskID);
-  
+
   const submitButtonRef = document.getElementById("submitEdit");
   submitButtonRef.disabled = true;
-  const isFilled = await fillInTaskData (taskID, dialogRef);
+  const isFilled = await fillInTaskData(taskID, dialogRef);
   if (isFilled) submitButtonRef.disabled = false;
 }
 
@@ -57,12 +57,16 @@ async function updateTask(event, taskID) {
 
 async function runEditUpdate(taskID) {
   const fields = buildEditFields(buildTask(document.getElementById("task-form")));
-  console.log(fields)
-  if (!fields.title) return;
+  if (!fields.title || !fields.dueDate) return;
   await patchQueue;
-  if (!(await fetchAllTasks())) return;
-  if (!allTasks[taskID]) return;
-
+  if (!(await fetchAllTasks())) {
+    checkForDialogMode();
+    return;
+  }
+  if (!allTasks[taskID]) {
+    updateBoardAfterDelete(taskID);
+    return;
+  }
   const saved = await patchTasks(buildEditUpdates(taskID, fields));
   if (saved) showUpdatedTask(taskID, fields);
 }
@@ -84,9 +88,12 @@ function buildEditUpdates(taskID, fields) {
 
 
 function showUpdatedTask(taskID, fields) {
-  Object.assign(allTasks, {[taskID]: fields});
-  // renderOneTask(taskID);
+  Object.assign(allTasks[taskID], fields);
+  document.getElementById(`taskDetails${taskID}`).innerHTML 
+    = templateTaskDetails(taskID);
+  renderTaskDetails(taskID);  
   resetSubtasks();
-  renderTaskDetailContent(taskID);
-  document.getElementById("dialogTask").dataset.dialogMode = "detailedTask";
+  renderOverlayTaskDetailContent(taskID);
+  document.getElementById("dialogTask").dataset.dialogMode 
+    = "detailedTask";
 }

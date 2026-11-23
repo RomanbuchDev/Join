@@ -43,28 +43,38 @@ function templateTaskCard(taskID, categoryColor) {
           </section>
         </div>
       </section>
-      <div class="task-title-description-container d-flex">
-        <h4>${escapeHtml(task.title)}</h4>
-        <p id="description${escapeHtml(taskID)}" class="task-description"></p>
-      </div>
-      <div id="progressContainer${escapeHtml(taskID)}" class="task-progress d-flex">
-      </div>
-      <div class="task-card-footer d-flex">
-        <ul id="assigneesContainer${escapeHtml(taskID)}" class="task-avatars-container d-flex">
-        </ul>
-        <div class="priority-icon d-flex">
-          <img draggable="false"
-            src="../assets/icons/prio-${escapeHtml(task.priority)}-symbol.svg"
-            alt="${escapeHtml(task.priority)} priority task"
-          />
-        </div>
-      </div>
+      <section id="taskDetails${escapeHtml(taskID)}" class="task-card-details d-flex">
+        ${templateTaskDetails(taskID)}
+      </section>
+      
     </li>`;
 }
 
 // #endregion
 
 // #region TASK DETAILS
+
+function templateTaskDetails(taskID) {
+  const task = allTasks[taskID];
+  return /*html*/ `
+    <div class="task-title-description-container d-flex">
+      <h4>${escapeHtml(task.title)}</h4>
+      <p id="description${escapeHtml(taskID)}" class="task-description"></p>
+    </div>
+    <div id="progressContainer${escapeHtml(taskID)}" class="task-progress d-flex">
+    </div>
+    <div class="task-card-footer d-flex">
+      <ul id="assigneesContainer${escapeHtml(taskID)}" class="task-avatars-container d-flex">
+      </ul>
+      <div class="priority-icon d-flex">
+        <img draggable="false"
+          src="../assets/icons/prio-${escapeHtml(task.priority)}-symbol.svg"
+          alt="${escapeHtml(task.priority)} priority task"
+        />
+      </div>
+    </div>`
+}
+
 
 /**
  * Returns the HTML template of the progress bar of a task card.

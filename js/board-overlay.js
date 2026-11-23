@@ -71,7 +71,7 @@ function checkForDialogMode() {
   const taskID = dialogRef.dataset.dialogTaskId;
   if (dialogRef.dataset.dialogMode === "editTask") {
     resetSubtasks();
-    renderTaskDetailContent(taskID);
+    renderOverlayTaskDetailContent(taskID);
     dialogRef.dataset.dialogMode = "detailedTask";
   } else {
     closeTaskOverlay();
@@ -117,7 +117,7 @@ function finishClosingOverlay(event) {
  */
 function renderTaskDialog(taskID) {
   renderTaskOverlayHeader(taskID);
-  renderTaskDetailContent(taskID);
+  renderOverlayTaskDetailContent(taskID);
 }
 
 
@@ -127,7 +127,7 @@ function renderTaskOverlayHeader(taskID) {
 }
 
 
-function renderTaskDetailContent(taskID) {
+function renderOverlayTaskDetailContent(taskID) {
   const mainRef = document.getElementById(`overlayMain${taskID}`);
   const footerRef = document.getElementById(`overlayFooter${taskID}`);
   mainRef.innerHTML = templateOverlayMainDetails(taskID);
