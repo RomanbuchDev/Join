@@ -1,5 +1,6 @@
 /* #region MARK: assets 
 */
+
 input:focus-visible,
 button:focus-visible {
   outline: none;
@@ -72,16 +73,14 @@ button:hover .svg-fill,
   display: none;
 }
 
-/* #endregion */
+h2,
+h4,
+p {
+  overflow-wrap: break-word;
+}
 
 .board-main-content {
   padding-top: 3em;
-  padding-inline: 0.5em;
-  scrollbar-width: none;
-}
-
-.board-main-content::-webkit-scrollbar {
-  display: none;
 }
 
 /* #endregion */
@@ -195,10 +194,6 @@ h2 > span {
   margin-right: 0;
 }
 
-.tasks-list::-webkit-scrollbar {
-  display: none;
-}
-
 /* #endregion */
 
 /* #region MARK: drag drop 
@@ -218,6 +213,16 @@ h2 > span {
 .placeholder {
   border: 1px dashed var(--color-highlight);
   border-radius: 24px;
+}
+
+/* #endregion */
+
+/* #region MARK: @ mobile M 
+*/
+@media (width >= 24em) {
+  .board-main-content {
+    padding-inline: 0.5em;
+  }
 }
 
 /* #endregion */
@@ -265,11 +270,7 @@ h2 > span {
     align-items: flex-start;
     overflow-x: auto;
     margin-inline-end: 0.5em;
-    gap: 0;
-  }
-
-  .board-column {
-    min-width: 16.75em;
+    gap: 0.5em;
   }
 
   .tasks-list {
@@ -292,6 +293,11 @@ h2 > span {
     padding-inline: 1em;
   }
 
+  .board-column {
+    flex: 1 1 0;
+    min-width: min-content;
+  }
+
   .tasks-list {
     height: calc(100dvh - 18em);
   }
@@ -304,12 +310,7 @@ h2 > span {
 
 @media (width >= 90em) {
   .board-main-content {
-    padding-top: 5em;
     padding-inline: 3em;
-  }
-
-  .tasks-list {
-    height: calc(100dvh - 20em);
   }
 }
 
@@ -318,7 +319,14 @@ h2 > span {
 /* #region MARK: @ laptop L
 */
 
-/* @media (width >= 120em) {
-} */
+@media (width >= 120em) {
+  .board-column {
+    max-width: var(--board-column-max-width);
+  }
+
+  .headline-section {
+    max-width: calc(4 * var(--board-column-max-width) + 3 * 0.5em);
+  }
+}
 
 /* #endregion */

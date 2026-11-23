@@ -4,52 +4,95 @@
 
 // #region SHOW
 
+/**
+ * Opens the detail overlay of a task when its card is clicked.
+ * Clicks inside the move menu of the card are ignored.
+ * @param {MouseEvent} event - The click event on the task card.
+ * @param {string} taskID - The ID of the clicked task.
+ * @returns {void} Nothing; the overlay is opened unless the click was inside the move menu.
+ */
 function handleTaskCardClick(event, taskID) {
   if (event.target.closest(".move-menu-container")) return;
-    openTaskOverlay(taskID);
+
+  openTaskOverlay(taskID);
 }
 
 
+/**
+ * Renders the task into the dialog, opens it as modal and slides it in.
+ * The forced reflow before adding the open class makes sure the slide-in transition starts.
+ * @param {string} taskID - The ID of the task to show.
+ * @returns {void} Nothing; the dialog is opened.
+ */
 function openTaskOverlay(taskID) {
   const dialogRef = document.getElementById("dialogTask");
   renderTaskOverlay(taskID);
   dialogRef.showModal();
   dialogRef.getBoundingClientRect();
-  dialogRef.classList.add("dialog-task-open");
+  dialogRef.classList.add("dialog-board-open");
 }
 
 // #endregion
 
 // #region CLOSE
 
+/**
+ * Closes the overlay if the click hit the dialog itself (the backdrop) and not its content.
+ * @param {MouseEvent} event - The click event on the dialog.
+ * @returns {void} Nothing; the closing is started if the backdrop was clicked.
+ */
 function handleOverlayBackdropClick(event) {
   if (event.target === event.currentTarget) closeTaskOverlay();
 }
 
 
+/**
+ * Replaces the native closing by the Escape key with the animated closing.
+ * @param {Event} event - The cancel event of the dialog.
+ * @returns {void} Nothing; the default behavior is prevented and the closing is started.
+ */
 function handleOverlayCancel(event) {
   event.preventDefault();
   closeTaskOverlay();
 }
 
 
+/**
+ * Starts closing the overlay: removes the open class to slide it out and
+ * closes the dialog when the transition has ended (see finishClosingOverlay).
+ * Relies on a running transition; without one, the dialog would not be closed.
+ * @returns {void} Nothing; the slide-out starts.
+ */
 function closeTaskOverlay() {
   const dialogRef = document.getElementById("dialogTask");
-  dialogRef.classList.remove("dialog-task-open");
-  dialogRef.addEventListener("transitionend", finishClosingOverlay)
+  dialogRef.classList.remove("dialog-board-open");
+  dialogRef.addEventListener("transitionend", finishClosingOverlay);
 }
 
 
+/**
+ * Closes the dialog after its own slide-out transition ended and removes the listener.
+ * Transition events of child elements are ignored.
+ * @param {TransitionEvent} event - The transitionend event of the dialog.
+ * @returns {void} Nothing; the dialog is closed.
+ */
 function finishClosingOverlay(event) {
-  if (event.target !== event.currentTarget) closeTaskOverlay();
-  event.currentTarget.close();
-  event.currentTarget.removeEventListener("transitionend", finishClosingOverlay);
+  const openedDialog = event.currentTarget;
+  if (event.target !== openedDialog) return;
+
+  openedDialog.close();
+  openedDialog.removeEventListener("transitionend", finishClosingOverlay);
 }
 
 // #endregion
 
 // #region RENDER
 
+/**
+ * Renders the detail view of a task into the overlay.
+ * @param {string} taskID - The ID of the task to show.
+ * @returns {void} Nothing; header, main part and footer of the overlay are written into the DOM.
+ */
 function renderTaskOverlay(taskID) {
   const overlayRef = document.getElementById("overlayTaskEdit");
   overlayRef.innerHTML = templateOverlayTask(taskID, getCategoryColor(taskID));
@@ -64,6 +107,11 @@ function renderTaskOverlay(taskID) {
 }
 
 
+/**
+ * Returns the due date of a task in the format "dd.mm.yyyy".
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The formatted date, or "No due date" if the stored date is missing or not in the format "yyyy-mm-dd".
+ */
 function getTaskDate(taskID) {
   const date = allTasks[taskID].dueDate;
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date ?? "")) return "No due date";
@@ -71,53 +119,97 @@ function getTaskDate(taskID) {
 }
 
 
+/**
+ * Renders the priority text and icon of a task into the overlay.
+ * Falls back to "medium" if the task has no priority.
+ * @param {string} taskID - The ID of the task.
+ * @returns {void} Nothing; the priority is written into the overlay.
+ */
 function renderPriority(taskID) {
   const priorityRef = document.getElementById(`overlayPriority${taskID}`);
-  let priority = allTasks[taskID].priority;
-  if (!priority) {
-    priority = "medium";
-  }
+  const priority = allTasks[taskID].priority || "medium";
   const priorityString = priority.charAt(0).toUpperCase() + priority.slice(1).toLowerCase();
   priorityRef.innerHTML = templateOverlayPriority(priorityString, priority);
 }
 
 
+/**
+ * Renders the assignees of a task into the overlay, or hides the section if there are none.
+ * @param {string} taskID - The ID of the task.
+ * @returns {void} Nothing; the assignees are written into the overlay or their container is hidden.
+ */
 function renderOverlayAssignees(taskID) {
-  const assignees = checkForTaskAssignees(taskID);
-  if (assignees) {
-    const assigneesRef = document.getElementById(`overlayAssigneesContainer${taskID}`);
-    assigneesRef.innerHTML = templateOverlayAssignees(taskID);
-    renderTaskAssignees(taskID, assignees, "overlay");
+  const assigneesRef = document.getElementById(`overlayAssigneesContainer${taskID}`);
+  const assignees = allTasks[taskID].assignedTo;
+  if (!hasTaskAssignees(assignees)) {
+    assigneesRef.classList.add("d-none");
+    return;
   }
+
+  assigneesRef.innerHTML = templateOverlayAssignees(taskID);
+  renderTaskAssignees(taskID, assignees, "overlay");
 }
 
 
+/**
+ * Appends one assignee to the assignee list of the overlay.
+ * Uses the shortcut as the name if the assignee has no name.
+ * @param {string} taskID - The ID of the task.
+ * @param {{name?: string, shortcut: string, shortcutColor: string}} assignee - The assignee to show.
+ * @returns {void} Nothing; the assignee is added to the list.
+ */
 function renderOneOverlayAssignee(taskID, assignee) {
-  const assigneesRef = document.getElementById(`overlayAssignees${taskID}`)
+  const assigneesRef = document.getElementById(`overlayAssignees${taskID}`);
   const name = assignee.name || assignee.shortcut;
   assigneesRef.innerHTML += templateOverlayOneAssignee(assignee.shortcutColor, assignee.shortcut, name);
 }
 
 
+/**
+ * Renders the subtask list of a task into the overlay, or hides the section if there are none.
+ * @param {string} taskID - The ID of the task.
+ * @returns {void} Nothing; the subtasks are written into the overlay or their container is hidden.
+ */
 function renderOverlaySubtasks(taskID) {
-  const subtasks = allTasks[taskID].subtasks;
-  if (!hasTaskSubtasks(subtasks)) return;
-
   const subtasksContainerRef = document.getElementById(`overlaySubtasksContainer${taskID}`);
-  subtasksContainerRef.innerHTML = templateOverlaySubtasks(taskID);
+  const subtasks = allTasks[taskID].subtasks;
+  if (!hasTaskSubtasks(subtasks)) {
+    subtasksContainerRef.classList.add("d-none");
+    return;
+  }
 
+  subtasksContainerRef.innerHTML = templateOverlaySubtasks(taskID);
   const subtasksListRef = document.getElementById(`overlaySubtasks${taskID}`);
+  subtasksListRef.innerHTML = getSubtasksHtml(taskID, subtasks);
+}
+
+
+/**
+ * Builds the HTML of all subtasks of a task for the overlay.
+ * @param {string} taskID - The ID of the task.
+ * @param {{text: string, done: boolean}[]} subtasks - The subtasks of the task.
+ * @returns {string} The HTML string of all subtask list entries.
+ */
+function getSubtasksHtml(taskID, subtasks) {
   let subtasksHTML = "";
   for (let indexSubtask = 0; indexSubtask < subtasks.length; indexSubtask++) {
     subtasksHTML += templateOverlayOneSubtask(taskID, indexSubtask);
-  } 
-  subtasksListRef.innerHTML = subtasksHTML;
+  }
+  return subtasksHTML;
 }
 
 // #endregion
 
 // #region EDIT
 
+/**
+ * Saves the new state of a subtask checkbox. Task data and progress bar are updated
+ * only after a successful save. The checkbox is disabled while saving.
+ * @param {Event} event - The change event of the checkbox.
+ * @param {string} taskID - The ID of the task.
+ * @param {number} indexSubtask - The index of the subtask in the task.
+ * @returns {Promise<void>} Resolves once the saving is finished.
+ */
 async function toggleSubtask(event, taskID, indexSubtask) {
   const checkboxRef = event.currentTarget;
   const newValue = checkboxRef.checked;
@@ -127,35 +219,49 @@ async function toggleSubtask(event, taskID, indexSubtask) {
     const saved = await patchTasks({[`${taskID}/subtasks/${indexSubtask}/done`]: newValue});
     if (saved) {
       adjustSubtaskChange(taskID, subtask, newValue);
-    } 
+    }
   } finally {
     checkboxRef.disabled = false;
   }
 }
 
 
-function adjustSubtaskChange(taskID, subtask, newValue) { 
+/**
+ * Stores the new done state of a subtask in the task data and updates the progress bar of the task card.
+ * @param {string} taskID - The ID of the task.
+ * @param {{text: string, done: boolean}} subtask - The subtask to update.
+ * @param {boolean} newValue - The new done state.
+ * @returns {void} Nothing; the subtask and the progress bar are updated.
+ */
+function adjustSubtaskChange(taskID, subtask, newValue) {
   subtask.done = newValue;
   renderProgressBar(taskID);
 }
 
 
-function editTask(event, taskID) {
-  const buttonRef = event.currentTarget;
-  buttonRef.disabled = true;
-
+/**
+ * Switches the overlay from the detail view to the edit view.
+ * @param {string} taskID - The ID of the task to edit.
+ * @returns {void} Nothing; main part and footer of the overlay are replaced by the edit view.
+ */
+function editTask(taskID) {
   const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
   const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
   overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
   overlayFooterRef.innerHTML = templateOverlayFooterEdit(taskID);
-  
-  buttonRef.disabled = false;
 }
 
 // #endregion
 
 // #region DELETE
 
+/**
+ * Deletes a task from the database and the board.
+ * The delete button is disabled while the deletion runs.
+ * @param {MouseEvent} event - The click event on the delete button.
+ * @param {string} taskID - The ID of the task to delete.
+ * @returns {Promise<void>} Resolves once the deletion is finished or failed.
+ */
 async function deleteTask(event, taskID) {
   const buttonRef = event.currentTarget;
   buttonRef.disabled = true;
@@ -167,20 +273,27 @@ async function deleteTask(event, taskID) {
 }
 
 
+/**
+ * Waits for pending saves, reloads the tasks and deletes the task if it still exists.
+ * Updates the board afterwards. Stops if reloading the tasks fails or if the saving fails.
+ * @param {string} taskID - The ID of the task to delete.
+ * @returns {Promise<void>} Resolves once the deletion is finished or stopped.
+ */
 async function runDeletion(taskID) {
   await patchQueue;
-  if (!(await refreshTasks())) return;
+  if (!(await fetchAllTasks())) return;
 
   const deleted = !allTasks[taskID] || await patchTasks(buildDeleteUpdates(taskID));
   if (deleted) updateBoardAfterDelete(taskID);
 }
 
 
-function refreshTasks() {
-  return fetchAllTasks();
-} 
-
-
+/**
+ * Builds the update object for deleting a task: removes it from the order of its column
+ * and sets the task itself to null.
+ * @param {string} taskID - The ID of the task to delete.
+ * @returns {Object<string, string|number|null>} The path-based updates for the PATCH request.
+ */
 function buildDeleteUpdates(taskID) {
   const updates = {};
   removeTaskFromColumn(updates, allTasks[taskID].status, taskID);
@@ -189,6 +302,12 @@ function buildDeleteUpdates(taskID) {
 }
 
 
+/**
+ * Removes a deleted task from allTasks and the board, closes the overlay
+ * and updates the task counter and the empty-column message.
+ * @param {string} taskID - The ID of the deleted task.
+ * @returns {void} Nothing; allTasks and the DOM are updated.
+ */
 function updateBoardAfterDelete(taskID) {
   const cardRef = document.querySelector(`[data-task-id="${taskID}"]`);
   const columnRef = cardRef?.parentElement;
@@ -196,7 +315,7 @@ function updateBoardAfterDelete(taskID) {
   cardRef?.remove();
   closeTaskOverlay();
   if (columnRef) renderAmountOfTasks(columnRef.id, columnRef.children.length);
-  checkForEmptyColumn()
+  checkForEmptyColumn();
 }
 
 // #endregion

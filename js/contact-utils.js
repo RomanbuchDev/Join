@@ -70,6 +70,7 @@ async function saveOwnAccountData() {
  */
 async function fetchAllContacts() {
   try {
+    await window.getCurrentUser(); // Auth-Ready-Wartepunkt, da initHeader() nicht mehr aufgerufen wird
     const idToken = await window.auth.currentUser.getIdToken();
     const response = await fetch(`${window.firebaseUrl}/${CONTACTS}.json?auth=${idToken}`);
 
@@ -249,7 +250,7 @@ async function deleteContactInDatabase(contactId) {
 }
 
 
-// Test - Kontakte in den Tasks auf der Board-Seite entfernen
+// Kontakte in den Tasks auf der Board-Seite entfernen
 
 /**
  * Updates the contacts in the task and in the database.
@@ -270,7 +271,7 @@ async function updateContactsInTask(currentTaskID, contacts, contactId) {
     const taskURL = window.firebaseUrl + "/" + TASKS + "/" + currentTaskID + ".json" + "?auth=" + idToken;
     await fetch(taskURL, { method: "PATCH", body: JSON.stringify({ assignedTo: contacts }) });
   } catch (error) {
-    openDialogConnectionErrorDatabase();    
+    openDialogConnectionErrorDatabase();
   }
 }
 
@@ -283,12 +284,12 @@ async function updateContactsInTask(currentTaskID, contacts, contactId) {
  */
 async function checkContactsInTask(responseAsJSON, contactId) {
   const taskIDs = Object.keys(responseAsJSON);
-  
+
   for (let index = 0; index < taskIDs.length; index++) {
     const currentTaskID = taskIDs[index];
     const contacts = responseAsJSON[currentTaskID].assignedTo || [];
     await updateContactsInTask(currentTaskID, contacts, contactId);
-  }  
+  }
 }
 
 

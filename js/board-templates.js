@@ -109,6 +109,13 @@ function templateEmptyColumn(columnName) {
 
 // #region OVERLAY TASK
 
+/**
+ * Returns the HTML template of the overlay frame: header with category label and close button,
+ * and empty containers for the main part and the footer.
+ * @param {string} taskID - The ID of the task.
+ * @param {string} categoryColor - The CSS class for the color of the category label.
+ * @returns {string} The HTML string of the overlay frame.
+ */
 function templateOverlayTask(taskID, categoryColor) {
   const task = allTasks[taskID];
   return /*html*/ `
@@ -127,23 +134,29 @@ function templateOverlayTask(taskID, categoryColor) {
         </svg>
       </button>
     </header>
-    <main id="overlayMain${escapeHtml(taskID)}" class="overlay-main d-flex"></main>
+    <section id="overlayMain${escapeHtml(taskID)}" class="overlay-main d-flex"></section>
     <footer id="overlayFooter${escapeHtml(taskID)}" class="overlay-footer d-flex"></footer>
   `
 }
 
 
+/**
+ * Returns the HTML template of the main part of the detail view: title, due date and containers
+ * for description, priority, assignees and subtasks, which are filled in afterwards.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the main part.
+ */
 function templateOverlayMainDetails(taskID) {
   const task = allTasks[taskID];
   return /*html*/ `
-    <h1>${escapeHtml(task.title)}</h1>
+    <h2>${escapeHtml(task.title)}</h2>
     <p id="overlayDescription${escapeHtml(taskID)}"></p>
     <div class="overlay-detail-row d-flex">
-      <h2>Due date:</h2>
+      <h4>Due date:</h4>
       <p>${escapeHtml(getTaskDate(taskID))}</p>
     </div>
     <div class="overlay-detail-row d-flex">
-      <h2>Priority:</h2>
+      <h4>Priority:</h4>
       <p id="overlayPriority${escapeHtml(taskID)}" class="overlay-priority d-flex"></p>
     </div>
     <div id="overlayAssigneesContainer${escapeHtml(taskID)}" class="overlay-detail-column d-flex"></div>
@@ -152,6 +165,11 @@ function templateOverlayMainDetails(taskID) {
 }
 
 
+/**
+ * Returns the HTML template of the footer of the detail view with the delete and the edit button.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the footer.
+ */
 function templateOverlayFooterDetails(taskID) {
   return /*html*/ `
     <button type="button" class="button-delete-edit button-reset d-flex"
@@ -168,7 +186,7 @@ function templateOverlayFooterDetails(taskID) {
     </button>
     <div class="divider-line"></div>
     <button type="button" class="button-delete-edit button-reset d-flex"
-      onclick="editTask(event, '${escapeHtml(taskID)}')">
+      onclick="editTask('${escapeHtml(taskID)}')">
       <svg
         class="svg-fill svg-width-height-18px"
         aria-hidden="true"
@@ -183,7 +201,13 @@ function templateOverlayFooterDetails(taskID) {
 }
 
 
-function templateOverlayPriority(priorityString,  priority) {
+/**
+ * Returns the HTML template of the priority with text and icon.
+ * @param {string} priorityString - The priority as text to display, e.g. "Medium".
+ * @param {string} priority - The priority as stored in the task, used for the icon file.
+ * @returns {string} The HTML string of the priority.
+ */
+function templateOverlayPriority(priorityString, priority) {
   return /*html*/ `
     <span>${escapeHtml(priorityString)}</span>
     <img draggable="false"
@@ -193,14 +217,26 @@ function templateOverlayPriority(priorityString,  priority) {
 }
 
 
+/**
+ * Returns the HTML template of the assignee section with its heading and an empty list.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the assignee section.
+ */
 function templateOverlayAssignees(taskID) {
   return /*html*/ `
-    <h2>Assigned to:</h2>
+    <h4>Assigned to:</h4>
     <ul id="overlayAssignees${escapeHtml(taskID)}" class="overlay-assignees d-flex">
     </ul>`
 }
 
 
+/**
+ * Returns the HTML template of one assignee in the overlay with avatar and name.
+ * @param {string} assigneeColor - The background color of the avatar.
+ * @param {string} assigneeShortcut - The shortcut shown in the avatar.
+ * @param {string} assigneeName - The name of the assignee.
+ * @returns {string} The HTML string of the assignee.
+ */
 function templateOverlayOneAssignee(assigneeColor, assigneeShortcut, assigneeName) {
   return /*html*/ `
     <li class="overlay-assignee d-flex">
@@ -212,14 +248,25 @@ function templateOverlayOneAssignee(assigneeColor, assigneeShortcut, assigneeNam
 }
 
 
+/**
+ * Returns the HTML template of the subtask section with its heading and an empty list.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the subtask section.
+ */
 function templateOverlaySubtasks(taskID) {
   return /*html*/ `
-    <h2>Subtasks:</h2>
+    <h4>Subtasks:</h4>
     <ul id="overlaySubtasks${escapeHtml(taskID)}">
     </ul>`
 }
 
 
+/**
+ * Returns the HTML template of one subtask with a checkbox that is checked if the subtask is done.
+ * @param {string} taskID - The ID of the task.
+ * @param {number} indexSubtask - The index of the subtask in the task.
+ * @returns {string} The HTML string of the subtask.
+ */
 function templateOverlayOneSubtask(taskID, indexSubtask) {
   const subtask = allTasks[taskID].subtasks[indexSubtask];
   const checked = subtask.done ? "checked" : "";
@@ -238,6 +285,12 @@ function templateOverlayOneSubtask(taskID, indexSubtask) {
 
 // #region OVERLAY EDIT
 
+/**
+ * Returns the HTML template of the main part of the edit view.
+ * Currently only a placeholder that shows the task ID.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the main part.
+ */
 function templateOverlayMainEdit(taskID) {
   return /*html*/ `
     <p>${escapeHtml(taskID)}</p>
@@ -245,10 +298,15 @@ function templateOverlayMainEdit(taskID) {
 }
 
 
+/**
+ * Returns the HTML template of the footer of the edit view with the "Ok" button.
+ * The button has no function yet.
+ * @returns {string} The HTML string of the footer.
+ */
 function templateOverlayFooterEdit() {
   return /*html*/ `
     <button
-      class="button-basic button-primary btn-d-tablet"
+      class="button-basic button-primary"
       type="button"
     >
       <span>Ok</span>

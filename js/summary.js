@@ -6,7 +6,8 @@ let tasks = [];
  * @returns {Promise<void>} Resolves when initialization is complete.
  */
 async function init() {
-  const user = await initHeader();
+  // const user = await initHeader(); // Header läuft jetzt zentral über initHeaderAuthUI() in script.js
+  const user = await window.getCurrentUser(); // user wird hier nur noch für die Begrüßung gebraucht
   await getSummaryData();
   getStatusInformation();
   renderDates();

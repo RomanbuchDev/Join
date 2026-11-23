@@ -8,11 +8,12 @@ async function initAddTask() {
   renderAddTask();
   const status = new URLSearchParams(window.location.search).get("status");
   setAddTaskFormStatus(status);
-  await initHeader();
+  // await initHeader(); // Header läuft jetzt zentral über initHeaderAuthUI() in script.js
+  await window.getCurrentUser(); // Auth-Ready-Wartepunkt, Header läuft über initHeaderAuthUI()
+
   await initTaskForm();
   document.body.classList.remove("is-loading");
 }
-
 
 /**
  * Renders the Add Task page content into its container.
@@ -22,7 +23,6 @@ function renderAddTask() {
   const content = document.getElementById("add-task-content");
   content.innerHTML = getAddTaskTemplate();
 }
-
 
 /**
  * Sets the form's task status, falling back to "toDo" for invalid values.
@@ -36,7 +36,6 @@ function setAddTaskFormStatus(
 ) {
   form.dataset.status = getValidAddTaskStatus(status);
 }
-
 
 /**
  * Resets draft subtasks, removes selected assignee badges,
@@ -52,7 +51,6 @@ function clearTaskForm() {
     toggleAssignedContacts();
   }
 }
-
 
 /**
  * Submits the task form and disables the create button until submission finishes.
@@ -70,7 +68,6 @@ function createTask(event, onSuccess = resetAddTaskAfterSave) {
     button.disabled = false;
   });
 }
-
 
 /**
  * Builds and saves a task, runs the success callback, and displays any caught error.
@@ -91,7 +88,6 @@ async function submitTaskForm(form, onSuccess = resetAddTaskAfterSave) {
   }
 }
 
-
 /**
  * Resets the task form and displays a confirmation toast after saving.
  * @param {HTMLFormElement} form - The task form to reset.
@@ -101,7 +97,6 @@ function resetAddTaskAfterSave(form) {
   form.reset();
   showToastMessage("Task added to board", "toast-message-new");
 }
-
 
 /**
  * Builds a task object from the form fields, selected assignees, and draft subtasks.
@@ -120,7 +115,6 @@ function buildTask(form, status = form.dataset.status) {
   };
 }
 
-
 /**
  * Reads task fields, trims the title and description,
  * and includes the category if its form control exists.
@@ -138,7 +132,6 @@ function readTaskFields(form, data) {
   };
 }
 
-
 /**
  * Reads the selected category's display text if the category field exists.
  * @param {HTMLFormElement} form - The task form to read.
@@ -152,7 +145,6 @@ function readAddTaskCategory(form) {
     category: category.selectedOptions[0].textContent.trim(),
   };
 }
-
 
 /**
  * Collects names, initials, and badge colors for selected user assignees.
@@ -173,7 +165,6 @@ function getAssignedUserBadges(form) {
   return badges;
 }
 
-
 /**
  * Saves a new task at the start of its status column and updates task positions.
  * @param {Object} task - The task data to save.
@@ -191,7 +182,6 @@ async function saveNewTask(task) {
   return persistNewTaskUpdates(updates, previousTasks);
 }
 
-
 /**
  * Saves task updates and restores the previous local state if saving returns false.
  * @param {Object} updates - The task updates to persist.
@@ -204,7 +194,6 @@ async function persistNewTaskUpdates(updates, previousTasks) {
   return saved;
 }
 
-
 /**
  * Returns the given task status if valid, otherwise defaults to "toDo".
  * @param {string|null|undefined} status - The task status to validate.
@@ -214,7 +203,6 @@ function getValidAddTaskStatus(status) {
   const statuses = ["toDo", "inProgress", "awaitFeedback", "done"];
   return statuses.includes(status) ? status : "toDo";
 }
-
 
 /**
  * Inserts a task at the start of its status column in local state

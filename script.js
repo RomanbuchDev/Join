@@ -15,6 +15,9 @@ async function fetchUserProfile(user) {
   const response = await fetch(
     `${window.firebaseUrl}/users/${user.uid}.json?auth=${idToken}`,
   );
+  if (!response.ok) {
+    throw new Error("Failed to load user profile");
+  }
   const profile = await response.json();
   return { uid: user.uid, name: profile.name, email: user.email };
 }
@@ -24,28 +27,20 @@ async function fetchUserProfile(user) {
  * Signs the logged-in user out via Firebase Auth and then redirects to the login page.
  */
 async function handleLogoutClick() {
-  await window.signOut(window.auth);
-  window.location.href = "../index.html";
-}
-
-const logoutButton = document.querySelector(".user-menu-logout");
-if (logoutButton) {
-  logoutButton.addEventListener("click", handleLogoutClick);
+  try {
+    document.body.classList.add("is-loading");
+    await window.signOut(window.auth);
+    window.location.href = "../index.html";
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  } finally {
+    document.body.classList.remove("is-loading");
+  }
 }
 
 // #endregion
 
 // #region HEADER
-
-/**
- * Waits for the logged-in user and renders the header for the current page.
- * @returns {Promise<Object>} The logged-in user.
- */
-async function initHeader() {
-  const user = await window.getCurrentUser();
-  initAvatar(user);
-  return user;
-}
 
 
 /**
@@ -111,10 +106,39 @@ function showGuestUI() {
  * @param {Object} user - The raw Firebase user object (uid, email, isAnonymous, getIdToken()).
  */
 async function showAuthenticatedUI(user) {
-  const profile = await fetchUserProfile(user);
-  initAvatar(profile);
-  document.querySelector(".user-menu").hidden = false;
+  try {
+    const profile = await fetchUserProfile(user);
+    initAvatar(profile);
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  } finally {
+    document.querySelector(".user-menu").hidden = false;
+  }
 }
+
+
+/**
+ * Registers an auth-state listener that renders the header, independent of
+ * the navbar.
+ */
+function initHeaderAuthUI() {
+  window.onAuthStateChanged(window.auth, async (user) => {
+    if (user) {
+      await showAuthenticatedUI(user);
+    } else {
+      showGuestUI();
+    }
+  });
+}
+
+/**
+ * Bootstraps the header auth-state listener on every page that has a
+ * #header element.
+ */
+if (document.getElementById("header")) {
+  initHeaderAuthUI();
+}
+
 
 // #endregion
 
@@ -151,7 +175,7 @@ function renderNavbarGuest(currentPage) {
 
 
 /**
- * Registers an auth-state listener and renders the header and navbar
+ * Registers an auth-state listener and renders the navbar
  * depending on whether the visitor is authenticated.
  */
 function initNavbarAuthUI() {
@@ -159,10 +183,8 @@ function initNavbarAuthUI() {
     const currentPage = getCurrentPage();
     if (user) {
       renderNavbarAuthenticated(currentPage);
-      await showAuthenticatedUI(user);
     } else {
       renderNavbarGuest(currentPage);
-      showGuestUI();
     }
   });
 }

@@ -21,13 +21,13 @@ let lastScrollPosition = 0;
  * @async
  */
 async function initContacts() {
-  await initHeader();
   await fetchAllContacts();
   renderContactList();
   activateContactFormSubmissionType();
   renderContactDetailsDesktopPlaceholder();
   closeDialogBackgroundClick();
   closeMobileContactOptionsEscapeKey();
+  initCorrectDialogClose();
 }
 
 
