@@ -1,4 +1,5 @@
-/* Zentrierungs-Klassen */
+/* #region MARK: center
+*/
 .dpf-center {
   display: flex;
   justify-content: center;
@@ -21,7 +22,10 @@
   align-items: center;
 }
 
-/* Ausrichtungs-Klassen für Flex-Richtung */
+/* #endregion */
+
+/* #region MARK: flex alignment
+*/
 .dpf-flex-start {
   display: flex;
   justify-content: flex-start;
@@ -41,7 +45,10 @@
   align-items: center;
 }
 
-/* Klassen für Flex-Richtung mit Ausrichtung */
+/* #endregion */
+
+/* #region MARK: flex direction
+*/
 .dpf-flex-column-start {
   display: flex;
   flex-direction: column;
@@ -70,6 +77,10 @@
   align-items: center;
 }
 
+/* #endregion */
+
+/* #region MARK: space between
+*/
 .dpf-sb-center {
   display: flex;
   justify-content: space-between;
@@ -88,3 +99,5 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+/* #endregion */
