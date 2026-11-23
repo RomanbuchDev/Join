@@ -39,7 +39,7 @@ function loginEventListener(form) {
  * Switches the lock icon depending on whether the password field is empty or not.
  */
 function inputPasswordCheck() {
-  const inputPasswordCheck = document.getElementById("exampleInputPassword1");
+  const inputPasswordCheck = document.getElementById("loginPassword");
   const icon = document.getElementById("visibility-icon");
   inputPasswordCheck.addEventListener("input", () => {
     if (inputPasswordCheck.value === "") {
@@ -57,7 +57,7 @@ function inputPasswordCheck() {
  * Reacts to clicks on the visibility icon.
  */
 function visibilityEventListener() {
-  const inputPasswordCheck = document.getElementById("exampleInputPassword1");
+  const inputPasswordCheck = document.getElementById("loginPassword");
   const icon = document.getElementById("visibility-icon"); //.getAttribute("src")
   icon.addEventListener("click", () => {
     if (inputPasswordCheck.value === "") {
@@ -183,8 +183,8 @@ function handleLoginSuccess() {
 function handleLoginError() {
   document.getElementById("loginError").innerText =
     "Password or email is incorrect!";
-  markFieldError("exampleInputEmail1", true);
-  markFieldError("exampleInputPassword1", true);
+  markFieldError("loginEmail", true);
+  markFieldError("loginPassword", true);
 }
 
 
@@ -210,7 +210,7 @@ function isLoginInputValid(loginUserData) {
 function checkEmailField(email) {
   const isEmpty = email.trim() === "";
   const isInvalid = !isEmpty && (!email.includes("@") || !email.includes("."));
-  markFieldError("exampleInputEmail1", isEmpty || isInvalid);
+  markFieldError("loginEmail", isEmpty || isInvalid);
   return { isEmpty, isInvalid };
 }
 
@@ -222,7 +222,7 @@ function checkEmailField(email) {
  */
 function checkPasswordField(password) {
   const isEmpty = password.trim() === "";
-  markFieldError("exampleInputPassword1", isEmpty);
+  markFieldError("loginPassword", isEmpty);
   return isEmpty;
 }
 
@@ -294,8 +294,8 @@ function markFieldError(inputId, isEmpty) {
  * @returns {Object} The entered form data.
  */
 function getLoginFormValues() {
-  const inputEmail = document.getElementById("exampleInputEmail1").value;
-  const inputPassword = document.getElementById("exampleInputPassword1").value;
+  const inputEmail = document.getElementById("loginEmail").value;
+  const inputPassword = document.getElementById("loginPassword").value;
   const loginUserData = {
     email: inputEmail,
     password: inputPassword,
@@ -310,8 +310,8 @@ function getLoginFormValues() {
 function resetLoginFormState() {
   document.getElementById("loginBtn").disabled = false;
   document.getElementById("guestLoginBtn").disabled = false;
-  markFieldError("exampleInputEmail1", false);
-  markFieldError("exampleInputPassword1", false);
+  markFieldError("loginEmail", false);
+  markFieldError("loginPassword", false);
   document.getElementById("loginError").innerText = "";
 }
 
