@@ -1,3 +1,14 @@
+/**
+ * Returns the summary cards HTML with task counts and a deadline placeholder.
+ * @param {Object} statusCounts - The task counts grouped by status.
+ * @param {number} statusCounts.toDo - The number of tasks to do.
+ * @param {number} statusCounts.inProgress - The number of tasks in progress.
+ * @param {number} statusCounts.awaitFeedback - The number of tasks awaiting feedback.
+ * @param {number} statusCounts.done - The number of completed tasks.
+ * @param {Object[]} tasks - The tasks used to display the total count.
+ * @param {number} urgentTasks - The number of tasks with urgent priority.
+ * @returns {string} The summary cards HTML.
+ */
 function generateSummaryHTM(statusCounts, tasks, urgentTasks) {
   return /* html */ `
   

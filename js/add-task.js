@@ -1,12 +1,35 @@
+/**
+ * Renders the Add Task page, sets the task status,
+ * initializes the header and task form, and clears the loading state.
+ * @returns {Promise<void>} Resolves when initialization is complete.
+ */
+
 async function initAddTask() {
   renderAddTask();
   const status = new URLSearchParams(window.location.search).get("status");
   setAddTaskFormStatus(status);
   await initHeader();
   await initTaskForm();
+  document.body.classList.remove("is-loading");
 }
 
 
+/**
+ * Renders the Add Task page content into its container.
+ * @returns {void}
+ */
+function renderAddTask() {
+  const content = document.getElementById("add-task-content");
+  content.innerHTML = getAddTaskTemplate();
+}
+
+
+/**
+ * Sets the form's task status, falling back to "toDo" for invalid values.
+ * @param {string|null} status - The requested task status.
+ * @param {HTMLFormElement} [form=document.getElementById("task-form")] - The task form.
+ * @returns {void}
+ */
 function setAddTaskFormStatus(
   status,
   form = document.getElementById("task-form"),
@@ -15,254 +38,11 @@ function setAddTaskFormStatus(
 }
 
 
-async function initTaskForm(assignedIds = [], assignedUserBadges = {}) {
-  const contacts = await loadAssignedContacts();
-  await addSelfAssignee(contacts);
-  addSavedUserAssignees(contacts, assignedIds, assignedUserBadges);
-  renderAssignedContacts(contacts);
-  setAssignedContacts(assignedIds);
-}
-
-
-function addSavedUserAssignees(contacts, assignedIds = [], badges = {}) {
-  for (const id of assignedIds) {
-    addSavedUserAssignee(contacts, id, badges);
-  }
-}
-
-
-function addSavedUserAssignee(contacts, id, badges) {
-  if (contacts.some((contact) => contact.id === id)) return;
-
-  const badge = badges[id];
-  if (!badge) return;
-
-  contacts.push(createSavedUserAssignee(id, badge));
-}
-
-
-function createSavedUserAssignee(id, badge) {
-  return {
-    ...badge,
-    id,
-    source: "users",
-    name: badge.name ?? badge.shortcut ?? "User",
-  };
-}
-
-
-function setAssignedContacts(assignedIds = []) {
-  const checkboxes = document.querySelectorAll(
-    '#contact_list input[type="checkbox"]',
-  );
-  for (const checkbox of checkboxes) {
-    checkbox.checked = (assignedIds ?? []).includes(checkbox.value);
-  }
-  renderSelectedContactBadges();
-}
-
-
-function renderAddTask() {
-  const content = document.getElementById("add-task-content");
-  content.innerHTML = getAddTaskTemplate();
-}
-
-
-function renderAssignedContacts(contacts) {
-  const contactList = document.getElementById("contact_list");
-  const sortedContacts = [...contacts].sort(compareAssignedContacts);
-  contactList.replaceChildren();
-
-  for (const contact of sortedContacts) {
-    contactList.append(createAssignedContactRow(contact));
-  }
-}
-
-
-function compareAssignedContacts(first, second) {
-  const firstIsSelf = isCurrentUserContact(first);
-  const secondIsSelf = isCurrentUserContact(second);
-
-  if (firstIsSelf !== secondIsSelf) {
-    return firstIsSelf ? -1 : 1;
-  }
-
-  return first.name.localeCompare(second.name, "de", {
-    sensitivity: "base",
-  });
-}
-
-
-function isCurrentUserContact(contact) {
-  const uid = window.auth.currentUser?.uid;
-  return contact.source === "users" && contact.id === uid;
-}
-
-
-function filterAssignedContacts(value) {
-  const search = value.trim().toLocaleLowerCase("de");
-  const list = document.getElementById("contact_list");
-
-  for (const row of list.children) {
-    const name = row.querySelector(".assigned-contact-name").textContent;
-    row.hidden =
-      search.length >= 2 && !name.toLocaleLowerCase("de").startsWith(search);
-  }
-
-  list.hidden = false;
-  document.getElementById("assigned-to").setAttribute("aria-expanded", "true");
-}
-
-
-function createAssignedContactRow(contact) {
-  const row = document.createElement("li");
-  row.innerHTML = getAssignedContactTemplate();
-  const isSelf =
-    contact.source === "users" && contact.id === window.auth.currentUser?.uid;
-  row.querySelector(".assigned-contact-name").textContent =
-    contact.name + (isSelf ? " (You)" : "");
-  setContactBadge(row, contact);
-  setContactCheckbox(row, contact);
-  return row;
-}
-
-
-function setContactBadge(row, contact) {
-  const badge = row.querySelector(".selected-contact-badge");
-  badge.textContent = contact.shortcut;
-  badge.style.backgroundColor = contact.shortcutColor;
-}
-
-
-function setContactCheckbox(row, contact) {
-  const checkbox = row.querySelector("input");
-  checkbox.value = contact.id;
-  checkbox.dataset.source = contact.source ?? "contacts";
-  checkbox.dataset.name = contact.name;
-  checkbox.dataset.shortcut = contact.shortcut;
-  checkbox.dataset.shortcutColor = contact.shortcutColor;
-}
-
-
-function toggleAssignedContacts() {
-  const contactList = document.getElementById("contact_list");
-  const assignedToInput = document.getElementById("assigned-to");
-
-  contactList.hidden = !contactList.hidden;
-  assignedToInput.setAttribute("aria-expanded", String(!contactList.hidden));
-}
-
-
-async function loadAssignedContacts() {
-  const idToken = await window.auth.currentUser.getIdToken();
-  const response = await fetch(
-    `${window.firebaseUrl}/contacts.json?auth=${encodeURIComponent(idToken)}`,
-  );
-  checkContactsResponse(response);
-  const data = await response.json();
-  return Object.entries(data ?? {}).map(([id, contact]) => ({
-    ...contact,
-    id,
-  }));
-}
-
-
-function checkContactsResponse(response) {
-  if (response.ok) return;
-
-  throw new Error(
-    `Kontakte konnten nicht geladen werden (${response.status}).`,
-  );
-}
-
-
-function renderSelectedContactBadges() {
-  const badges = document.getElementById("selected-contact-badges");
-  const checkedContacts = document.querySelectorAll(
-    `#contact_list input[type="checkbox"]:checked`,
-  );
-
-  badges.replaceChildren();
-
-  for (const checkbox of checkedContacts) {
-    const badge = document.createElement("span");
-    badge.className = "selected-contact-badge";
-    badge.textContent = checkbox.dataset.shortcut;
-    badge.style.backgroundColor = checkbox.dataset.shortcutColor;
-
-    badges.append(badge);
-  }
-}
-
-
-async function addSelfAssignee(contacts) {
-  const user = window.auth.currentUser;
-  if (!isAssignableUser(user)) return;
-
-  await tryAddSelfAssignee(contacts, user);
-}
-
-
-function isAssignableUser(user) {
-  return user && !user.isAnonymous;
-}
-
-
-async function tryAddSelfAssignee(contacts, user) {
-  try {
-    const profile = await loadUserProfile(user);
-    addSelfAssigneeFromProfile(contacts, user, profile);
-  } catch (error) {
-    console.warn("Eigenes Profil konnte nicht geladen werden", error);
-  }
-}
-
-
-function addSelfAssigneeFromProfile(contacts, user, profile) {
-  const name = profile?.name?.trim();
-  if (!name) return;
-
-  contacts.unshift(createSelfAssignee(user.uid, name));
-}
-
-
-async function loadUserProfile(user) {
-  const idToken = await user.getIdToken();
-  const path = `users/${encodeURIComponent(user.uid)}`;
-  const response = await fetch(
-    `${window.firebaseUrl}/${path}.json?auth=${encodeURIComponent(idToken)}`,
-  );
-  if (!response.ok) {
-    throw new Error(`Profil konnte nicht geladen werden (${response.status}).`);
-  }
-  return response.json();
-}
-
-
-function createSelfAssignee(uid, name) {
-  const initials = name.split(/\s+/).slice(0, 2);
-  return {
-    id: uid,
-    name,
-    shortcut: initials
-      .map((word) => word[0])
-      .join("")
-      .toUpperCase(),
-    shortcutColor: "#29abe2",
-    source: "users",
-  };
-}
-
-
-function closeAssignedContactsOnOutsideClick(event) {
-  const contactList = document.getElementById("contact_list");
-  if (!contactList || contactList.hidden) return;
-  if (event.target.closest(".form-field--assigned")) return;
-
-  toggleAssignedContacts();
-}
-
-
+/**
+ * Resets draft subtasks, removes selected assignee badges,
+ * and closes the assignee dropdown if it is open.
+ * @returns {void}
+ */
 function clearTaskForm() {
   resetSubtasks();
   document.getElementById("selected-contact-badges").replaceChildren();
@@ -274,6 +54,12 @@ function clearTaskForm() {
 }
 
 
+/**
+ * Submits the task form and disables the create button until submission finishes.
+ * @param {SubmitEvent} event - The form's submit event.
+ * @param {function(HTMLFormElement): (void|Promise<void>)} [onSuccess=resetAddTaskAfterSave] - Callback run after saving.
+ * @returns {Promise<boolean>|undefined} The submission result, or undefined if the button is already disabled.
+ */
 function createTask(event, onSuccess = resetAddTaskAfterSave) {
   event.preventDefault();
   const form = event.currentTarget;
@@ -286,6 +72,12 @@ function createTask(event, onSuccess = resetAddTaskAfterSave) {
 }
 
 
+/**
+ * Builds and saves a task, runs the success callback, and displays any caught error.
+ * @param {HTMLFormElement} form - The form containing the task data.
+ * @param {function(HTMLFormElement): (void|Promise<void>)} [onSuccess=resetAddTaskAfterSave] - Callback run after saving.
+ * @returns {Promise<boolean>} True if saving and the callback succeed; otherwise false.
+ */
 async function submitTaskForm(form, onSuccess = resetAddTaskAfterSave) {
   try {
     const task = buildTask(form);
@@ -300,12 +92,23 @@ async function submitTaskForm(form, onSuccess = resetAddTaskAfterSave) {
 }
 
 
+/**
+ * Resets the task form and displays a confirmation toast after saving.
+ * @param {HTMLFormElement} form - The task form to reset.
+ * @returns {void}
+ */
 function resetAddTaskAfterSave(form) {
   form.reset();
   showToastMessage("Task added to board", "toast-message-new");
 }
 
 
+/**
+ * Builds a task object from the form fields, selected assignees, and draft subtasks.
+ * @param {HTMLFormElement} form - The form containing the task data.
+ * @param {string} [status=form.dataset.status] - The requested task status; invalid values default to "toDo".
+ * @returns {Object} The task data prepared for saving.
+ */
 function buildTask(form, status = form.dataset.status) {
   const data = new FormData(form);
   return {
@@ -318,6 +121,13 @@ function buildTask(form, status = form.dataset.status) {
 }
 
 
+/**
+ * Reads task fields, trims the title and description,
+ * and includes the category if its form control exists.
+ * @param {HTMLFormElement} form - The task form.
+ * @param {FormData} data - The data collected from the form.
+ * @returns {Object} The task fields read from the form.
+ */
 function readTaskFields(form, data) {
   return {
     title: data.get("title").trim(),
@@ -329,6 +139,11 @@ function readTaskFields(form, data) {
 }
 
 
+/**
+ * Reads the selected category's display text if the category field exists.
+ * @param {HTMLFormElement} form - The task form to read.
+ * @returns {{category?: string}} The selected category, or an empty object if the field is absent.
+ */
 function readAddTaskCategory(form) {
   const category = form.elements.namedItem("category");
   if (!category) return {};
@@ -339,6 +154,11 @@ function readAddTaskCategory(form) {
 }
 
 
+/**
+ * Collects names, initials, and badge colors for selected user assignees.
+ * @param {HTMLFormElement} form - The task form containing the assignee checkboxes.
+ * @returns {Object.<string, Object>} Badge data keyed by user ID.
+ */
 function getAssignedUserBadges(form) {
   const badges = {};
   const checked = form.querySelectorAll("#contact_list input:checked");
@@ -354,6 +174,11 @@ function getAssignedUserBadges(form) {
 }
 
 
+/**
+ * Saves a new task at the start of its status column and updates task positions.
+ * @param {Object} task - The task data to save.
+ * @returns {Promise<boolean>} True if saving succeeds, or false if loading or saving fails.
+ */
 async function saveNewTask(task) {
   await patchQueue;
   if (!(await fetchAllTasks())) return false;
@@ -367,6 +192,12 @@ async function saveNewTask(task) {
 }
 
 
+/**
+ * Saves task updates and restores the previous local state if saving returns false.
+ * @param {Object} updates - The task updates to persist.
+ * @param {Object} previousTasks - The task state to restore if saving fails.
+ * @returns {Promise<boolean>} Whether the updates were saved successfully.
+ */
 async function persistNewTaskUpdates(updates, previousTasks) {
   const saved = await patchTasks(updates);
   if (!saved) replaceAllTasks(previousTasks);
@@ -374,12 +205,25 @@ async function persistNewTaskUpdates(updates, previousTasks) {
 }
 
 
+/**
+ * Returns the given task status if valid, otherwise defaults to "toDo".
+ * @param {string|null|undefined} status - The task status to validate.
+ * @returns {"toDo"|"inProgress"|"awaitFeedback"|"done"} A valid task status.
+ */
 function getValidAddTaskStatus(status) {
   const statuses = ["toDo", "inProgress", "awaitFeedback", "done"];
   return statuses.includes(status) ? status : "toDo";
 }
 
 
+/**
+ * Inserts a task at the start of its status column in local state
+ * and builds the updates needed to persist the task and affected positions.
+ * @param {string} taskID - The new task's unique ID.
+ * @param {Object} task - The task data to insert.
+ * @param {"toDo"|"inProgress"|"awaitFeedback"|"done"} task.status - The target column.
+ * @returns {Object} The updates to persist.
+ */
 function createNewTaskUpdates(taskID, task) {
   const updates = {};
   allTasks[taskID] = { ...task, position: 0 };
