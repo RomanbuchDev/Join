@@ -1,3 +1,7 @@
+/**
+ * Returns the HTML for the Add Task page, including its header and form.
+ * @returns {string} The Add Task page HTML.
+ */
 function getAddTaskTemplate() {
   return /*html*/ `
     ${getAddTaskHeaderTemplate()}
@@ -6,6 +10,17 @@ function getAddTaskTemplate() {
 }
 
 
+/**
+ * Returns the task form HTML with configurable handlers, fields, and action buttons.
+ * @param {Object} [options={}] - Settings that override the form defaults.
+ * @param {string} [options.submitHandler="createTask(event)"] - JavaScript for the submit event.
+ * @param {string} [options.resetHandler="clearTaskForm()"] - JavaScript for the reset event.
+ * @param {string} [options.priority="medium"] - The initially selected priority.
+ * @param {string} [options.category=""] - The initially selected category's display text.
+ * @param {boolean} [options.showCategory=true] - Whether to include the category field.
+ * @param {string} [options.actions] - Custom action buttons HTML; defaults to getTaskActionsTemplate().
+ * @returns {string} The configured task form HTML.
+ */
 function getTaskFormTemplate(options = {}) {
   const settings = Object.assign(
     {
@@ -32,6 +47,10 @@ function getTaskFormTemplate(options = {}) {
 }
 
 
+/**
+ * Returns the HTML for the Add Task page header.
+ * @returns {string} The header HTML.
+ */
 function getAddTaskHeaderTemplate() {
   return /*html*/ `
     <header class="add-task-header">
@@ -41,22 +60,46 @@ function getAddTaskHeaderTemplate() {
 }
 
 
+/**
+ * Returns the checked attribute when the priorities match.
+ * @param {string} currentPriority - The currently selected priority.
+ * @param {string} priority - The priority of the radio button.
+ * @returns {string} "checked" if the priorities match, otherwise an empty string.
+ */
 function getCheckedAttribute(currentPriority, priority) {
   return currentPriority === priority ? "checked" : "";
 }
 
 
+/**
+ * Returns the selected attribute when the categories match.
+ * @param {string} currentCategory - The currently selected category.
+ * @param {string} category - The category of the option.
+ * @returns {string} "selected" if the categories match, otherwise an empty string.
+ */
 function getSelectedAttribute(currentCategory, category) {
   return currentCategory === category ? "selected" : "";
 }
 
 
+/**
+ * Selects the category placeholder when no supported category is provided.
+ * @param {string} category - The category's display text.
+ * @returns {string} "selected" if the category is unsupported, otherwise an empty string.
+ */
 function getCategoryPlaceholderAttribute(category) {
   const categories = ["User Story", "Technical Task"];
   return categories.includes(category) ? "" : "selected";
 }
 
 
+/**
+ * Returns the HTML for the task fields, assignee selection, and subtask controls.
+ * @param {"urgent"|"medium"|"low"} [priority="medium"] - The initially selected priority.
+ * @param {string} [category=""] - The initially selected category's display text.
+ * @param {boolean} [showCategory=true] - Whether to include the category field.
+ * @returns {string} The task fields HTML.
+ */
 function getTaskFieldsTemplate(
   priority = "medium",
   category = "",
@@ -74,6 +117,7 @@ function getTaskFieldsTemplate(
             type="text"
             placeholder="Enter a title"
             required
+            oninvalid="markTaskFieldInvalid(event)"
           />
         </div>
 
@@ -95,6 +139,7 @@ function getTaskFieldsTemplate(
             name="due-date"
             id="due-date"
             required
+            oninvalid="markTaskFieldInvalid(event)"
           />
         </div>
       </div>
@@ -271,6 +316,11 @@ function getTaskFieldsTemplate(
 }
 
 
+/**
+ * Returns the category dropdown HTML with the matching option selected.
+ * @param {string} [category=""] - The category's display text; unsupported values select the placeholder.
+ * @returns {string} The category dropdown HTML.
+ */
 function getTaskCategoryTemplate(category = "") {
   return /*html*/ `
     <div class="form-field form-field--category">
@@ -278,6 +328,7 @@ function getTaskCategoryTemplate(category = "") {
       <select
         class="form-control form-control--select" name="category" id="category"
         required
+        oninvalid="markTaskFieldInvalid(event)"
       >
         <option
           class="select-placeholder"
@@ -305,6 +356,10 @@ function getTaskCategoryTemplate(category = "") {
 }
 
 
+/**
+ * Returns the HTML for the required-field hint and the Clear and Create Task buttons.
+ * @returns {string} The task form actions HTML.
+ */
 function getTaskActionsTemplate() {
   return /*html*/ `
     <div class="form-actions">
@@ -320,77 +375,6 @@ function getTaskActionsTemplate() {
       <button type="submit" class="form-action form-action--create">
         Create Task
       </button>
-    </div>
-  `;
-}
-
-
-function getTaskOverlayActionsTemplate(mode = "add", cancelHandler = "") {
-  return /*html*/ `
-    <div class="form-actions">
-      ${
-        mode === "edit"
-          ? ""
-          : `
-        <button type="button" class="form-action form-action--clear"
-          onclick="${cancelHandler}">Cancel ✕</button>
-      `
-      }
-      <button type="submit" class="form-action form-action--create">
-        ${mode === "edit" ? "Ok ✓" : "Create Task ✓"}
-      </button>
-    </div>
-  `;
-}
-
-
-function getAssignedContactTemplate() {
-  return /*html*/ `
-    <label class="assigned-contact-option">
-      <span class="selected-contact-badge" aria-hidden="true"></span>
-      <span class="assigned-contact-name"></span>
-      <input
-        type="checkbox" name="assignedTo" onclick="renderSelectedContactBadges()"
-      />
-    </label>
-  `;
-}
-
-
-function getSubtaskTemplate(index, isEditing) {
-  return /*html*/ `
-    <div class="subtask-row ${isEditing ? "subtask-row--editing" : ""}">
-      ${
-        isEditing
-          ? `<input class="subtask-edit-input" type="text"
-              aria-label="Edit subtask"
-              oninput="editingSubtask.text = this.value"
-              onkeydown="handleSubtaskEditKeydown(event)" />`
-          : `<span class="subtask-text"></span>`
-      }
-
-      <div class="subtask-row-actions">
-        ${
-          isEditing
-            ? ""
-            : `<button type="button" aria-label="Edit subtask"
-                onclick="editSubtask(${index})">
-                <img src="../assets/icons/subtasks.svg" alt="" width="20" height="20" />
-              </button>`
-        }
-
-        <button type="button" aria-label="Delete subtask"
-          onclick="deleteSubtask(${index})">
-          <img src="../assets/icons/delete.svg" alt="" width="20" height="20" />
-        </button>
-
-        ${
-          isEditing
-            ? `<button type="button" aria-label="Save subtask"
-                onclick="saveSubtaskEdit()">✓</button>`
-            : ""
-        }
-      </div>
     </div>
   `;
 }
