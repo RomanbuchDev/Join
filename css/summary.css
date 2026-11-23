@@ -288,6 +288,19 @@ main {
   }
 }
 
+@media (64em <= width < 80em) {
+  .greeting {
+    display: none;
+  }
+
+  main {
+    grid-template-columns: 560px;
+    grid-template-areas:
+      "summary-header"
+      "summary-list";
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .summary-card:hover {
     transform: scale(1.05);
