@@ -9,6 +9,7 @@ async function initAddTask() {
   setAddTaskFormStatus(status);
   await window.getCurrentUser();
   await initTaskForm();
+  document.body.classList.remove("is-loading");
 }
 
 
