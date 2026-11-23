@@ -1,6 +1,3 @@
-setTimeout(() => {
-  window.location.href = "./summary.html";
-}, 3000);
 
 
 /**
@@ -8,7 +5,16 @@ setTimeout(() => {
  */
 async function initGreeting() {
   const user = await window.getCurrentUser();
-  greetingUser(user);
+  try {
+    greetingUser(user);
+    setTimeout(() => {
+      window.location.href = "./summary.html";
+    }, 3000);
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+  } finally {
+    document.body.classList.remove("is-loading");
+  }
 }
 
 
@@ -18,10 +24,10 @@ async function initGreeting() {
  */
 function greetingUser(user) {
   if (user.isGuest) {
-    document.getElementById("greetingMessage").innerText = "Good morning!";
+    document.getElementById("greetingMessage").innerText = getGreeting() + "!";
     document.getElementById("userName").innerText = "";
   } else {
-    document.getElementById("greetingMessage").innerText = "Good morning,";
+    document.getElementById("greetingMessage").innerText = getGreeting() + ",";
     document.getElementById("userName").innerText = user.name;
   }
 }

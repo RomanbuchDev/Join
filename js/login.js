@@ -11,9 +11,6 @@ window.addEventListener("pageshow", (event) => {
   }
 });
 
-document.querySelector(".splash-logo").addEventListener("animationend", () => {
-  document.getElementById("splashScreen").style.display = "none";
-});
 
 /**
  * Registers all event listeners for the login page.
@@ -106,7 +103,25 @@ async function handleLoginSubmit(event) {
     return;
   }
   document.getElementById("loginBtn").disabled = true;
+  document.body.classList.add("is-loading");
   await attemptLogin(loginUserData);
+}
+
+
+/**
+ * Reacts to a failed login attempt depending on the error code, and re-enables the login button.
+ * @param {Object} error - The error thrown by loginWithEmail().
+ */
+function handleLoginFailure(error) {
+  if (error.code === "auth/network-request-failed") {
+    openDialogConnectionErrorDatabase();
+  } else if (error.code === "auth/too-many-requests") {
+    document.getElementById("loginError").innerText = "Too many attempts, please try again later.";
+  } else {
+    handleLoginError();
+  }
+  document.getElementById("loginBtn").disabled = false;
+  document.body.classList.remove("is-loading");
 }
 
 
@@ -119,23 +134,36 @@ async function attemptLogin(loginUserData) {
     await loginWithEmail(loginUserData.email, loginUserData.password);
     handleLoginSuccess();
   } catch (error) {
-    handleLoginError();
-    document.getElementById("loginBtn").disabled = false;
+    handleLoginFailure(error);
   }
 }
 
 
 /**
- * Reacts to clicks on the guest login button.
+ * Registers the click handler for the guest login button.
  * @param {HTMLButtonElement} formGuest - The guest login button.
  */
 function guestLoginEventListener(formGuest) {
-  formGuest.addEventListener("click", async function (event) {
+  formGuest.addEventListener("click", handleGuestLoginClick);
+}
+
+
+/**
+ * Reacts to a click on the guest login button: logs in as guest and redirects on success.
+ * @param {MouseEvent} event - The click event.
+ */
+async function handleGuestLoginClick(event) {
+  try {
     event.preventDefault();
     document.getElementById("guestLoginBtn").disabled = true;
+    document.body.classList.add("is-loading");
     await loginAsGuest();
     handleLoginSuccess();
-  });
+  } catch (error) {
+    openDialogConnectionErrorDatabase();
+    document.getElementById("guestLoginBtn").disabled = false;
+    document.body.classList.remove("is-loading");
+  }
 }
 
 
