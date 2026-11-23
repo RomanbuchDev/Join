@@ -9,6 +9,7 @@ async function initAddTask() {
   setAddTaskFormStatus(status);
   await window.getCurrentUser();
   await initTaskForm();
+  document.body.classList.remove("is-loading");
 }
 
 
@@ -42,6 +43,7 @@ function setAddTaskFormStatus(
  * @returns {void}
  */
 function clearTaskForm() {
+  clearTaskValidation();
   resetSubtasks();
   document.getElementById("selected-contact-badges").replaceChildren();
 
@@ -232,4 +234,32 @@ function createNewTaskUpdates(taskID, task) {
   delete updates[`${taskID}/position`];
   updates[taskID] = structuredClone(allTasks[taskID]);
   return updates;
+}
+
+
+/**
+ * Shows an inline validation message instead of the browser popup.
+ * @param {Event} event - The invalid event from a form control.
+ * @returns {void}
+ */
+function markTaskFieldInvalid(event) {
+  event.preventDefault();
+  const input = event.target;
+  const field = input.closest(".form-field");
+  input.classList.add("task-field-invalid");
+  field.dataset.error = input.validity.valueMissing
+    ? "This field is required"
+    : input.validationMessage;
+}
+
+
+/**
+ * Removes validation markers when the task form is reset.
+ * @returns {void}
+ */
+function clearTaskValidation() {
+  const inputs = document.querySelectorAll("#task-form .task-field-invalid");
+  for (const input of inputs) {
+    input.classList.remove("task-field-invalid");
+  }
 }

@@ -117,6 +117,7 @@ function getTaskFieldsTemplate(
             type="text"
             placeholder="Enter a title"
             required
+            oninvalid="markTaskFieldInvalid(event)"
           />
         </div>
 
@@ -138,6 +139,7 @@ function getTaskFieldsTemplate(
             name="due-date"
             id="due-date"
             required
+            oninvalid="markTaskFieldInvalid(event)"
           />
         </div>
       </div>
@@ -326,6 +328,7 @@ function getTaskCategoryTemplate(category = "") {
       <select
         class="form-control form-control--select" name="category" id="category"
         required
+        oninvalid="markTaskFieldInvalid(event)"
       >
         <option
           class="select-placeholder"

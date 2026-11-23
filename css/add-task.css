@@ -238,6 +238,36 @@
   grid-area: subtasks;
 }
 
+/* Dünner schwarzer Rahmen beim Anklicken */
+#task-form .form-control:focus,
+#task-form .form-control:focus-visible,
+#task-form .subtask-input:focus-within,
+#task-form .subtask-edit-input:focus {
+  border: 1px solid var(--color-dark-active);
+  outline: none;
+  box-shadow: none;
+}
+
+#task-form .subtask-input input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Fehler erst nach einem fehlgeschlagenen Absendeversuch */
+#task-form .task-field-invalid:invalid {
+  border: 1px solid var(--color-error);
+  outline: none;
+  box-shadow: none;
+}
+
+#task-form .form-field:has(.task-field-invalid:invalid)::after {
+  content: attr(data-error);
+  display: block;
+  color: var(--color-error);
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
 @supports (appearance: base-select) {
   #category,
   #category::picker(select) {
