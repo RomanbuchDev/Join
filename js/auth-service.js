@@ -1,3 +1,5 @@
+// #region LOGIN
+
 /**
  * Fetches the user's profile data from the Realtime Database.
  * @param {string} uid - The user's Firebase Auth uid.
@@ -34,6 +36,9 @@ async function loginWithEmail(email, password) {
   return { uid: user.uid, name: profile.name, email: user.email };
 }
 
+// #endregion
+
+// #region GUEST
 
 /**
  * Signs in an anonymous guest user via Firebase Anonymous Authentication.
@@ -45,6 +50,9 @@ async function loginAsGuest() {
   return { name: "Guest", uid: user.uid, isGuest: true };
 }
 
+// #endregion
+
+// #region REGISTER
 
 /**
  * Creates a new Firebase Auth account and saves the profile (without password) in the database.
@@ -82,3 +90,5 @@ async function saveUserProfile(uid, profile, idToken) {
     throw new Error("Failed to save user profile");
   }
 }
+
+// #endregion

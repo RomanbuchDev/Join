@@ -4,6 +4,8 @@
  * No further setup needed — runs automatically on load.
  */
 
+// #region AUTH STATE
+
 /**
  * Reacts to changes in the login status: redirects if nobody is logged in,
  * otherwise loads the logged-in user's profile.
@@ -22,6 +24,9 @@ function handleAuthStateChange(user) {
   loadCurrentUserProfile(user);
 }
 
+// #endregion
+
+// #region PROFILE
 
 /**
  * Fetches the user's profile data from the Realtime Database.
@@ -59,6 +64,9 @@ async function loadCurrentUserProfile(user) {
   }
 }
 
+// #endregion
+
+// #region CURRENT USER
 
 /**
  * Returns the logged-in user as soon as it is known — directly if window.currentUser is already
@@ -79,7 +87,12 @@ function getCurrentUser() {
   });
 }
 
+// #endregion
+
+// #region INIT
 
 window.getCurrentUser = getCurrentUser;
 
 window.onAuthStateChanged(window.auth, handleAuthStateChange);
+
+// #endregion
