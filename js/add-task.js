@@ -1,18 +1,14 @@
 /**
  * Renders the Add Task page, sets the task status,
- * initializes the header and task form, and clears the loading state.
+ * waits for the current user, and initializes the task form.
  * @returns {Promise<void>} Resolves when initialization is complete.
  */
-
 async function initAddTask() {
   renderAddTask();
   const status = new URLSearchParams(window.location.search).get("status");
   setAddTaskFormStatus(status);
-  // await initHeader(); // Header läuft jetzt zentral über initHeaderAuthUI() in script.js
-  await window.getCurrentUser(); // Auth-Ready-Wartepunkt, Header läuft über initHeaderAuthUI()
-
+  await window.getCurrentUser();
   await initTaskForm();
-  document.body.classList.remove("is-loading");
 }
 
 /**
