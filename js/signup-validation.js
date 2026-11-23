@@ -1,3 +1,5 @@
+// #region FIELD CHECKS
+
 /**
  * Checks every form field individually and bundles the results into one object.
  * @param {Object} signupUserData - The entered form data.
@@ -67,6 +69,21 @@ function checkConfirmPasswordField(password, confirmPassword) {
   return { isEmpty, isMismatch };
 }
 
+
+/**
+ * Checks whether the privacy checkbox is checked.
+ * @param {boolean} isChecked
+ * @returns {boolean}
+ */
+function checkPrivacyField(isChecked) {
+  const isUnchecked = !isChecked;
+  markFieldError("privacyCheckField", isUnchecked);
+  return isUnchecked;
+}
+
+// #endregion
+
+// #region ERROR MESSAGES
 
 /**
  * Builds the matching error text from the bundled check results.
@@ -162,6 +179,22 @@ function getConfirmPasswordErrorMessage(confirmCheck) {
 
 
 /**
+ * Builds the error text for the privacy checkbox.
+ * @param {boolean} isUnchecked
+ * @returns {string}
+ */
+function getPrivacyErrorMessage(isUnchecked) {
+  if (isUnchecked) {
+    return "Please accept the privacy policy.";
+  }
+  return "";
+}
+
+// #endregion
+
+// #region MARK FIELDS
+
+/**
  * Sets or removes the error marking on an input field.
  * @param {string} inputId
  * @param {boolean} isEmpty
@@ -175,27 +208,4 @@ function markFieldError(inputId, isEmpty) {
   }
 }
 
-
-/**
- * Checks whether the privacy checkbox is checked.
- * @param {boolean} isChecked
- * @returns {boolean}
- */
-function checkPrivacyField(isChecked) {
-  const isUnchecked = !isChecked;
-  markFieldError("privacyCheckField", isUnchecked);
-  return isUnchecked;
-}
-
-
-/**
- * Builds the error text for the privacy checkbox.
- * @param {boolean} isUnchecked
- * @returns {string}
- */
-function getPrivacyErrorMessage(isUnchecked) {
-  if (isUnchecked) {
-    return "Please accept the privacy policy.";
-  }
-  return "";
-}
+// #endregion

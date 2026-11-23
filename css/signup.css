@@ -1,3 +1,5 @@
+/* #region MARK: base
+*/
 a {
   text-decoration: none;
 }
@@ -16,6 +18,10 @@ a {
   gap: 4rem;
 }
 
+/* #endregion */
+
+/* #region MARK: header
+*/
 .header-signup {
   height: auto;
   width: 100%;
@@ -29,6 +35,10 @@ a {
   object-position: center;
 }
 
+/* #endregion */
+
+/* #region MARK: main
+*/
 .main-signup {
   max-width: 25rem;
   position: relative;
@@ -48,14 +58,30 @@ a {
   top: 2.5rem;
 }
 
-/* form signup */
+.heading-accent--bottom-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.heading-accent--bottom-center::after {
+  content: "";
+  width: 80%;
+  height: 0.1875rem;
+  background-color: var(--color-highlight);
+}
+
+/* #endregion */
+
+/* #region MARK: form
+*/
 form {
   height: 100%;
   width: 100%;
   gap: 1rem;
 }
 
-/* Spacing & Labels */
 .pb-1 {
   padding-bottom: 1rem;
   width: 100%;
@@ -66,7 +92,13 @@ form {
   display: inline-block;
 }
 
-/* form-control (Input-Felder) */
+.input-wrapper {
+  position: relative;
+  max-width: 22.75rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
 .form-control {
   height: 3rem;
   display: block;
@@ -83,13 +115,6 @@ form {
 .form-control:focus {
   outline: 0;
   border: 1px solid var(--color-medium);
-}
-
-.input-wrapper {
-  position: relative;
-  max-width: 22.75rem;
-  width: 100%;
-  margin-top: 0.5rem;
 }
 
 .input-icon {
@@ -117,20 +142,6 @@ form {
   padding-top: 0.5rem;
 }
 
-.heading-accent--bottom-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1em;
-}
-
-.heading-accent--bottom-center::after {
-  content: "";
-  width: 80%;
-  height: 0.1875rem;
-  background-color: var(--color-highlight);
-}
-
 .form-check {
   display: flex;
   align-items: center;
@@ -150,16 +161,18 @@ form {
   color: var(--color-black-100);
 }
 
-/* Buttons */
+/* #endregion */
+
+/* #region MARK: buttons
+*/
 #signup {
   width: 100%;
 }
 
-.signup-a {
-  color: var(--color-medium);
-}
+/* #endregion */
 
-/* footer */
+/* #region MARK: footer
+*/
 .footer-signup {
   height: 10.8rem;
   width: 100%;
@@ -175,6 +188,14 @@ form {
   padding: 0.5rem;
 }
 
+.signup-a {
+  color: var(--color-medium);
+}
+
+/* #endregion */
+
+/* #region MARK: toast
+*/
 .toast {
   position: fixed;
   padding: 0.5rem;
@@ -197,14 +218,20 @@ form {
   transform: translate(-50%, -50%);
 }
 
-/* teblet */
+/* #endregion */
+
+/* #region MARK: @ tablet
+*/
 @media (width >= 40rem) and (width < 64rem) {
   .signup-back-vector {
     left: 2rem;
   }
 }
 
-/* Laptop */
+/* #endregion */
+
+/* #region MARK: @ laptop S
+*/
 @media (width >= 64rem) {
   .app {
     min-width: 64rem;
@@ -260,7 +287,10 @@ form {
   }
 }
 
-/* Desktop */
+/* #endregion */
+
+/* #region MARK: @ desktop
+*/
 @media (width >= 90rem) {
   .app {
     max-width: 90rem;
@@ -275,3 +305,5 @@ form {
     width: 6.25rem;
   }
 }
+
+/* #endregion */
