@@ -43,32 +43,33 @@ function handleFillError(error, dialogRef) {
 }
 
 
-async function updateTask(event, taskID) {
+async function updateEditedTask(event, taskID) {
   event.preventDefault();
   const buttonRef = event.submitter;
   buttonRef.disabled = true;
   try {
-    await runEditUpdate(taskID);
+    const fields = buildEditFields(buildTask(document.getElementById("task-form")));
+    if (await isUpdatePossible(taskID, fields)) {
+      runEditUpdate(taskID, fields);
+    }
   } finally {
     buttonRef.disabled = false;
   }
 }
 
 
-async function runEditUpdate(taskID) {
-  const fields = buildEditFields(buildTask(document.getElementById("task-form")));
-  if (!fields.title || !fields.dueDate) return;
+async function isUpdatePossible(taskID, fields) {
+  if (!fields.title || !fields.dueDate) return false;
   await patchQueue;
   if (!(await fetchAllTasks())) {
     checkForDialogMode();
-    return;
+    return false;
   }
   if (!allTasks[taskID]) {
     updateBoardAfterDelete(taskID);
-    return;
+    return false;
   }
-  const saved = await patchTasks(buildEditUpdates(taskID, fields));
-  if (saved) showUpdatedTask(taskID, fields);
+  return true;
 }
 
 
@@ -84,6 +85,15 @@ function buildEditUpdates(taskID, fields) {
     updates[`${taskID}/${field}`] = value;
   }
   return updates;
+}
+
+
+async function runEditUpdate(taskID, fields) {
+  const saved = await patchTasks(buildEditUpdates(taskID, fields));
+    if (saved) {
+      showUpdatedTask(taskID, fields);
+      showToastMessage("Task successfully edited", "toast-message-edit");
+    }
 }
 
 

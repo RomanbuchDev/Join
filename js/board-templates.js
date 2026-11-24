@@ -21,7 +21,7 @@ function templateTaskCard(taskID, categoryColor) {
         <h3 class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(task.category)}</h3>
         <div class="move-menu-container">
           <button class="button-reset" type="button" aria-label="Open move menu"
-            onclick="toggleMenu(this, 'move-menu-dropdown${escapeHtml(taskID)}')" aria-expanded="false" aria-controls="move-menu">
+            onclick="toggleMenu(this, 'move-menu-dropdown${escapeHtml(taskID)}')" aria-expanded="false" aria-controls="move-menu-dropdown${escapeHtml(taskID)}">
             <svg 
               class="svg-fill svg-width-height-move"
               aria-hidden="true"
@@ -45,8 +45,7 @@ function templateTaskCard(taskID, categoryColor) {
       </section>
       <section id="taskDetails${escapeHtml(taskID)}" class="task-card-details d-flex">
         ${templateTaskDetails(taskID)}
-      </section>
-      
+      </section> 
     </li>`;
 }
 
@@ -72,7 +71,7 @@ function templateTaskDetails(taskID) {
           alt="${escapeHtml(task.priority)} priority task"
         />
       </div>
-    </div>`
+    </div>`;
 }
 
 
@@ -85,7 +84,7 @@ function templateTaskDetails(taskID) {
 function templateProgressBar(doneSubtasks, subtasksLength) {
   return /*html*/ `
     <progress value="${doneSubtasks}" max="${subtasksLength}"></progress>
-    <p>${doneSubtasks}/${subtasksLength} Subtasks</p>`
+    <p>${doneSubtasks}/${subtasksLength} Subtasks</p>`;
 }
 
 
@@ -99,7 +98,7 @@ function templateTaskAssignee(assigneeColor, assigneeShortcut) {
   return /*html*/ `
     <li class="task-avatar d-flex" style="background-color:${escapeHtml(assigneeColor)}">
       ${escapeHtml(assigneeShortcut)}
-    </li>`
+    </li>`;
 }
 
 
@@ -112,7 +111,7 @@ function templateEmptyColumn(columnName) {
   return /*html*/ `
     <li class="empty-column-message d-flex">
       <p>No tasks ${escapeHtml(columnName)}</p>
-    </li>`
+    </li>`;
 }
 
 // #endregion
@@ -146,7 +145,7 @@ function templateOverlayTask(taskID, categoryColor) {
     </header>
     <section id="overlayMain${escapeHtml(taskID)}" class="overlay-main d-flex"></section>
     <footer id="overlayFooter${escapeHtml(taskID)}" class="overlay-footer d-flex"></footer>
-  `
+  `;
 }
 
 
@@ -171,7 +170,7 @@ function templateOverlayMainDetails(taskID) {
     </div>
     <div id="overlayAssigneesContainer${escapeHtml(taskID)}" class="overlay-detail-column d-flex"></div>
     <div id="overlaySubtasksContainer${escapeHtml(taskID)}" class="overlay-detail-column d-flex"></div>
-  `
+  `;
 }
 
 
@@ -183,7 +182,7 @@ function templateOverlayMainDetails(taskID) {
 function templateOverlayFooterDetails(taskID) {
   return /*html*/ `
     <button type="button" class="button-delete-edit button-reset d-flex"
-      onclick="deleteTask(event, '${escapeHtml(taskID)}')">
+      onclick="openDialogDeleteQuestion(event, '${escapeHtml(taskID)}')">
       <svg
         class="svg-fill svg-width-height-delete"
         aria-hidden="true"
@@ -207,7 +206,7 @@ function templateOverlayFooterDetails(taskID) {
       </svg>
       <span>Edit</span>
     </button>
-  `
+  `;
 }
 
 
@@ -223,7 +222,7 @@ function templateOverlayPriority(priorityString, priority) {
     <img draggable="false"
       src="../assets/icons/prio-${escapeHtml(priority)}-symbol.svg"
       alt="${escapeHtml(priority)} priority task"
-    />`
+    />`;
 }
 
 
@@ -236,7 +235,7 @@ function templateOverlayAssignees(taskID) {
   return /*html*/ `
     <h4>Assigned to:</h4>
     <ul id="overlayAssignees${escapeHtml(taskID)}" class="overlay-assignees d-flex">
-    </ul>`
+    </ul>`;
 }
 
 
@@ -254,7 +253,7 @@ function templateOverlayOneAssignee(assigneeColor, assigneeShortcut, assigneeNam
         ${escapeHtml(assigneeShortcut)}
       </span>
       <span>${escapeHtml(assigneeName)}</span>
-    </li>`
+    </li>`;
 }
 
 
@@ -267,7 +266,7 @@ function templateOverlaySubtasks(taskID) {
   return /*html*/ `
     <h4>Subtasks:</h4>
     <ul id="overlaySubtasks${escapeHtml(taskID)}">
-    </ul>`
+    </ul>`;
 }
 
 
@@ -281,14 +280,16 @@ function templateOverlayOneSubtask(taskID, indexSubtask) {
   const subtask = allTasks[taskID].subtasks[indexSubtask];
   const checked = subtask.done ? "checked" : "";
   return /*html*/ `
-    <li>
+    <li class="d-flex">
       <input type="checkbox" ${checked}  
         id="checkSubtask${escapeHtml(taskID)}_${indexSubtask}"
-        onchange="toggleSubtask(event, '${escapeHtml(taskID)}', ${indexSubtask})"/>
+        class="subtask-checkbox"
+        onchange="toggleSubtask(event, '${escapeHtml(taskID)}', ${indexSubtask})"
+        />
       <label for="checkSubtask${escapeHtml(taskID)}_${indexSubtask}">
         ${escapeHtml(subtask.text)}
       </label>
-    </li>`
+    </li>`;
 }
 
 // #endregion
@@ -304,13 +305,13 @@ function templateOverlayOneSubtask(taskID, indexSubtask) {
 function templateOverlayMainEdit(taskID) {
   return /*html*/ `
     ${getTaskFormTemplate({
-      submitHandler: `updateTask(event, '${escapeHtml(taskID)}')`,
+      submitHandler: `updateEditedTask(event, '${escapeHtml(taskID)}')`,
       resetHandler: "",
       priority: allTasks[taskID].priority || "medium",
       showCategory: false,
       actions: "",
     })}
-    `
+  `;
 }
 
 
@@ -330,7 +331,41 @@ function templateOverlayFooterEdit() {
       <span>Ok</span>
       <img src="../assets/icons/check.svg" alt="check icon" />
     </button>
-  `
+  `;
 }
 
 // #endregion
+
+// #region DELETE
+
+function templateDeleteQuestion(event, taskID) {
+  return /*html*/ `
+    <form method="dialog">
+      <h4 id="delete-question-title">Delete task</h4>
+      <p id="delete-question-text">
+        Do you really want to delete this task?
+      </p>
+      <div class="delete-question-button-container">
+        <!-- Delete contact - No button -->
+        <button
+          type="button"
+          class="button-basic button-secondary delete-question-button"
+          onclick="closeDialogDeleteQuestion()"
+        >
+          NO
+        </button>
+        <!-- Delete contact - Yes button -->
+        <button
+          type="submit"
+          class="button-basic button-primary delete-question-button"
+          onclick="deleteTask(event, '${escapeHtml(taskID)}')"
+          autofocus
+        >
+          YES
+        </button>
+      </div>
+    </form>`;
+}
+
+// #endregion
+""

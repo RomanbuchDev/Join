@@ -2,6 +2,12 @@
  * JavaScript file for the board overlay.
  */
 
+// #region VARIABLES
+
+const deleteQuestionRef = document.getElementById("delete-question-dialog");
+
+// #endregion
+
 // #region SHOW
 
 /**
@@ -309,7 +315,11 @@ async function runDeletion(taskID) {
   if (!(await fetchAllTasks())) return;
 
   const deleted = !allTasks[taskID] || await patchTasks(buildDeleteUpdates(taskID));
-  if (deleted) updateBoardAfterDelete(taskID);
+  if (deleted) {
+    updateBoardAfterDelete(taskID);
+    document.getElementById("delete-question-dialog").close();
+    showToastMessage("Task successfully deleted", "toast-message-delete");
+  }
 }
 
 
@@ -341,6 +351,19 @@ function updateBoardAfterDelete(taskID) {
   closeTaskOverlay();
   if (columnRef) renderAmountOfTasks(columnRef.id, columnRef.children.length);
   checkForEmptyColumn();
+}
+
+
+/** Opens the dialog for delete a task. */
+function openDialogDeleteQuestion(event, taskID) {
+  deleteQuestionRef.showModal();
+  deleteQuestionRef.innerHTML = templateDeleteQuestion(event, taskID);
+}
+
+
+/** Closes the dialog for delete a task. */
+function closeDialogDeleteQuestion() {
+  deleteQuestionRef.close();
 }
 
 // #endregion

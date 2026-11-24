@@ -22,11 +22,15 @@ let allFetchedTasksAreRendered = false;
  * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
  */
 async function initBoard() {
-  await window.getCurrentUser();
+  try {
+    await window.getCurrentUser();
   await fetchAllTasks();
   await fetchAllContacts();
   renderTasks(Object.keys(allTasks));
   allFetchedTasksAreRendered = true;
+  } finally {
+    document.body.classList.remove("is-loading");
+  }
 }
 
 
