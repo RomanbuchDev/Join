@@ -5,6 +5,7 @@
  */
 async function initAddTask() {
   renderAddTask();
+  setMinimumTaskDate();
   const status = new URLSearchParams(window.location.search).get("status");
   setAddTaskFormStatus(status);
   await window.getCurrentUser();
@@ -73,22 +74,40 @@ function createTask(event, onSuccess = resetAddTaskAfterSave) {
 
 
 /**
- * Builds and saves a task, runs the success callback, and displays any caught error.
- * @param {HTMLFormElement} form - The form containing the task data.
- * @param {function(HTMLFormElement): (void|Promise<void>)} [onSuccess=resetAddTaskAfterSave] - Callback run after saving.
- * @returns {Promise<boolean>} True if saving and the callback succeed; otherwise false.
+ * Validates the task form, builds and saves the task,
+ * and executes the success callback.
+ * @param {HTMLFormElement} form - The task form containing the task data.
+ * @param {function(HTMLFormElement): (void|Promise<void>)} [onSuccess=resetAddTaskAfterSave] - Callback executed after saving.
+ * @returns {Promise<boolean>} True if validation, saving, and the callback succeed; otherwise false.
  */
 async function submitTaskForm(form, onSuccess = resetAddTaskAfterSave) {
   try {
+    if (!validateTaskForm(form)) return false;
     const task = buildTask(form);
-    if (!task.title) throw new Error("Bitte gib einen Titel ein.");
     if (!(await saveNewTask(task))) return false;
+
     await onSuccess(form);
     return true;
   } catch (error) {
     alert(error.message);
     return false;
   }
+}
+
+
+/**
+ * Trims the task title and validates the form.
+ * @param {HTMLFormElement} form - The task form to validate.
+ * @returns {boolean} True if the form is valid.
+ */
+function validateTaskForm(form) {
+  const titleInput = form.elements.namedItem("title");
+  titleInput.value = titleInput.value.trim();
+
+  if (form.checkValidity()) return true;
+
+  form.querySelector(":invalid")?.focus();
+  return false;
 }
 
 
@@ -262,4 +281,18 @@ function clearTaskValidation() {
   for (const input of inputs) {
     input.classList.remove("task-field-invalid");
   }
+}
+
+
+/**
+ * Sets today as the earliest allowed due date.
+ * @returns {void}
+ */
+function setMinimumTaskDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  document.getElementById("due-date").min = `${year}-${month}-${day}`;
 }
