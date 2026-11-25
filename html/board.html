@@ -37,6 +37,7 @@
     <script defer src="../js/add-task-assignees.js"></script>
     <script defer src="../js/board-dragdrop.js"></script>
     <script defer src="../js/board-overlay.js"></script>
+    <script defer src="../js/board-overlay-add.js"></script>
     <script defer src="../js/board-overlay-delete.js"></script>
     <script defer src="../js/board-overlay-edit.js"></script>
     <script defer src="../js/board-search.js"></script>
@@ -85,6 +86,7 @@
             class="button-reset btn-d-mobile"
             type="button"
             aria-label="Add new task"
+            onclick="openAddView('toDo')"
           >
             <svg
               class="svg-fill svg-width-height-40px"
@@ -110,6 +112,7 @@
           <button
             class="button-basic button-primary btn-d-tablet"
             type="button"
+            onclick="openAddView('toDo')"
           >
             <span>Add task</span>
             <img src="../assets/icons/plus.svg" alt="plus icon" />
@@ -128,6 +131,7 @@
               class="button-reset"
               type="button"
               aria-label="Add new task"
+              onclick="openAddView('toDo')"
             >
               <svg
                 class="svg-fill svg-width-height-add"
@@ -158,6 +162,7 @@
               class="button-reset"
               type="button"
               aria-label="Add new task"
+              onclick="openAddView('inProgress')"
             >
               <svg
                 class="svg-fill svg-width-height-add"
@@ -188,6 +193,7 @@
               class="button-reset"
               type="button"
               aria-label="Add new task"
+              onclick="openAddView('awaitFeedback')"
             >
               <svg
                 class="svg-fill svg-width-height-add"
@@ -249,8 +255,19 @@
       ></div>
     </dialog>
 
-    <dialog id="dialogAddTask">
-      <div></div>
+    <dialog
+      id="dialogAddTask"
+      data-dialog-mode="addTask"
+      class="dialog-board d-flex"
+      onclick="handleOverlayBackdropClick(event)"
+      oncancel="handleOverlayCancel(event)"
+    >
+      <div
+        id="overlayAddTask"
+        class="overlay-board"
+        autofocus
+        tabindex="-1"
+      ></div>
     </dialog>
 
     <dialog
