@@ -211,7 +211,7 @@
   display: none;
 }
 
-.delete-question-container {
+/* .delete-question-container {
   background-color: var(--color-white);
   border: none;
   border-radius: 30px;
@@ -231,19 +231,19 @@
   align-items: center;
   text-align: center;
   gap: 1em;
-}
+} */
 
-.delete-question-button-container {
+/* .delete-question-button-container {
   display: flex;
   justify-content: center;
   gap: 1.25em;
   width: 100%;
   padding-inline: 1.5em;
-}
+} */
 
-.delete-question-button {
+/* .delete-question-button {
   min-width: 100px;
-}
+} */
 
 /*  ==================================================================================================== 
     2. OTHER

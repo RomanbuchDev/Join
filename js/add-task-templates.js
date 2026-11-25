@@ -27,7 +27,7 @@ function getTaskFormTemplate(options = {}) {
       submitHandler: "createTask(event)",
       resetHandler: "clearTaskForm()",
       priority: "medium",
-      category: "",
+      // category: "",
       showCategory: true,
       actions: getTaskActionsTemplate(),
     },

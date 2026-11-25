@@ -1,5 +1,6 @@
 /**
- * JavaScript file for the shared task data (allTasks), saving changes via PATCH and calculating the task positions.
+ * JavaScript file for the shared task data (allTasks): loading it, saving changes via PATCH
+ * and calculating the task positions. Also contains the helper for checking HTTP responses.
  * Used by the board page and the add task page.
  */
 
@@ -78,7 +79,7 @@ function replaceAllTasks(tasks) {
 
 /**
  * Queues a PATCH request so that updates are sent one after another in the order they were made.
- * @param {Object<string, *>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position", "<taskID>").
+ * @param {Object<string, *>} updates - The changes, keyed by path, e.g. "<taskID>/status" or "<taskID>" (null deletes the task).
  * @returns {Promise<boolean>} Resolves to true if the PATCH succeeded, false if it failed.
  */
 function patchTasks(updates) {
@@ -90,7 +91,7 @@ function patchTasks(updates) {
 /**
  * Sends the updates to the Firebase database.
  * Opens the connection error dialog on failure and never throws, so the queue keeps running.
- * @param {Object<string, *>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position", "<taskID>").
+ * @param {Object<string, *>} updates - The changes, keyed by path, e.g. "<taskID>/status" or "<taskID>" (null deletes the task).
  * @returns {Promise<boolean>} True on success, false on failure. Resolves once the request is finished or failed.
  */
 async function sendPatch(updates) {
@@ -110,7 +111,7 @@ async function sendPatch(updates) {
  * Sends a PATCH request with the updates to the given tasks URL.
  * Does not check the response status; the caller has to do that.
  * @param {string} tasksUrl - The Firebase URL of the tasks, including the auth token.
- * @param {Object<string, *>} updates - The changes, keyed by path ("<taskID>/status", "<taskID>/position", "<taskID>").
+ * @param {Object<string, *>} updates - The changes, keyed by path, e.g. "<taskID>/status" or "<taskID>" (null deletes the task).
  * @returns {Promise<Response>} The response of the PATCH request.
  */
 async function requestTaskPatch(tasksUrl, updates) {
@@ -141,13 +142,13 @@ function insertTaskIntoColumn(
   { insertedTaskID, previousTaskID },
 ) {
   const sortedTasks = getSortedTaskIds(status);
-  removeTaskId(sortedTasks, insertedTaskID);
+  removeIdFromList(sortedTasks, insertedTaskID);
 
   const newPosition = previousTaskID
     ? sortedTasks.indexOf(previousTaskID) + 1
     : 0;
   sortedTasks.splice(newPosition, 0, insertedTaskID);
-  adjustPositions(updates, sortedTasks);
+  renumberPositions(updates, sortedTasks);
 }
 
 
@@ -160,8 +161,8 @@ function insertTaskIntoColumn(
  */
 function removeTaskFromColumn(updates, status, removedTaskID) {
   const sortedTasks = getSortedTaskIds(status);
-  removeTaskId(sortedTasks, removedTaskID);
-  adjustPositions(updates, sortedTasks);
+  removeIdFromList(sortedTasks, removedTaskID);
+  renumberPositions(updates, sortedTasks);
 }
 
 
@@ -186,7 +187,7 @@ function getSortedTaskIds(status) {
  * @param {string} removedTaskID - The ID to remove.
  * @returns {void} Nothing; the array is changed in place.
  */
-function removeTaskId(sortedTasks, removedTaskID) {
+function removeIdFromList(sortedTasks, removedTaskID) {
   const removedTaskIndex = sortedTasks.indexOf(removedTaskID);
   if (removedTaskIndex === -1) return;
   sortedTasks.splice(removedTaskIndex, 1);
@@ -199,7 +200,7 @@ function removeTaskId(sortedTasks, removedTaskID) {
  * @param {string[]} sortedIDs - The task IDs in their new order; all of them must exist in allTasks.
  * @returns {void} Nothing; allTasks and the updates object are changed.
  */
-function adjustPositions(updates, sortedIDs) {
+function renumberPositions(updates, sortedIDs) {
   sortedIDs.forEach((taskID, index) => {
     allTasks[taskID].position = index;
     Object.assign(updates, { [`${taskID}/position`]: index });

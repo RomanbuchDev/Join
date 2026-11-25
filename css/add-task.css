@@ -83,7 +83,8 @@
   gap: 0.5em;
 }
 
-.form-field > label {
+.form-field > label,
+.form-field > legend {
   font-size: 1rem;
   font-weight: 400;
 }

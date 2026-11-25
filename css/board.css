@@ -273,6 +273,11 @@ h2 > span {
     gap: 0.5em;
   }
 
+  .board-column {
+    flex: 1 1 0;
+    min-width: 17.5em;
+  }
+
   .tasks-list {
     flex-direction: column;
     margin-right: 0;
@@ -291,11 +296,6 @@ h2 > span {
 @media (width >= 64em) {
   .board-main-content {
     padding-inline: 1em;
-  }
-
-  .board-column {
-    flex: 1 1 0;
-    min-width: min-content;
   }
 
   .tasks-list {

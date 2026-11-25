@@ -22,11 +22,15 @@ let allFetchedTasksAreRendered = false;
  * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
  */
 async function initBoard() {
-  await window.getCurrentUser();
-  await fetchAllTasks();
-  await fetchAllContacts();
-  renderTasks(Object.keys(allTasks));
-  allFetchedTasksAreRendered = true;
+  try {
+    await window.getCurrentUser();
+    await fetchAllTasks();
+    await fetchAllContacts();
+    renderTasks(Object.keys(allTasks));
+    allFetchedTasksAreRendered = true;
+  } finally {
+    document.body.classList.remove("is-loading");
+  }
 }
 
 
@@ -59,11 +63,11 @@ async function fetchAllContacts() {
 function renderTasks(currentTaskIDs) {
   clearAllColumns();
   for (const column of columns) {
-    renderAmountForStatus(currentTaskIDs, column.id);
+    renderTaskCountForStatus(currentTaskIDs, column.id);
   }
   const sortedTaskIDs = currentTaskIDs.toSorted((a, b) => allTasks[a].position - allTasks[b].position);
-  sortedTaskIDs.forEach(renderOneTask);
-  checkForEmptyColumn();
+  sortedTaskIDs.forEach(renderOneTaskCard);
+  renderEmptyColumnMessages();
 }
 
 
@@ -73,9 +77,9 @@ function renderTasks(currentTaskIDs) {
  * @param {string} status - The status (column ID) to count the tasks for.
  * @returns {void} Nothing; the amount is written into the column header.
  */
-function renderAmountForStatus(currentTaskIDs, status) {
+function renderTaskCountForStatus(currentTaskIDs, status) {
   const amount = currentTaskIDs.filter((taskId) => allTasks[taskId].status === status).length;
-  renderAmountOfTasks(status, amount);
+  renderTaskCount(status, amount);
 }
 
 
@@ -85,7 +89,7 @@ function renderAmountForStatus(currentTaskIDs, status) {
  * @param {number} amount - The amount of tasks to display.
  * @returns {void} Nothing; the counter element is updated.
  */
-function renderAmountOfTasks(status, amount) {
+function renderTaskCount(status, amount) {
   document.getElementById(`${status}Amount`).innerHTML = amount;
 }
 
@@ -96,9 +100,20 @@ function renderAmountOfTasks(status, amount) {
  * @param {string} taskID - The ID of the task to render.
  * @returns {void} Nothing; the task card is added to its column in the DOM.
  */
-function renderOneTask(taskID) {
+function renderOneTaskCard(taskID) {
   const column = document.getElementById(allTasks[taskID].status);
-  column.innerHTML += templateTaskCard(taskID, getCategoryColor(taskID));
+  column.innerHTML += templateTaskCard(taskID, getCategoryColorClass(taskID));
+  renderTaskCardDetails(taskID);
+}
+
+
+/**
+ * Fills the details of a rendered task card: description, progress bar and assignees.
+ * The card with its empty containers has to be in the DOM already.
+ * @param {string} taskID - The ID of the task.
+ * @returns {void} Nothing; the containers of the task card are filled, hidden or removed.
+ */
+function renderTaskCardDetails(taskID) {
   renderDescription(taskID, `description${taskID}`);
   renderProgressBar(taskID);
   const assignees = allTasks[taskID].assignedTo;
@@ -114,7 +129,7 @@ function renderOneTask(taskID) {
  * @param {string} taskID - The ID of the task.
  * @returns {string} The class for "User Story" tasks, otherwise the class for technical tasks.
  */
-function getCategoryColor(taskID) {
+function getCategoryColorClass(taskID) {
   return (allTasks[taskID].category === "User Story") ? "category-color-user-story" : "category-color-technical-task";
 }
 
@@ -146,7 +161,7 @@ function renderProgressBar(taskID) {
   const progressContainerRef = document.getElementById(`progressContainer${taskID}`);
   const subtasks = allTasks[taskID].subtasks;
   if (hasTaskSubtasks(subtasks)) {
-    const doneSubtasks = getDoneSubtasksCounter(subtasks);
+    const doneSubtasks = countDoneSubtasks(subtasks);
     progressContainerRef.innerHTML = templateProgressBar(doneSubtasks, subtasks.length);
   } else {
     progressContainerRef.classList.add("d-none");
@@ -156,20 +171,23 @@ function renderProgressBar(taskID) {
 
 /**
  * Checks whether a task has at least one subtask.
- * @param {Object[]|undefined} subtasks - The subtasks of a task; missing if the task has none.
- * @returns {boolean|undefined} True if there is at least one subtask; falsy (undefined) if the subtasks are missing.
+ * @param {{text: string, done: boolean}[]|undefined} subtasks - The subtasks of a task; missing if the task has none.
+ * @returns {boolean} True if there is at least one subtask, otherwise false.
  */
 function hasTaskSubtasks(subtasks) {
-  return subtasks && subtasks.length > 0;
+  if (subtasks && subtasks.length > 0) {
+    return true;
+  }
+  return false;
 }
 
 
 /**
  * Counts the completed subtasks.
- * @param {Object[]} subtasks - The array of subtasks for a task.
+ * @param {{text: string, done: boolean}[]} subtasks - The array of subtasks for a task.
  * @returns {number} The number of subtasks marked as done.
  */
-function getDoneSubtasksCounter(subtasks) {
+function countDoneSubtasks(subtasks) {
   let counter = 0;
   subtasks.forEach((subtask) => { counter += subtask.done ? 1 : 0; });
   return counter;
@@ -179,10 +197,13 @@ function getDoneSubtasksCounter(subtasks) {
 /**
  * Checks whether a task has at least one assignee.
  * @param {string[]|undefined} assignees - The assignee IDs of a task; missing if the task has none.
- * @returns {boolean|undefined} True if there is at least one assignee; falsy (undefined) if the assignees are missing.
+ * @returns {boolean} True if there is at least one assignee, otherwise false.
  */
 function hasTaskAssignees(assignees) {
-  return assignees && assignees.length > 0;
+  if (assignees && assignees.length > 0) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -199,7 +220,7 @@ function renderTaskAssignees(taskID, assignees, view) {
     const assignee = getAssignee(taskID, assignees[i]);
     if (!assignee) continue;
 
-    if (view === "board") renderOneTaskAssignee(taskID, assignee);
+    if (view === "board") renderOneCardAssignee(taskID, assignee);
     if (view === "overlay") renderOneOverlayAssignee(taskID, assignee);
   }
 }
@@ -210,7 +231,7 @@ function renderTaskAssignees(taskID, assignees, view) {
  * Looks in allContacts first and falls back to the badges stored in the task (e.g. for the logged-in user).
  * @param {string} taskID - The ID of the task.
  * @param {string} assigneeID - The ID of the assignee.
- * @returns {Object|undefined} The contact or badge with shortcut and shortcutColor, or undefined if none exists.
+ * @returns {{name?: string, shortcut: string, shortcutColor: string}|undefined} The contact or badge, or undefined if none exists.
  */
 function getAssignee(taskID, assigneeID) {
   return allContacts[assigneeID] ?? allTasks[taskID].assignedUserBadges?.[assigneeID];
@@ -223,9 +244,9 @@ function getAssignee(taskID, assigneeID) {
  * @param {{shortcut: string, shortcutColor: string}} assignee - The assignee to show.
  * @returns {void} Nothing; the avatar is added to the task card.
  */
-function renderOneTaskAssignee(taskID, assignee) {
+function renderOneCardAssignee(taskID, assignee) {
   const assigneesRef = document.getElementById(`assigneesContainer${taskID}`);
-  assigneesRef.innerHTML += templateTaskAssignee(assignee.shortcutColor, assignee.shortcut);
+  assigneesRef.innerHTML += templateCardAssignee(assignee.shortcutColor, assignee.shortcut);
 }
 
 // #endregion
@@ -242,16 +263,16 @@ function clearAllColumns() {
 
 
 /**
- * Renders a placeholder into every empty column. Also called after tasks were moved.
- * @returns {void} Nothing; the placeholder is written into each empty column.
+ * Renders a message into every empty column. Also called after tasks were moved or deleted.
+ * @returns {void} Nothing; the message is written into each empty column.
  */
-function checkForEmptyColumn() {
+function renderEmptyColumnMessages() {
   for (let i = 0; i < columns.length; i++) {
     if (!columns[i].innerText) {
       const emptyColumnID = columns[i].id;
       const emptyColumnName = getColumnName(emptyColumnID);
       document.getElementById(emptyColumnID).innerHTML
-        = templateEmptyColumn(emptyColumnName);
+        = templateEmptyColumnMessage(emptyColumnName);
     }
   }
 }

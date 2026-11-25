@@ -1,6 +1,7 @@
 /**
  * JavaScript file for the drag and drop and move via button functionality on the board page.
  * Depends on “columns” from board.js, so it has to be loaded after it.
+ * Saves moves with the task data and functions from task-storage.js.
  */
 
 // #region START, END
@@ -14,7 +15,6 @@ function handleDragstart(event) {
   const currentDraggedTask = event.currentTarget;
   currentDraggedTask.classList.add("dragged-task");
   event.dataTransfer.effectAllowed = "move";
-  // Custom type to identify a task drag
   event.dataTransfer.setData("dragging", "");
 }
 
@@ -97,7 +97,7 @@ function movePlaceholder(event) {
     existingPlaceholder?.remove();
     return;
   }
-  column.insertBefore(existingPlaceholder ?? makePlaceholder(draggedTask), cardAfter)
+  column.insertBefore(existingPlaceholder ?? createPlaceholder(draggedTask), cardAfter);
 }
 
 
@@ -111,7 +111,7 @@ function movePlaceholder(event) {
 function isPointerOverPlaceholder(event, direction, existingPlaceholder) {
   if (existingPlaceholder) {
     const placeholderRect = existingPlaceholder.getBoundingClientRect();
-    return isPointerInRectAlongAxis(event, direction, placeholderRect)
+    return isPointerInRectAlongAxis(event, direction, placeholderRect);
   }
   return false;
 }
@@ -203,7 +203,7 @@ function isPositionUnchanged(draggedTask, column, cardAfter) {
  * @param {HTMLElement} draggedTask - The dragged task card.
  * @returns {HTMLLIElement} The placeholder element, not yet inserted into the DOM.
  */
-function makePlaceholder(draggedTask) {
+function createPlaceholder(draggedTask) {
   const placeholder = document.createElement("li");
   placeholder.classList.add("placeholder");
   placeholder.style.minHeight = `${draggedTask.offsetHeight}px`;
@@ -230,9 +230,9 @@ function handleDrop(event) {
   column.classList.remove("drag-over-column");
   if (!placeholder || !draggedTask) return;
 
-  handleSuccessfulDrop(column, draggedTask, placeholder);
-  handleMovedTasks(draggedTask);
-  checkForEmptyColumn();
+  moveCardToPlaceholder(column, draggedTask, placeholder);
+  saveTaskMove(draggedTask);
+  renderEmptyColumnMessages();
 }
 
 
@@ -243,7 +243,7 @@ function handleDrop(event) {
  * @param {HTMLElement} placeholder - The placeholder marking the drop position.
  * @returns {void} Nothing; the card replaces the placeholder and the empty-column message is removed.
  */
-function handleSuccessfulDrop(column, draggedTask, placeholder) {
+function moveCardToPlaceholder(column, draggedTask, placeholder) {
   column.querySelector(".empty-column-message")?.remove();
   column.insertBefore(draggedTask, placeholder);
   placeholder.remove();
@@ -269,8 +269,8 @@ function moveTaskViaButton(event) {
   destinationColumn.querySelector(".empty-column-message")?.remove();
   destinationColumn.prepend(movedTask);
   toggleMenu(moveButton, `move-menu-dropdown${movedTask.dataset.taskId}`);
-  handleMovedTasks(movedTask);
-  checkForEmptyColumn();
+  saveTaskMove(movedTask);
+  renderEmptyColumnMessages();
 }
 
 // #endregion
@@ -284,7 +284,7 @@ function moveTaskViaButton(event) {
  * @param {HTMLElement} draggedTask - The task card, already placed in its destination column.
  * @returns {void} Nothing; allTasks and the DOM are updated and the changes are queued for saving.
  */
-function handleMovedTasks(draggedTask) {
+function saveTaskMove(draggedTask) {
   const updates = {};
   const destinationStatus = draggedTask.parentElement.id;
   const originStatus = draggedTask.dataset.taskStatus;
@@ -293,7 +293,7 @@ function handleMovedTasks(draggedTask) {
   
   insertTaskIntoColumn(updates, destinationStatus, { insertedTaskID:draggedTaskID, previousTaskID });
   if (destinationStatus !== originStatus) {
-    handleStatusChange(updates, { destinationStatus, originStatus }, draggedTask);
+    adjustStatusChange(updates, { destinationStatus, originStatus }, draggedTask);
   }
   patchTasks(updates);
 }
@@ -310,10 +310,10 @@ function handleMovedTasks(draggedTask) {
  * @param {HTMLElement} draggedTask - The moved task card, already in its destination column.
  * @returns {void} Nothing; the counters, allTasks, the card and the updates object are changed.
  */
-function handleStatusChange(updates, { destinationStatus, originStatus }, draggedTask) {
-  adjustTaskAmount(destinationStatus, originStatus);
+function adjustStatusChange(updates, { destinationStatus, originStatus }, draggedTask) {
+  updateMovedTaskCounts(destinationStatus, originStatus);
   removeTaskFromColumn(updates, originStatus, draggedTask.dataset.taskId);
-  adjustNewStatusToDraggedTask(updates, destinationStatus, draggedTask);
+  setTaskStatus(updates, destinationStatus, draggedTask);
 }
 
 
@@ -323,9 +323,9 @@ function handleStatusChange(updates, { destinationStatus, originStatus }, dragge
  * @param {string} originStatus - The status of the origin column.
  * @returns {void} Nothing; both counters are rewritten.
  */
-function adjustTaskAmount(destinationStatus, originStatus) {
-  renderAmountOfTasks(destinationStatus, document.querySelector(`#${destinationStatus}`).children.length);
-  renderAmountOfTasks(originStatus, document.querySelector(`#${originStatus}`).children.length);
+function updateMovedTaskCounts(destinationStatus, originStatus) {
+  renderTaskCount(destinationStatus, document.querySelector(`#${destinationStatus}`).children.length);
+  renderTaskCount(originStatus, document.querySelector(`#${originStatus}`).children.length);
 }
 
 
@@ -336,7 +336,7 @@ function adjustTaskAmount(destinationStatus, originStatus) {
  * @param {HTMLElement} draggedTask - The moved task card.
  * @returns {void} Nothing; allTasks, the card's data attribute and the updates object are changed.
  */
-function adjustNewStatusToDraggedTask(updates, destinationStatus, draggedTask) {
+function setTaskStatus(updates, destinationStatus, draggedTask) {
   const draggedTaskID = draggedTask.dataset.taskId;
   allTasks[draggedTaskID].status = destinationStatus;
   draggedTask.dataset.taskStatus = destinationStatus;

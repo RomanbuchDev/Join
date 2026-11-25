@@ -13,6 +13,11 @@
   cursor: pointer;
 }
 
+.task-card-details {
+  flex-direction: column;
+  gap: 1.5em;
+}
+
 .label-move-container {
   justify-content: space-between;
 }
