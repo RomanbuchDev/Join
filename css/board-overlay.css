@@ -191,7 +191,7 @@
 }
 
 .priority-option label {
-  font-size: 1rem;
+  font-size: 0.875rem;
   min-width: 5.5em;
 }
 
@@ -214,6 +214,10 @@
 
   .overlay-main {
     gap: 1.25em;
+  }
+
+  .priority-option label {
+    font-size: 1rem;
   }
 }
 
@@ -253,6 +257,16 @@
   .overlay-main h4,
   .overlay-main {
     font-size: 1.25rem;
+  }
+}
+
+/* #endregion */
+
+/* #region MARK: @ laptop S
+*/
+@media (width >= 64em) {
+  .form-column--right {
+    padding-top: 0;
   }
 }
 

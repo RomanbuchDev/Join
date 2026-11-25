@@ -136,6 +136,7 @@
   flex: 1;
   border: none;
   border-radius: var(--progress-radius);
+  min-width: 0;
   height: 0.5rem;
 }
 
@@ -168,8 +169,14 @@
   align-items: center;
 }
 
+.task-avatars-container {
+  flex-wrap: wrap;
+  padding-left: 0.5em;
+}
+
 .task-avatar {
   color: var(--color-white);
+  margin-left: -0.5em;
   border: 1px solid var(--color-white);
   border-radius: 50%;
 }
@@ -180,10 +187,6 @@
   align-items: center;
   width: 2em;
   height: 2em;
-}
-
-.task-avatar + .task-avatar {
-  margin-left: -0.5em;
 }
 
 /* #endregion */

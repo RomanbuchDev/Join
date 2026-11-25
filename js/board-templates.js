@@ -138,7 +138,7 @@ function templateOverlayFrame(taskID, categoryColor) {
       <h3 class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(task.category)}</h3>
       <button type="button" aria-label="Close overlay"
         class="button-reset"
-        onclick="handleOverlayCloseRequest()">
+        onclick="handleOverlayCloseRequest('dialogTask')">
         <svg
           class="svg-fill svg-width-height-18px"
           aria-hidden="true"
@@ -377,4 +377,3 @@ function templateDeleteQuestion(taskID) {
 }
 
 // #endregion
-""

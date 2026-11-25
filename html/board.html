@@ -245,7 +245,7 @@
       data-dialog-task-id=""
       class="dialog-board d-flex"
       onclick="handleOverlayBackdropClick(event)"
-      oncancel="handleOverlayCancel(event)"
+      oncancel="handleOverlayCancel(event, 'dialogTask')"
     >
       <div
         id="overlayTaskEdit"
@@ -259,8 +259,7 @@
       id="dialogAddTask"
       data-dialog-mode="addTask"
       class="dialog-board d-flex"
-      onclick="handleOverlayBackdropClick(event)"
-      oncancel="handleOverlayCancel(event)"
+      oncancel="handleOverlayCancel(event, 'dialogAddTask')"
     >
       <div
         id="overlayAddTask"

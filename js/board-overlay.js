@@ -50,7 +50,7 @@ function handleOverlayBackdropClick(event) {
 
   const dialogRef = document.getElementById("dialogTask");
   if (dialogRef.dataset.dialogMode === "detailedTask") {
-    closeTaskOverlay();
+    closeTaskOverlay(dialogID);
   }
 }
 
@@ -60,9 +60,9 @@ function handleOverlayBackdropClick(event) {
  * @param {Event} event - The cancel event of the dialog.
  * @returns {void} Nothing; the default behavior is prevented and the closing is started.
  */
-function handleOverlayCancel(event) {
+function handleOverlayCancel(event, dialogID) {
   event.preventDefault();
-  handleOverlayCloseRequest();
+  handleOverlayCloseRequest(dialogID);
 }
 
 
@@ -71,15 +71,15 @@ function handleOverlayCancel(event) {
  * In edit mode, discards the changes and returns to the detail view; otherwise closes the overlay.
  * @returns {void} Nothing; the view is switched or the closing is started.
  */
-function handleOverlayCloseRequest() {
-  const dialogRef = document.getElementById("dialogTask");
-  const taskID = dialogRef.dataset.dialogTaskId;
+function handleOverlayCloseRequest(dialogID) {
+  const dialogRef = document.getElementById(dialogID);
+  // const taskID = dialogRef.dataset.dialogTaskId;
   if (dialogRef.dataset.dialogMode === "editTask") {
     resetSubtasks();
-    renderOverlayDetailView(taskID);
+    renderOverlayDetailView(dialogRef.dataset.dialogTaskId);
     dialogRef.dataset.dialogMode = "detailedTask";
   } else {
-    closeTaskOverlay();
+    closeTaskOverlay(dialogID);
   }
 }
 
@@ -90,8 +90,8 @@ function handleOverlayCloseRequest() {
  * Relies on a running transition; without one, the dialog would not be closed.
  * @returns {void} Nothing; the slide-out starts.
  */
-function closeTaskOverlay() {
-  const dialogRef = document.getElementById("dialogTask");
+function closeTaskOverlay(dialogID) {
+  const dialogRef = document.getElementById(dialogID);
   dialogRef.classList.remove("dialog-board-open");
   dialogRef.addEventListener("transitionend", finishClosingOverlay);
 }
