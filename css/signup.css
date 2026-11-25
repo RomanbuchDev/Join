@@ -189,7 +189,8 @@ form {
 }
 
 .signup-a {
-  color: var(--color-medium);
+  color: var(--color-black-100);
+  transition: color 125ms ease;
 }
 
 /* #endregion */
@@ -302,6 +303,16 @@ form {
   .header-signup img {
     height: 7.75rem;
     width: 6.25rem;
+  }
+}
+
+/* #endregion */
+
+/* #region MARK: @ hover
+*/
+@media (hover: hover) and (pointer: fine) {
+  .signup-a:hover {
+    color: var(--color-medium);
   }
 }
 
