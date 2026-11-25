@@ -19,7 +19,7 @@
 
 .form-content {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
     "title"
     "description"
@@ -31,7 +31,7 @@
   gap: 1.5rem;
   min-height: 0;
   overflow: hidden auto;
-  padding-block-end: 10em;
+  padding-block-end: 1em;
   padding-inline: 1em;
 }
 
@@ -77,13 +77,19 @@
   font-weight: 700;
 }
 
+.form-column {
+  min-width: 0;
+}
+
 .form-field {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
+  min-width: 0;
 }
 
-.form-field > label {
+.form-field > label,
+.form-field > legend {
   font-size: 1rem;
   font-weight: 400;
 }
@@ -186,6 +192,10 @@
   margin-block-start: 1rem;
 }
 
+.subtask-actions {
+  flex-shrink: 0;
+}
+
 .priority-option {
   max-width: 300px;
   gap: 0.25em;
@@ -267,39 +277,6 @@
   line-height: 1.2;
 }
 
-@supports (appearance: base-select) {
-  #category,
-  #category::picker(select) {
-    appearance: base-select;
-  }
-
-  #category::picker(select) {
-    background-color: var(--color-white);
-    border: 1px solid var(--color-gray-209);
-    border-radius: 0.625rem;
-    box-shadow: 0 4px 12px var(--color-black-10);
-  }
-
-  #category option {
-    padding: 0.75rem 1rem;
-  }
-
-  #category {
-    background-image: none;
-    padding-inline-end: 0.75em;
-  }
-
-  #category::picker-icon {
-    content: "";
-    width: 1.2em;
-    height: 1.2em;
-    flex: none;
-    align-self: center;
-    margin-inline-start: auto;
-    background: url("../assets/icons/drop-arrow.svg") center / contain no-repeat;
-  }
-}
-
 @media (width >= 64em) {
   .add-task-page #toast-message {
     bottom: 12rem;
@@ -319,8 +296,11 @@
   }
 
   .form-actions {
-    inset-inline-start: 14.5rem;
+    inset-inline: 18.5rem auto;
     bottom: 0;
+    width: calc(100% - 22.5rem);
+    max-width: 64rem;
+    box-sizing: border-box;
   }
 
   .form-content {
@@ -357,6 +337,19 @@
     align-self: start;
   }
 
+  .form-field--description::before {
+    content: "";
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #fff;
+    border-bottom-right-radius: 9px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
   .form-field--description::after {
     content: "";
     position: absolute;
@@ -371,6 +364,7 @@
     );
     clip-path: polygon(100% 0, 100% 100%, 0 100%);
     pointer-events: none;
+    z-index: 2;
   }
 
   .form-control--description::-webkit-resizer {
@@ -391,6 +385,6 @@
   .form-actions > .required-hint--desktop {
     display: block;
     margin-inline-end: auto;
-    margin-left: 4rem;
+    margin-left: 0;
   }
 }

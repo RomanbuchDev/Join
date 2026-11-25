@@ -207,6 +207,23 @@ const toastMessage = document.getElementById("toast-message");
 let toastMessageTime;
 
 /**
+ * Shows a toast message for a short time.
+ * @param {string} text - The toast message text.
+ * @param {string} statusClass - The CSS class for the background color.
+ */
+function showToastMessage(text, statusClass) {
+  if (toastMessageTime) clearTimeout(toastMessageTime);
+  toastMessage.className = "toast-message";
+  toastMessage.textContent = text;
+  toastMessage.showPopover();
+  toastMessage.classList.add("show", statusClass);
+  toastMessageTime = setTimeout(() => {
+    hideToastMessage(statusClass);
+  }, 3000);
+}
+
+
+/**
  * Hides the toast message and removes the CSS status class.
  * @param {string} statusClass - The CSS class for the background color.
  */
@@ -223,23 +240,6 @@ function hideToastMessage(statusClass) {
       );
     },
   );
-}
-
-
-/**
- * Shows a toast message for a short time.
- * @param {string} text - The toast message text.
- * @param {string} statusClass - The CSS class for the background color.
- */
-function showToastMessage(text, statusClass) {
-  if (toastMessageTime) clearTimeout(toastMessageTime);
-  toastMessage.className = "toast-message";
-  toastMessage.textContent = text;
-  toastMessage.showPopover();
-  toastMessage.classList.add("show", statusClass);
-  toastMessageTime = setTimeout(() => {
-    hideToastMessage(statusClass);
-  }, 3000);
 }
 
 // #endregion

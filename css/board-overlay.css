@@ -1,4 +1,4 @@
-/* #region MARK: ?? 
+/* #region MARK: dialog 
 */
 
 .dialog-board {
@@ -26,6 +26,14 @@
   background: var(--color-black-40);
 }
 
+.dialog-board:focus {
+  outline: none;
+}
+
+/* #endregion */
+
+/* #region MARK: overlay 
+*/
 .overlay-board {
   padding: 1em 0;
   gap: 1.25em;
@@ -51,12 +59,17 @@
   padding-inline: 1em;
 }
 
+/* #endregion */
+
+/* #region MARK: footer 
+*/
 .overlay-footer {
   grid-area: overlay-footer;
   justify-content: flex-end;
   padding-inline: 1em;
   gap: 0.5em;
-  height: 1.5em;
+  min-height: 1.5em;
+  height: fit-content;
 }
 
 .button-delete-edit {
@@ -69,6 +82,10 @@
   border: 1px solid var(--color-gray-209);
 }
 
+/* #endregion */
+
+/* #region MARK: main 
+*/
 .overlay-main {
   grid-area: overlay-main;
   flex-direction: column;
@@ -88,6 +105,10 @@
   font-weight: 400;
 }
 
+/* #endregion */
+
+/* #region MARK: priority 
+*/
 .overlay-detail-row h4 {
   width: 6em;
 }
@@ -100,6 +121,10 @@
   width: 1.25em;
 }
 
+/* #endregion */
+
+/* #region MARK: assignees 
+*/
 .overlay-detail-column {
   flex-direction: column;
   gap: 1em;
@@ -107,7 +132,7 @@
 
 .overlay-assignees {
   flex-direction: column;
-  padding-left: 1em;
+  padding-left: 16px;
   gap: 0.5em;
 }
 
@@ -123,6 +148,55 @@
   justify-content: center;
   width: 2.25em;
   height: 2.25em;
+}
+
+/* #endregion */
+
+/* #region MARK: subtasks 
+*/
+.subtask-checkbox {
+  box-sizing: content-box;
+  appearance: none;
+  background-image: url("../assets/icons/checkbox-default.svg");
+  background-size: cover;
+  align-self: center;
+  margin: 0 1rem;
+  border: 2px solid var(--color-white);
+  border-radius: 3px;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.subtask-checkbox:checked {
+  background-image: url("../assets/icons/checkbox-checked.svg");
+}
+
+.subtask-checkbox:hover,
+.subtask-checkbox:focus-visible {
+  background-color: var(--color-hover);
+  border-color: var(--color-hover);
+}
+
+/* #endregion */
+
+/* #region MARK: add task 
+*/
+.form-content {
+  padding: 0;
+}
+
+.form-column--right {
+  padding-top: 1em;
+}
+
+.priority-option label {
+  font-size: 1rem;
+  min-width: 5.5em;
+}
+
+.subtask-input input {
+  font-size: 1rem;
 }
 
 /* #endregion */

@@ -27,7 +27,6 @@ function getTaskFormTemplate(options = {}) {
       submitHandler: "createTask(event)",
       resetHandler: "clearTaskForm()",
       priority: "medium",
-      category: "",
       showCategory: true,
       actions: getTaskActionsTemplate(),
     },
@@ -131,17 +130,20 @@ function getTaskFieldsTemplate(
           ></textarea>
         </div>
 
-        <div class="form-field form-field--due-date">
-          <label class="required-label" for="due-date">Due date</label>
-          <input
-            class="form-control form-control--date"
-            type="date"
-            name="due-date"
-            id="due-date"
-            required
-            oninvalid="markTaskFieldInvalid(event)"
-          />
+      <div class="form-field form-field--due-date">
+       <label class="required-label" for="due-date">Due date</label>
+
+       <div class="task-date-input">
+         <input
+         class="form-control form-control--date"
+         type="date"
+         name="due-date"
+         id="due-date"
+         required
+         oninvalid="markTaskFieldInvalid(event)"
+         />
         </div>
+       </div>
       </div>
 
       <div class="form-column form-column--right">

@@ -1,5 +1,5 @@
 /**
- * JavaScript file for the board overlay.
+ * JavaScript file for the task overlay of the board page.
  */
 
 // #region SHOW
@@ -26,7 +26,10 @@ function handleTaskCardClick(event, taskID) {
  */
 function openTaskOverlay(taskID) {
   const dialogRef = document.getElementById("dialogTask");
+  dialogRef.dataset.dialogMode = "detailedTask";
+  dialogRef.dataset.dialogTaskId = taskID;
   renderTaskOverlay(taskID);
+  dialogRef.classList.remove("dialog-board-open");
   dialogRef.showModal();
   dialogRef.getBoundingClientRect();
   dialogRef.classList.add("dialog-board-open");
@@ -42,7 +45,13 @@ function openTaskOverlay(taskID) {
  * @returns {void} Nothing; the closing is started if the backdrop was clicked.
  */
 function handleOverlayBackdropClick(event) {
-  if (event.target === event.currentTarget) closeTaskOverlay();
+  closeAssignedContactsOnOutsideClick(event);
+  if (event.target !== event.currentTarget) return;
+
+  const dialogRef = document.getElementById("dialogTask");
+  if (dialogRef.dataset.dialogMode === "detailedTask") {
+    closeTaskOverlay();
+  }
 }
 
 
@@ -53,7 +62,25 @@ function handleOverlayBackdropClick(event) {
  */
 function handleOverlayCancel(event) {
   event.preventDefault();
-  closeTaskOverlay();
+  handleOverlayCloseRequest();
+}
+
+
+/**
+ * Handles a request to close the overlay (close button or Escape key).
+ * In edit mode, discards the changes and returns to the detail view; otherwise closes the overlay.
+ * @returns {void} Nothing; the view is switched or the closing is started.
+ */
+function handleOverlayCloseRequest() {
+  const dialogRef = document.getElementById("dialogTask");
+  const taskID = dialogRef.dataset.dialogTaskId;
+  if (dialogRef.dataset.dialogMode === "editTask") {
+    resetSubtasks();
+    renderOverlayDetailView(taskID);
+    dialogRef.dataset.dialogMode = "detailedTask";
+  } else {
+    closeTaskOverlay();
+  }
 }
 
 
@@ -94,14 +121,34 @@ function finishClosingOverlay(event) {
  * @returns {void} Nothing; header, main part and footer of the overlay are written into the DOM.
  */
 function renderTaskOverlay(taskID) {
+  renderOverlayFrame(taskID);
+  renderOverlayDetailView(taskID);
+}
+
+
+/**
+ * Renders the frame of the overlay: the header and the empty containers for main part and footer.
+ * @param {string} taskID - The ID of the task to show.
+ * @returns {void} Nothing; the content of the overlay is replaced.
+ */
+function renderOverlayFrame(taskID) {
   const overlayRef = document.getElementById("overlayTaskEdit");
-  overlayRef.innerHTML = templateOverlayTask(taskID, getCategoryColor(taskID));
-  const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
-  const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
-  overlayMainRef.innerHTML = templateOverlayMainDetails(taskID);
-  overlayFooterRef.innerHTML = templateOverlayFooterDetails(taskID);
+  overlayRef.innerHTML = templateOverlayFrame(taskID, getCategoryColorClass(taskID));
+}
+
+
+/**
+ * Renders main part and footer of the detail view. The overlay frame of this task has to be rendered already.
+ * @param {string} taskID - The ID of the task to show.
+ * @returns {void} Nothing; main part and footer of the overlay are replaced.
+ */
+function renderOverlayDetailView(taskID) {
+  const mainRef = document.getElementById(`overlayMain${taskID}`);
+  const footerRef = document.getElementById(`overlayFooter${taskID}`);
+  mainRef.innerHTML = templateOverlayMainDetails(taskID);
+  footerRef.innerHTML = templateOverlayFooterDetails(taskID);
   renderDescription(taskID, `overlayDescription${taskID}`);
-  renderPriority(taskID);
+  renderOverlayPriority(taskID);
   renderOverlayAssignees(taskID);
   renderOverlaySubtasks(taskID);
 }
@@ -112,10 +159,22 @@ function renderTaskOverlay(taskID) {
  * @param {string} taskID - The ID of the task.
  * @returns {string} The formatted date, or "No due date" if the stored date is missing or not in the format "yyyy-mm-dd".
  */
-function getTaskDate(taskID) {
+function getFormattedDueDate(taskID) {
   const date = allTasks[taskID].dueDate;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date ?? "")) return "No due date";
+  if (!isDateValid(date)) return "No due date";
   return date.split("-").reverse().join(".");
+}
+
+
+/**
+ * Checks whether a date string has the format "yyyy-mm-dd".
+ * Only the format is checked, not whether the date exists.
+ * @param {string|undefined} date - The date to check; missing if the task has none.
+ * @returns {boolean} True if the format matches.
+ */
+function isDateValid(date) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(date ?? "");
+  
 }
 
 
@@ -125,7 +184,7 @@ function getTaskDate(taskID) {
  * @param {string} taskID - The ID of the task.
  * @returns {void} Nothing; the priority is written into the overlay.
  */
-function renderPriority(taskID) {
+function renderOverlayPriority(taskID) {
   const priorityRef = document.getElementById(`overlayPriority${taskID}`);
   const priority = allTasks[taskID].priority || "medium";
   const priorityString = priority.charAt(0).toUpperCase() + priority.slice(1).toLowerCase();
@@ -200,11 +259,12 @@ function getSubtasksHtml(taskID, subtasks) {
 
 // #endregion
 
-// #region EDIT
+// #region SUBTASKS
 
 /**
  * Saves the new state of a subtask checkbox. Task data and progress bar are updated
  * only after a successful save. The checkbox is disabled while saving.
+ * If saving fails, the checkbox keeps its new state.
  * @param {Event} event - The change event of the checkbox.
  * @param {string} taskID - The ID of the task.
  * @param {number} indexSubtask - The index of the subtask in the task.
@@ -218,7 +278,7 @@ async function toggleSubtask(event, taskID, indexSubtask) {
   try {
     const saved = await patchTasks({[`${taskID}/subtasks/${indexSubtask}/done`]: newValue});
     if (saved) {
-      adjustSubtaskChange(taskID, subtask, newValue);
+      adjustSubtaskState(taskID, subtask, newValue);
     }
   } finally {
     checkboxRef.disabled = false;
@@ -233,89 +293,9 @@ async function toggleSubtask(event, taskID, indexSubtask) {
  * @param {boolean} newValue - The new done state.
  * @returns {void} Nothing; the subtask and the progress bar are updated.
  */
-function adjustSubtaskChange(taskID, subtask, newValue) {
+function adjustSubtaskState(taskID, subtask, newValue) {
   subtask.done = newValue;
   renderProgressBar(taskID);
-}
-
-
-/**
- * Switches the overlay from the detail view to the edit view.
- * @param {string} taskID - The ID of the task to edit.
- * @returns {void} Nothing; main part and footer of the overlay are replaced by the edit view.
- */
-function editTask(taskID) {
-  const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
-  const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
-  overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
-  overlayFooterRef.innerHTML = templateOverlayFooterEdit(taskID);
-}
-
-// #endregion
-
-// #region DELETE
-
-/**
- * Deletes a task from the database and the board.
- * The delete button is disabled while the deletion runs.
- * @param {MouseEvent} event - The click event on the delete button.
- * @param {string} taskID - The ID of the task to delete.
- * @returns {Promise<void>} Resolves once the deletion is finished or failed.
- */
-async function deleteTask(event, taskID) {
-  const buttonRef = event.currentTarget;
-  buttonRef.disabled = true;
-  try {
-    await runDeletion(taskID);
-  } finally {
-    buttonRef.disabled = false;
-  }
-}
-
-
-/**
- * Waits for pending saves, reloads the tasks and deletes the task if it still exists.
- * Updates the board afterwards. Stops if reloading the tasks fails or if the saving fails.
- * @param {string} taskID - The ID of the task to delete.
- * @returns {Promise<void>} Resolves once the deletion is finished or stopped.
- */
-async function runDeletion(taskID) {
-  await patchQueue;
-  if (!(await fetchAllTasks())) return;
-
-  const deleted = !allTasks[taskID] || await patchTasks(buildDeleteUpdates(taskID));
-  if (deleted) updateBoardAfterDelete(taskID);
-}
-
-
-/**
- * Builds the update object for deleting a task: removes it from the order of its column
- * and sets the task itself to null.
- * @param {string} taskID - The ID of the task to delete.
- * @returns {Object<string, string|number|null>} The path-based updates for the PATCH request.
- */
-function buildDeleteUpdates(taskID) {
-  const updates = {};
-  removeTaskFromColumn(updates, allTasks[taskID].status, taskID);
-  updates[taskID] = null;
-  return updates;
-}
-
-
-/**
- * Removes a deleted task from allTasks and the board, closes the overlay
- * and updates the task counter and the empty-column message.
- * @param {string} taskID - The ID of the deleted task.
- * @returns {void} Nothing; allTasks and the DOM are updated.
- */
-function updateBoardAfterDelete(taskID) {
-  const cardRef = document.querySelector(`[data-task-id="${taskID}"]`);
-  const columnRef = cardRef?.parentElement;
-  delete allTasks[taskID];
-  cardRef?.remove();
-  closeTaskOverlay();
-  if (columnRef) renderAmountOfTasks(columnRef.id, columnRef.children.length);
-  checkForEmptyColumn();
 }
 
 // #endregion
