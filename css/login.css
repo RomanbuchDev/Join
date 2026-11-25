@@ -267,7 +267,6 @@ form {
 */
 @media (width >= 64rem) {
   .app {
-    min-width: 64rem;
     width: 100%;
     min-height: 100vh;
     padding: 4.1875rem 7.625rem 2.5rem 4.8125rem;
