@@ -26,17 +26,12 @@ body {
   display: flex;
   flex-direction: column;
   line-height: 1.2;
-  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
 }
 
 body h3 {
   font-weight: 700;
-}
-
-/* Notiz: Nur vorübergehend einfügen bis zum nächsten Update von Main */
-body .user-menu-dropdown {
-  transform: translateX(1em);
 }
 
 /*  ==================================================================================================== 
@@ -46,13 +41,18 @@ body .user-menu-dropdown {
 .main-container {
   background-color: var(--color-bg-main);
   overflow-y: auto;
-  padding-inline: 0.875em;
+  padding-top: 3em;
+  padding-bottom: 1.25em;
+  padding-inline: 1em;
+}
+
+.content-container {
+  max-width: 90em;
 }
 
 .title-container {
   display: flex;
   justify-content: space-between;
-  padding-top: 4.125em;
   padding-bottom: 1.25em;
 }
 
@@ -99,15 +99,27 @@ body .user-menu-dropdown {
   margin: 0;
 }
 
-/* E-Mail */
+.back-button-small {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 0.75em;
+  padding-right: 0.7em;
+}
+
+.back-button-small img {
+  width: 21px;
+  height: 20px;
+}
+
+/* ##### E-Mail ##### */
+
 .contact-email {
-  color: var(--color-black-100);
+  color: var(--color-email);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.125s ease;
 }
 
 .contact-email:hover {
-  color: var(--color-email);
   text-decoration: underline;
 }
 
@@ -118,6 +130,10 @@ body .user-menu-dropdown {
 @media (width >= 64em) {
   .main-container {
     grid-area: main;
-    padding-inline: 6em;
+    padding-inline: 4em;
+  }
+
+  .back-button-small {
+    display: none;
   }
 }
