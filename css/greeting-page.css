@@ -1,3 +1,5 @@
+/* #region MARK: greeting
+*/
 .main-greeting {
   padding-bottom: 5rem;
   gap: 1rem;
@@ -19,3 +21,5 @@
   line-height: 120%;
   color: var(--color-medium);
 }
+
+/* #endregion */

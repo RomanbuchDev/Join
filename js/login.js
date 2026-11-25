@@ -1,15 +1,23 @@
+// #region INIT
+
 /**
  * Starts the setup as soon as the page has loaded.
  */
 function init() {
   setupEventListeners();
+  window.addEventListener("pageshow", handlePageShow);
 }
 
-window.addEventListener("pageshow", (event) => {
+
+/**
+ * Resets the form when the page is restored from the browser cache (e.g. via the back button).
+ * @param {PageTransitionEvent} event - The pageshow event.
+ */
+function handlePageShow(event) {
   if (event.persisted) {
     resetLoginFormState();
   }
-});
+}
 
 
 /**
@@ -36,61 +44,16 @@ function loginEventListener(form) {
 
 
 /**
- * Switches the lock icon depending on whether the password field is empty or not.
+ * Registers the click handler for the guest login button.
+ * @param {HTMLButtonElement} formGuest - The guest login button.
  */
-function inputPasswordCheck() {
-  const inputPasswordCheck = document.getElementById("exampleInputPassword1");
-  const icon = document.getElementById("visibility-icon");
-  inputPasswordCheck.addEventListener("input", () => {
-    if (inputPasswordCheck.value === "") {
-      icon.src = "./assets/icons/lock.svg";
-      icon.classList.remove("visibility-icon");
-      return;
-    }
-    icon.src = "./assets/icons/visibility_off.svg";
-    icon.classList.add("visibility-icon");
-  });
+function guestLoginEventListener(formGuest) {
+  formGuest.addEventListener("click", handleGuestLoginClick);
 }
 
+// #endregion
 
-/**
- * Reacts to clicks on the visibility icon.
- */
-function visibilityEventListener() {
-  const inputPasswordCheck = document.getElementById("exampleInputPassword1");
-  const icon = document.getElementById("visibility-icon"); //.getAttribute("src")
-  icon.addEventListener("click", () => {
-    if (inputPasswordCheck.value === "") {
-      inputPasswordCheck.type = "password";
-      icon.src = "./assets/icons/lock.svg";
-      icon.classList.remove("visibility-icon");
-      return;
-    }
-    visibilityIconSwish(icon, inputPasswordCheck);
-  });
-}
-
-
-/**
- * Toggles between visible and hidden password (including icon swap).
- * @param {HTMLImageElement} icon - The visibility icon.
- * @param {HTMLInputElement} inputPasswordCheck - The password input field.
- */
-function visibilityIconSwish(icon, inputPasswordCheck) {
-  const iconSrc = icon.getAttribute("src");
-  const iconVisibilityOn = "./assets/icons/visibility.svg";
-  const iconVisibilityOff = "./assets/icons/visibility_off.svg";
-  if (iconSrc === iconVisibilityOn) {
-    inputPasswordCheck.type = "password";
-    document.getElementById("visibility-icon").src = iconVisibilityOff;
-  }
-  if (iconSrc === iconVisibilityOff) {
-    inputPasswordCheck.type = "text";
-    document.getElementById("visibility-icon").src = iconVisibilityOn;
-  }
-  return;
-}
-
+// #region LOGIN
 
 /**
  * Processes the form submission: reads the values, validates them, starts the login on success.
@@ -105,6 +68,30 @@ async function handleLoginSubmit(event) {
   document.getElementById("loginBtn").disabled = true;
   document.body.classList.add("is-loading");
   await attemptLogin(loginUserData);
+}
+
+
+/**
+ * Attempts to log in with the entered data.
+ * @param {Object} loginUserData - The entered form data (email, password).
+ */
+async function attemptLogin(loginUserData) {
+  try {
+    await loginWithEmail(loginUserData.email, loginUserData.password);
+    handleLoginSuccess();
+  } catch (error) {
+    handleLoginFailure(error);
+  }
+}
+
+
+/**
+ * Redirects after a successful login — Firebase Auth manages the session itself.
+ */
+function handleLoginSuccess() {
+  setTimeout(() => {
+    window.location.href = "./html/greeting-page.html";
+  }, 1500);
 }
 
 
@@ -126,27 +113,18 @@ function handleLoginFailure(error) {
 
 
 /**
- * Attempts to log in with the entered data.
- * @param {Object} loginUserData - The entered form data (email, password).
+ * Shows an error message after a failed login.
  */
-async function attemptLogin(loginUserData) {
-  try {
-    await loginWithEmail(loginUserData.email, loginUserData.password);
-    handleLoginSuccess();
-  } catch (error) {
-    handleLoginFailure(error);
-  }
+function handleLoginError() {
+  document.getElementById("loginError").innerText =
+    "Password or email is incorrect!";
+  markFieldError("loginEmail", true);
+  markFieldError("loginPassword", true);
 }
 
+// #endregion
 
-/**
- * Registers the click handler for the guest login button.
- * @param {HTMLButtonElement} formGuest - The guest login button.
- */
-function guestLoginEventListener(formGuest) {
-  formGuest.addEventListener("click", handleGuestLoginClick);
-}
-
+// #region GUEST LOGIN
 
 /**
  * Reacts to a click on the guest login button: logs in as guest and redirects on success.
@@ -166,27 +144,9 @@ async function handleGuestLoginClick(event) {
   }
 }
 
+// #endregion
 
-/**
- * Redirects after a successful login — Firebase Auth manages the session itself.
- */
-function handleLoginSuccess() {
-  setTimeout(() => {
-    window.location.href = "./html/greeting-page.html";
-  }, 1500);
-}
-
-
-/**
- * Shows an error message after a failed login.
- */
-function handleLoginError() {
-  document.getElementById("loginError").innerText =
-    "Password or email is incorrect!";
-  markFieldError("exampleInputEmail1", true);
-  markFieldError("exampleInputPassword1", true);
-}
-
+// #region VALIDATION
 
 /**
  * Checks whether the entered login data is valid and shows an error message if not.
@@ -210,7 +170,7 @@ function isLoginInputValid(loginUserData) {
 function checkEmailField(email) {
   const isEmpty = email.trim() === "";
   const isInvalid = !isEmpty && (!email.includes("@") || !email.includes("."));
-  markFieldError("exampleInputEmail1", isEmpty || isInvalid);
+  markFieldError("loginEmail", isEmpty || isInvalid);
   return { isEmpty, isInvalid };
 }
 
@@ -222,10 +182,28 @@ function checkEmailField(email) {
  */
 function checkPasswordField(password) {
   const isEmpty = password.trim() === "";
-  markFieldError("exampleInputPassword1", isEmpty);
+  markFieldError("loginPassword", isEmpty);
   return isEmpty;
 }
 
+
+/**
+ * Sets or removes the error marking on an input field.
+ * @param {string} inputId - The ID of the input field.
+ * @param {boolean} isEmpty - Whether the field should be marked as invalid.
+ */
+function markFieldError(inputId, isEmpty) {
+  const input = document.getElementById(inputId);
+  if (isEmpty) {
+    input.classList.add("input-error");
+  } else {
+    input.classList.remove("input-error");
+  }
+}
+
+// #endregion
+
+// #region ERROR MESSAGES
 
 /**
  * Builds the matching error text from the email/password checks.
@@ -273,29 +251,77 @@ function getPasswordErrorMessage(isEmpty) {
   return "";
 }
 
+// #endregion
+
+// #region PASSWORD VISIBILITY
 
 /**
- * Sets or removes the error marking on an input field.
- * @param {string} inputId - The ID of the input field.
- * @param {boolean} isEmpty - Whether the field should be marked as invalid.
+ * Switches the lock icon depending on whether the password field is empty or not.
  */
-function markFieldError(inputId, isEmpty) {
-  const input = document.getElementById(inputId);
-  if (isEmpty) {
-    input.classList.add("input-error");
-  } else {
-    input.classList.remove("input-error");
-  }
+function inputPasswordCheck() {
+  const inputPasswordCheck = document.getElementById("loginPassword");
+  const icon = document.getElementById("visibility-icon");
+  inputPasswordCheck.addEventListener("input", () => {
+    if (inputPasswordCheck.value === "") {
+      icon.src = "./assets/icons/lock.svg";
+      icon.classList.remove("visibility-icon");
+      return;
+    }
+    icon.src = "./assets/icons/visibility_off.svg";
+    icon.classList.add("visibility-icon");
+  });
 }
 
+
+/**
+ * Reacts to clicks on the visibility icon.
+ */
+function visibilityEventListener() {
+  const inputPasswordCheck = document.getElementById("loginPassword");
+  const icon = document.getElementById("visibility-icon");
+  icon.addEventListener("click", () => {
+    if (inputPasswordCheck.value === "") {
+      inputPasswordCheck.type = "password";
+      icon.src = "./assets/icons/lock.svg";
+      icon.classList.remove("visibility-icon");
+      return;
+    }
+    visibilityIconSwish(icon, inputPasswordCheck);
+  });
+}
+
+
+/**
+ * Toggles between visible and hidden password (including icon swap).
+ * @param {HTMLImageElement} icon - The visibility icon.
+ * @param {HTMLInputElement} inputPasswordCheck - The password input field.
+ */
+function visibilityIconSwish(icon, inputPasswordCheck) {
+  const iconSrc = icon.getAttribute("src");
+  const iconVisibilityOn = "./assets/icons/visibility.svg";
+  const iconVisibilityOff = "./assets/icons/visibility_off.svg";
+  if (iconSrc === iconVisibilityOn) {
+    inputPasswordCheck.type = "password";
+    document.getElementById("visibility-icon").src = iconVisibilityOff;
+  }
+  if (iconSrc === iconVisibilityOff) {
+    inputPasswordCheck.type = "text";
+    document.getElementById("visibility-icon").src = iconVisibilityOn;
+  }
+  return;
+}
+
+// #endregion
+
+// #region FORM HELPERS
 
 /**
  * Reads email and password from the form.
  * @returns {Object} The entered form data.
  */
 function getLoginFormValues() {
-  const inputEmail = document.getElementById("exampleInputEmail1").value;
-  const inputPassword = document.getElementById("exampleInputPassword1").value;
+  const inputEmail = document.getElementById("loginEmail").value;
+  const inputPassword = document.getElementById("loginPassword").value;
   const loginUserData = {
     email: inputEmail,
     password: inputPassword,
@@ -310,9 +336,11 @@ function getLoginFormValues() {
 function resetLoginFormState() {
   document.getElementById("loginBtn").disabled = false;
   document.getElementById("guestLoginBtn").disabled = false;
-  markFieldError("exampleInputEmail1", false);
-  markFieldError("exampleInputPassword1", false);
+  markFieldError("loginEmail", false);
+  markFieldError("loginPassword", false);
   document.getElementById("loginError").innerText = "";
 }
+
+// #endregion
 
 init();

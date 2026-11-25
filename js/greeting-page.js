@@ -1,4 +1,4 @@
-
+// #region GREETING
 
 /**
  * Starts the greeting as soon as the logged-in user is known.
@@ -31,3 +31,5 @@ function greetingUser(user) {
     document.getElementById("userName").innerText = user.name;
   }
 }
+
+// #endregion
