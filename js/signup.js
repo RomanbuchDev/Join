@@ -127,7 +127,6 @@ function updateSignupButtonState() {
   const checkboxChecked = document.getElementById("privacyCheck").checked;
   const isReady = checkboxChecked && areRequiredFieldsFilled();
   document.getElementById("signup").setAttribute("aria-disabled", String(!isReady));
-  document.getElementById("signupHint").classList.toggle("hint-hidden", isReady);
 }
 
 // #endregion
@@ -188,7 +187,7 @@ async function attemptSignup(signupUserData) {
  * Redirects to the login page after a successful registration (no auto-login).
  */
 function handleSignupSuccess() {
-  document.getElementById("signupToast").classList.add("show");
+  showToastMessage("You Signed Up successfully", "toast-message-new");
   setTimeout(() => {
     window.location.href = "../index.html";
   }, 3000);

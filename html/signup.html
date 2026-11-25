@@ -40,10 +40,11 @@
               <h1>Sign up</h1>
             </div>
           </div>
-          <p id="signupHint" class="hint-text" aria-live="polite">
-            Please fill in all fields and accept the Privacy Policy.
-          </p>
+
           <div class="pb-1 dpf-flex-column-center input-bar">
+            <p id="signupHint" class="hint-text">
+              All fields are required to create an account.
+            </p>
             <label for="registerName" class="form-label"></label>
             <div class="input-wrapper">
               <input
@@ -131,7 +132,7 @@
           </section>
         </form>
       </main>
-      <div id="signupToast" class="toast">You Signed Up successfully</div>
+      <div class="toast-message" id="toast-message" popover="manual"></div>
 
       <footer class="dpf-flex-column-center footer-signup">
         <section class="dpf-center impress-bar">
