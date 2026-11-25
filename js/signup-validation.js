@@ -20,6 +20,34 @@ function getSignupFieldChecks(signupUserData) {
 
 
 /**
+ * Checks whether name, email, password, and confirm-password are all filled in (no marking).
+ * @returns {boolean}
+ */
+function areRequiredFieldsFilled() {
+  return (
+    getFieldValue("registerName").trim() !== "" &&
+    getFieldValue("registerEmail").trim() !== "" &&
+    getFieldValue("registerPassword").trim() !== "" &&
+    getFieldValue("registerConfirmPassword").trim() !== ""
+  );
+}
+
+
+/**
+ * Checks whether name, email, password, and confirm-password are all empty.
+ * @returns {boolean}
+ */
+function areAllRequiredFieldsEmpty() {
+  return (
+    getFieldValue("registerName").trim() === "" &&
+    getFieldValue("registerEmail").trim() === "" &&
+    getFieldValue("registerPassword").trim() === "" &&
+    getFieldValue("registerConfirmPassword").trim() === ""
+  );
+}
+
+
+/**
  * Checks whether the name field is empty.
  * @param {string} name
  * @returns {boolean}
@@ -79,6 +107,23 @@ function checkPrivacyField(isChecked) {
   const isUnchecked = !isChecked;
   markFieldError("privacyCheckField", isUnchecked);
   return isUnchecked;
+}
+
+
+/**
+ * Checks whether the form is ready to submit and shows a message if not.
+ * @returns {boolean}
+ */
+function isSignupReadyToSubmit() {
+  if (!areRequiredFieldsFilled()) {
+    showFieldBlurMessage("Please fill in all fields.");
+    return false;
+  }
+  if (!document.getElementById("privacyCheck").checked) {
+    showFieldBlurMessage(getPrivacyErrorMessage(true));
+    return false;
+  }
+  return true;
 }
 
 // #endregion
@@ -188,6 +233,57 @@ function getPrivacyErrorMessage(isUnchecked) {
     return "Please accept the privacy policy.";
   }
   return "";
+}
+
+// #endregion
+
+// #region FIELD BLUR MESSAGES
+
+/**
+ * Registers a blur listener that checks a field and shows its error message.
+ * @param {string} elementId
+ * @param {Function} checkFn - Field check function (e.g. checkNameField).
+ * @param {Function} messageFn - Matching error-message function.
+ */
+function addFieldBlurListener(elementId, checkFn, messageFn) {
+  document.getElementById(elementId).addEventListener("blur", () => {
+    showFieldBlurMessage(messageFn(checkFn(getFieldValue(elementId))));
+  });
+}
+
+
+/**
+ * Shows the matching error message for the confirm-password field on blur.
+ */
+function handleConfirmPasswordBlur() {
+  const confirmCheck = checkConfirmPasswordField(
+    getFieldValue("registerPassword"),
+    getFieldValue("registerConfirmPassword"),
+  );
+  showFieldBlurMessage(getConfirmPasswordErrorMessage(confirmCheck));
+}
+
+
+/**
+ * Shows a field's error message, or the general "fill in all fields"
+ * message if all required fields are still empty.
+ * @param {string} message
+ */
+function showFieldBlurMessage(message) {
+  const text = areAllRequiredFieldsEmpty() ? "Please fill in all fields." : message;
+  document.getElementById("signupError").innerText = text;
+}
+
+
+/**
+ * Registers blur listeners on all required fields that show the matching
+ * error message without affecting the submit button.
+ */
+function setupFieldBlurMessages() {
+  addFieldBlurListener("registerName", checkNameField, getNameErrorMessage);
+  addFieldBlurListener("registerEmail", checkEmailField, getEmailErrorMessage);
+  addFieldBlurListener("registerPassword", checkPasswordField, getPasswordErrorMessage);
+  document.getElementById("registerConfirmPassword").addEventListener("blur", handleConfirmPasswordBlur);
 }
 
 // #endregion

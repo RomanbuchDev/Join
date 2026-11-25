@@ -32,6 +32,7 @@ function setupEventListeners() {
   setupPasswordVisibilityListeners();
   setupButtonStateListeners();
   setupFieldValidationListeners();
+  setupFieldBlurMessages();
 }
 
 
@@ -119,11 +120,14 @@ function addButtonStateListener(elementId, eventType) {
 
 
 /**
- * Enables/disables the sign-up button based on the privacy checkbox state.
+ * Visually marks the sign-up button as not ready when required fields or
+ * the privacy checkbox are missing (button stays clickable on purpose).
  */
 function updateSignupButtonState() {
   const checkboxChecked = document.getElementById("privacyCheck").checked;
-  document.getElementById("signup").disabled = !checkboxChecked;
+  const isReady = checkboxChecked && areRequiredFieldsFilled();
+  document.getElementById("signup").setAttribute("aria-disabled", String(!isReady));
+  document.getElementById("signupHint").classList.toggle("hint-hidden", isReady);
 }
 
 // #endregion
@@ -136,6 +140,9 @@ function updateSignupButtonState() {
  */
 async function handleSignupSubmit(event) {
   event.preventDefault();
+  if (!isSignupReadyToSubmit()) {
+    return;
+  }
   const signupUserData = getSignupFormValues();
   if (!isSignupInputValid(signupUserData)) {
     return;

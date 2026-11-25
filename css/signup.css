@@ -142,6 +142,18 @@ form {
   padding-top: 0.5rem;
 }
 
+.hint-text {
+  width: 100%;
+  color: var(--color-gray-104);
+  font-size: 0.875rem;
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
+.hint-text.hint-hidden {
+  visibility: hidden;
+}
+
 .form-check {
   display: flex;
   align-items: center;
@@ -167,6 +179,11 @@ form {
 */
 #signup {
   width: 100%;
+}
+
+#signup[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* #endregion */
