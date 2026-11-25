@@ -44,7 +44,7 @@ function templateTaskCard(taskID, categoryColor) {
         </div>
       </section>
       <section id="taskDetails${escapeHtml(taskID)}" class="task-card-details d-flex">
-        ${templateTaskDetails(taskID)}
+        ${templateTaskCardDetails(taskID)}
       </section> 
     </li>`;
 }
@@ -53,7 +53,13 @@ function templateTaskCard(taskID, categoryColor) {
 
 // #region TASK DETAILS
 
-function templateTaskDetails(taskID) {
+/**
+ * Returns the HTML template of the details of a task card: title, priority icon and empty containers
+ * for description, progress bar and assignees, which are filled in afterwards.
+ * @param {string} taskID - The ID of the task.
+ * @returns {string} The HTML string of the card details.
+ */
+function templateTaskCardDetails(taskID) {
   const task = allTasks[taskID];
   return /*html*/ `
     <div class="task-title-description-container d-flex">
@@ -94,7 +100,7 @@ function templateProgressBar(doneSubtasks, subtasksLength) {
  * @param {string} assigneeShortcut - The shortcut of the assignee shown in the avatar.
  * @returns {string} The HTML string of the avatar.
  */
-function templateTaskAssignee(assigneeColor, assigneeShortcut) {
+function templateCardAssignee(assigneeColor, assigneeShortcut) {
   return /*html*/ `
     <li class="task-avatar d-flex" style="background-color:${escapeHtml(assigneeColor)}">
       ${escapeHtml(assigneeShortcut)}
@@ -107,7 +113,7 @@ function templateTaskAssignee(assigneeColor, assigneeShortcut) {
  * @param {string} columnName - The display name of the column.
  * @returns {string} The HTML string of the message.
  */
-function templateEmptyColumn(columnName) {
+function templateEmptyColumnMessage(columnName) {
   return /*html*/ `
     <li class="empty-column-message d-flex">
       <p>No tasks ${escapeHtml(columnName)}</p>
@@ -125,14 +131,14 @@ function templateEmptyColumn(columnName) {
  * @param {string} categoryColor - The CSS class for the color of the category label.
  * @returns {string} The HTML string of the overlay frame.
  */
-function templateOverlayTask(taskID, categoryColor) {
+function templateOverlayFrame(taskID, categoryColor) {
   const task = allTasks[taskID];
   return /*html*/ `
     <header class="overlay-header d-flex">
       <h3 class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(task.category)}</h3>
       <button type="button" aria-label="Close overlay"
         class="button-reset"
-        onclick="checkForDialogMode()">
+        onclick="handleOverlayCloseRequest()">
         <svg
           class="svg-fill svg-width-height-18px"
           aria-hidden="true"
@@ -162,7 +168,7 @@ function templateOverlayMainDetails(taskID) {
     <p id="overlayDescription${escapeHtml(taskID)}"></p>
     <div class="overlay-detail-row d-flex">
       <h4>Due date:</h4>
-      <p>${escapeHtml(getTaskDate(taskID))}</p>
+      <p>${escapeHtml(getFormattedDueDate(taskID))}</p>
     </div>
     <div class="overlay-detail-row d-flex">
       <h4>Priority:</h4>
@@ -182,7 +188,7 @@ function templateOverlayMainDetails(taskID) {
 function templateOverlayFooterDetails(taskID) {
   return /*html*/ `
     <button type="button" class="button-delete-edit button-reset d-flex"
-      onclick="openDialogDeleteQuestion(event, '${escapeHtml(taskID)}')">
+      onclick="openDialogTaskDeleteQuestion('${escapeHtml(taskID)}')">
       <svg
         class="svg-fill svg-width-height-delete"
         aria-hidden="true"
@@ -195,7 +201,7 @@ function templateOverlayFooterDetails(taskID) {
     </button>
     <div class="divider-line"></div>
     <button type="button" class="button-delete-edit button-reset d-flex"
-      onclick="editTask('${escapeHtml(taskID)}')">
+      onclick="openEditView('${escapeHtml(taskID)}')">
       <svg
         class="svg-fill svg-width-height-18px"
         aria-hidden="true"
@@ -297,15 +303,15 @@ function templateOverlayOneSubtask(taskID, indexSubtask) {
 // #region OVERLAY EDIT
 
 /**
- * Returns the HTML template of the main part of the edit view.
- * Currently only a placeholder that shows the task ID.
+ * Returns the HTML template of the main part of the edit view: the task form without category field
+ * and action buttons, with the priority of the task preselected (fallback "medium").
  * @param {string} taskID - The ID of the task.
  * @returns {string} The HTML string of the main part.
  */
 function templateOverlayMainEdit(taskID) {
   return /*html*/ `
     ${getTaskFormTemplate({
-      submitHandler: `updateEditedTask(event, '${escapeHtml(taskID)}')`,
+      submitHandler: `handleEditSubmit(event, '${escapeHtml(taskID)}')`,
       resetHandler: "",
       priority: allTasks[taskID].priority || "medium",
       showCategory: false,
@@ -317,7 +323,7 @@ function templateOverlayMainEdit(taskID) {
 
 /**
  * Returns the HTML template of the footer of the edit view with the "Ok" button.
- * The button has no function yet.
+ * The button submits the task form (ID "task-form").
  * @returns {string} The HTML string of the footer.
  */
 function templateOverlayFooterEdit() {
@@ -338,7 +344,12 @@ function templateOverlayFooterEdit() {
 
 // #region DELETE
 
-function templateDeleteQuestion(event, taskID) {
+/**
+ * Returns the HTML template of the confirmation question for deleting a task, with a "NO" and a "YES" button.
+ * @param {string} taskID - The ID of the task to delete.
+ * @returns {string} The HTML string of the dialog content.
+ */
+function templateDeleteQuestion(taskID) {
   return /*html*/ `
     <form method="dialog">
       <h4 id="delete-question-title">Delete task</h4>
@@ -346,7 +357,6 @@ function templateDeleteQuestion(event, taskID) {
         Do you really want to delete this task?
       </p>
       <div class="delete-question-button-container">
-        <!-- Delete contact - No button -->
         <button
           type="button"
           class="button-basic button-secondary delete-question-button"
@@ -354,7 +364,6 @@ function templateDeleteQuestion(event, taskID) {
         >
           NO
         </button>
-        <!-- Delete contact - Yes button -->
         <button
           type="submit"
           class="button-basic button-primary delete-question-button"
