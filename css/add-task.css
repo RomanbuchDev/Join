@@ -122,6 +122,7 @@
   background-position: right 0.75em center;
   background-size: 1.2em;
   padding-inline-end: 2em;
+  cursor: pointer;
 }
 
 .contact-search {
@@ -130,6 +131,7 @@
 
 .contact-search input {
   padding-inline-end: 3em;
+  cursor: pointer;
 }
 
 .contact-search .dropdown-arrow {
@@ -190,10 +192,6 @@
 
 .form-column > .form-field + .form-field {
   margin-block-start: 1rem;
-}
-
-.subtask-actions {
-  flex-shrink: 0;
 }
 
 .priority-option {
@@ -277,34 +275,10 @@
   line-height: 1.2;
 }
 
-/* Mausfinger für die drei Felder */
-.contact-search input,
-.form-control--select {
-  cursor: pointer;
-}
-
 @media (hover: hover) and (pointer: fine) {
   .contact-search input:not(:focus):hover,
-  .form-control--select:not(:focus):not(.task-field-invalid):hover {
+  .form-control--select:not(:focus, .task-field-invalid):hover {
     border-color: var(--color-gray-231);
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .form-action--create:not(:disabled):hover {
-    background-color: var(--color-medium);
-    border-color: var(--color-medium);
-    box-shadow: 0 4px 4px var(--color-black-25);
-  }
-
-  .form-action--clear:hover {
-    color: var(--color-medium);
-    border-color: var(--color-medium);
-    box-shadow: 0 4px 4px var(--color-black-25);
-  }
-
-  .priority-option input:not(:checked) + label:hover {
-    box-shadow: 0 4px 4px var(--color-black-25);
   }
 }
 
