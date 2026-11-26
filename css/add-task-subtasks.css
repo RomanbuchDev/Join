@@ -126,6 +126,10 @@
   display: none;
 }
 
+.subtask-actions {
+  flex-shrink: 0;
+}
+
 .subtask-actions:not([hidden]),
 .subtask-row-actions {
   display: flex;
@@ -342,6 +346,22 @@
     .subtask-row-actions {
     opacity: 0;
     pointer-events: none;
+  }
+
+  .form-action--create:not(:disabled):hover {
+    background-color: var(--color-medium);
+    border-color: var(--color-medium);
+    box-shadow: 0 4px 4px var(--color-black-25);
+  }
+
+  .form-action--clear:hover {
+    color: var(--color-medium);
+    border-color: var(--color-medium);
+    box-shadow: 0 4px 4px var(--color-black-25);
+  }
+
+  .priority-option input:not(:checked) + label:hover {
+    box-shadow: 0 4px 4px var(--color-black-25);
   }
 }
 
