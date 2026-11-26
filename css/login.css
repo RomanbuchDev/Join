@@ -11,7 +11,7 @@ a {
 }
 
 .body-login {
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .app {
@@ -19,9 +19,9 @@ a {
   overflow: hidden;
   background-color: var(--color-bg-main);
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 0 0.5rem;
-  gap: 4rem;
+  gap: clamp(2rem, 5dvh, 4rem);
 }
 
 /* #endregion */
@@ -68,14 +68,13 @@ a {
 .header-login {
   height: auto;
   width: 100%;
-  padding: 2.31rem 0 0 2.38rem;
+  padding: clamp(1rem, 4dvh, 2.31rem) 0 0 2.38rem;
 }
 
 .header-login img {
-  height: 4.88rem;
-  width: 4rem;
+  height: clamp(3rem, 8dvh, 4.88rem);
+  aspect-ratio: 4 / 4.88;
   object-fit: cover;
-  object-position: center;
 }
 
 /* #endregion */
@@ -83,7 +82,6 @@ a {
 /* #region MARK: main
 */
 .main-login {
-  position: relative;
   max-height: 29.7rem;
   max-width: 25rem;
   width: 100%;
@@ -189,7 +187,6 @@ form {
 .btn {
   height: 3rem;
   width: 100%;
-  padding: 0;
   font-size: 1rem;
   line-height: 1;
   text-align: center;
@@ -213,8 +210,22 @@ form {
   width: 6.5rem;
 }
 
+.btn-signup .btn-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
 .btn-logins-bar .button-basic {
   width: 100%;
+  font-size: 1rem;
+}
+
+.btn-logins-bar .button-secondary {
+  font-weight: 700;
 }
 
 /* #endregion */
@@ -222,15 +233,15 @@ form {
 /* #region MARK: footer
 */
 .footer-login {
-  height: 10.8rem;
   width: 100%;
-  gap: 1.5rem;
+  gap: 1rem;
+  padding-bottom: 1rem;
 }
 
 .sign-up-bar {
   height: 3rem;
   max-width: 18.25rem;
-  gap: 2.2rem;
+  gap: 1.5rem;
 }
 
 .sign-up-bar-header {
@@ -253,23 +264,10 @@ form {
 
 /* #endregion */
 
-/* #region MARK: @ tablet
-*/
-@media (width >= 40rem) and (width < 64rem) {
-  .app {
-    width: 100%;
-    min-height: 100vh;
-  }
-}
-
-/* #endregion */
-
 /* #region MARK: @ laptop S
 */
 @media (width >= 64rem) {
   .app {
-    width: 100%;
-    min-height: 100vh;
     padding: 4.1875rem 7.625rem 2.5rem 4.8125rem;
   }
 
@@ -285,7 +283,6 @@ form {
   .header-login img {
     height: 6.5rem;
     width: 5rem;
-    padding: 0;
   }
 
   .sign-up-bar-header {
@@ -300,7 +297,6 @@ form {
   .main-login {
     max-width: 41rem;
     height: 28rem;
-    width: 100%;
     padding: 3rem 2rem;
   }
 
@@ -331,10 +327,12 @@ form {
     flex-direction: unset;
   }
 
-  .btn-primary {
-    width: 6.9rem;
+  .btn,
+  .btn-logins-bar .button-basic {
+    font-size: 1.25rem;
   }
 
+  .btn-primary,
   .btn-logins-bar .button-primary {
     width: 6.9rem;
   }
@@ -345,7 +343,6 @@ form {
 
   .footer-login {
     justify-content: end;
-    height: 2rem;
   }
 
   @keyframes logo-to-header {
@@ -381,13 +378,21 @@ form {
 
 /* #region MARK: @ hover
 */
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) and (width >= 64rem) {
   .btn-primary:hover {
+    background-color: var(--color-medium);
     box-shadow: 0 0.25rem 0.5rem var(--color-black-25);
   }
 
   .login-a:hover {
     color: var(--color-medium);
+    font-weight: 700;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (width < 64rem) {
+  .btn-logins-bar .button-basic:hover {
+    box-shadow: none;
   }
 }
 

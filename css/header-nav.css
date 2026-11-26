@@ -295,7 +295,7 @@
     width: 115px;
     height: auto;
     margin-inline: auto;
-    margin-block: 4em min(7em, 8vh);
+    margin-block: 4em min(7em, 8dvh);
   }
 
   .main-nav-legal {

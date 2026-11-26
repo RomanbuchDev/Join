@@ -49,6 +49,7 @@ h4 {
 .main-legal a {
   text-decoration: none;
   color: var(--color-medium);
+  overflow-wrap: break-word;
 }
 
 .main-legal .email-link {
