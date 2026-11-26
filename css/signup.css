@@ -5,7 +5,7 @@ a {
 }
 
 .body-signup {
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .app {
@@ -13,9 +13,9 @@ a {
   overflow: hidden;
   background-color: var(--color-bg-main);
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 0 0.5rem;
-  gap: 4rem;
+  gap: clamp(2rem, 5dvh, 4rem);
 }
 
 /* #endregion */
@@ -25,12 +25,12 @@ a {
 .header-signup {
   height: auto;
   width: 100%;
-  padding: 2.31rem 0 0 2.38rem;
+  padding: clamp(1rem, 4dvh, 2.31rem) 0 0 2.38rem;
 }
 
 .header-signup img {
-  height: 4.88rem;
-  width: 4rem;
+  height: clamp(3rem, 8dvh, 4.88rem);
+  aspect-ratio: 4 / 4.88;
   object-fit: cover;
   object-position: center;
 }
@@ -169,12 +169,17 @@ form {
   color: var(--color-black-100);
 }
 
+.privacy-link {
+  color: var(--color-medium);
+}
+
 /* #endregion */
 
 /* #region MARK: buttons
 */
 #signup {
   width: 100%;
+  font-size: 1rem;
 }
 
 #signup[aria-disabled="true"] {
@@ -187,9 +192,9 @@ form {
 /* #region MARK: footer
 */
 .footer-signup {
-  height: 10.8rem;
   width: 100%;
   gap: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .impress-bar {
@@ -203,7 +208,6 @@ form {
 
 .signup-a {
   color: var(--color-black-100);
-  transition: color 125ms ease;
 }
 
 /* #endregion */
@@ -223,7 +227,7 @@ form {
 @media (width >= 64rem) {
   .app {
     width: 100%;
-    min-height: 100vh;
+    min-height: 100dvh;
     padding: 4.1875rem 7.625rem 2.5rem 4.8125rem;
   }
 
@@ -248,6 +252,10 @@ form {
     height: auto;
   }
 
+  #signup {
+    font-size: 1.25rem;
+  }
+
   .signup-back-vector {
     left: 3rem;
     top: 2.5rem;
@@ -270,7 +278,6 @@ form {
 
   .footer-signup {
     justify-content: end;
-    height: 2rem;
   }
 }
 
@@ -297,9 +304,16 @@ form {
 
 /* #region MARK: @ hover
 */
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) and (width >= 64rem) {
   .signup-a:hover {
     color: var(--color-medium);
+    font-weight: 700;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (width < 64rem) {
+  #signup:hover {
+    box-shadow: none;
   }
 }
 
