@@ -201,6 +201,44 @@ if (document.getElementById("navbar-content")) {
 
 // #endregion
 
+// #region BACK NAVIGATION
+
+/**
+ * Binds the back-navigation handler, but only on pages that have
+ * a #historyBack link (the legal pages).
+ */
+const historyBackLink = document.getElementById("historyBack");
+
+if (historyBackLink) {
+  historyBackLink.addEventListener("click", goBack);
+}
+
+
+/**
+ * Goes back to the previous page instead of following the link.
+ * @param {Event} event - The click event of the back link.
+ */
+function goBack(event) {
+  event.preventDefault();
+  history.back();
+}
+
+
+/**
+ * Redirects to the previous project page, or to the summary page
+ * when there is no usable browser history (e.g. direct page access).
+ */
+function backToLastPage() {
+  const referrer = document.referrer;
+  if (referrer && referrer.includes("html")) {
+    history.back();
+  } else {
+    window.location.href = "summary.html";
+  }
+}
+
+// #endregion
+
 // #region TOAST MESSAGE
 
 const toastMessage = document.getElementById("toast-message");
