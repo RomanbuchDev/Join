@@ -12,17 +12,29 @@
  * @returns {Promise<void>} Resolves once filling the form is finished or stopped.
  */
 async function openEditView(taskID) {
-  const dialogRef = document.getElementById("dialogTask");
+  const dialogRef = document.getElementById("dialogDetailedTask");
   dialogRef.dataset.dialogMode = "editTask";
-  const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
-  const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
-  overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
-  overlayFooterRef.innerHTML = templateOverlayFooterEdit();
+  renderOverlayEditView(taskID);
+  setMinimumTaskDate();
 
   const submitButtonRef = document.getElementById("submitEdit");
   submitButtonRef.disabled = true;
   const isFilled = await fillEditForm(taskID, dialogRef);
   if (isFilled) submitButtonRef.disabled = false;
+}
+
+
+/**
+ * Renders main part and footer of the edit view. The overlay frame of this task has to be rendered already.
+ * @param {string} taskID - The ID of the task to show.
+ * @returns {void} Nothing; main part and footer of the overlay are replaced.
+ */
+function renderOverlayEditView(taskID) {
+  const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
+  const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
+  overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
+  // overlayFooterRef.innerHTML = getTaskOverlayActionsTemplate("edit");
+  overlayFooterRef.innerHTML = templateOverlayFooterEdit();
 }
 
 
@@ -102,7 +114,7 @@ async function ensureUpdatePossible(taskID, fields) {
   if (!fields.title || !fields.dueDate) return false;
   await patchQueue;
   if (!(await fetchAllTasks())) {
-    handleOverlayCloseRequest();
+    handleOverlayCloseRequest("dialogDetailedTask");
     return false;
   }
   if (!allTasks[taskID]) {
@@ -173,7 +185,7 @@ function adjustTaskUpdate(taskID, fields) {
   renderTaskCardDetails(taskID);  
   resetSubtasks();
   renderOverlayDetailView(taskID);
-  document.getElementById("dialogTask").dataset.dialogMode = "detailedTask";
+  document.getElementById("dialogDetailedTask").dataset.dialogMode = "detailedTask";
 }
 
 // #endregion

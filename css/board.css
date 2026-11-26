@@ -311,7 +311,6 @@ h2 > span {
 
 /* #region MARK: @ laptop M
 */
-
 @media (width >= 90em) {
   .board-main-content {
     padding-inline: 3em;
@@ -322,7 +321,6 @@ h2 > span {
 
 /* #region MARK: @ laptop L
 */
-
 @media (width >= 120em) {
   .board-column {
     max-width: var(--board-column-max-width);

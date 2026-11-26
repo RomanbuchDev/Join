@@ -240,12 +240,12 @@
     <!-- #region MARK: dialog 
       -->
     <dialog
-      id="dialogTask"
+      id="dialogDetailedTask"
       data-dialog-mode=""
       data-dialog-task-id=""
       class="dialog-board d-flex"
-      onclick="handleOverlayBackdropClick(event)"
-      oncancel="handleOverlayCancel(event)"
+      onclick="handleOverlayBackdropClick(event, 'dialogDetailedTask')"
+      oncancel="handleOverlayCancel(event, 'dialogDetailedTask')"
     >
       <div
         id="overlayTaskEdit"
@@ -259,12 +259,12 @@
       id="dialogAddTask"
       data-dialog-mode="addTask"
       class="dialog-board d-flex"
-      onclick="handleOverlayBackdropClick(event)"
-      oncancel="handleOverlayCancel(event)"
+      onclick="handleOverlayBackdropClick(event, 'dialogAddTask')"
+      oncancel="handleOverlayCancel(event, 'dialogAddTask')"
     >
       <div
         id="overlayAddTask"
-        class="overlay-board"
+        class="overlay-board overlay-add"
         autofocus
         tabindex="-1"
       ></div>
