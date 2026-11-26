@@ -4,6 +4,11 @@
 
 // #region SHOW
 
+function resetBoardOverlay(overlayID) {
+  document.getElementById(overlayID).innerHTML = "";
+}
+
+
 /**
  * Opens the detail overlay of a task when its card is clicked.
  * Clicks inside the move menu of the card are ignored.
@@ -25,10 +30,10 @@ function handleTaskCardClick(event, taskID) {
  * @returns {void} Nothing; the dialog is opened.
  */
 function openTaskOverlay(taskID) {
-  const dialogRef = document.getElementById("dialogTask");
+  renderTaskOverlay(taskID);
+  const dialogRef = document.getElementById("dialogDetailedTask");
   dialogRef.dataset.dialogMode = "detailedTask";
   dialogRef.dataset.dialogTaskId = taskID;
-  renderTaskOverlay(taskID);
   dialogRef.classList.remove("dialog-board-open");
   dialogRef.showModal();
   dialogRef.getBoundingClientRect();
@@ -44,13 +49,13 @@ function openTaskOverlay(taskID) {
  * @param {MouseEvent} event - The click event on the dialog.
  * @returns {void} Nothing; the closing is started if the backdrop was clicked.
  */
-function handleOverlayBackdropClick(event) {
+function handleOverlayBackdropClick(event, dialogID) {
   closeAssignedContactsOnOutsideClick(event);
   if (event.target !== event.currentTarget) return;
 
-  const dialogRef = document.getElementById("dialogTask");
+  const dialogRef = document.getElementById(dialogID);
   if (dialogRef.dataset.dialogMode === "detailedTask") {
-    closeTaskOverlay();
+    closeOverlay(dialogID);
   }
 }
 
@@ -60,9 +65,9 @@ function handleOverlayBackdropClick(event) {
  * @param {Event} event - The cancel event of the dialog.
  * @returns {void} Nothing; the default behavior is prevented and the closing is started.
  */
-function handleOverlayCancel(event) {
+function handleOverlayCancel(event, dialogID) {
   event.preventDefault();
-  handleOverlayCloseRequest();
+  handleOverlayCloseRequest(dialogID);
 }
 
 
@@ -71,15 +76,14 @@ function handleOverlayCancel(event) {
  * In edit mode, discards the changes and returns to the detail view; otherwise closes the overlay.
  * @returns {void} Nothing; the view is switched or the closing is started.
  */
-function handleOverlayCloseRequest() {
-  const dialogRef = document.getElementById("dialogTask");
-  const taskID = dialogRef.dataset.dialogTaskId;
+function handleOverlayCloseRequest(dialogID) {
+  const dialogRef = document.getElementById(dialogID);
   if (dialogRef.dataset.dialogMode === "editTask") {
     resetSubtasks();
-    renderOverlayDetailView(taskID);
+    renderOverlayDetailView(dialogRef.dataset.dialogTaskId);
     dialogRef.dataset.dialogMode = "detailedTask";
   } else {
-    closeTaskOverlay();
+    closeOverlay(dialogID);
   }
 }
 
@@ -90,8 +94,8 @@ function handleOverlayCloseRequest() {
  * Relies on a running transition; without one, the dialog would not be closed.
  * @returns {void} Nothing; the slide-out starts.
  */
-function closeTaskOverlay() {
-  const dialogRef = document.getElementById("dialogTask");
+function closeOverlay(dialogID) {
+  const dialogRef = document.getElementById(dialogID);
   dialogRef.classList.remove("dialog-board-open");
   dialogRef.addEventListener("transitionend", finishClosingOverlay);
 }
@@ -106,9 +110,9 @@ function closeTaskOverlay() {
 function finishClosingOverlay(event) {
   const openedDialog = event.currentTarget;
   if (event.target !== openedDialog) return;
-
   openedDialog.close();
   openedDialog.removeEventListener("transitionend", finishClosingOverlay);
+  resetBoardOverlay(openedDialog.firstElementChild.id);
 }
 
 // #endregion
@@ -133,7 +137,7 @@ function renderTaskOverlay(taskID) {
  */
 function renderOverlayFrame(taskID) {
   const overlayRef = document.getElementById("overlayTaskEdit");
-  overlayRef.innerHTML = templateOverlayFrame(taskID, getCategoryColorClass(taskID));
+  overlayRef.innerHTML = templateOverlayTaskFrame(taskID, getCategoryColorClass(taskID));
 }
 
 
