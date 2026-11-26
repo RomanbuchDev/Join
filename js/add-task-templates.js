@@ -126,7 +126,7 @@ function getTaskFieldsTemplate(
             class="form-control form-control--description"
             name="description"
             id="description"
-            placeholder="Enter a Description"
+            placeholder="Enter a description"
           ></textarea>
         </div>
 
