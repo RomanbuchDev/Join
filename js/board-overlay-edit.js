@@ -12,7 +12,7 @@
  * @returns {Promise<void>} Resolves once filling the form is finished or stopped.
  */
 async function openEditView(taskID) {
-  const dialogRef = document.getElementById("dialogTask");
+  const dialogRef = document.getElementById("dialogDetailedTask");
   dialogRef.dataset.dialogMode = "editTask";
   renderOverlayEditView(taskID);
   setMinimumTaskDate();
@@ -33,6 +33,7 @@ function renderOverlayEditView(taskID) {
   const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
   const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
   overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
+  // overlayFooterRef.innerHTML = getTaskOverlayActionsTemplate("edit");
   overlayFooterRef.innerHTML = templateOverlayFooterEdit();
 }
 
@@ -113,7 +114,7 @@ async function ensureUpdatePossible(taskID, fields) {
   if (!fields.title || !fields.dueDate) return false;
   await patchQueue;
   if (!(await fetchAllTasks())) {
-    handleOverlayCloseRequest("dialogTask");
+    handleOverlayCloseRequest("dialogDetailedTask");
     return false;
   }
   if (!allTasks[taskID]) {
@@ -184,7 +185,7 @@ function adjustTaskUpdate(taskID, fields) {
   renderTaskCardDetails(taskID);  
   resetSubtasks();
   renderOverlayDetailView(taskID);
-  document.getElementById("dialogTask").dataset.dialogMode = "detailedTask";
+  document.getElementById("dialogDetailedTask").dataset.dialogMode = "detailedTask";
 }
 
 // #endregion

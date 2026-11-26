@@ -101,7 +101,7 @@ function updateBoardAfterDelete(taskID) {
   const columnRef = cardRef?.parentElement;
   delete allTasks[taskID];
   cardRef?.remove();
-  closeTaskOverlay();
+  closeOverlay("dialogDetailedTask");
   if (columnRef) renderTaskCount(columnRef.id, columnRef.children.length);
   renderEmptyColumnMessages();
 }

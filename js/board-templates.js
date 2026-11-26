@@ -1,6 +1,4 @@
-/**
- * JavaScript file for the templates of the board page.
- */
+/** JavaScript file for the templates of the board page. */
 
 // #region TASK CARD
 
@@ -52,7 +50,6 @@ function templateTaskCard(taskID, categoryColor) {
 // #endregion
 
 // #region TASK DETAILS
-
 /**
  * Returns the HTML template of the details of a task card: title, priority icon and empty containers
  * for description, progress bar and assignees, which are filled in afterwards.
@@ -122,8 +119,53 @@ function templateEmptyColumnMessage(columnName) {
 
 // #endregion
 
-// #region OVERLAY TASK
+// #region OVERLAY ADD 
+function templateOverlayAddFrame(dialogID) {
+  return /*html*/ `
+    <header class="overlay-header d-flex">
+      <h2 class="overlay-h2">Add Task</h2>
+      ${templateCloseButton(dialogID)}
+    </header>
+    ${getTaskFormTemplate({
+      submitHandler: "createTask(event, finishAddSubmit)", 
+      actions: templateOverlayAddActions()
+    })}`;
+}
 
+
+function templateCloseButton(dialogID) {
+  return /*html*/ `
+    <button type="button" aria-label="Close overlay"
+      class="button-reset"
+      onclick="handleOverlayCloseRequest('${escapeHtml(dialogID)}')">
+      <svg
+        class="svg-fill svg-width-height-18px"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 18 18"
+      >
+        <path d="M6.575 7.975L1.675 12.875C1.49167 13.0583 1.25833 13.15 0.975 13.15C0.691667 13.15 0.458333 13.0583 0.275 12.875C0.0916667 12.6917 0 12.4583 0 12.175C0 11.8917 0.0916667 11.6583 0.275 11.475L5.175 6.575L0.275 1.675C0.0916667 1.49167 0 1.25833 0 0.975C0 0.691667 0.0916667 0.458333 0.275 0.275C0.458333 0.0916667 0.691667 0 0.975 0C1.25833 0 1.49167 0.0916667 1.675 0.275L6.575 5.175L11.475 0.275C11.6583 0.0916667 11.8917 0 12.175 0C12.4583 0 12.6917 0.0916667 12.875 0.275C13.0583 0.458333 13.15 0.691667 13.15 0.975C13.15 1.25833 13.0583 1.49167 12.875 1.675L7.975 6.575L12.875 11.475C13.0583 11.6583 13.15 11.8917 13.15 12.175C13.15 12.4583 13.0583 12.6917 12.875 12.875C12.6917 13.0583 12.4583 13.15 12.175 13.15C11.8917 13.15 11.6583 13.0583 11.475 12.875L6.575 7.975Z"/>
+      </svg>
+    </button>`;
+}
+
+
+function templateOverlayAddActions() {
+  return /*html*/ `
+    <div class="form-actions">
+      <span class="required-hint required-hint--desktop">
+        <span class="required-marker" aria-hidden="true">*</span>
+        This field is required
+      </span>
+      <button type="button" class="form-action form-action--clear"
+        onclick="handleOverlayCloseRequest('dialogAddTask')">Cancel ✕</button>
+      <button type="submit" class="form-action form-action--create">Create Task ✓</button>
+    </div>`;
+}
+
+// #endregion
+
+// #region OVERLAY TASK
 /**
  * Returns the HTML template of the overlay frame: header with category label and close button,
  * and empty containers for the main part and the footer.
@@ -131,27 +173,15 @@ function templateEmptyColumnMessage(columnName) {
  * @param {string} categoryColor - The CSS class for the color of the category label.
  * @returns {string} The HTML string of the overlay frame.
  */
-function templateOverlayFrame(taskID, categoryColor) {
+function templateOverlayTaskFrame(taskID, categoryColor) {
   const task = allTasks[taskID];
   return /*html*/ `
     <header class="overlay-header d-flex">
       <h3 class="task-label ${escapeHtml(categoryColor)}">${escapeHtml(task.category)}</h3>
-      <button type="button" aria-label="Close overlay"
-        class="button-reset"
-        onclick="handleOverlayCloseRequest('dialogTask')">
-        <svg
-          class="svg-fill svg-width-height-18px"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 18 18"
-        >
-          <path d="M6.575 7.975L1.675 12.875C1.49167 13.0583 1.25833 13.15 0.975 13.15C0.691667 13.15 0.458333 13.0583 0.275 12.875C0.0916667 12.6917 0 12.4583 0 12.175C0 11.8917 0.0916667 11.6583 0.275 11.475L5.175 6.575L0.275 1.675C0.0916667 1.49167 0 1.25833 0 0.975C0 0.691667 0.0916667 0.458333 0.275 0.275C0.458333 0.0916667 0.691667 0 0.975 0C1.25833 0 1.49167 0.0916667 1.675 0.275L6.575 5.175L11.475 0.275C11.6583 0.0916667 11.8917 0 12.175 0C12.4583 0 12.6917 0.0916667 12.875 0.275C13.0583 0.458333 13.15 0.691667 13.15 0.975C13.15 1.25833 13.0583 1.49167 12.875 1.675L7.975 6.575L12.875 11.475C13.0583 11.6583 13.15 11.8917 13.15 12.175C13.15 12.4583 13.0583 12.6917 12.875 12.875C12.6917 13.0583 12.4583 13.15 12.175 13.15C11.8917 13.15 11.6583 13.0583 11.475 12.875L6.575 7.975Z"/>
-        </svg>
-      </button>
+      ${templateCloseButton('dialogDetailedTask')}
     </header>
     <section id="overlayMain${escapeHtml(taskID)}" class="overlay-main d-flex"></section>
-    <footer id="overlayFooter${escapeHtml(taskID)}" class="overlay-footer d-flex"></footer>
-  `;
+    <footer id="overlayFooter${escapeHtml(taskID)}" class="overlay-footer d-flex"></footer>`;
 }
 
 
@@ -164,8 +194,8 @@ function templateOverlayFrame(taskID, categoryColor) {
 function templateOverlayMainDetails(taskID) {
   const task = allTasks[taskID];
   return /*html*/ `
-    <h2>${escapeHtml(task.title)}</h2>
-    <p id="overlayDescription${escapeHtml(taskID)}"></p>
+    <h2 class="overlay-h2">${escapeHtml(task.title)}</h2>
+    <p id="overlayDescription${escapeHtml(taskID)}" class="overlay-description"></p>
     <div class="overlay-detail-row d-flex">
       <h4>Due date:</h4>
       <p>${escapeHtml(getFormattedDueDate(taskID))}</p>
@@ -175,8 +205,7 @@ function templateOverlayMainDetails(taskID) {
       <p id="overlayPriority${escapeHtml(taskID)}" class="overlay-priority d-flex"></p>
     </div>
     <div id="overlayAssigneesContainer${escapeHtml(taskID)}" class="overlay-detail-column d-flex"></div>
-    <div id="overlaySubtasksContainer${escapeHtml(taskID)}" class="overlay-detail-column d-flex"></div>
-  `;
+    <div id="overlaySubtasksContainer${escapeHtml(taskID)}" class="overlay-detail-column d-flex"></div>`;
 }
 
 
@@ -211,8 +240,7 @@ function templateOverlayFooterDetails(taskID) {
         <path d="M2 16.25H3.4L12.025 7.625L10.625 6.225L2 14.85V16.25ZM16.3 6.175L12.05 1.975L13.45 0.575C13.8333 0.191667 14.3042 0 14.8625 0C15.4208 0 15.8917 0.191667 16.275 0.575L17.675 1.975C18.0583 2.35833 18.2583 2.82083 18.275 3.3625C18.2917 3.90417 18.1083 4.36667 17.725 4.75L16.3 6.175ZM14.85 7.65L4.25 18.25H0V14L10.6 3.4L14.85 7.65Z"/>
       </svg>
       <span>Edit</span>
-    </button>
-  `;
+    </button>`;
 }
 
 
@@ -227,8 +255,7 @@ function templateOverlayPriority(priorityString, priority) {
     <span>${escapeHtml(priorityString)}</span>
     <img draggable="false"
       src="../assets/icons/prio-${escapeHtml(priority)}-symbol.svg"
-      alt="${escapeHtml(priority)} priority task"
-    />`;
+      alt="${escapeHtml(priority)} priority task"/>`;
 }
 
 
@@ -301,7 +328,6 @@ function templateOverlayOneSubtask(taskID, indexSubtask) {
 // #endregion
 
 // #region OVERLAY EDIT
-
 /**
  * Returns the HTML template of the main part of the edit view: the task form without category field
  * and action buttons, with the priority of the task preselected (fallback "medium").
@@ -315,9 +341,8 @@ function templateOverlayMainEdit(taskID) {
       resetHandler: "",
       priority: allTasks[taskID].priority || "medium",
       showCategory: false,
-      actions: "",
-    })}
-  `;
+      actions: ""
+    })}`;
 }
 
 
@@ -332,18 +357,15 @@ function templateOverlayFooterEdit() {
       id="submitEdit"
       class="button-basic button-primary"
       type="submit"
-      form="task-form"
-    >
+      form="task-form">
       <span>Ok</span>
       <img src="../assets/icons/check.svg" alt="check icon" />
-    </button>
-  `;
+    </button>`;
 }
 
 // #endregion
 
-// #region DELETE
-
+// #region DELETE QUESTION
 /**
  * Returns the HTML template of the confirmation question for deleting a task, with a "NO" and a "YES" button.
  * @param {string} taskID - The ID of the task to delete.
@@ -375,5 +397,4 @@ function templateDeleteQuestion(taskID) {
       </div>
     </form>`;
 }
-
 // #endregion
