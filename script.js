@@ -93,11 +93,12 @@ function toggleMenu(button, menuId) {
 
 
 /**
- * Resets the header for an unauthenticated visitor: clears the avatar and hides the user menu.
+ * Resets the header for an unauthenticated visitor: clears the avatar and hides the user menu and the help icon.
  */
 function showGuestUI() {
   avatarExport("");
   document.querySelector(".user-menu").hidden = true;
+  document.querySelector(".main-header-help").hidden = true;
 }
 
 

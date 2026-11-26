@@ -9,7 +9,8 @@
     1. USER INTERFACE ELEMENTS
     ==================================================================================================== */
 
-/* ##### Basic button structure for all buttons ##### */
+/* #region MARK:buttons
+##### Basic button structure for all buttons ##### */
 
 .button-basic {
   display: flex;
@@ -66,52 +67,6 @@
   box-shadow: 0 4px 4px var(--color-black-25);
 }
 
-/* ##### Basic toast messages structure ##### */
-
-.toast-message {
-  background: transparent;
-  color: var(--color-white);
-  font-size: 1.25rem;
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0 0 4px var(--color-black-40);
-  position: fixed;
-  top: unset;
-  bottom: 300px;
-  left: 50%;
-  right: auto;
-  white-space: nowrap;
-  transform: translate(-50%, 300px);
-  transition: transform 0.3s ease-out;
-  padding: 1.125em 0.625em;
-  margin: 0 auto;
-}
-
-.toast-message.show {
-  transform: translate(-50%, 0);
-}
-
-.toast-message-new {
-  background-color: var(--color-dark);
-}
-
-.toast-message-edit {
-  background-color: rgb(22 153 70 / 100%);
-}
-
-.toast-message-delete {
-  background-color: rgb(235 20 40 / 100%);
-}
-
-/* ##### Input field border color error ##### */
-
-input.input-error,
-textarea.input-error,
-div.input-error,
-div.input-error:focus-within {
-  border: 1px solid var(--color-error);
-}
-
 /* ##### Back button structure ##### */
 
 .back-button {
@@ -159,7 +114,104 @@ div.input-error:focus-within {
   font-weight: 700;
 }
 
-/* ##### No connection to database ##### */
+/* #endregion */
+
+/* #region MARK: toast messages
+##### Basic toast messages structure ##### */
+
+.toast-message {
+  background: transparent;
+  color: var(--color-white);
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 4px var(--color-black-40);
+  position: fixed;
+  top: unset;
+  bottom: 300px;
+  left: 50%;
+  right: auto;
+  white-space: nowrap;
+  transform: translate(-50%, 300px);
+  transition: transform 0.3s ease-out;
+  padding: 1.125em 0.625em;
+  margin: 0 auto;
+}
+
+.toast-message.show {
+  transform: translate(-50%, 0);
+}
+
+.toast-message-new {
+  background-color: var(--color-dark);
+}
+
+.toast-message-edit {
+  background-color: rgb(22 153 70 / 100%);
+}
+
+.toast-message-delete {
+  background-color: rgb(235 20 40 / 100%);
+}
+
+/* #endregion */
+
+/* #region MARK: input error
+##### Input field border color error ##### */
+
+input.input-error,
+textarea.input-error,
+div.input-error,
+div.input-error:focus-within {
+  border: 1px solid var(--color-error);
+}
+
+/* #endregion */
+
+/* #region MARK: delete question
+*/
+.delete-question-container {
+  background-color: var(--color-white);
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 0 4px var(--color-black-40);
+  contain: paint layout;
+  z-index: 200;
+  margin: auto;
+  padding: 1.875em 1.5em;
+  width: calc(100% - 28px);
+  max-width: 396px;
+  max-height: calc(100dvh - 160px);
+}
+
+.delete-question-container:focus {
+  outline: none;
+}
+
+.delete-question-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1em;
+}
+
+.delete-question-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.25em;
+  width: 100%;
+  padding-inline: 1.5em;
+}
+
+.delete-question-button {
+  min-width: 100px;
+}
+
+/* #endregion */
+
+/* #region MARK: database error
+##### No connection to database ##### */
 
 .connection-error-database-container {
   background-color: var(--color-white);
@@ -195,7 +247,10 @@ div.input-error:focus-within {
   min-width: 100px;
 }
 
-/* ##### Loading animation ##### */
+/* #endregion */
+
+/* #region MARK: loading animation
+*/
 
 .loading-animation::before {
   content: "";
@@ -249,10 +304,14 @@ div.input-error:focus-within {
   }
 }
 
+/* #endregion */
+
 /*  ==================================================================================================== 
     2. OTHER
     ==================================================================================================== */
 
+/* #region MARK: @ laptop S
+*/
 @media (width >= 64em) {
   .button-basic {
     height: 56px;
