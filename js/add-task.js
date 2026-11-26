@@ -112,11 +112,19 @@ function validateTaskForm(form) {
 
 
 /**
- * Resets the task form and displays a confirmation toast after saving.
- * @param {HTMLFormElement} form - The task form to reset.
+ * Returns to the board when a status URL parameter is present.
+ * Otherwise resets the form and displays a confirmation toast.
+ * @param {HTMLFormElement} form - The saved task's form.
  * @returns {void}
  */
 function resetAddTaskAfterSave(form) {
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.has("status")) {
+    window.location.assign("board.html");
+    return;
+  }
+
   form.reset();
   showToastMessage("Task added to board", "toast-message-new");
 }
