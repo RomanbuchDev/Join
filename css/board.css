@@ -190,6 +190,10 @@ h2 > span {
   overflow-x: auto;
 }
 
+.tasks-list:has(.task-card) {
+  min-height: 12em;
+}
+
 .tasks-list:has(.empty-column-message) {
   margin-right: 0;
 }
