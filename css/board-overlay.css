@@ -251,7 +251,6 @@
 }
 
 .form-action {
-  font-family: var(--font-family);
   min-width: fit-content;
 }
 

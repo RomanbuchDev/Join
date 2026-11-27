@@ -58,6 +58,7 @@
 }
 
 .form-action {
+  font-family: var(--font-family);
   font-size: 1rem;
   padding: 0.75em 1em;
   border-radius: 10px;
