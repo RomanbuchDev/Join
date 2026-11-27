@@ -1,5 +1,6 @@
 /**
- * JavaScript file for the initiation (fetch and tasks rendering) of the board page.
+ * JavaScript file for the initialization of the board page, loading the contacts
+ * and rendering the task cards and columns.
  */
 
 // #region VARIABLES
@@ -17,9 +18,10 @@ let allFetchedTasksAreRendered = false;
 
 /**
  * Initializes the board view.
- * Loads all tasks and all contacts first, then renders the tasks into their columns.
+ * Waits for the current user, loads all tasks and all contacts, then renders the tasks into their columns.
  * Contacts must be loaded before rendering, because the task assignees depend on them.
- * @returns {Promise<void>} Resolves once tasks and contacts are loaded and the tasks are rendered.
+ * The loading animation is removed even if an error occurs.
+ * @returns {Promise<void>} Resolves once loading is finished and the tasks are rendered.
  */
 async function initBoard() {
   try {
@@ -72,29 +74,6 @@ function renderTasks(currentTaskIDs) {
 
 
 /**
- * Counts the given tasks per status and renders the amount in the column header.
- * @param {string[]} currentTaskIDs - The task IDs to count.
- * @param {string} status - The status (column ID) to count the tasks for.
- * @returns {void} Nothing; the amount is written into the column header.
- */
-function renderTaskCountForStatus(currentTaskIDs, status) {
-  const amount = currentTaskIDs.filter((taskId) => allTasks[taskId].status === status).length;
-  renderTaskCount(status, amount);
-}
-
-
-/**
- * Writes the amount of tasks into the header of a column.
- * @param {string} status - The status (column ID) of the column.
- * @param {number} amount - The amount of tasks to display.
- * @returns {void} Nothing; the counter element is updated.
- */
-function renderTaskCount(status, amount) {
-  document.getElementById(`${status}Amount`).innerHTML = amount;
-}
-
-
-/**
  * Renders a single task card into its column,
  * including the description, progress bar and assignees if this information exists.
  * @param {string} taskID - The ID of the task to render.
@@ -122,7 +101,7 @@ function renderTaskCardDetails(taskID) {
 
 // #endregion
 
-// #region T. DETAILS
+// #region TASK DETAILS
 
 /**
  * Returns the CSS class for the color of the category label of a task.
@@ -151,6 +130,9 @@ function renderDescription(taskID, containerID) {
   }
 }
 
+// #endregion
+
+// #region SUBTASK PROGRESS
 
 /**
  * Renders a progress bar for a task based on its subtasks if they exist.
@@ -193,6 +175,9 @@ function countDoneSubtasks(subtasks) {
   return counter;
 }
 
+// #endregion
+
+// #region ASSIGNEES
 
 /**
  * Checks whether a task has at least one assignee.
@@ -252,6 +237,29 @@ function renderOneCardAssignee(taskID, assignee) {
 // #endregion
 
 // #region COLUMNS
+
+/**
+ * Counts the given tasks per status and renders the amount in the column header.
+ * @param {string[]} currentTaskIDs - The task IDs to count.
+ * @param {string} status - The status (column ID) to count the tasks for.
+ * @returns {void} Nothing; the amount is written into the column header.
+ */
+function renderTaskCountForStatus(currentTaskIDs, status) {
+  const amount = currentTaskIDs.filter((taskId) => allTasks[taskId].status === status).length;
+  renderTaskCount(status, amount);
+}
+
+
+/**
+ * Writes the amount of tasks into the header of a column.
+ * @param {string} status - The status (column ID) of the column.
+ * @param {number} amount - The amount of tasks to display.
+ * @returns {void} Nothing; the counter element is updated.
+ */
+function renderTaskCount(status, amount) {
+  document.getElementById(`${status}Amount`).innerHTML = amount;
+}
+
 
 /**
  * Empties all task columns.

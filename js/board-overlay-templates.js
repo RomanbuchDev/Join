@@ -1,17 +1,13 @@
-// #region OVERLAY ADD 
-function templateOverlayAddFrame(dialogID) {
-  return /*html*/ `
-    <header class="overlay-header d-flex">
-      <h2 class="overlay-h2">Add Task</h2>
-      ${templateCloseButton(dialogID)}
-    </header>
-    ${getTaskFormTemplate({
-      submitHandler: "createTask(event, finishAddSubmit)", 
-      actions: templateOverlayAddActions()
-    })}`;
-}
+/** JavaScript file for the templates of the overlays and the delete question of the board page. */
 
+// #region OVERLAY SHARED
 
+/**
+ * Returns the HTML template of the close button of an overlay. A click sends a close request,
+ * see handleOverlayCloseRequest.
+ * @param {string} dialogID - The ID of the dialog the button belongs to.
+ * @returns {string} The HTML string of the button.
+ */
 function templateCloseButton(dialogID) {
   return /*html*/ `
     <button type="button" aria-label="Close overlay"
@@ -28,7 +24,34 @@ function templateCloseButton(dialogID) {
     </button>`;
 }
 
+// #endregion
 
+// #region OVERLAY ADD
+
+/**
+ * Returns the HTML template of the add task overlay: header with title and close button,
+ * and the task form with the actions of the overlay.
+ * @param {string} dialogID - The ID of the add task dialog, used by the close button.
+ * @returns {string} The HTML string of the overlay content.
+ */
+function templateOverlayAddFrame(dialogID) {
+  return /*html*/ `
+    <header class="overlay-header d-flex">
+      <h2 class="overlay-h2">Add Task</h2>
+      ${templateCloseButton(dialogID)}
+    </header>
+    ${getTaskFormTemplate({
+      submitHandler: "createTask(event, finishAddSubmit)", 
+      actions: templateOverlayAddActions()
+    })}`;
+}
+
+
+/**
+ * Returns the HTML template of the actions of the add task overlay: the required-field hint,
+ * the "Cancel" button for the add task dialog and the "Create Task" submit button.
+ * @returns {string} The HTML string of the form actions.
+ */
 function templateOverlayAddActions() {
   return /*html*/ `
     <div class="form-actions">
@@ -44,7 +67,8 @@ function templateOverlayAddActions() {
 
 // #endregion
 
-// #region OVERLAY TASK
+// #region OVERLAY DETAILS
+
 /**
  * Returns the HTML template of the overlay frame: header with category label and close button,
  * and empty containers for the main part and the footer.
@@ -138,6 +162,9 @@ function templateOverlayPriority(priorityString, priority) {
     />`;
 }
 
+// #endregion
+
+// #region DETAILS ASSIGNEES
 
 /**
  * Returns the HTML template of the assignee section with its heading and an empty list.
@@ -170,6 +197,9 @@ function templateOverlayOneAssignee(assigneeColor, assigneeShortcut, assigneeNam
     </li>`;
 }
 
+// #endregion
+
+// #region DETAILS SUBTASKS
 
 /**
  * Returns the HTML template of the subtask section with its heading and an empty list.
@@ -209,6 +239,7 @@ function templateOverlayOneSubtask(taskID, indexSubtask) {
 // #endregion
 
 // #region OVERLAY EDIT
+
 /**
  * Returns the HTML template of the main part of the edit view: the task form without category field
  * and action buttons, with the priority of the task preselected (fallback "medium").
@@ -247,6 +278,7 @@ function templateOverlayFooterEdit() {
 // #endregion
 
 // #region DELETE QUESTION
+
 /**
  * Returns the HTML template of the confirmation question for deleting a task, with a "NO" and a "YES" button.
  * @param {string} taskID - The ID of the task to delete.
@@ -278,4 +310,5 @@ function templateDeleteQuestion(taskID) {
       </div>
     </form>`;
 }
+
 // #endregion

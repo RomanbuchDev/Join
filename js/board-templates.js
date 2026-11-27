@@ -1,4 +1,4 @@
-/** JavaScript file for the templates of the board page. */
+/** JavaScript file for the templates of the task cards and columns of the board page. */
 
 // #region TASK CARD
 
@@ -49,7 +49,8 @@ function templateTaskCard(taskID, categoryColor) {
 
 // #endregion
 
-// #region TASK DETAILS
+// #region CARD DETAILS
+
 /**
  * Returns the HTML template of the details of a task card: title, priority icon and empty containers
  * for description, progress bar and assignees, which are filled in afterwards.
@@ -104,6 +105,9 @@ function templateCardAssignee(assigneeColor, assigneeShortcut) {
     </li>`;
 }
 
+// #endregion
+
+// #region EMPTY COLUMN
 
 /**
  * Returns the HTML template of the message for an empty column.

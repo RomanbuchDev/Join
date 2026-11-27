@@ -1,13 +1,9 @@
 /**
- * JavaScript file for the task overlay of the board page.
+ * JavaScript file for the overlays of the board page: opening the detail view of a task,
+ * closing the detail and the add task overlay, rendering the detail view and toggling subtasks.
  */
 
-// #region SHOW
-
-function resetBoardOverlay(overlayID) {
-  document.getElementById(overlayID).innerHTML = "";
-}
-
+// #region OPEN
 
 /**
  * Opens the detail overlay of a task when its card is clicked.
@@ -18,7 +14,6 @@ function resetBoardOverlay(overlayID) {
  */
 function handleTaskCardClick(event, taskID) {
   if (event.target.closest(".move-menu-container")) return;
-
   openTaskOverlay(taskID);
 }
 
@@ -45,9 +40,12 @@ function openTaskOverlay(taskID) {
 // #region CLOSE
 
 /**
- * Closes the overlay if the click hit the dialog itself (the backdrop) and not its content.
+ * Handles a click on an overlay dialog. Closes the assignee dropdown of the task form on an outside click.
+ * Closes the overlay only if the click hit the dialog itself (the backdrop) in the detail view;
+ * in the edit and the add task view, a backdrop click does not close it.
  * @param {MouseEvent} event - The click event on the dialog.
- * @returns {void} Nothing; the closing is started if the backdrop was clicked.
+ * @param {string} dialogID - The ID of the clicked dialog.
+ * @returns {void} Nothing; the dropdown or the overlay is closed if the conditions are met.
  */
 function handleOverlayBackdropClick(event, dialogID) {
   closeAssignedContactsOnOutsideClick(event);
@@ -61,9 +59,10 @@ function handleOverlayBackdropClick(event, dialogID) {
 
 
 /**
- * Replaces the native closing by the Escape key with the animated closing.
+ * Replaces the native closing by the Escape key with a close request for the overlay.
  * @param {Event} event - The cancel event of the dialog.
- * @returns {void} Nothing; the default behavior is prevented and the closing is started.
+ * @param {string} dialogID - The ID of the dialog.
+ * @returns {void} Nothing; the default behavior is prevented and the close request is handled.
  */
 function handleOverlayCancel(event, dialogID) {
   event.preventDefault();
@@ -72,8 +71,9 @@ function handleOverlayCancel(event, dialogID) {
 
 
 /**
- * Handles a request to close the overlay (close button or Escape key).
+ * Handles a request to close an overlay, e.g. by the close button, the cancel button or the Escape key.
  * In edit mode, discards the changes and returns to the detail view; otherwise closes the overlay.
+ * @param {string} dialogID - The ID of the dialog.
  * @returns {void} Nothing; the view is switched or the closing is started.
  */
 function handleOverlayCloseRequest(dialogID) {
@@ -92,6 +92,7 @@ function handleOverlayCloseRequest(dialogID) {
  * Starts closing the overlay: removes the open class to slide it out and
  * closes the dialog when the transition has ended (see finishClosingOverlay).
  * Relies on a running transition; without one, the dialog would not be closed.
+ * @param {string} dialogID - The ID of the dialog to close.
  * @returns {void} Nothing; the slide-out starts.
  */
 function closeOverlay(dialogID) {
@@ -102,10 +103,10 @@ function closeOverlay(dialogID) {
 
 
 /**
- * Closes the dialog after its own slide-out transition ended and removes the listener.
- * Transition events of child elements are ignored.
+ * Closes the dialog after its own slide-out transition ended, removes the listener
+ * and empties the overlay. Transition events of child elements are ignored.
  * @param {TransitionEvent} event - The transitionend event of the dialog.
- * @returns {void} Nothing; the dialog is closed.
+ * @returns {void} Nothing; the dialog is closed and its overlay is emptied.
  */
 function finishClosingOverlay(event) {
   const openedDialog = event.currentTarget;
@@ -115,9 +116,19 @@ function finishClosingOverlay(event) {
   resetBoardOverlay(openedDialog.firstElementChild.id);
 }
 
+
+/**
+ * Removes the content of an overlay.
+ * @param {string} overlayID - The ID of the overlay element to empty.
+ * @returns {void} Nothing; the content of the element is removed from the DOM.
+ */
+function resetBoardOverlay(overlayID) {
+  document.getElementById(overlayID).innerHTML = "";
+}
+
 // #endregion
 
-// #region RENDER
+// #region RENDER DETAIL VIEW
 
 /**
  * Renders the detail view of a task into the overlay.
@@ -157,6 +168,9 @@ function renderOverlayDetailView(taskID) {
   renderOverlaySubtasks(taskID);
 }
 
+// #endregion
+
+// #region DUE DATE, PRIORITY
 
 /**
  * Returns the due date of a task in the format "dd.mm.yyyy".
@@ -178,7 +192,6 @@ function getFormattedDueDate(taskID) {
  */
 function isDateValid(date) {
   return /^\d{4}-\d{2}-\d{2}$/.test(date ?? "");
-  
 }
 
 
@@ -195,6 +208,9 @@ function renderOverlayPriority(taskID) {
   priorityRef.innerHTML = templateOverlayPriority(priorityString, priority);
 }
 
+// #endregion
+
+// #region RENDER ASSIGNEES
 
 /**
  * Renders the assignees of a task into the overlay, or hides the section if there are none.
@@ -227,6 +243,9 @@ function renderOneOverlayAssignee(taskID, assignee) {
   assigneesRef.innerHTML += templateOverlayOneAssignee(assignee.shortcutColor, assignee.shortcut, name);
 }
 
+// #endregion
+
+// #region RENDER SUBTASKS
 
 /**
  * Renders the subtask list of a task into the overlay, or hides the section if there are none.
@@ -263,7 +282,7 @@ function getSubtasksHtml(taskID, subtasks) {
 
 // #endregion
 
-// #region SUBTASKS
+// #region TOGGLE SUBTASKS
 
 /**
  * Saves the new state of a subtask checkbox. Task data and progress bar are updated
