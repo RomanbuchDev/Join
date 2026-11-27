@@ -171,7 +171,6 @@
   appearance: none;
   background-image: url("../assets/icons/checkbox-default.svg");
   background-size: cover;
-  align-self: center;
   margin: 0 1rem;
   border: 2px solid var(--color-white);
   border-radius: 3px;
@@ -188,6 +187,11 @@
 .subtask-checkbox:focus-visible {
   background-color: var(--color-hover);
   border-color: var(--color-hover);
+}
+
+.overlay-subtask-text {
+  overflow-wrap: break-word;
+  max-width: calc(100% - 3.25rem);
 }
 
 /* #endregion */

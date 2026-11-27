@@ -191,7 +191,7 @@ h2 > span {
 }
 
 .tasks-list:has(.task-card) {
-  min-height: 12em;
+  min-height: 12.5em;
 }
 
 .tasks-list:has(.empty-column-message) {
