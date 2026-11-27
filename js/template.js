@@ -49,7 +49,7 @@ function getContactDetailsTemplate(contactData) {
         <span class="contact-details-subtitle">Better with a team</span>
       </div>
       <button type="button" class="back-button" onclick="backToContactList()">
-      <img src="../assets/icons/login-back-vector.svg" alt="Back button icon">
+      <img src="../assets/icons/go-back-icon.svg" alt="Back button icon">
       </button>
     </div>
 
