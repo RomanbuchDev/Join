@@ -20,9 +20,9 @@
   font-size: 1.3125rem;
   border-radius: 10px;
   transition:
-    background-color 0.1s ease,
-    color 0.1s ease,
-    box-shadow 0.1s ease;
+    background-color 0.125s ease,
+    color 0.125s ease,
+    box-shadow 0.125s ease;
   cursor: pointer;
   gap: 0.25em;
   height: 51px;

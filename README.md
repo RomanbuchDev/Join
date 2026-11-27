@@ -121,6 +121,7 @@ http://<deine_ip>:<live-server-port>
 │       board.html
 │       contacts.html
 │       greeting-page.html
+│       help.html
 │       imprint.html
 │       privacy-policy.html
 │       signup.html
@@ -129,8 +130,42 @@ http://<deine_ip>:<live-server-port>
 ├───css/
 │
 └───js/
+        firebase-backup.json
+        firebase-init.js
+        auth-service.js
+        login-status.js
 
+        template.js
 
+        login.js
+        signup.js
+        signup-validation.js
+
+        greeting-page.js
+        summary.js
+        summary-templates.js
+
+        task-storage.js
+
+        add-task.js
+        add-task-subtasks.js
+        add-task-assignees.js
+        add-task-templates.js
+        add-task-component-templates.js
+
+        board.js
+        board-dragdrop.js
+        board-overlay.js
+        board-overlay-add.js
+        board-overlay-delete.js
+        board-overlay-edit.js
+        board-search.js
+        board-templates.js
+        board-overlay-templates.js
+
+        contacts.js
+        contacts-dialog.js
+        contact-utils.js
 ```
 
 ## 📝 Disclaimer

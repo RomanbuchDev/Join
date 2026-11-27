@@ -18,6 +18,7 @@ let patchQueue = Promise.resolve();
 /**
  * Builds the Firebase URL for the tasks, including the auth token of the current user.
  * @returns {Promise<string>} The URL to the tasks.json with the auth query parameter.
+ * @throws {Error} If there is no current user or the token cannot be retrieved.
  */
 async function getAuthTasksUrl() {
   const idToken = await window.auth.currentUser.getIdToken();
@@ -64,8 +65,9 @@ async function fetchAllTasks() {
 
 
 /**
- * Replaces the content of allTasks, so tasks deleted in the meantime do not stay in it.
- * @param {Object<string, Object>|null} tasks - The loaded tasks keyed by task ID; null if there are none.
+ * Replaces the content of allTasks, so entries that are not in the new data do not stay in it.
+ * Used after loading and for restoring the previous state if saving a new task fails.
+ * @param {Object<string, Object>|null} tasks - The new tasks keyed by task ID; null if there are none.
  * @returns {void} Nothing; allTasks is emptied and refilled.
  */
 function replaceAllTasks(tasks) {

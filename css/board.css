@@ -188,10 +188,11 @@ h2 > span {
   padding: 0.5em;
   gap: 1em;
   overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .tasks-list:has(.task-card) {
-  min-height: 12em;
+  min-height: 12.5em;
 }
 
 .tasks-list:has(.empty-column-message) {
@@ -279,7 +280,7 @@ h2 > span {
 
   .board-column {
     flex: 1 1 0;
-    min-width: 17.5em;
+    min-width: 17em;
   }
 
   .tasks-list {

@@ -65,49 +65,17 @@
     }
   },
   "tasks": {
-    "-IDTest12345": {
-      "assignedTo": [
-        "-P0qFvs8zfGoK2KNOszq"
-      ],
-      "category": "User Story",
-      "dueDate": "2026-10-20",
-      "position": 0,
-      "priority": "medium",
-      "status": "done",
-      "title": "0 - Test"
-    },
-    "-IDTest2222": {
-      "category": "User Story",
-      "position": 1,
-      "priority": "medium",
-      "status": "done",
-      "title": "1 - Test"
-    },
-    "-IDTest3333": {
-      "category": "Technical Task",
-      "position": 2,
-      "priority": "medium",
-      "status": "done",
-      "title": "2 - Test"
-    },
-    "-IDTest4444": {
-      "category": "Technical Task",
-      "position": 3,
-      "priority": "medium",
-      "status": "done",
-      "title": "3 - Test"
-    },
     "-P1701uUKDiyQHooM3gX": {
       "assignedTo": [
+        "-P0qFvs8zfGoK2KNOszq",
         "-P0qGMckhAKC6RslX_8C",
-        "-P0qGPpsc3csxCpMnhWT",
-        "-P0qFvs8zfGoK2KNOszq"
+        "-P0qGPpsc3csxCpMnhWT"
       ],
       "category": "User Story",
       "description": "Build the main page that fetches Pokemon from the PokeAPI and displays them as a scrollable list with a live search input.",
       "dueDate": "2026-11-15",
-      "position": 4,
-      "priority": "medium",
+      "position": 0,
+      "priority": "low",
       "status": "toDo",
       "subtasks": [
         {
@@ -119,26 +87,26 @@
           "text": "Render Pokemon cards in a grid"
         },
         {
-          "done": false,
+          "done": true,
           "text": "Implement search input with filtering"
         }
       ],
-      "title": "4 - Pokemon List View & Search Bar"
+      "title": "Pokemon List View & Search Bar"
     },
     "-P1701zqkHsqGfDUns9V": {
       "category": "User Story",
       "description": "Create a detail overlay that opens on card click and shows stats, abilities, and types for the selected Pokemon.",
-      "dueDate": "2026-11-18",
+      "dueDate": "2027-01-22",
       "position": 2,
       "priority": "urgent",
       "status": "toDo",
       "subtasks": [
         {
-          "done": true,
+          "done": false,
           "text": "Design overlay layout"
         },
         {
-          "done": true,
+          "done": false,
           "text": "Fetch detail data by Pokemon ID"
         },
         {
@@ -146,44 +114,29 @@
           "text": "Display base stats as bar chart"
         }
       ],
-      "title": "2 - Pokemon Detail Overlay"
-    },
-    "-P1702-HzqPUuocSfZr6": {
-      "assignedTo": [
-        "-P0qGFf5oQqcYLv3D8Pm"
-      ],
-      "category": "User Story",
-      "description": "Add filter controls so users can narrow the Pokemon list down by type (e.g. fire, water, grass).",
-      "dueDate": "2026-11-20",
-      "position": 0,
-      "priority": "medium",
-      "status": "inProgress",
-      "subtasks": [
-        {
-          "done": false,
-          "text": "Create type filter dropdown"
-        },
-        {
-          "done": false,
-          "text": "Apply filter logic to rendered list"
-        }
-      ],
-      "title": "0 - Type & Stats Filter"
+      "title": "Pokemon Detail Overlay"
     },
     "-P1702-idaIPNzxQd2Zk": {
       "assignedTo": [
+        "-P0qG7eK1SbbC3JW2ygi",
+        "-P0qFvs8zfGoK2KNOszq",
+        "-P0qGBUZNnbuS0E7TCPw",
+        "-P0qGFf5oQqcYLv3D8Pm",
+        "-P0qGMckhAKC6RslX_8C",
+        "-P3ujf7BG8fyGILYqrzw",
         "-P0qGJL7d5iBdqYCE0vA",
-        "-P0qGMckhAKC6RslX_8C"
+        "-P0qGPpsc3csxCpMnhWT",
+        "-P0qGTqRTGBHqHBx4f7n"
       ],
       "category": "User Story",
       "description": "Allow users to mark Pokemon as favorites and view a separate favorites list persisted in local storage.",
-      "dueDate": "2026-11-22",
-      "position": 1,
+      "dueDate": "2027-01-27",
+      "position": 0,
       "priority": "low",
-      "status": "toDo",
+      "status": "done",
       "subtasks": [
         {
-          "done": false,
+          "done": true,
           "text": "Add favorite toggle button on cards"
         },
         {
@@ -191,67 +144,68 @@
           "text": "Persist favorites in localStorage"
         },
         {
-          "done": false,
+          "done": true,
           "text": "Build favorites-only view"
         },
         {
-          "done": false,
+          "done": true,
           "text": "Sync favorite state on page reload"
         }
       ],
-      "title": "1 - Favorites / Bookmark System"
+      "title": "Favorites / Bookmark System"
     },
     "-P17020BZJNPbmhOEX2X": {
       "assignedTo": [
+        "-P0qFvs8zfGoK2KNOszq",
         "-P0qGPpsc3csxCpMnhWT",
-        "-P0qGTqRTGBHqHBx4f7n",
-        "-P0qFvs8zfGoK2KNOszq"
+        "-P0qGTqRTGBHqHBx4f7n"
       ],
       "category": "User Story",
+      "description": "",
       "dueDate": "2026-11-25",
-      "position": 1,
-      "priority": "medium",
+      "position": 3,
+      "priority": "low",
       "status": "inProgress",
-      "title": "1 - Loading Spinner & Load-More Pagination"
+      "title": "Loading Spinner & Load-More Pagination"
     },
     "-P17020fFz9aN5T7eqsq": {
       "assignedTo": [
         "-P0qGBUZNnbuS0E7TCPw",
         "-P0qGFf5oQqcYLv3D8Pm",
-        "-P0qGJL7d5iBdqYCE0vA",
-        "-P0qGMckhAKC6RslX_8C"
+        "-P0qGMckhAKC6RslX_8C",
+        "-P0qGJL7d5iBdqYCE0vA"
       ],
       "category": "User Story",
       "description": "Adapt the list, search bar, and detail overlay so the app is fully usable on mobile screen sizes.",
       "dueDate": "2026-11-28",
-      "position": 3,
-      "priority": "low",
-      "status": "toDo",
+      "position": 1,
+      "priority": "urgent",
+      "status": "inProgress",
       "subtasks": [
         {
-          "done": false,
+          "done": true,
           "text": "Adjust grid breakpoints for mobile"
         },
         {
-          "done": false,
+          "done": true,
           "text": "Make overlay full-screen on small viewports"
         },
         {
-          "done": false,
+          "done": true,
           "text": "Test on real mobile devices"
         }
       ],
-      "title": "3 - Responsive Mobile Layout"
+      "title": "Responsive Mobile Layout"
     },
     "-P170216DWykCsJB7op4": {
       "assignedTo": [
-        "-P0qFvs8zfGoK2KNOszq",
-        "-P0qG7eK1SbbC3JW2ygi"
+        "-P0qG7eK1SbbC3JW2ygi",
+        "-P0qFvs8zfGoK2KNOszq"
       ],
       "category": "Technical Task",
       "description": "Central fetch service.",
-      "dueDate": "2026-11-10",
-      "position": 4,
+      "dueDate": "2027-01-25",
+      "position": 2,
       "priority": "urgent",
       "status": "inProgress",
       "subtasks": [
@@ -264,7 +218,7 @@
           "text": "Add in-memory cache for requested Pokemon"
         }
       ],
-      "title": "4 - PokeAPI Fetch & Data Caching Setup"
+      "title": "PokeAPI Fetch & Data Caching Setup"
     },
     "-P17021_6tUw9TlXLZm5": {
       "assignedTo": [
@@ -272,11 +226,11 @@
       ],
       "category": "Technical Task",
       "description": "Add consistent error handling and a fallback UI message whenever a PokeAPI request fails or times out.",
-      "dueDate": "2026-11-12",
-      "position": 3,
+      "dueDate": "2027-01-15",
+      "position": 0,
       "priority": "medium",
       "status": "inProgress",
-      "title": "3 - Error Handling for API Requests"
+      "title": "Error Handling for API Requests"
     },
     "-P17022-OraSrRUkkIRQ": {
       "assignedTo": [
@@ -286,24 +240,24 @@
       "category": "Technical Task",
       "description": "Extract the Pokemon card and detail overlay markup into reusable template functions, following the project's max-14-lines-per-function rule.",
       "dueDate": "2026-11-14",
-      "position": 2,
+      "position": 1,
       "priority": "medium",
-      "status": "inProgress",
+      "status": "done",
       "subtasks": [
         {
           "done": true,
           "text": "Create getPokemonCardTemplate()"
         },
         {
-          "done": false,
+          "done": true,
           "text": "Create getPokemonDetailTemplate()"
         },
         {
-          "done": false,
+          "done": true,
           "text": "Split templates into template.js"
         }
       ],
-      "title": "2 - Build Reusable Card & Overlay Templates"
+      "title": "Build Reusable Card & Overlay Templates"
     },
     "-P17022Rfby8_A79SMeM": {
       "assignedTo": [
@@ -311,8 +265,8 @@
       ],
       "category": "Technical Task",
       "description": "Wire up the existing CI/CD pipeline so the Pokedex build is linted, tested, and deployed automatically on merge to main.",
-      "dueDate": "2026-11-30",
-      "position": 0,
+      "dueDate": "2027-01-22",
+      "position": 1,
       "priority": "low",
       "status": "toDo",
       "subtasks": [
@@ -329,65 +283,25 @@
           "text": "Confirm branch protection rules"
         }
       ],
-      "title": "0 - Deploy Project via FTP & GitHub Actions"
+      "title": "Deploy Project via FTP & GitHub Actions"
     }
   },
   "users": {
-    "B9ui9GdVNSUf80LQTwHnUgIEUE82": {
-      "email": "elena2@join.de",
-      "name": "Elena 2"
-    },
-    "Fg1bbzaCrROVZmRVtd0f1UxI8DI3": {
-      "email": "sara.hoffmann@join.de",
-      "name": "Sara Hoffmann"
-    },
     "PxumgGgANtdsWobj0y94RFYCRor2": {
       "email": "elena@join.de",
       "name": "Elena"
-    },
-    "S021oOSWvfXh6kumS3OJldOaLhq2": {
-      "email": "alex-sonne@join.de",
-      "name": "alex haus"
-    },
-    "V5knApLiTPUZR6z9Bf9811IDBx53": {
-      "email": "alex-1234@join.com",
-      "name": "alex >"
     },
     "hIr3mdZPchUxHUu0IzJuH3dt3Sh2": {
       "email": "alex-test@join.de",
       "name": "alex epp"
     },
-    "icJMWYmiuBe0FCh2z4ZrzMcCMBF3": {
-      "email": "kjhjhvjhv@dedfjfkj.com",
-      "name": "jkkj"
-    },
-    "jnxmXVgkRxfdqiuc4i0gyVzSYNL2": {
-      "email": "alex-haus@join.de",
-      "name": "alex haus"
-    },
     "p3RzBmF854Q39sOFsPKenTEQQDW2": {
       "email": "timo@join.de",
       "name": "Test Benutzer"
     },
-    "wnzjQ4PWv0TAI4SmDmS9WRBXstw2": {
-      "email": "alex-mond@join.de",
-      "name": "alex"
-    },
-    "wo51lqCC22VYFc1eBberQgr9SGU2": {
-      "email": "jonas.becker@join.de",
-      "name": "Jonas Becker"
-    },
-    "x5ES19e4NQee6Rq5MLIuBvIKhhU2": {
-      "email": "alex-baum@join.de",
-      "name": "Alex Baum"
-    },
-    "xMM1USwb44X8R62NVQuiMcDMNYS2": {
-      "email": "alex-boss@join.de",
-      "name": "alex"
-    },
-    "xQYMDQJ5X9WafKHHZa5bP2H3VF22": {
-      "email": "alex-borg@join.com",
-      "name": "alex borg"
+    "r231bN1SSRYGyts4lgiVST106IX2": {
+      "email": "rombuc99@gmail.com",
+      "name": "Roman Buchmüller"
     }
   }
 }

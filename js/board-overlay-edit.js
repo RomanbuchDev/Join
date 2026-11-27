@@ -33,10 +33,12 @@ function renderOverlayEditView(taskID) {
   const overlayMainRef = document.getElementById(`overlayMain${taskID}`);
   const overlayFooterRef = document.getElementById(`overlayFooter${taskID}`);
   overlayMainRef.innerHTML = templateOverlayMainEdit(taskID);
-  // overlayFooterRef.innerHTML = getTaskOverlayActionsTemplate("edit");
   overlayFooterRef.innerHTML = templateOverlayFooterEdit();
 }
 
+// #endregion
+
+// #region FILL FORM
 
 /**
  * Fills the edit form with the data of a task, including assignees and subtasks.

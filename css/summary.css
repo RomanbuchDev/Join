@@ -261,9 +261,9 @@ main {
     grid-area: greeting;
     display: flex;
     flex-direction: column;
-    place-self: start start;
     margin: 0;
-    margin-block-start: 12.25em;
+    max-width: 25em;
+    align-self: center;
   }
 
   .greeting__text {
@@ -277,6 +277,7 @@ main {
     font-weight: 700;
     line-height: 1.2;
     color: var(--color-medium);
+    overflow-wrap: break-word;
   }
 
   .summary-card {

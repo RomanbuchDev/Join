@@ -230,7 +230,7 @@ function getConfirmPasswordErrorMessage(confirmCheck) {
  */
 function getPrivacyErrorMessage(isUnchecked) {
   if (isUnchecked) {
-    return "Please accept the privacy policy.";
+    return "Please accept the Privacy Policy.";
   }
   return "";
 }
