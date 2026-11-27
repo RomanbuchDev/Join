@@ -145,11 +145,6 @@ http://<deine_ip>:<live-server-port>
         summary.js
         summary-templates.js
 
-        contacts.js
-        contact-list.json
-        contact-utils.js
-        contacts-dialog.js
-
         task-storage.js
 
         add-task.js
@@ -167,6 +162,10 @@ http://<deine_ip>:<live-server-port>
         board-search.js
         board-templates.js
         board-overlay-templates.js
+
+        contacts.js
+        contacts-dialog.js
+        contact-utils.js
 ```
 
 ## 📝 Disclaimer

@@ -245,6 +245,7 @@
     flex-direction: column;
     gap: 1em;
     overflow-y: auto;
+    scrollbar-width: thin;
   }
 
   .main-nav-list,
