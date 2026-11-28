@@ -346,7 +346,7 @@ function checkInputEmail() {
   const data = contactEmail.value.trim();
   const inputLength = data.length > 40;
   dialogErrorMessageEmail.textContent = inputLength ? "Only 40 characters allowed for email." : originalErrorMessageEmail;
-  const valid = (data === "" || data.includes("@")) && !inputLength;
+  const valid = (data === "" || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data)) && !inputLength;
   return toggleInputError({
     input: contactEmail,
     inputContainer: contactEmailInput,
@@ -357,14 +357,25 @@ function checkInputEmail() {
 
 
 /**
+ * Cleans the phone number input for valid requirements.
+ * @returns {string} Contact phone number.
+ */
+function cleanPhoneInput() {
+  const phoneValue = contactPhone.value.replace(/[^0-9+\s]/g, '').trimStart();
+  contactPhone.value = phoneValue.charAt(0) + phoneValue.slice(1).replace(/\+/g, '');
+  return contactPhone.value.trim();
+}
+
+
+/**
  * Checks the phone number for valid characters.
  * @returns {boolean} True if the format is valid, otherwise false.
  */
 function checkInputPhone() {
-  const data = contactPhone.value.trim();
+  const data = cleanPhoneInput();
   const inputLength = data.length > 20;
   dialogErrorMessagePhone.textContent = inputLength ? "Only 20 characters allowed for phone." : originalErrorMessagePhone;
-  const valid = (data === "" || /^\+?[0-9\s]+$/.test(data)) && !inputLength;
+  const valid = (data === "" || /^\+?[0-9\s]*$/.test(data)) && !inputLength;
   return toggleInputError({
     input: contactPhone,
     inputContainer: contactPhoneInput,
